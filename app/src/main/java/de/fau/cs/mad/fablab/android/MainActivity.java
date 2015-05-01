@@ -1,4 +1,4 @@
-package android.fablab.mad.cs.fau.de.faufablab;
+package de.fau.cs.mad.fablab.android;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
