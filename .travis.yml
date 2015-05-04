@@ -3,9 +3,18 @@ android:
   components:
   - android-21
   - build-tools-21.1.2
-
+env:
+  global:
+  - secure: KuCVpSmLqbTDgKz9ZHTQOjTjcBPNXGVLw4+LNShhd88tWwPYnhJ97F7CV8mILOSc6iAUUiix3ZpPLqUNciWaqhVtC4WyQEQxPz+ypb4CuuwtcgE6mo+KD1Q0L/vLLUJjhVB2VsolXK07YRTwbmI912Cg7HuOB1U/vn5/4mc824U=
+  - secure: gUKso160n5SBkQKXJnJJW5fBPgclucIV11IhIakn9wqPZmcdP0tm7AZ4cdKB57PX1Fepr5eozKoPCHrCiP5Ofo7ZHiS/kG0I7iB6Vc2vTE66FLeLxyibqVLnIJSd2ImJ4Ewms8lIAuBiKwSE0S2ADPQFJwomSiWdMDluYgx3mOg=
+before_install:
+- openssl aes-256-cbc -K $encrypted_ac4e281d93a4_key -iv $encrypted_ac4e281d93a4_iv
+  -in keys.tar.enc -out keys.tar -d
+- tar xvf keys.tar
+- mv madfau.keystore app/
 script: "./gradlew assemble"
 after_success:
-- mv app/build/outputs/apk/app-release.apk fablab-android-$TRAVIS_BRANCH-`git rev-parse HEAD`.apk
-- curl -u $LOGIN -F "apk=@fablab-android-$TRAVIS_BRANCH-`git rev-parse HEAD`.apk" -F "project=fablab-android"
-  $URL
+- mv app/build/outputs/apk/app-release.apk fablab-android-$TRAVIS_BRANCH-`git rev-parse
+  HEAD`.apk
+- curl -u $LOGIN -F "apk=@fablab-android-$TRAVIS_BRANCH-`git rev-parse HEAD`.apk"
+  -F "project=fablab-android" $URL
