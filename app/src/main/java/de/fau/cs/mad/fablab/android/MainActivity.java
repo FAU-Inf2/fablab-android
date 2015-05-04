@@ -2,9 +2,16 @@ package de.fau.cs.mad.fablab.android;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+
+import de.fau.cs.mad.fablab.rest.TestClient;
+import de.fau.cs.mad.fablab.common.WelcomeUser;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -12,6 +19,23 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // REST-Client - example usage
+        TestClient testClient = new TestClient(this);
+        testClient.get().getWelcomeUser("FablabUser", new Callback<WelcomeUser>() {
+            @Override
+            public void success(WelcomeUser welcomeUser, Response response) {
+                // success
+                Log.i("App", welcomeUser.getMessage());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                // something went wrong
+                Log.i("App", error.getMessage());
+            }
+        });
+
     }
 
 
