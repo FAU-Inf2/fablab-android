@@ -1,12 +1,15 @@
 package de.fau.cs.mad.fablab.android;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
+import de.fau.cs.mad.fablab.android.ORM.DBObjectView;
 import de.fau.cs.mad.fablab.rest.TestClient;
 import de.fau.cs.mad.fablab.common.WelcomeUser;
 import retrofit.Callback;
@@ -59,5 +62,11 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void showORMButtonClicked(View view){
+        Intent intent = new Intent(getApplicationContext(), DBObjectView.class);
+        startActivity(intent);
     }
 }

@@ -1,0 +1,26 @@
+#
+# generated on 2015/05/05 09:04:25
+#
+# --table-start--
+dataClass=de.fau.cs.mad.fablab.android.ORM.DBObject
+tableName=ORMObject
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=title
+# --field-end--
+# --field-start--
+fieldName=text
+# --field-end--
+# --field-start--
+fieldName=created
+# --field-end--
+# --field-start--
+fieldName=modified
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
