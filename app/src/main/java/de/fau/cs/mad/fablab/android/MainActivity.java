@@ -69,4 +69,9 @@ public class MainActivity extends ActionBarActivity {
         Intent intent = new Intent(getApplicationContext(), DBObjectView.class);
         startActivity(intent);
     }
+
+    public void startBarcodeScanner(View view) {
+        Intent intent = new Intent(this, BarcodeScannerActivity.class);
+        startActivity(intent);
+    }
 }

@@ -37,6 +37,7 @@ dependencies {
     compile 'com.squareup.okio:okio:1.0.1'
     compile 'com.j256.ormlite:ormlite-core:4.48'
     compile 'com.j256.ormlite:ormlite-android:4.48'
+    compile 'me.dm7.barcodescanner:zxing:1.7'
 }
 
 allprojects {
