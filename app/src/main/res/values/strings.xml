@@ -6,4 +6,9 @@
     <string name="button_start_barcode_scanner">Start barcode scanner</string>
     <string name="title_activity_barcode_scanner">Barcode scanner</string>
     <string name="API_URL">http://ec2-52-28-16-59.eu-central-1.compute.amazonaws.com</string>
+    <string name="appbar_fau">FAU</string>
+    <string name="appbar_fablab">FabLab</string>
+    <string name="appbar_opened">Geöffnet</string>
+    <string name="appbar_opened_since">seit</string>
+    <string name="appbar_closed">Geschlossen</string>
 </resources>

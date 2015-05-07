@@ -3,10 +3,13 @@ package de.fau.cs.mad.fablab.android;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 import de.fau.cs.mad.fablab.android.ORM.DBObjectView;
@@ -17,11 +20,18 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class MainActivity extends ActionBarActivity {
+    // Appbar toolbar material design for pre-lollipop versions
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Appbar instantiation
+        toolbar = (Toolbar) findViewById(R.id.appbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // REST-Client - example usage
         TestClient testClient = new TestClient(this);
@@ -57,7 +67,9 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_opened) {
+            Toast appbar_opened_toast = Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT);
+            appbar_opened_toast.show();
             return true;
         }
 
