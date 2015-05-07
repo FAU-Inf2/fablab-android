@@ -18,9 +18,9 @@ allprojects {
     }
 }
 
-//project(':app') {
-//    dependencies {
-//        compile project(':../fablab-common')
-//    }
-//}
+project(':app') {
+    dependencies {
+        project(':../fablab-common')
+    }
+}
 
