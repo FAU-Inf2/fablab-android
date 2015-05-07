@@ -29,6 +29,7 @@ android {
 }
 
 dependencies {
+    compile fileTree(dir: '../../fablab-common/build/libs', include: 'fablab-common-1.0.jar')
     compile 'com.android.support:appcompat-v7:21.0.0'
     // Libraries for the REST Client (Retrofit)
     compile 'com.squareup.retrofit:retrofit:1.6.1'

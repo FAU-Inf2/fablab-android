@@ -17,3 +17,10 @@ allprojects {
         jcenter()
     }
 }
+
+//project(':app') {
+//    dependencies {
+//        compile project(':../fablab-common')
+//    }
+//}
+

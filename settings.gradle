@@ -1,1 +1,15 @@
+buildscript {
+    repositories { mavenCentral() }
+    dependencies { classpath 'org.ajoberstar:gradle-git:0.8.0' }
+}
+
+import org.ajoberstar.grgit.*
+
+File dir = new File('../fablab-common')
+if (!dir.exists()) {
+    println 'Cloning fablab-common repository...'
+    def grgit = Grgit.clone(dir: dir, uri: 'https://github.com/FAU-Inf2/fablab-common')
+}
+
 include ':app'
+include '../fablab-common'
