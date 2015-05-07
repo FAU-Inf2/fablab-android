@@ -11,7 +11,7 @@ import android.view.View;
 
 import de.fau.cs.mad.fablab.android.ORM.DBObjectView;
 import de.fau.cs.mad.fablab.rest.TestClient;
-import de.fau.cs.mad.fablab.common.WelcomeUser;
+import de.fau.cs.mad.fablab.rest.entities.WelcomeUser;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
