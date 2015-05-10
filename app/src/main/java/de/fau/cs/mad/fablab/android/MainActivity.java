@@ -8,12 +8,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
+import net.spaceapi.HackerSpace;
+
 import de.fau.cs.mad.fablab.android.ORM.DBObjectView;
-import de.fau.cs.mad.fablab.rest.TestClient;
+import de.fau.cs.mad.fablab.rest.SpaceApiClient;
 import de.fau.cs.mad.fablab.rest.entities.WelcomeUser;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -34,12 +35,12 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // REST-Client - example usage
-        TestClient testClient = new TestClient(this);
-        testClient.get().getWelcomeUser("FablabUser", new Callback<WelcomeUser>() {
+        SpaceApiClient spaceApiClient = new SpaceApiClient(this);
+        spaceApiClient.get().getSpace("FablabUser", new Callback<HackerSpace>() {
             @Override
-            public void success(WelcomeUser welcomeUser, Response response) {
+            public void success(HackerSpace hackerSpace, Response response) {
                 // success
-                Log.i("App", welcomeUser.getMessage());
+                Log.i("App", "Put your actions here!");
             }
 
             @Override
