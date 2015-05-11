@@ -34,7 +34,7 @@
 
         <activity android:name=".ORM.DBObjectView"></activity>
         <activity android:name=".ORM.DBObjectDetailsView"></activity>
-
+        <activity android:name=".basket.BasketActivity"/>
     </application>
 
 </manifest>

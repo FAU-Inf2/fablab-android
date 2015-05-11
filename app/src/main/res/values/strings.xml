@@ -11,4 +11,8 @@
     <string name="appbar_opened">Geöffnet</string>
     <string name="appbar_opened_since">seit</string>
     <string name="appbar_closed">Geschlossen</string>
+    <string name="basket_title">Warenkorb:</string>
+    <string name="basket_empty"><b><big>Ihr Warenkorb ist leider noch leer</big></b></string>
+    <string name="basket_total_price_title">Gesamtpreis</string>
+    <string name="basket_button_checkout">Zur Kasse</string>
 </resources>

@@ -14,8 +14,8 @@ import android.widget.Toast;
 import net.spaceapi.HackerSpace;
 
 import de.fau.cs.mad.fablab.android.ORM.DBObjectView;
+import de.fau.cs.mad.fablab.android.basket.BasketActivity;
 import de.fau.cs.mad.fablab.rest.SpaceApiClient;
-import de.fau.cs.mad.fablab.rest.entities.WelcomeUser;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -85,6 +85,11 @@ public class MainActivity extends ActionBarActivity {
 
     public void startBarcodeScanner(View view) {
         Intent intent = new Intent(this, BarcodeScannerActivity.class);
+        startActivity(intent);
+    }
+
+    public void showBasket(View view){
+        Intent intent = new Intent(this, BasketActivity.class);
         startActivity(intent);
     }
 }
