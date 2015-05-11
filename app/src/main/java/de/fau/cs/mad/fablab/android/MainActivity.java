@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 
 import net.spaceapi.HackerSpace;
+import net.spaceapi.State;
 
 import de.fau.cs.mad.fablab.android.ORM.DBObjectView;
 import de.fau.cs.mad.fablab.android.basket.BasketActivity;
@@ -34,30 +35,15 @@ public class MainActivity extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        // REST-Client - example usage
-        SpaceApiClient spaceApiClient = new SpaceApiClient(this);
-        spaceApiClient.get().getSpace("FablabUser", new Callback<HackerSpace>() {
-            @Override
-            public void success(HackerSpace hackerSpace, Response response) {
-                // success
-                Log.i("App", "Put your actions here!");
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                // something went wrong
-                Log.i("App", error.getMessage());
-            }
-        });
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        updateOpenState(menu.findItem(R.id.action_opened));
+
         return true;
     }
 
@@ -78,7 +64,6 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public void showORMButtonClicked(View view){
         Intent intent = new Intent(getApplicationContext(), DBObjectView.class);
         startActivity(intent);
@@ -94,5 +79,27 @@ public class MainActivity extends ActionBarActivity {
     public void showBasket(View view){
         Intent intent = new Intent(this, BasketActivity.class);
         startActivity(intent);
+    }
+
+    public void updateOpenState(final MenuItem item) {
+        // REST-Client - example usage
+        SpaceApiClient spaceApiClient = new SpaceApiClient(this);
+        spaceApiClient.get().getSpace(getString(R.string.SpaceName), new Callback<HackerSpace>() {
+            @Override
+            public void success(HackerSpace hackerSpace, Response response) {
+                // success
+                State state = hackerSpace.getState();
+                if (state != null) {
+                    item.setTitle(state.getMessage());
+                    Log.i("App", state.getMessage());
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                // something went wrong
+                Log.i("App", error.getMessage());
+            }
+        });
     }
 }
