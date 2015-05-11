@@ -1,6 +1,7 @@
 package de.fau.cs.mad.fablab.android;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -84,7 +85,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void startBarcodeScanner(View view) {
-        Intent intent = new Intent(this, BarcodeScannerActivity.class);
-        startActivity(intent);
+        if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+            Intent intent = new Intent(this, BarcodeScannerActivity.class);
+            startActivity(intent);
+        }
     }
 }

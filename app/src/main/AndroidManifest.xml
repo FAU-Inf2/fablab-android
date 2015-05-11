@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="de.fau.cs.mad.fablab.android" >
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.FLASHLIGHT"
+        tools:node="remove" />
+    <uses-permission
+        android:name="android.permission.VIBRATE"
+        tools:node="remove" />
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false" />
+        android:required="false"
+        tools:replace="android:required" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        tools:node="remove" />
+    <uses-feature
+        android:name="android.hardware.screen.landscape"
+        tools:node="remove" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        tools:node="remove" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        tools:replace="android:label,android:icon" >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -23,14 +41,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".BarcodeScannerActivity"
-            android:label="@string/title_activity_barcode_scanner"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.fau.cs.mad.fablab.android.MainActivity" />
-        </activity>
+        <activity android:name=".BarcodeScannerActivity" />
 
         <activity android:name=".ORM.DBObjectView"></activity>
         <activity android:name=".ORM.DBObjectDetailsView"></activity>

@@ -4,37 +4,46 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.Toast;
 
-import com.google.zxing.Result;
-
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import eu.livotov.zxscan.ScannerView;
 
 
-public class BarcodeScannerActivity extends ActionBarActivity implements ZXingScannerView.ResultHandler {
-    private ZXingScannerView mScannerView;
+public class BarcodeScannerActivity extends ActionBarActivity
+        implements ScannerView.ScannerViewEventListener {
+    private ScannerView mScannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mScannerView = new ZXingScannerView(this);
-        setContentView(mScannerView);
+        setContentView(R.layout.activity_barcodescanner);
+        mScannerView = (ScannerView) findViewById(R.id.scanner);
+        mScannerView.setScannerViewEventListener(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mScannerView.setResultHandler(this);
-        mScannerView.startCamera();
+        mScannerView.startScanner();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mScannerView.stopCamera();
+        mScannerView.stopScanner();
     }
 
     @Override
-    public void handleResult(Result rawResult) {
-        Toast.makeText(this, rawResult.getText(), Toast.LENGTH_LONG).show();
-        mScannerView.startCamera();
+    public boolean onCodeScanned(final String data) {
+        Toast.makeText(this, data, Toast.LENGTH_LONG).show();
+        return true;
+    }
+
+    @Override
+    public void onScannerFailure(int cameraError) {
+
+    }
+
+    @Override
+    public void onScannerReady() {
+
     }
 }
