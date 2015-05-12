@@ -25,6 +25,7 @@ gradle-app.setting
 # Generated files
 bin/
 gen/
+java-gen/
 
 # Gradle files
 .gradle/

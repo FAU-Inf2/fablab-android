@@ -1,4 +1,17 @@
 apply plugin: 'com.android.application'
+apply plugin: 'de.bitdroid.jaxrs2retrofit'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'de.bitdroid.jaxrs2retrofit:plugin:0.4.1'
+    }
+}
+
+def generatedSourcesDir = file('src/main/java-gen')
+def mainSourcesDir = file('src/main/java')
 
 android {
     compileSdkVersion 21
@@ -26,9 +39,19 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+    sourceSets {
+        main {
+            java {
+                srcDir mainSourcesDir
+                srcDir generatedSourcesDir
+            }
+        }
+    }
 }
 
 dependencies {
+    compile files('../../fablab-common/build/libs/fablab-common-1.0.jar')
     compile 'com.android.support:appcompat-v7:21.0.0'
     // Libraries for the REST Client (Retrofit)
     compile 'com.squareup.retrofit:retrofit:1.6.1'
@@ -37,7 +60,12 @@ dependencies {
     compile 'com.squareup.okio:okio:1.0.1'
     compile 'com.j256.ormlite:ormlite-core:4.48'
     compile 'com.j256.ormlite:ormlite-android:4.48'
-    compile 'me.dm7.barcodescanner:zxing:1.7'
+    compile ('eu.livotov.labs:zxscanlib:2.0.0@aar') {transitive=true}
+    // Basket Sliding Up Panel
+    compile 'com.sothree.slidinguppanel:library:3.0.0'
+    // Basket CardView and RecyclerView
+    compile 'com.android.support:cardview-v7:+'
+    compile 'com.android.support:recyclerview-v7:+'
 }
 
 allprojects {
@@ -55,3 +83,16 @@ allprojects {
         }
     }
 }
+
+afterEvaluate {
+    project.tasks.matching { it.name.startsWith('jaxRs2Retrofit') }.each {
+        it.inputDir = file(project(':../fablab-common').projectDir.toString() + '/src/main/java')
+        it.outputDir = generatedSourcesDir
+        it.packageName = 'de.fau.cs.mad.fablab.rest.myapi'
+        it.excludedClassNamesRegex = "MyHiddenResource"
+        it.generateSynchronousMethods = true
+        it.generateCallbackMethods = true
+        it.generateRxJavaMethods = false
+    }
+}
+

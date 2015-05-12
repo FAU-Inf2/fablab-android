@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/AppBarColorPrimary"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:elevation="4dp"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/appbar_fau"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="20sp"
+        android:textColor="@color/AppBarTextColor"
+        android:paddingRight="1dp"
+        android:id="@+id/appbar_fau"/>
+
+    <ImageView
+        android:id="@+id/icon_fablab"
+        android:src="@drawable/fablab_icon"
+        android:layout_width="38sp"
+        android:layout_height="38sp"
+        ></ImageView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/appbar_fablab"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="20sp"
+        android:textColor="@color/AppBarTextColor"
+        android:id="@+id/appbar_fablab"/>
+
+
+</android.support.v7.widget.Toolbar>

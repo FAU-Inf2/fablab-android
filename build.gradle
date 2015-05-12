@@ -15,5 +15,13 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url 'http://maven.livotovlabs.pro/content/groups/public' }
     }
 }
+
+project(':app') {
+    dependencies {
+        project(':../fablab-common')
+    }
+}
+
