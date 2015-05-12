@@ -2,21 +2,29 @@ package de.fau.cs.mad.fablab.android;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
-
 
 import net.spaceapi.HackerSpace;
 import net.spaceapi.State;
 
 import de.fau.cs.mad.fablab.android.ORM.DBObjectView;
 import de.fau.cs.mad.fablab.android.basket.BasketActivity;
+import de.fau.cs.mad.fablab.android.navdrawer.NavigationDrawer;
+import de.fau.cs.mad.fablab.android.navdrawer.NavigationDrawerAdapter;
+import de.fau.cs.mad.fablab.android.navdrawer.NavigationDrawerItem;
 import de.fau.cs.mad.fablab.rest.SpaceApiClient;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -25,6 +33,15 @@ import retrofit.client.Response;
 public class MainActivity extends ActionBarActivity {
     // Appbar toolbar material design for pre-lollipop versions
     private Toolbar toolbar;
+
+    // Navigation Drawer
+    private NavigationDrawer navdrawer;
+    RecyclerView mRecyclerView;
+    RecyclerView.Adapter mAdapter;
+    RecyclerView.LayoutManager mLayoutManager;
+    DrawerLayout Drawer;
+
+    ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +52,70 @@ public class MainActivity extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        // Navigation Drawer
+        navdrawer = new NavigationDrawer("Fablab User", "usermail@user.mail");
+        navdrawer.addItem(new NavigationDrawerItem("Datenbank", DBObjectView.class));
+        navdrawer.addItem(new NavigationDrawerItem("Barcode", BarcodeScannerActivity.class));
+        navdrawer.addItem(new NavigationDrawerItem("Warenkorb", BasketActivity.class));
+        navdrawer.addItem(new NavigationDrawerItem("Produktsuche", ProductSearchActivity.class));
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.navdrawer_RecyclerView);
+        mRecyclerView.setHasFixedSize(true);
+        mAdapter = new NavigationDrawerAdapter(navdrawer);
+        mRecyclerView.setAdapter(mAdapter);
+
+        final GestureDetector mGestureDetector = new GestureDetector(MainActivity.this, new GestureDetector.SimpleOnGestureListener() {
+            @Override public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
+        });
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
+                View child = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
+
+                if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
+                    int child_id = recyclerView.getChildAdapterPosition(child);
+                    if(child_id > 0) {
+                        Drawer.closeDrawers();
+                        Intent intent = new Intent(getApplicationContext(), navdrawer.getItems().get(child_id - 1).getIntent());
+                        startActivity(intent);
+                    }
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
+            }
+        });
+
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        Drawer = (DrawerLayout) findViewById(R.id.DrawerLayout);
+        mDrawerToggle = new ActionBarDrawerToggle(this,Drawer,toolbar,R.string.app_name,R.string.app_name){
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+
+
+
+        };
+        Drawer.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
     }
 
     @Override
