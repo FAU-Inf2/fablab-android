@@ -26,15 +26,18 @@
         <activity
             android:name=".BarcodeScannerActivity"
             android:label="@string/title_activity_barcode_scanner"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.fau.cs.mad.fablab.android.MainActivity" />
         </activity>
-
-        <activity android:name=".ORM.DBObjectView"></activity>
-        <activity android:name=".ORM.DBObjectDetailsView"></activity>
-
+        <activity android:name=".ORM.DBObjectView" />
+        <activity android:name=".ORM.DBObjectDetailsView" />
+        <activity
+            android:name=".ProductMapActivity"
+            android:parentActivityName=".MainActivity" >
+        </activity>
+        <activity android:name=".ProductMapFineActivity"></activity>
     </application>
 
 </manifest>
