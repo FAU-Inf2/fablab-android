@@ -15,4 +15,5 @@
     <string name="basket_empty"><b>Ihr Warenkorb ist leider noch leer</b></string>
     <string name="basket_total_price_title">Gesamtpreis</string>
     <string name="basket_button_checkout">Zur Kasse</string>
+    <string name="search_hint">Suche Produkt</string>
 </resources>

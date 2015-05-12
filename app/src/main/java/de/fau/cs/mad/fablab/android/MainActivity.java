@@ -81,6 +81,11 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+    public void startProductSearch(View view) {
+        Intent intent = new Intent(this, ProductSearchActivity.class);
+        startActivity(intent);
+    }
+
     public void updateOpenState(final MenuItem item) {
         // REST-Client - example usage
         SpaceApiClient spaceApiClient = new SpaceApiClient(this);
