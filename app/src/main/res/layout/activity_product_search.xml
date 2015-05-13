@@ -9,8 +9,14 @@
         ></include>
 
     <SearchView
-        android:id="@+id/search_view"
+        android:id="@+id/product_search_view"
         android:layout_below="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/product_recycler_view"
+        android:layout_below="@+id/product_search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
