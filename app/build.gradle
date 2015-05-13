@@ -66,7 +66,9 @@ dependencies {
     // Basket CardView and RecyclerView
     compile 'com.android.support:cardview-v7:+'
     compile 'com.android.support:recyclerview-v7:+'
+    // Navigation Drawer Design
     compile 'com.android.support:support-v4'
+    compile 'de.hdodenhof:circleimageview:1.2.1'
 }
 
 allprojects {
