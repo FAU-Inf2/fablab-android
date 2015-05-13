@@ -1,21 +1,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="ormlite.eeimer.de.ormlitetest.add_object"
- >
+    tools:context=".BasketTestDetailsActivity">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="back"
+        android:text="Back"
         android:id="@+id/btnBack"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:onClick="backButtonClicked" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:id="@+id/btnDelete"
+        android:layout_alignBottom="@+id/btnBack"
+        android:layout_centerHorizontal="true"
+        android:onClick="deleteButtonClicked" />
 
     <Button
         android:layout_width="wrap_content"
@@ -28,61 +38,32 @@
         android:layout_alignBottom="@+id/btnDelete"
         android:onClick="saveButtonClicked" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="delete"
-        android:id="@+id/btnDelete"
-        android:layout_alignBottom="@+id/btnBack"
-        android:layout_centerHorizontal="true"
-        android:onClick="deleteButtonClicked" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/etTitle"
+        android:id="@+id/productId"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="22dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:hint="Title"
+        android:hint="Product ID"
         android:layout_below="@+id/btnBack"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:inputType="number" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/etText"
-        android:hint="Text"
-        android:layout_below="@+id/etTitle"
+        android:id="@+id/quantity"
+        android:hint="Quantity"
+        android:layout_below="@+id/productId"
         android:layout_alignRight="@+id/btnSave"
         android:layout_alignEnd="@+id/btnSave"
         android:layout_marginTop="36dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:singleLine="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/tvCreated"
-        android:layout_below="@+id/etText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="54dp"
-        android:text="" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/tvModified"
-        android:text=""
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
+        android:singleLine="true"
+        android:inputType="number" />
 
 </RelativeLayout>

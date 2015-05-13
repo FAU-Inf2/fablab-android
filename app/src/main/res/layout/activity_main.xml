@@ -12,8 +12,7 @@
 
         <include
             android:id="@+id/appbar"
-            layout="@layout/appbar"
-            ></include>
+            layout="@layout/appbar" />
 
         <TextView android:text="@string/hello_world"
             android:layout_below="@+id/appbar"
@@ -33,11 +32,11 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Show ORM Example"
+            android:text="Show Basket Test"
             android:id="@+id/button"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:onClick="showORMButtonClicked" />
+            android:onClick="showBasketTest" />
 
         <Button
             android:layout_width="wrap_content"

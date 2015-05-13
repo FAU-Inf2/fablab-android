@@ -1,20 +1,16 @@
-package de.fau.cs.mad.fablab.android.ORM;
+package de.fau.cs.mad.fablab.android.db;
 
 import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
 
-/**
- * Created by EE on 04.05.15.
- *
- * Generates CONFIG AND R.raw
- */
+import de.fau.cs.mad.fablab.android.basket.BasketItem;
 
 
-public class DBConfigUtil extends OrmLiteConfigUtil {
+public class DatabaseConfigUtil extends OrmLiteConfigUtil {
     private static final Class<?>[] classes = new Class[] {
-            DBObject.class,
+            BasketItem.class,
     };
+
     public static void main(String[] args) throws Exception {
         writeConfigFile("ormlite_config.txt", classes);
     }
 }
-

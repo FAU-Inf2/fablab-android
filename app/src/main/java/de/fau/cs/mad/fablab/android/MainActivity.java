@@ -20,7 +20,6 @@ import android.widget.Toast;
 import net.spaceapi.HackerSpace;
 import net.spaceapi.State;
 
-import de.fau.cs.mad.fablab.android.ORM.DBObjectView;
 import de.fau.cs.mad.fablab.android.basket.BasketActivity;
 import de.fau.cs.mad.fablab.android.navdrawer.NavigationDrawer;
 import de.fau.cs.mad.fablab.android.navdrawer.NavigationDrawerAdapter;
@@ -55,7 +54,7 @@ public class MainActivity extends ActionBarActivity {
 
         // Navigation Drawer
         navdrawer = new NavigationDrawer("Fablab User", "usermail@user.mail");
-        navdrawer.addItem(new NavigationDrawerItem("Datenbank", DBObjectView.class));
+        navdrawer.addItem(new NavigationDrawerItem("Datenbank", BasketTestActivity.class));
         navdrawer.addItem(new NavigationDrawerItem("Barcode", BarcodeScannerActivity.class));
         navdrawer.addItem(new NavigationDrawerItem("Warenkorb", BasketActivity.class));
         navdrawer.addItem(new NavigationDrawerItem("Produktsuche", ProductSearchActivity.class));
@@ -145,8 +144,8 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void showORMButtonClicked(View view){
-        Intent intent = new Intent(getApplicationContext(), DBObjectView.class);
+    public void showBasketTest(View view){
+        Intent intent = new Intent(getApplicationContext(), BasketTestActivity.class);
         startActivity(intent);
     }
 

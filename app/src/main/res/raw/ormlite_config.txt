@@ -1,25 +1,16 @@
 #
-# generated on 2015/05/05 09:04:25
+# generated on 2015/05/12 04:36:53
 #
 # --table-start--
-dataClass=de.fau.cs.mad.fablab.android.ORM.DBObject
-tableName=ORMObject
+dataClass=de.fau.cs.mad.fablab.android.basket.BasketItem
+tableName=basket
 # --table-fields-start--
 # --field-start--
-fieldName=id
-generatedId=true
+fieldName=productId
+id=true
 # --field-end--
 # --field-start--
-fieldName=title
-# --field-end--
-# --field-start--
-fieldName=text
-# --field-end--
-# --field-start--
-fieldName=created
-# --field-end--
-# --field-start--
-fieldName=modified
+fieldName=quantity
 # --field-end--
 # --table-fields-end--
 # --table-end--
