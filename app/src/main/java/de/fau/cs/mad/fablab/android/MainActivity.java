@@ -77,7 +77,7 @@ public class MainActivity extends ActionBarActivity {
                 View child = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
 
                 if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
-                    int child_id = recyclerView.getChildLayoutPosition(child);
+                    int child_id = recyclerView.getChildPosition(child);
                     if(child_id > 0) {
                         Drawer.closeDrawers();
                         Intent intent = new Intent(getApplicationContext(), navdrawer.getItems().get(child_id - 1).getIntent());
