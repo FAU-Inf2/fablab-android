@@ -198,7 +198,7 @@ public class MainActivity extends ActionBarActivity {
                 // success
                 State state = hackerSpace.getState();
                 if (state != null) {
-                    if(!state.getOpen() && item.getTitle().toString().equals(getString(R.string.appbar_closed))) {
+                    if(state.getOpen() && item.getTitle().toString().equals(getString(R.string.appbar_closed))) {
                         item.setIcon(R.drawable.opened);
                         item.setTitle(R.string.appbar_opened);
                     } else if(!state.getOpen() && item.getTitle().toString().equals(getString(R.string.appbar_opened))) {
