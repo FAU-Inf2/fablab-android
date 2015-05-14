@@ -3,6 +3,7 @@ package de.fau.cs.mad.fablab.android;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -41,6 +42,10 @@ public class MainActivity extends ActionBarActivity {
     DrawerLayout Drawer;
 
     ActionBarDrawerToggle mDrawerToggle;
+
+    // Opened State Handler
+    private Handler openendStateHandler = new Handler();
+    private String openedMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +127,24 @@ public class MainActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        updateOpenState(menu.findItem(R.id.action_opened));
+
+        // Handler instead of TimerTask for opened / close state
+        class OpenedStateRunner implements Runnable {
+            private Menu m;
+
+            public OpenedStateRunner(Menu m) {
+                this.m = m;
+            }
+            @Override
+            public void run() {
+                updateOpenState(m.findItem(R.id.action_opened));
+                openendStateHandler.postDelayed(this, 60 * 1000);
+            }
+        }
+
+        Runnable openedStateRunner = new OpenedStateRunner(menu);
+
+        openendStateHandler.postDelayed(openedStateRunner, 500);
 
         return true;
     }
@@ -136,7 +158,8 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_opened) {
-            Toast appbar_opened_toast = Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT);
+            updateOpenState(item);
+            Toast appbar_opened_toast = Toast.makeText(this, openedMessage, Toast.LENGTH_SHORT);
             appbar_opened_toast.show();
             return true;
         }
@@ -166,7 +189,7 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    public void updateOpenState(final MenuItem item) {
+    private void updateOpenState(final MenuItem item) {
         // REST-Client - example usage
         SpaceApiClient spaceApiClient = new SpaceApiClient(this);
         spaceApiClient.get().getSpace(getString(R.string.SpaceName), new Callback<HackerSpace>() {
@@ -175,7 +198,16 @@ public class MainActivity extends ActionBarActivity {
                 // success
                 State state = hackerSpace.getState();
                 if (state != null) {
-                    item.setTitle(state.getMessage());
+                    if(!state.getOpen() && item.getTitle().toString().equals(getString(R.string.appbar_closed))) {
+                        item.setIcon(R.drawable.opened);
+                        item.setTitle(R.string.appbar_opened);
+                    } else if(!state.getOpen() && item.getTitle().toString().equals(getString(R.string.appbar_opened))) {
+                        item.setIcon(R.drawable.closed);
+                        item.setTitle(R.string.appbar_closed);
+                    }
+
+                    openedMessage = state.getMessage();
+
                     Log.i("App", state.getMessage());
                 }
             }
