@@ -27,7 +27,7 @@ public enum Basket {
 
     public void addProduct(Product p){
         for(int i=0;i<products.size();i++){
-            if(products.get(i).getId() == p.getId()){
+            if(products.get(i).getProductId() == p.getProductId()){
                 quantities.set(i,quantities.get(i)+1);
                 return;
             }
