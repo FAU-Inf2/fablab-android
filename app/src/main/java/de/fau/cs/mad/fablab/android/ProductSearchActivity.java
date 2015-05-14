@@ -11,7 +11,7 @@ import android.widget.SearchView;
 import java.util.ArrayList;
 import java.util.List;
 import de.fau.cs.mad.fablab.android.basket.RecyclerViewAdapter;
-import de.fau.cs.mad.fablab.rest.entities.Product;
+import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class ProductSearchActivity extends ActionBarActivity {
 

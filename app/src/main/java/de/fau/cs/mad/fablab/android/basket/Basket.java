@@ -3,7 +3,7 @@ package de.fau.cs.mad.fablab.android.basket;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.fau.cs.mad.fablab.rest.entities.Product;
+import de.fau.cs.mad.fablab.rest.core.Product;
 
 // Singleton class for the basket realized with enum
 public enum Basket {

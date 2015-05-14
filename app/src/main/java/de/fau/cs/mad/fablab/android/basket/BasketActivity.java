@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.rest.entities.Product;
+import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class BasketActivity extends ActionBarActivity{
     @Override
