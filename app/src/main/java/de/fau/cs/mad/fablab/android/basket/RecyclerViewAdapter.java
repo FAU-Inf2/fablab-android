@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.rest.core.Product;
+import de.fau.cs.mad.fablab.rest.core.CartEntry;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ProductViewHolder> {
 
@@ -34,37 +34,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    private List<Product> products;
-    private List<Integer> quantities;
+    private List<CartEntry> products;
 
-    public RecyclerViewAdapter(List<Product> products) {
+
+    public RecyclerViewAdapter(List<CartEntry> products) {
         this.products = products;
-        this.quantities = null;
     }
 
-    public RecyclerViewAdapter(List<Product> products, List<Integer> quantities){
-        this.products = products;
-        this.quantities = quantities;
-    }
 
-    public void addProduct(Product product) {
-        products.add(product);
-        notifyItemInserted(getItemCount()-1);
-    }
-
-    public void addProduct(Product product, int quantity) {
-        products.add(product);
-        if(quantities != null) {
-            quantities.add(quantity);
+    public void addProduct(CartEntry product) {
+        for(int i = 0; i< products.size(); i++){
+            if(products.get(i).getProductId() == product.getProductId()){
+                products.get(i).setAmount(products.get(i).getAmount() + 1);
+                notifyItemChanged(i);
+                return;
+            }
         }
+        products.add(product);
         notifyItemInserted(getItemCount()-1);
     }
 
     public void clear() {
         products.clear();
-        if(quantities != null) {
-            quantities.clear();
-        }
         notifyDataSetChanged();
     }
 
@@ -85,8 +76,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         productViewHolder.basket_product_name.setText(products.get(i).getName());
         productViewHolder.basket_product_price.setText(String.valueOf(products.get(i).getPrice()));
         productViewHolder.basket_product_photo.setImageResource(R.drawable.no_image_avl);
-        if(quantities != null &&  quantities.size() > i) {
-            productViewHolder.basket_product_quantity.setText(quantities.get(i).toString());
-        }
+        productViewHolder.basket_product_quantity.setText(String.valueOf(products.get(i).getAmount()) +" " + products.get(i).getUnit());
     }
 }

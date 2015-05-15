@@ -11,6 +11,7 @@ import android.widget.SearchView;
 import java.util.ArrayList;
 import java.util.List;
 import de.fau.cs.mad.fablab.android.basket.RecyclerViewAdapter;
+import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class ProductSearchActivity extends ActionBarActivity {
@@ -34,7 +35,7 @@ public class ProductSearchActivity extends ActionBarActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.product_recycler_view);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        productAdapter = new RecyclerViewAdapter(new ArrayList<Product>());
+        productAdapter = new RecyclerViewAdapter(new ArrayList<CartEntry>());
         recyclerView.setAdapter(productAdapter);
 
         //handle intent
@@ -62,7 +63,7 @@ public class ProductSearchActivity extends ActionBarActivity {
         List<Product> products = getDummyProducts();
         for(Product product : products) {
             if(product.getName().contains(query)) {
-                productAdapter.addProduct(product);
+                productAdapter.addProduct(new CartEntry(product, 0));
             }
         }
     }
