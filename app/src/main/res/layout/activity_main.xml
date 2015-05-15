@@ -24,19 +24,10 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/button"
+            android:id="@+id/button"
             android:layout_centerInParent="true"
             android:onClick="startBarcodeScanner"
             android:text="@string/button_start_barcode_scanner" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Show Basket Test"
-            android:id="@+id/button"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:onClick="showBasketTest" />
 
         <Button
             android:layout_width="wrap_content"

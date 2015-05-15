@@ -70,15 +70,15 @@ public class ProductSearchActivity extends ActionBarActivity {
     private List<Product> getDummyProducts() {
         //create dummy products
         List<Product> products= new ArrayList<Product>();
-        Product p1 = new Product(1,"Produkt1",1,1,"Category1");
+        Product p1 = new Product(1,"Produkt1",1,1,"Category1", "Unit1");
         products.add(p1);
-        Product p2 = new Product(2,"Produkt2",2,2,"Category2");
+        Product p2 = new Product(2,"Produkt2",2,2,"Category2", "Unit2");
         products.add(p2);
-        Product p3 = new Product(3,"Produkt3",3,3,"Category3");
+        Product p3 = new Product(3,"Produkt3",3,3,"Category3", "Unit3");
         products.add(p3);
-        Product p4 = new Product(4,"Produkt4",4,4,"Category4");
+        Product p4 = new Product(4,"Produkt4",4,4,"Category4", "Unit4");
         products.add(p4);
-        Product p5 = new Product(5,"Produkt5",5,5,"Category5");
+        Product p5 = new Product(5,"Produkt5",5,5,"Category5", "Unit5");
         products.add(p5);
         return products;
     }

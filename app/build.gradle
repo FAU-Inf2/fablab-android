@@ -65,6 +65,7 @@ dependencies {
     compile 'com.squareup.okio:okio:1.0.1'
     compile 'com.j256.ormlite:ormlite-core:4.48'
     compile 'com.j256.ormlite:ormlite-android:4.48'
+    compile 'javax.persistence:persistence-api:1.0'
     compile ('eu.livotov.labs:zxscanlib:2.0.0@aar') {transitive=true}
     // Basket Sliding Up Panel
     compile 'com.sothree.slidinguppanel:library:3.0.0'

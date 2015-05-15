@@ -43,8 +43,6 @@
         </activity>
         <activity android:name=".BarcodeScannerActivity" />
 
-        <activity android:name=".BasketTestActivity" />
-        <activity android:name=".BasketTestDetailsActivity" />
         <activity android:name=".basket.BasketActivity"/>
 
         <activity

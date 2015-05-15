@@ -11,17 +11,16 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 
-import de.fau.cs.mad.fablab.android.basket.BasketItem;
 import de.fau.cs.mad.fablab.android.R;
-
+import de.fau.cs.mad.fablab.rest.core.CartEntry;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "fablab.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String TAG = DatabaseHelper.class.getSimpleName();
 
     private static DatabaseHelper instance;
-    private RuntimeExceptionDao<BasketItem, Integer> basketItemDao;
+    private RuntimeExceptionDao<CartEntry, Integer> cartEntryDao;
 
     private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);
@@ -37,7 +36,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, BasketItem.class);
+            TableUtils.createTable(connectionSource, CartEntry.class);
         } catch (SQLException e) {
             Log.e(TAG, "Can't create database", e);
             throw new RuntimeException(e);
@@ -48,7 +47,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion,
                           int newVersion) {
         try {
-            TableUtils.dropTable(connectionSource, BasketItem.class, true);
+            TableUtils.dropTable(connectionSource, CartEntry.class, true);
             onCreate(db, connectionSource);
         } catch (SQLException e) {
             Log.e(TAG, "Can't drop database", e);
@@ -56,16 +55,16 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    public RuntimeExceptionDao<BasketItem, Integer> getBasketItemDao() {
-        if (basketItemDao == null) {
-            basketItemDao = getRuntimeExceptionDao(BasketItem.class);
+    public RuntimeExceptionDao<CartEntry, Integer> getCartEntryDao() {
+        if (cartEntryDao == null) {
+            cartEntryDao = getRuntimeExceptionDao(CartEntry.class);
         }
-        return basketItemDao;
+        return cartEntryDao;
     }
 
     @Override
     public void close() {
         super.close();
-        basketItemDao = null;
+        cartEntryDao = null;
     }
 }

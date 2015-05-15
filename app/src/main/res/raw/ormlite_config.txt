@@ -1,16 +1,74 @@
 #
-# generated on 2015/05/12 04:36:53
+# generated on 2015/05/15 02:34:56
 #
 # --table-start--
-dataClass=de.fau.cs.mad.fablab.android.basket.BasketItem
-tableName=basket
+dataClass=de.fau.cs.mad.fablab.rest.core.CartEntry
+tableName=cart
 # --table-fields-start--
 # --field-start--
-fieldName=productId
-id=true
+fieldName=amount
+columnName=amount
+dataPersister=DOUBLE
+width=255
+useGetSet=true
 # --field-end--
 # --field-start--
-fieldName=quantity
+fieldName=productId
+columnName=product_id
+dataPersister=LONG
+width=255
+id=true
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=name
+columnName=name
+dataPersister=STRING
+width=255
+canBeNull=false
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=description
+columnName=description
+dataPersister=STRING
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=unit
+columnName=unit
+dataPersister=STRING
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=categoryId
+columnName=category_id
+dataPersister=LONG
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=categoryString
+columnName=category_string
+dataPersister=STRING
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=price
+columnName=price
+dataPersister=DOUBLE
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=itemsAvailable
+columnName=available
+dataPersister=INTEGER
+width=255
+useGetSet=true
 # --field-end--
 # --table-fields-end--
 # --table-end--

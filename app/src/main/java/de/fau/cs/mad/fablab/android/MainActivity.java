@@ -59,7 +59,6 @@ public class MainActivity extends ActionBarActivity {
 
         // Navigation Drawer
         navdrawer = new NavigationDrawer("Fablab User", "usermail@user.mail");
-        navdrawer.addItem(new NavigationDrawerItem("Datenbank", BasketTestActivity.class));
         navdrawer.addItem(new NavigationDrawerItem("Barcode", BarcodeScannerActivity.class));
         navdrawer.addItem(new NavigationDrawerItem("Warenkorb", BasketActivity.class));
         navdrawer.addItem(new NavigationDrawerItem("Produktsuche", ProductSearchActivity.class));
@@ -165,11 +164,6 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void showBasketTest(View view){
-        Intent intent = new Intent(getApplicationContext(), BasketTestActivity.class);
-        startActivity(intent);
     }
 
     public void startBarcodeScanner(View view) {
