@@ -2,7 +2,10 @@ package de.fau.cs.mad.fablab.android.ui;
 
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,15 +32,19 @@ public class NewsActivity extends RoboActionBarActivity {
     @InjectView(R.id.search_FAB) FloatingActionButton searchButton;
     @InjectView(R.id.scan_FAB) FloatingActionButton scanButton;
     @InjectView(R.id.news) RecyclerView news;
-    @InjectView(R.id.dates) RecyclerView dates;
+    @InjectView(R.id.dates_view_pager) ViewPager datesViewPager;
+    private DatesSlidePagerAdapter datesSlidePagerAdapter;
     private RecyclerView.LayoutManager newsLayoutManager;
-    private RecyclerView.LayoutManager datesLayoutManager;
+    //private RecyclerView.LayoutManager datesLayoutManager;
     private NewsAdapter newsAdapter;
-    private DatesAdapter datesAdapter;
+    //private DatesAdapter datesAdapter;
 
     static final String IMAGE = "IMAGE";
     static final String TITLE = "TITLE";
     static final String TEXT = "TEXT";
+
+    static final String LIST= "LIST";
+    static final String POSITION = "POSITION";
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -56,15 +63,22 @@ public class NewsActivity extends RoboActionBarActivity {
         news.setLayoutManager(newsLayoutManager);
         news.setAdapter(newsAdapter);
 
-        datesLayoutManager = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
+        //datesLayoutManager = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
 
-        List<String> testDates = new ArrayList<>();
+        ArrayList<String> testDates = new ArrayList<>();
         testDates.add("Selflab");
         testDates.add("Open Lab");
         testDates.add("Versammlung");
+        /*
         datesAdapter = new DatesAdapter(testDates);
         dates.setLayoutManager(datesLayoutManager);
         dates.setAdapter(datesAdapter);
+        */
+
+
+        datesSlidePagerAdapter = new DatesSlidePagerAdapter(getSupportFragmentManager(), testDates);
+        datesViewPager.setAdapter(datesSlidePagerAdapter);
+
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +160,39 @@ public class NewsActivity extends RoboActionBarActivity {
         }
     }
 
+    private class DatesSlidePagerAdapter extends FragmentStatePagerAdapter {
+
+        ArrayList<String> dates = new ArrayList<>();
+        public DatesSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        public DatesSlidePagerAdapter(FragmentManager fm, ArrayList<String> dates)
+        {
+            super(fm);
+            this.dates = dates;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+                int arrayPosition = position *2;
+                Bundle args = new Bundle();
+                args.putStringArrayList(LIST, dates);
+                args.putInt(POSITION, arrayPosition);
+                DatesFragment datesFragment = new DatesFragment();
+                datesFragment.setArguments(args);
+                return datesFragment;
+
+        }
+
+        @Override
+        public int getCount() {
+            return (int)(dates.size()+1)/2;
+        }
+    }
+
+
+    /*
     public class DatesAdapter extends RecyclerView.Adapter<DatesAdapter.DatesViewHolder> {
 
         private List<String> dates = new ArrayList<String>();
@@ -192,4 +239,5 @@ public class NewsActivity extends RoboActionBarActivity {
             }
         }
     }
+    */
 }
