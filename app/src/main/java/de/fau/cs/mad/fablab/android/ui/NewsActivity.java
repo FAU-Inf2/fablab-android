@@ -9,10 +9,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
@@ -39,6 +43,8 @@ public class NewsActivity extends RoboActionBarActivity {
     private NewsAdapter newsAdapter;
     //private DatesAdapter datesAdapter;
 
+    private AppbarDrawerInclude appbarDrawer;
+
     static final String IMAGE = "IMAGE";
     static final String TITLE = "TITLE";
     static final String TEXT = "TEXT";
@@ -49,6 +55,9 @@ public class NewsActivity extends RoboActionBarActivity {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        appbarDrawer = new AppbarDrawerInclude(this);
+        appbarDrawer.create();
 
         //no animations of the shopping cart when clicked
         shoppingCartButton.setIconAnimated(false);
@@ -95,6 +104,25 @@ public class NewsActivity extends RoboActionBarActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        appbarDrawer.startTimer(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_opened) {
+            appbarDrawer.updateOpenState(item);
+            Toast appbar_opened_toast = Toast.makeText(this, appbarDrawer.openedMessage, Toast.LENGTH_SHORT);
+            appbar_opened_toast.show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
 

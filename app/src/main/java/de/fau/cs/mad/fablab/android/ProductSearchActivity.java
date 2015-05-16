@@ -7,10 +7,15 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 import de.fau.cs.mad.fablab.android.basket.RecyclerViewAdapter;
+import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
@@ -19,10 +24,15 @@ public class ProductSearchActivity extends ActionBarActivity {
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerViewAdapter productAdapter;
 
+    private AppbarDrawerInclude appbarDrawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_search);
+
+        appbarDrawer = new AppbarDrawerInclude(this);
+        appbarDrawer.create();
 
         //get search view and set searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -40,6 +50,26 @@ public class ProductSearchActivity extends ActionBarActivity {
 
         //handle intent
         handleIntent(getIntent());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        appbarDrawer.startTimer(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_opened) {
+            appbarDrawer.updateOpenState(item);
+            Toast appbar_opened_toast = Toast.makeText(this, appbarDrawer.openedMessage, Toast.LENGTH_SHORT);
+            appbar_opened_toast.show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
