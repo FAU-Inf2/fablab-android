@@ -45,6 +45,8 @@
 
         <activity android:name=".basket.BasketActivity"/>
 
+        <activity android:name=".ui.NewsActivity"/>
+
         <activity
             android:name=".ProductSearchActivity"
             android:launchMode="singleTop" >

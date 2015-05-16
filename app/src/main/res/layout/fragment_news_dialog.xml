@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:paddingRight="@dimen/news_dialog_vertical_margin"
+    android:paddingLeft="@dimen/news_dialog_vertical_margin"
+    android:paddingTop="@dimen/news_dialog_horizontal_margin"
+    android:paddingBottom="@dimen/news_dialog_horizontal_margin"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/news_dialog_title_text_margin"
+        android:id="@+id/linearLayout"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="@dimen/news_dialog_icon_size"
+            android:layout_height="@dimen/news_dialog_icon_size"
+            android:layout_centerVertical="true"
+            android:id="@+id/image_news_dialog"
+            android:src="@drawable/fablab_icon_black"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/title_news_dialog"
+            android:text="Title"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/abc_text_size_title_material"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:id="@+id/news_text_news_dialog"
+            android:text="real news entry"
+            />
+    </ScrollView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ok"
+        android:id="@+id/ok_button_news_dialog"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

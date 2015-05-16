@@ -25,6 +25,7 @@ import de.fau.cs.mad.fablab.android.basket.BasketActivity;
 import de.fau.cs.mad.fablab.android.navdrawer.NavigationDrawer;
 import de.fau.cs.mad.fablab.android.navdrawer.NavigationDrawerAdapter;
 import de.fau.cs.mad.fablab.android.navdrawer.NavigationDrawerItem;
+import de.fau.cs.mad.fablab.android.ui.NewsActivity;
 import de.fau.cs.mad.fablab.rest.SpaceApiClient;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -180,6 +181,12 @@ public class MainActivity extends ActionBarActivity {
 
     public void startProductSearch(View view) {
         Intent intent = new Intent(this, ProductSearchActivity.class);
+        startActivity(intent);
+    }
+
+    public void startNewsActivity(View view)
+    {
+        Intent intent = new Intent(this, NewsActivity.class);
         startActivity(intent);
     }
 

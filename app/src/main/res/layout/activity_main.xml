@@ -46,6 +46,15 @@
             android:onClick="startProductSearch"
             android:layout_below="@+id/basket_btn"
             android:layout_centerHorizontal="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start News Activity"
+            android:id="@+id/news_activity"
+            android:onClick="startNewsActivity"
+            android:layout_below="@+id/button_product_search"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
