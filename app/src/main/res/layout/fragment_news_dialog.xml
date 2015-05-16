@@ -44,11 +44,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout">
+        android:layout_below="@+id/linearLayout"
+        android:id="@+id/scrollView">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/news_dialog_vertical_margin"
             android:textColor="@android:color/black"
             android:id="@+id/news_text_news_dialog"
             android:text="real news entry"
@@ -60,8 +62,8 @@
         android:layout_height="wrap_content"
         android:text="Ok"
         android:id="@+id/ok_button_news_dialog"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/scrollView"
+        android:layout_alignRight="@+id/scrollView"
+        android:layout_alignEnd="@+id/scrollView" />
 
 </RelativeLayout>

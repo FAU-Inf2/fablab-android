@@ -2,6 +2,7 @@ package de.fau.cs.mad.fablab.android.ui;
 
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,7 +56,8 @@ public class NewsActivity extends RoboActionBarActivity {
         news.setLayoutManager(newsLayoutManager);
         news.setAdapter(newsAdapter);
 
-        datesLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        datesLayoutManager = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
+
         List<String> testDates = new ArrayList<>();
         testDates.add("Selflab");
         testDates.add("Open Lab");
@@ -190,5 +192,4 @@ public class NewsActivity extends RoboActionBarActivity {
             }
         }
     }
-
 }
