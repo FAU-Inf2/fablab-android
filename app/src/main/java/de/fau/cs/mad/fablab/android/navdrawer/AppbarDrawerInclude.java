@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import net.spaceapi.HackerSpace;
 import net.spaceapi.State;
@@ -171,17 +172,38 @@ public class AppbarDrawerInclude  {
                 // success
                 State state = hackerSpace.getState();
                 if (state != null) {
+                    TextView timeView = (TextView) mainActivity.findViewById(R.id.appbar_time);
+
+                    double currentMillis = System.currentTimeMillis() / 1000L;
+                    double millisDelta = (currentMillis - state.getLastchange()) / 60;
+                    long time = new Double(millisDelta).longValue();
+
                     if (state.getOpen() && item.getTitle().toString().equals(mainActivity.getString(R.string.appbar_closed))) {
                         item.setIcon(R.drawable.opened);
                         item.setTitle(R.string.appbar_opened);
+                        timeView.setTextColor(mainActivity.getResources().getColor(R.color.AppbarColorOpened));
                     } else if (!state.getOpen() && item.getTitle().toString().equals(mainActivity.getString(R.string.appbar_opened))) {
                         item.setIcon(R.drawable.closed);
                         item.setTitle(R.string.appbar_closed);
+                        timeView.setTextColor(mainActivity.getResources().getColor(R.color.AppbarColorClosed));
                     }
-
+                    timeView.setText(getTime(time));
                     openedMessage = state.getMessage();
+                }
+            }
 
-                    Log.i("App", state.getMessage());
+            private String getTime(long time) {
+                if(time < 60)
+                    return time + "m";
+                else if(time < (60*24)) {
+                    long hours = time / 60;
+                    long minutes = time % 60;
+                    if(minutes == 0)
+                        return hours + "h";
+                    else
+                        return hours + "h " + minutes + "m";
+                } else {
+                    return "";
                 }
             }
 
