@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="178dp"
-    android:background="#999999"
+    android:background="#333333"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -39,4 +39,12 @@
 
             />
     </LinearLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/avatar"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="38dp"
+        android:id="@+id/navdrawer_circleView" />
 </RelativeLayout>

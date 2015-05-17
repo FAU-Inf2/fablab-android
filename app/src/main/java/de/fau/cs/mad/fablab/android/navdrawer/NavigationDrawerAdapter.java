@@ -31,12 +31,12 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
 
             if(ViewType == TYPE_ITEM) {
                 navdrawer_textView = (TextView) itemView.findViewById(R.id.navdrawer_rowText);
-                //navdrawer_imageView = (ImageView) itemView.findViewById(R.id.navdrawer_rowIcon);
+                navdrawer_imageView = (ImageView) itemView.findViewById(R.id.navdrawer_rowIcon);
                 holderID = 1;
             } else {
                 navdrawer_name = (TextView) itemView.findViewById(R.id.navdrawer_name);
                 navdrawer_email = (TextView) itemView.findViewById(R.id.navdrawer_email);
-               // navdrawer_icon = (ImageView) itemView.findViewById(R.id.navdrawer_circleView);
+                navdrawer_icon = (ImageView) itemView.findViewById(R.id.navdrawer_circleView);
                 holderID = 0;
             }
         }
@@ -64,9 +64,9 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     public void onBindViewHolder(NavigationDrawerAdapter.ViewHolder holder, int position) {
         if(holder.holderID == 1) {
             holder.navdrawer_textView.setText(navdrawer.getItems().get(position - 1).getTitle());
-            //holder.navdrawer_imageView.setImageResource(navdrawer.getItems().get(position - 1).getIcon());
+            holder.navdrawer_imageView.setImageResource(navdrawer.getItems().get(position - 1).getIcon());
         } else {
-            //holder.navdrawer_icon.setImageResource(navdrawer.getIcon());
+            holder.navdrawer_icon.setImageResource(navdrawer.getIcon());
             holder.navdrawer_name.setText(navdrawer.getName());
             holder.navdrawer_email.setText(navdrawer.getEmail());
         }

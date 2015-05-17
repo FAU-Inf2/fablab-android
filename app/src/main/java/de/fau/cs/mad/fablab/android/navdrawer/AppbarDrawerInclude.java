@@ -57,12 +57,12 @@ public class AppbarDrawerInclude  {
         this.mainActivity = mainActivity;
 
         // Navigation Drawer
-        navdrawer = new NavigationDrawer("Fablab User", "usermail@user.mail");
-        navdrawer.addItem(new NavigationDrawerItem("Main", MainActivity.class));
-        navdrawer.addItem(new NavigationDrawerItem("Barcode", BarcodeScannerActivity.class));
-        navdrawer.addItem(new NavigationDrawerItem("Warenkorb", CartActivity.class));
-        navdrawer.addItem(new NavigationDrawerItem("Produktsuche", ProductSearchActivity.class));
-        navdrawer.addItem(new NavigationDrawerItem("News", NewsActivity.class));
+        navdrawer = new NavigationDrawer("Fablab User", "usermail@user.mail", R.drawable.avatar);
+        navdrawer.addItem(new NavigationDrawerItem("Main", MainActivity.class, R.drawable.main));
+        navdrawer.addItem(new NavigationDrawerItem("Barcode", BarcodeScannerActivity.class, R.drawable.barcode));
+        navdrawer.addItem(new NavigationDrawerItem("Warenkorb", CartActivity.class, R.drawable.warenkorb));
+        navdrawer.addItem(new NavigationDrawerItem("Produktsuche", ProductSearchActivity.class, R.drawable.produktsuche));
+        navdrawer.addItem(new NavigationDrawerItem("News", NewsActivity.class, R.drawable.news));
     }
 
     public void create() {
