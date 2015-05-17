@@ -20,7 +20,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
 
     private static DatabaseHelper instance;
-    private RuntimeExceptionDao<CartEntry, Integer> cartEntryDao;
+    private RuntimeExceptionDao<CartEntry, Long> cartEntryDao;
 
     private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);
@@ -55,7 +55,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    public RuntimeExceptionDao<CartEntry, Integer> getCartEntryDao() {
+    public RuntimeExceptionDao<CartEntry, Long> getCartEntryDao() {
         if (cartEntryDao == null) {
             cartEntryDao = getRuntimeExceptionDao(CartEntry.class);
         }

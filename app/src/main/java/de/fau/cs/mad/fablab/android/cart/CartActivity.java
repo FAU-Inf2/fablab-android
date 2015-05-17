@@ -27,7 +27,7 @@ public class CartActivity extends ActionBarActivity{
 
     private List<CartEntry> cart_entries;
     private Dialog dialog;
-    private RuntimeExceptionDao<CartEntry, Integer> dao;
+    private RuntimeExceptionDao<CartEntry, Long> dao;
     private RecyclerViewAdapter adapter;
     private AppbarDrawerInclude appbarDrawer;
 
