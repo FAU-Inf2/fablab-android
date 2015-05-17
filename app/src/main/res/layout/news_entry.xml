@@ -14,7 +14,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/news_entry_card_padding"
+        android:padding="1dp"
         >
 
         <ImageView
