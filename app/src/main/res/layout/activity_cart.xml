@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/DrawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="7dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/appbar"
+            layout="@layout/appbar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_below="@+id/appbar"
+            android:layout_marginTop="@dimen/card_vertical_margin">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cart_title"
+                android:text="@string/cart_title"
+                android:layout_marginLeft="@dimen/card_horizontal_margin"
+                android:layout_marginTop="@dimen/card_vertical_margin"
+                android:textSize="18sp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/cart_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight=".70"
+                android:scrollbars="vertical"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cart_total_price_title"
+                android:text="@string/cart_total_price_title"
+                android:layout_marginLeft="@dimen/card_horizontal_margin"
+                android:layout_marginTop="@dimen/card_vertical_margin"
+                android:layout_marginBottom="@dimen/card_vertical_margin"
+                android:textSize="18sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginRight="@dimen/card_horizontal_margin"
+                android:layout_marginLeft="@dimen/card_horizontal_margin"
+                android:layout_marginTop="@dimen/card_vertical_margin"
+                android:layout_marginBottom="@dimen/news_activity_FAB_padding">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cart_total_price"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:layout_weight="1"
+                    android:textSize="25sp"
+                    android:textStyle="bold"/>
+
+                <Button
+                    android:id="@+id/cart_button_checkout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical|center"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/cart_button_checkout"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/shopping_cart_FAM"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            fab:menu_colorNormal="@android:color/black"
+            fab:menu_colorPressed="@android:color/black"
+            fab:menu_icon="@drawable/ic_add_shopping_cart_white_24dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/news_activity_FAB_padding"
+            android:layout_marginBottom="@dimen/news_activity_FAB_padding"
+            >
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/scan_FAB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_size="mini"
+                fab:fab_colorNormal="@android:color/black"
+                fab:fab_colorPressed="@android:color/black"
+                android:src="@drawable/ic_camera_alt_white_24dp"
+                />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/search_FAB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_size="mini"
+                fab:fab_colorNormal="@android:color/black"
+                fab:fab_colorPressed="@android:color/black"
+                android:src="@drawable/ic_search_white_24dp"
+                />
+
+        </com.github.clans.fab.FloatingActionMenu>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/navdrawer_RecyclerView"
+        android:layout_width="320dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="#ffffff"
+        android:scrollbars="vertical">
+
+    </android.support.v7.widget.RecyclerView>
+
+</android.support.v4.widget.DrawerLayout>

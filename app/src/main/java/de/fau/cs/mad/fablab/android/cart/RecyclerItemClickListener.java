@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.basket;
+package de.fau.cs.mad.fablab.android.cart;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

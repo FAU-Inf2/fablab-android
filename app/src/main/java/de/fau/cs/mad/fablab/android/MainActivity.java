@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import de.fau.cs.mad.fablab.android.basket.BasketActivity;
+import de.fau.cs.mad.fablab.android.cart.CartActivity;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.android.ui.NewsActivity;
 
@@ -68,7 +68,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void showBasket(View view){
-        Intent intent = new Intent(this, BasketActivity.class);
+        Intent intent = new Intent(this, CartActivity.class);
         startActivity(intent);
     }
 

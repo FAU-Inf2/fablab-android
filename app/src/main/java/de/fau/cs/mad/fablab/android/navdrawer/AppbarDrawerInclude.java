@@ -23,7 +23,7 @@ import de.fau.cs.mad.fablab.android.BarcodeScannerActivity;
 import de.fau.cs.mad.fablab.android.MainActivity;
 import de.fau.cs.mad.fablab.android.ProductSearchActivity;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.basket.BasketActivity;
+import de.fau.cs.mad.fablab.android.cart.CartActivity;
 import de.fau.cs.mad.fablab.android.ui.NewsActivity;
 import de.fau.cs.mad.fablab.rest.SpaceApiClient;
 import retrofit.Callback;
@@ -60,7 +60,7 @@ public class AppbarDrawerInclude  {
         navdrawer = new NavigationDrawer("Fablab User", "usermail@user.mail");
         navdrawer.addItem(new NavigationDrawerItem("Main", MainActivity.class));
         navdrawer.addItem(new NavigationDrawerItem("Barcode", BarcodeScannerActivity.class));
-        navdrawer.addItem(new NavigationDrawerItem("Warenkorb", BasketActivity.class));
+        navdrawer.addItem(new NavigationDrawerItem("Warenkorb", CartActivity.class));
         navdrawer.addItem(new NavigationDrawerItem("Produktsuche", ProductSearchActivity.class));
         navdrawer.addItem(new NavigationDrawerItem("News", NewsActivity.class));
     }
