@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +21,7 @@ import java.util.List;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.db.DatabaseHelper;
+import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
@@ -29,11 +32,15 @@ public class CartActivity extends ActionBarActivity{
     private Dialog dialog;
     private RuntimeExceptionDao<CartEntry, Integer> dao;
     private RecyclerViewAdapter adapter;
+    private AppbarDrawerInclude appbarDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+        appbarDrawer = new AppbarDrawerInclude(this);
+        appbarDrawer.create();
 
         // Get Table "cartentries"-object
         dao = DatabaseHelper.getHelper(
@@ -118,13 +125,31 @@ public class CartActivity extends ActionBarActivity{
         for(int i=0;i<cart_entries.size();i++){
             total += cart_entries.get(i).getPrice()*cart_entries.get(i).getAmount();
         }
-        total_price.setText(total + " Euro");
+        total_price.setText(total + " €");
 
         // Basket empty?
         if(cart_entries.size() == 0){
-            TextView title = (TextView) findViewById(R.id.cart_empty);
-            title.setText(Html.fromHtml(getString(R.string.cart_empty)));
-            title.setVisibility(View.VISIBLE);
+            Toast.makeText(CartActivity.this,  R.string.cart_empty, Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        appbarDrawer.startTimer(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_opened) {
+            appbarDrawer.updateOpenState(item);
+            Toast appbar_opened_toast = Toast.makeText(this, appbarDrawer.openedMessage, Toast.LENGTH_SHORT);
+            appbar_opened_toast.show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -12,7 +12,7 @@
     <string name="appbar_opened_since">seit</string>
     <string name="appbar_closed">Geschlossen</string>
     <string name="cart_title">Warenkorb:</string>
-    <string name="cart_empty"><b>Ihr Warenkorb ist leider noch leer</b></string>
+    <string name="cart_empty">Ihr Warenkorb ist leider noch leer</string>
     <string name="cart_total_price_title">Gesamtpreis</string>
     <string name="cart_button_checkout">Zur Kasse</string>
     <string name="cart_entry_popup_title">Menge ändern...</string>

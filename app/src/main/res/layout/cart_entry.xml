@@ -10,14 +10,19 @@
         android:layout_gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="100dp"
-        android:layout_margin="3dp"
-        card_view:cardCornerRadius="0dp"
-        card_view:contentPadding="5dp">
+        android:layout_marginRight="@dimen/card_horizontal_margin"
+        android:layout_marginLeft="@dimen/card_horizontal_margin"
+        android:layout_marginTop="@dimen/card_vertical_margin"
+        android:layout_marginBottom="@dimen/card_vertical_margin"
+        card_view:cardCornerRadius="0dp">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
+            android:paddingLeft="@dimen/card_horizontal_margin"
+            android:paddingRight="@dimen/card_horizontal_margin"
+            android:paddingBottom="@dimen/card_vertical_margin"
+            android:paddingTop="@dimen/card_vertical_margin"
             android:orientation="horizontal"
             android:gravity="center_vertical|left">
 
