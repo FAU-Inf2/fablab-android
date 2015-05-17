@@ -43,7 +43,7 @@
         </activity>
         <activity android:name=".BarcodeScannerActivity" />
 
-        <activity android:name=".basket.BasketActivity"/>
+        <activity android:name=".cart.CartActivity"/>
 
         <activity android:name=".ui.NewsActivity"/>
 
