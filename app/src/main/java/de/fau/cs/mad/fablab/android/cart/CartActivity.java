@@ -63,7 +63,7 @@ public class CartActivity extends ActionBarActivity{
             public void onItemLongClick(View view, final int position)
             {
                 dialog = new Dialog(CartActivity.this);
-                dialog.setContentView(R.layout.cart_entry_popup);
+                dialog.setContentView(R.layout.cart_entry_dialog);
                 dialog.setTitle(R.string.cart_entry_popup_title);
 
                 CartEntry temp = cart_entries.get(position);
