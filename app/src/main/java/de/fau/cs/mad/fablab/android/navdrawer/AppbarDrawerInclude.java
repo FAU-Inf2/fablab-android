@@ -50,7 +50,7 @@ public class AppbarDrawerInclude  {
     public String openedMessage;
     private Menu menu;
 
-    final long REFRESH_MILLIS = 2 * 1000;
+    final long REFRESH_MILLIS = 60 * 1000; // 1 minute
     final long FIRST_MILLIS = 500;
 
     public AppbarDrawerInclude(ActionBarActivity mainActivity) {

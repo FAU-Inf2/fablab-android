@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +21,6 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.db.DatabaseHelper;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
-import de.fau.cs.mad.fablab.rest.core.Product;
 
 
 public class CartActivity extends ActionBarActivity{
@@ -135,8 +132,21 @@ public class CartActivity extends ActionBarActivity{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        appbarDrawer.startTimer(menu);
+        appbarDrawer.createMenu(menu);
+        appbarDrawer.startTimer();
         return true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        appbarDrawer.stopTimer();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        appbarDrawer.startTimer();
     }
 
     @Override
