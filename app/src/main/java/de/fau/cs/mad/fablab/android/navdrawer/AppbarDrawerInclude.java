@@ -43,9 +43,15 @@ public class AppbarDrawerInclude  {
 
     ActionBarDrawerToggle mDrawerToggle;
 
+    Runnable openedStateRunner;
+
     // Opened State Handler
     private Handler openendStateHandler = new Handler();
     public String openedMessage;
+    private Menu menu;
+
+    final long REFRESH_MILLIS = 2 * 1000;
+    final long FIRST_MILLIS = 500;
 
     public AppbarDrawerInclude(ActionBarActivity mainActivity) {
         this.mainActivity = mainActivity;
@@ -123,27 +129,38 @@ public class AppbarDrawerInclude  {
         mDrawerToggle.syncState();
     }
 
-    public void startTimer(Menu menu) {
-        mainActivity.getMenuInflater().inflate(R.menu.menu_main, menu);
+    public void createMenu(Menu menu) {
+        if(menu != null) {
+            this.menu = menu;
+            mainActivity.getMenuInflater().inflate(R.menu.menu_main, this.menu);
+        }
+    }
 
+    class OpenedStateRunner implements Runnable {
+        private Menu m;
 
-        // Handler instead of TimerTask for opened / close state
-        class OpenedStateRunner implements Runnable {
-            private Menu m;
-
-            public OpenedStateRunner(Menu m) {
-                this.m = m;
-            }
-            @Override
-            public void run() {
-                updateOpenState(m.findItem(R.id.action_opened));
-                openendStateHandler.postDelayed(this, 60 * 1000);
-            }
+        public OpenedStateRunner(Menu m) {
+            this.m = m;
         }
 
-        Runnable openedStateRunner = new OpenedStateRunner(menu);
+        @Override
+        public void run() {
+            updateOpenState(m.findItem(R.id.action_opened));
+            Log.i("UPDATE", "done");
+            openendStateHandler.postDelayed(this, REFRESH_MILLIS);
+        }
+    }
 
-        openendStateHandler.postDelayed(openedStateRunner, 500);
+    public void startTimer() {
+        // Handler instead of TimerTask for opened / close state
+        if(menu != null) {
+            openedStateRunner = new OpenedStateRunner(menu);
+            openendStateHandler.postDelayed(openedStateRunner, FIRST_MILLIS);
+        }
+    }
+
+    public void stopTimer() {
+        openendStateHandler.removeCallbacks(openedStateRunner);
     }
 
     public void updateOpenState(final MenuItem item) {

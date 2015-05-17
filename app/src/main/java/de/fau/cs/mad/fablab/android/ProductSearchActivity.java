@@ -54,8 +54,21 @@ public class ProductSearchActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        appbarDrawer.startTimer(menu);
+        appbarDrawer.createMenu(menu);
+        appbarDrawer.startTimer();
         return true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        appbarDrawer.stopTimer();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        appbarDrawer.startTimer();
     }
 
     @Override

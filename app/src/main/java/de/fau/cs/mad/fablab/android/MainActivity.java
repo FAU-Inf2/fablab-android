@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,8 +29,22 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        appbarDrawer.startTimer(menu);
+        appbarDrawer.createMenu(menu);
+        Log.i("SET", "jo");
+        appbarDrawer.startTimer();
         return true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        appbarDrawer.stopTimer();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+       appbarDrawer.startTimer();
     }
 
     @Override
