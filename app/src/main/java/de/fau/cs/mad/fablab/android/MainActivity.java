@@ -30,7 +30,6 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         appbarDrawer.createMenu(menu);
-        Log.i("SET", "jo");
         appbarDrawer.startTimer();
         return true;
     }

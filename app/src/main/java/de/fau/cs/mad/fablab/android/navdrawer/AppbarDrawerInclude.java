@@ -146,7 +146,6 @@ public class AppbarDrawerInclude  {
         @Override
         public void run() {
             updateOpenState(m.findItem(R.id.action_opened));
-            Log.i("UPDATE", "done");
             openendStateHandler.postDelayed(this, REFRESH_MILLIS);
         }
     }
