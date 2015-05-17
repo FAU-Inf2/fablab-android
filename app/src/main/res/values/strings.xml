@@ -11,9 +11,15 @@
     <string name="appbar_opened">Geöffnet</string>
     <string name="appbar_opened_since">seit</string>
     <string name="appbar_closed">Geschlossen</string>
-    <string name="basket_title">Warenkorb:</string>
-    <string name="basket_empty"><b>Ihr Warenkorb ist leider noch leer</b></string>
-    <string name="basket_total_price_title">Gesamtpreis</string>
-    <string name="basket_button_checkout">Zur Kasse</string>
+    <string name="cart_title">Warenkorb:</string>
+    <string name="cart_empty"><b>Ihr Warenkorb ist leider noch leer</b></string>
+    <string name="cart_total_price_title">Gesamtpreis</string>
+    <string name="cart_button_checkout">Zur Kasse</string>
+    <string name="cart_entry_popup_title">Menge ändern...</string>
+    <string name="cart_entry_popup_ok">OK</string>
+    <string name="cart_entry_popup_cancel">Abbrechen</string>
+    <string name="cart_entry_unit_null_exception"></string>
+    <string name="cart_entry_popup_valid_amount">Bitte gib eine gültige Menge ein</string>
+    <string name="cart_entry_popup_info">Drücke länger, um die Mengenangabe zu ändern</string>
     <string name="search_hint">Suche Produkt</string>
 </resources>

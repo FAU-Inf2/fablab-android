@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import de.fau.cs.mad.fablab.android.basket.RecyclerViewAdapter;
+import de.fau.cs.mad.fablab.android.cart.RecyclerViewAdapter;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.fau.cs.mad.fablab.rest.core.Product;

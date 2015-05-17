@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.basket;
+package de.fau.cs.mad.fablab.android.cart;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -17,20 +17,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         private CardView card_view;
-        private TextView basket_product_name;
-        private TextView basket_product_quantity;
-        private ImageView basket_product_photo;
-        private TextView basket_product_price;
+        private TextView cart_product_name;
+        private TextView cart_product_quantity;
+        private ImageView cart_product_photo;
+        private TextView cart_product_price;
 
 
         ProductViewHolder(View itemView) {
             super(itemView);
 
-            this.card_view = (CardView) itemView.findViewById(R.id.card_view);
-            this.basket_product_name = (TextView) itemView.findViewById(R.id.basket_product_name);
-            this.basket_product_quantity = (TextView) itemView.findViewById(R.id.basket_product_quantity);
-            this.basket_product_photo = (ImageView) itemView.findViewById(R.id.basket_product_photo);
-            this.basket_product_price = (TextView) itemView.findViewById(R.id.basket_product_price);
+            this.card_view = (CardView) itemView.findViewById(R.id.cart_card_view);
+            this.cart_product_name = (TextView) itemView.findViewById(R.id.cart_product_name);
+            this.cart_product_quantity = (TextView) itemView.findViewById(R.id.cart_product_quantity);
+            this.cart_product_photo = (ImageView) itemView.findViewById(R.id.cart_product_photo);
+            this.cart_product_price = (TextView) itemView.findViewById(R.id.cart_product_price);
         }
     }
 
@@ -66,16 +66,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public ProductViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.basket_product, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cart_entry, viewGroup, false);
         ProductViewHolder pvh = new ProductViewHolder(v);
         return pvh;
     }
 
     @Override
     public void onBindViewHolder(ProductViewHolder productViewHolder, int i) {
-        productViewHolder.basket_product_name.setText(products.get(i).getName());
-        productViewHolder.basket_product_price.setText(String.valueOf(products.get(i).getPrice()));
-        productViewHolder.basket_product_photo.setImageResource(R.drawable.no_image_avl);
-        productViewHolder.basket_product_quantity.setText(String.valueOf(products.get(i).getAmount()) +" " + products.get(i).getUnit());
+        productViewHolder.cart_product_name.setText(products.get(i).getName());
+        productViewHolder.cart_product_price.setText(String.valueOf(products.get(i).getPrice()));
+        productViewHolder.cart_product_photo.setImageResource(R.drawable.no_image_avl);
+        productViewHolder.cart_product_quantity.setText(String.valueOf(products.get(i).getAmount()) +" " + products.get(i).getUnit());
     }
 }

@@ -9,18 +9,18 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/basket_title"
-        android:text="@string/basket_title" />
+        android:id="@+id/cart_title"
+        android:text="@string/cart_title" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/basket_empty"
-        android:text="@string/basket_empty"
+        android:id="@+id/cart_empty"
+        android:text="@string/cart_empty"
         android:visibility="invisible"/>
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/basket_recycler_view"
+        android:id="@+id/cart_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_weight=".30"
@@ -30,8 +30,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/basket_total_price_title"
-        android:text="@string/basket_total_price_title"/>
+        android:id="@+id/cart_total_price_title"
+        android:text="@string/cart_total_price_title"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,13 +42,13 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/basket_total_price"
+            android:id="@+id/cart_total_price"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:layout_weight="1"/>
 
         <Button
-            android:id="@+id/button_checkout"
+            android:id="@+id/cart_button_checkout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="14sp"
@@ -56,7 +56,7 @@
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
             android:layout_weight="1"
-            android:text="@string/basket_button_checkout"/>
+            android:text="@string/cart_button_checkout"/>
 
     </LinearLayout>
 
