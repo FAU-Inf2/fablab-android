@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import java.util.List;
@@ -52,7 +53,37 @@ public class CartActivity extends ActionBarActivity{
         adapter = new RecyclerViewAdapter(cart_entries);
         cart_rv.setAdapter(adapter);
 
-        // Set up Listeners to be able to change the quantity for a product in the cart (popup)
+        // Set up listener to be able to swipe to left/right to remove items
+        SwipeableRecyclerViewTouchListener swipeTouchListener =
+                new SwipeableRecyclerViewTouchListener(cart_rv,
+                        new SwipeableRecyclerViewTouchListener.SwipeListener() {
+                            @Override
+                            public boolean canSwipe(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    Cart.MYCART.removeEntry(cart_entries.get(position));
+                                    adapter.notifyItemRemoved(position);
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    Cart.MYCART.removeEntry(cart_entries.get(position));
+                                    adapter.notifyItemRemoved(position);
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+
+        cart_rv.addOnItemTouchListener(swipeTouchListener);
+
+        // Set up listeners to be able to change the quantity for a product in the cart (popup)
         cart_rv.addOnItemTouchListener(new RecyclerItemClickListener(this, cart_rv, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -115,6 +146,7 @@ public class CartActivity extends ActionBarActivity{
             }
 
         }));
+
 
         // set total price
         refreshTotalPrice();
