@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import de.fau.cs.mad.fablab.android.cart.Cart;
 import de.fau.cs.mad.fablab.android.cart.CartActivity;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.android.ui.NewsActivity;
@@ -25,6 +26,9 @@ public class MainActivity extends ActionBarActivity {
 
         appbarDrawer = new AppbarDrawerInclude(this);
         appbarDrawer.create();
+
+        // init db and cart - always do this on app start
+        Cart.MYCART.init(getApplication());
     }
 
     @Override

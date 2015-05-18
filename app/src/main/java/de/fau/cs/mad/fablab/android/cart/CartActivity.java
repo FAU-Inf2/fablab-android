@@ -27,7 +27,6 @@ public class CartActivity extends ActionBarActivity{
 
     private List<CartEntry> cart_entries;
     private Dialog dialog;
-    private RuntimeExceptionDao<CartEntry, Long> dao;
     private RecyclerViewAdapter adapter;
     private AppbarDrawerInclude appbarDrawer;
 
@@ -39,10 +38,6 @@ public class CartActivity extends ActionBarActivity{
         appbarDrawer = new AppbarDrawerInclude(this);
         appbarDrawer.create();
 
-        // Get Table "cartentries"-object
-        dao = DatabaseHelper.getHelper(
-                getApplicationContext()).getCartEntryDao();
-
         // Set Layout and Recyclerview
         RecyclerView cart_rv = (RecyclerView)findViewById(R.id.cart_recycler_view);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -51,7 +46,7 @@ public class CartActivity extends ActionBarActivity{
 
 
         // Get all Cart Entries of cart from db
-        cart_entries = dao.queryForAll();
+        cart_entries = Cart.MYCART.getProducts();
 
         // Add Entries to view
         adapter = new RecyclerViewAdapter(cart_entries);
@@ -103,9 +98,14 @@ public class CartActivity extends ActionBarActivity{
                         double amount_new = Double.parseDouble(temp.getText().toString());
                         cart_entries.get(position).setAmount(amount_new);
 
-                        dao.update(cart_entries.get(position));
-                        cart_entries.get(position).getProductId();
-                        adapter.notifyItemChanged(position);
+                        if(amount_new == 0.0){
+                            Cart.MYCART.removeEntry(cart_entries.get(position));
+                            adapter.notifyItemRemoved(position);
+                        }else{
+                            Cart.MYCART.updateEntry(cart_entries.get(position));
+                            adapter.notifyItemChanged(position);
+                        }
+
                         dialog.dismiss();
                     }
                 });
