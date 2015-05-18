@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="2"
+    >
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/card_horizontal_margin"
+        android:layout_marginLeft="@dimen/card_horizontal_margin"
+        android:layout_marginTop="@dimen/card_vertical_margin"
+        android:layout_marginBottom="@dimen/card_vertical_margin"
+        android:layout_weight="1"
+        android:id="@+id/dates_card_left"
+        card_view:cardBackgroundColor="@color/cardSelflab"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="0dp"
+            >
+
+            <TextView
+                android:id="@+id/title_dates_entry_left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:text="Title"
+                android:fontFamily="sans-serif-medium"
+                android:layout_margin="3dp"
+                android:paddingLeft="@dimen/card_horizontal_padding"
+                android:paddingRight="@dimen/card_horizontal_padding"
+                android:paddingBottom="@dimen/card_vertical_padding"
+                android:paddingTop="@dimen/card_vertical_padding"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"
+                android:alpha=".20" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/card_horizontal_padding"
+                android:paddingRight="@dimen/card_horizontal_padding"
+                android:paddingBottom="@dimen/card_vertical_padding"
+                android:paddingTop="@dimen/card_vertical_padding"
+                >
+
+
+                <ImageView
+                    android:id="@+id/icon_dates_entry_left"
+                    android:layout_width="@dimen/dates_entry_event_icon_size"
+                    android:layout_height="@dimen/dates_entry_event_icon_size"
+                    android:src="@drawable/ic_event_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:alpha=".30"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_toRightOf="@+id/icon_dates_entry_left"
+                    android:layout_toEndOf="@+id/icon_dates_entry_left">
+
+                    <TextView
+                        android:id="@+id/date_dates_entry_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:text="Subtitle"
+                        android:singleLine="true"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/dates_entry_icon_date_margin"
+                        android:layout_toRightOf="@+id/icon_dates_entry"
+                        />
+
+                    <TextView
+                        android:id="@+id/time_dates_entry_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:text="Subtitle"
+                        android:singleLine="true"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/dates_entry_icon_date_margin"
+                        android:layout_toRightOf="@+id/icon_dates_entry"
+                        android:layout_marginTop="-3dp"
+                        />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/card_horizontal_margin"
+        android:layout_marginLeft="@dimen/card_horizontal_margin"
+        android:layout_marginTop="@dimen/card_vertical_margin"
+        android:layout_marginBottom="@dimen/card_vertical_margin"
+        android:layout_weight="1"
+        android:id="@+id/dates_card_right"
+        card_view:cardBackgroundColor="@color/cardOpenlab"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="0dp"
+            >
+
+            <TextView
+                android:id="@+id/title_dates_entry_right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:text="Title"
+                android:fontFamily="sans-serif-medium"
+                android:layout_margin="3dp"
+                android:paddingLeft="@dimen/card_horizontal_padding"
+                android:paddingRight="@dimen/card_horizontal_padding"
+                android:paddingBottom="@dimen/card_vertical_padding"
+                android:paddingTop="@dimen/card_vertical_padding"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"
+                android:alpha=".20" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/card_horizontal_padding"
+                android:paddingRight="@dimen/card_horizontal_padding"
+                android:paddingBottom="@dimen/card_vertical_padding"
+                android:paddingTop="@dimen/card_vertical_padding"
+                >
+
+
+                <ImageView
+                    android:id="@+id/icon_dates_entry_right"
+                    android:layout_width="@dimen/dates_entry_event_icon_size"
+                    android:layout_height="@dimen/dates_entry_event_icon_size"
+                    android:src="@drawable/ic_event_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:alpha=".30"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_toRightOf="@+id/icon_dates_entry_right"
+                    android:layout_toEndOf="@+id/icon_dates_entry_right">
+
+                    <TextView
+                        android:id="@+id/date_dates_entry_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:text="Subtitle"
+                        android:singleLine="true"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/dates_entry_icon_date_margin"
+                        android:layout_toRightOf="@+id/icon_dates_entry"
+                        />
+
+                    <TextView
+                        android:id="@+id/time_dates_entry_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:text="Subtitle"
+                        android:singleLine="true"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/dates_entry_icon_date_margin"
+                        android:layout_toRightOf="@+id/icon_dates_entry"
+                        android:layout_marginTop="-3dp"
+                        />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

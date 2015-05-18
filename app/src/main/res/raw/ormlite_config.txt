@@ -1,25 +1,74 @@
 #
-# generated on 2015/05/05 09:04:25
+# generated on 2015/05/17 10:04:45
 #
 # --table-start--
-dataClass=de.fau.cs.mad.fablab.android.ORM.DBObject
-tableName=ORMObject
+dataClass=de.fau.cs.mad.fablab.rest.core.CartEntry
+tableName=cart
 # --table-fields-start--
 # --field-start--
-fieldName=id
-generatedId=true
+fieldName=amount
+columnName=amount
+dataPersister=DOUBLE
+width=255
+useGetSet=true
 # --field-end--
 # --field-start--
-fieldName=title
+fieldName=productId
+columnName=product_id
+dataPersister=LONG
+width=255
+id=true
+useGetSet=true
 # --field-end--
 # --field-start--
-fieldName=text
+fieldName=name
+columnName=name
+dataPersister=STRING
+width=255
+canBeNull=false
+useGetSet=true
 # --field-end--
 # --field-start--
-fieldName=created
+fieldName=description
+columnName=description
+dataPersister=STRING
+width=255
+useGetSet=true
 # --field-end--
 # --field-start--
-fieldName=modified
+fieldName=unit
+columnName=unit
+dataPersister=STRING
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=categoryId
+columnName=category_id
+dataPersister=LONG
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=categoryString
+columnName=category_string
+dataPersister=STRING
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=price
+columnName=price
+dataPersister=DOUBLE
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=itemsAvailable
+columnName=available
+dataPersister=INTEGER
+width=255
+useGetSet=true
 # --field-end--
 # --table-fields-end--
 # --table-end--

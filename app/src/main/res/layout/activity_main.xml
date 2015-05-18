@@ -1,56 +1,61 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/DrawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:elevation="7dp">
 
-    <include
-        android:id="@+id/appbar"
-        layout="@layout/appbar"
-        ></include>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <!-- IMPORTANT, to MAD programmers: layout_below must be at first element after appbar -->
-    <TextView android:text="@string/hello_world"
-        android:layout_below="@+id/appbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:id="@+id/textView" />
+        <include
+            android:id="@+id/appbar"
+            layout="@layout/appbar" />
+
+        <TextView android:text="@string/hello_world"
+            android:layout_below="@+id/appbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:id="@+id/textView" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button"
+            android:layout_centerInParent="true"
+            android:onClick="startBarcodeScanner"
+            android:text="@string/button_start_barcode_scanner" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show Basket Example"
+            android:id="@+id/basket_btn"
+            android:onClick="showBasket"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/button"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Product Search"
+            android:id="@+id/button_product_search"
+            android:onClick="startProductSearch"
+            android:layout_below="@+id/basket_btn"
+            android:layout_centerHorizontal="true" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button"
-        android:layout_centerInParent="true"
-        android:onClick="startBarcodeScanner"
-        android:text="@string/button_start_barcode_scanner" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show ORM Example"
-        android:id="@+id/button"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="showORMButtonClicked" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show Basket Example"
-        android:id="@+id/basket_btn"
-        android:onClick="showBasket"
-        android:layout_centerInParent="true"
-        android:layout_below="@+id/button"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start Product Search"
-        android:id="@+id/button_product_search"
-        android:onClick="startProductSearch"
-        android:layout_below="@+id/basket_btn"
-        android:layout_centerHorizontal="true" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start News Activity"
+            android:id="@+id/news_activity"
+            android:onClick="startNewsActivity"
+            android:layout_below="@+id/button_product_search"
+            android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -60,5 +65,20 @@
         android:onClick="startProductMap"
         android:layout_below="@+id/button_product_search"
         android:layout_centerHorizontal="true" />
+    
+    
+    </RelativeLayout>
 
-</RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/navdrawer_RecyclerView"
+        android:layout_width="320dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="#ffffff"
+        android:scrollbars="vertical">
+
+    </android.support.v7.widget.RecyclerView>
+
+</android.support.v4.widget.DrawerLayout>    
+
+

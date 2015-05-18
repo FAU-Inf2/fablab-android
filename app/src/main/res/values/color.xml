@@ -4,4 +4,9 @@
     <color name="AppBarColorPrimaryDark">#1B1B1B</color>
     <color name="AppBarTextColor">#FFFFFF</color>
     <color name="windowBackground">#E0E0E0</color>
+    <color name="cardOpenlab">#8888FF</color>
+    <color name="cardSelflab">#FF8888</color>
+    <color name="cardImportant">#FF0000</color>
+    <color name="AppbarColorClosed">#FF0000</color>
+    <color name="AppbarColorOpened">#62DF25</color>
 </resources>
