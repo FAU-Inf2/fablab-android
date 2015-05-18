@@ -23,7 +23,6 @@ fablab-android uses the following libraries and software:
 * [JaxRs2Retrofit] (https://github.com/Maddoc42/JaxRs2Retrofit) License: [Apache License Version 2.0](https://github.com/Maddoc42/JaxRs2Retrofit#license)
 * [OkHttp](http://square.github.io/okhttp/) License [Apache License Version 2.0](http://square.github.io/okhttp/#license)
 * [okio](https://github.com/square/okio) License [Apache License Version 2.0](https://github.com/square/okio/blob/master/LICENSE.txt)
-* [zxing](https://github.com/zxing/zxing) License [Apache License Version 2.0](https://github.com/zxing/zxing/wiki/License-Questions)
 
 ## Licence
 

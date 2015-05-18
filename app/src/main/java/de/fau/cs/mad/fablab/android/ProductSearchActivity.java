@@ -7,13 +7,19 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import de.fau.cs.mad.fablab.android.cart.Cart;
 import de.fau.cs.mad.fablab.android.cart.RecyclerViewAdapter;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
@@ -23,7 +29,7 @@ public class ProductSearchActivity extends ActionBarActivity {
 
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerViewAdapter productAdapter;
-
+    private SlidingUpPanelLayout mLayout;
     private AppbarDrawerInclude appbarDrawer;
 
     @Override
@@ -33,6 +39,9 @@ public class ProductSearchActivity extends ActionBarActivity {
 
         appbarDrawer = new AppbarDrawerInclude(this);
         appbarDrawer.create();
+
+        // Setting up Basket and SlidingUpPanel
+        Cart.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), true);
 
         //get search view and set searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
