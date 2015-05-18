@@ -105,7 +105,7 @@ public class CartActivity extends ActionBarActivity{
                             Cart.MYCART.updateEntry(cart_entries.get(position));
                             adapter.notifyItemChanged(position);
                         }
-
+                        refreshTotalPrice();
                         dialog.dismiss();
                     }
                 });
@@ -116,13 +116,8 @@ public class CartActivity extends ActionBarActivity{
 
         }));
 
-        // Compute total price
-        TextView total_price = (TextView) findViewById(R.id.cart_total_price);
-        int total = 0;
-        for(int i=0;i<cart_entries.size();i++){
-            total += cart_entries.get(i).getPrice()*cart_entries.get(i).getAmount();
-        }
-        total_price.setText(total + " €");
+        // set total price
+        refreshTotalPrice();
 
         // Basket empty?
         if(cart_entries.size() == 0){
@@ -161,5 +156,10 @@ public class CartActivity extends ActionBarActivity{
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void refreshTotalPrice(){
+        TextView total_price = (TextView) findViewById(R.id.cart_total_price);
+        total_price.setText(Cart.MYCART.totalPrice() + " €");
     }
 }

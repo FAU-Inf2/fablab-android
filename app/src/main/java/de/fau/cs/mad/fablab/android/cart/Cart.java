@@ -69,4 +69,18 @@ public enum Cart {
         dao.create(new_entry);
         products.add(new_entry);
     }
+
+    // return total price
+    public double totalPrice(){
+        double total = 0;
+        for(int i=0;i<products.size();i++){
+            total += products.get(i).getPrice()*products.get(i).getAmount();
+        }
+
+        if (total == 0){
+            return total;
+        }else{
+            return (total/100);
+        }
+    }
 }
