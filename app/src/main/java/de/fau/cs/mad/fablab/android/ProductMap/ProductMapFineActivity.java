@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android;
+package de.fau.cs.mad.fablab.android.ProductMap;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;

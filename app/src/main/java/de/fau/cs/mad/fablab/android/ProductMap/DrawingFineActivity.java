@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android;
+package de.fau.cs.mad.fablab.android.ProductMap;
 
 import android.content.Context;
 import android.graphics.Canvas;

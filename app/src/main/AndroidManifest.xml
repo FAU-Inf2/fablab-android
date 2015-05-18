@@ -48,10 +48,10 @@
         <activity android:name=".basket.BasketActivity"/>
 
         <activity
-            android:name=".ProductMapActivity"
+            android:name=".ProductMap.ProductMapActivity"
             android:parentActivityName=".MainActivity" >
         </activity>
-        <activity android:name=".ProductMapFineActivity"></activity>
+        <activity android:name=".ProductMap.ProductMapFineActivity"></activity>
         
         <activity
             android:name=".ProductSearchActivity"

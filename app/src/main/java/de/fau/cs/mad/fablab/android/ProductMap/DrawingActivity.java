@@ -1,15 +1,11 @@
-package de.fau.cs.mad.fablab.android;
+package de.fau.cs.mad.fablab.android.ProductMap;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.View;
-import android.view.ViewGroup;
 
 
 /**

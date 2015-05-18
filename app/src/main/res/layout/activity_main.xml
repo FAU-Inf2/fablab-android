@@ -52,4 +52,13 @@
         android:layout_below="@+id/basket_btn"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Product Map"
+        android:id="@+id/button_ProductMap"
+        android:onClick="startProductMap"
+        android:layout_below="@+id/button_product_search"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

@@ -17,6 +17,7 @@ import net.spaceapi.State;
 
 import de.fau.cs.mad.fablab.android.ORM.DBObjectView;
 import de.fau.cs.mad.fablab.android.basket.BasketActivity;
+import de.fau.cs.mad.fablab.android.ProductMap.ProductMapActivity;
 import de.fau.cs.mad.fablab.rest.SpaceApiClient;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -83,6 +84,12 @@ public class MainActivity extends ActionBarActivity {
 
     public void startProductSearch(View view) {
         Intent intent = new Intent(this, ProductSearchActivity.class);
+        startActivity(intent);
+    }
+
+    public void startProductMap(View view)
+    {
+        Intent intent = new Intent(this, ProductMapActivity.class);
         startActivity(intent);
     }
 
