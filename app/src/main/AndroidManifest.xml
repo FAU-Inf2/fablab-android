@@ -47,8 +47,10 @@
 
         <activity android:name=".ui.NewsActivity"/>
 
+        <activity android:name=".productMap.ProductMapActivity" />
+
         <activity
-            android:name=".ProductSearchActivity"
+            android:name=".productsearch.ProductSearchActivity"
             android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

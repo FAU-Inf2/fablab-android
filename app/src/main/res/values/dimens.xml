@@ -24,4 +24,6 @@
 
     <dimen name="dates_entry_icon_date_margin">10dp</dimen>
     <dimen name="dates_entry_event_icon_size">30dp</dimen>
+
+    <dimen name="product_dialog_margin">24dp</dimen>
 </resources>
