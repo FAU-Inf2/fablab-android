@@ -1,7 +1,9 @@
 package de.fau.cs.mad.fablab.android.productsearch;
 
+import android.app.Application;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,8 @@ import android.view.Window;
 import android.widget.TextView;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.cart.CartActivity;
+import de.fau.cs.mad.fablab.android.productMap.ProductMapActivity;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class ProductDialog extends DialogFragment {
@@ -43,6 +47,8 @@ public class ProductDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 //show location
+                Intent intent = new Intent(getActivity(), ProductMapActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -73,8 +79,6 @@ public class ProductDialog extends DialogFragment {
 
         return dialog;
     }
-
-
 
 
 }
