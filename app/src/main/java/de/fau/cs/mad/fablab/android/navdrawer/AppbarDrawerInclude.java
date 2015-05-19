@@ -50,6 +50,9 @@ public class AppbarDrawerInclude  {
     private Handler openendStateHandler = new Handler();
     public String openedMessage;
     private Menu menu;
+    private boolean loggedIn = false;
+
+
 
     final long REFRESH_MILLIS = 60 * 1000; // 1 minute
     final long FIRST_MILLIS = 500;
@@ -64,6 +67,7 @@ public class AppbarDrawerInclude  {
         navdrawer.addItem(new NavigationDrawerItem("Warenkorb", CartActivity.class, R.drawable.warenkorb));
         navdrawer.addItem(new NavigationDrawerItem("Produktsuche", ProductSearchActivity.class, R.drawable.produktsuche));
         navdrawer.addItem(new NavigationDrawerItem("News", NewsActivity.class, R.drawable.news));
+
     }
 
     public void create() {
@@ -74,8 +78,12 @@ public class AppbarDrawerInclude  {
 
         mRecyclerView = (RecyclerView) mainActivity.findViewById(R.id.navdrawer_RecyclerView);
         mRecyclerView.setHasFixedSize(true);
-        mAdapter = new NavigationDrawerAdapter(navdrawer);
+        mAdapter = new NavigationDrawerAdapter(navdrawer, false, mainActivity);
         mRecyclerView.setAdapter(mAdapter);
+
+
+
+        //drupalLoginButton.setOnClickListener(new DrupalLogin());
 
         final GestureDetector mGestureDetector = new GestureDetector(mainActivity, new GestureDetector.SimpleOnGestureListener() {
             @Override public boolean onSingleTapUp(MotionEvent e) {
@@ -94,6 +102,8 @@ public class AppbarDrawerInclude  {
                         Drawer.closeDrawers();
                         Intent intent = new Intent(mainActivity.getApplicationContext(), navdrawer.getItems().get(child_id - 1).getIntent());
                         mainActivity.startActivity(intent);
+                    } else {
+                        return false;
                     }
 
                     return true;
@@ -128,6 +138,10 @@ public class AppbarDrawerInclude  {
         };
         Drawer.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
 
     public void createMenu(Menu menu) {
