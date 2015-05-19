@@ -21,7 +21,8 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/product_dialog_margin"
         android:text="@string/product_dialog_location"
-        android:textSize="@dimen/abc_text_size_medium_material" />
+        android:textSize="@dimen/abc_text_size_medium_material"
+        android:nestedScrollingEnabled="false" />
 
     <TextView
         android:id="@+id/product_dialog_cart"
