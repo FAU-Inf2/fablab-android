@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android;
+package de.fau.cs.mad.fablab.android.productsearch;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -19,9 +19,12 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.cart.Cart;
+import de.fau.cs.mad.fablab.android.cart.RecyclerItemClickListener;
 import de.fau.cs.mad.fablab.android.cart.RecyclerViewAdapter;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
+import de.fau.cs.mad.fablab.android.productsearch.ProductDialog;
 import de.fau.cs.mad.fablab.rest.ProductApiClient;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.fau.cs.mad.fablab.rest.core.Product;
@@ -36,6 +39,8 @@ public class ProductSearchActivity extends ActionBarActivity {
     private RecyclerViewAdapter productAdapter;
     private SlidingUpPanelLayout mLayout;
     private AppbarDrawerInclude appbarDrawer;
+    //only for testing
+    private ArrayList<Product> productEntries;
     //our rest-callback interface
     private ProductApi mProductApi;
 
@@ -48,6 +53,7 @@ public class ProductSearchActivity extends ActionBarActivity {
             }
             for (Product product : products) {
                 productAdapter.addProduct(new CartEntry(product, 1));
+                productEntries.add(product);
             }
         }
 
@@ -82,6 +88,30 @@ public class ProductSearchActivity extends ActionBarActivity {
         productAdapter = new RecyclerViewAdapter(new ArrayList<CartEntry>());
         recyclerView.setAdapter(productAdapter);
         mProductApi = new ProductApiClient(this).get();
+
+        //add listener to handle click events
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView,
+                new RecyclerItemClickListener.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(View view, int position) {
+                //show dialog
+                Bundle arguments = new Bundle();
+                arguments.putSerializable(ProductDialog.PRODUCT_KEY, productEntries.get(position));
+                ProductDialog dialog = new ProductDialog();
+                dialog.setArguments(arguments);
+                dialog.show(getFragmentManager(), "product_dialog");
+
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                //do nothing
+                return;
+            }
+
+        }));
+
 
         //handle intent
         handleIntent(getIntent());
@@ -137,6 +167,7 @@ public class ProductSearchActivity extends ActionBarActivity {
 
     private void search(String query) {
         //show products containing the query
+        productEntries = new ArrayList<Product>();
         productAdapter.clear();
         //TODO maybe add a limit here?
         mProductApi.findByName(query, 0, 0, mSearchCallback);
