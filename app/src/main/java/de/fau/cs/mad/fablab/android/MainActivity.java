@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,17 +12,6 @@ import android.widget.Toast;
 import de.fau.cs.mad.fablab.android.cart.CartActivity;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.android.ui.NewsActivity;
-
-import net.spaceapi.HackerSpace;
-import net.spaceapi.State;
-
-import de.fau.cs.mad.fablab.android.ORM.DBObjectView;
-import de.fau.cs.mad.fablab.android.basket.BasketActivity;
-import de.fau.cs.mad.fablab.android.ProductMap.ProductMapActivity;
-import de.fau.cs.mad.fablab.rest.SpaceApiClient;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class MainActivity extends ActionBarActivity {
     // Navigation Drawer
