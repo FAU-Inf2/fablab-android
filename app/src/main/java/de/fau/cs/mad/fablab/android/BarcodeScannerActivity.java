@@ -9,6 +9,7 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 import java.util.regex.Pattern;
 
 import de.fau.cs.mad.fablab.android.cart.AddToCartDialog;
+import de.fau.cs.mad.fablab.android.cart.Cart;
 import de.fau.cs.mad.fablab.android.db.DatabaseHelper;
 import de.fau.cs.mad.fablab.rest.ProductApiClient;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
@@ -103,16 +104,8 @@ public class BarcodeScannerActivity extends ActionBarActivity
     public void onDialogPositiveClick() {
         Product product = scannedProduct;
         isDialogStarted = false;
-        RuntimeExceptionDao<CartEntry, Long> dao = DatabaseHelper.getHelper(getApplicationContext())
-                .getCartEntryDao();
-        CartEntry cartEntry = dao.queryForId(product.getProductId());
-        if (cartEntry != null) {
-            cartEntry.setAmount(cartEntry.getAmount() + 1);
-            dao.update(cartEntry);
-        } else {
-            cartEntry = new CartEntry(product, 1);
-            dao.create(cartEntry);
-        }
+
+        Cart.MYCART.addProduct(product);
     }
 
     @Override

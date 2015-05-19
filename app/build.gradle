@@ -67,11 +67,12 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'javax.persistence:persistence-api:1.0'
     compile ('eu.livotov.labs:zxscanlib:2.0.0@aar') {transitive=true}
-    // Basket Sliding Up Panel
+    // Cart Sliding Up Panel
     compile 'com.sothree.slidinguppanel:library:3.0.0'
-    // Basket CardView and RecyclerView
+    // Cart CardView and RecyclerView and Sqipe-To-Remove lib
     compile 'com.android.support:cardview-v7:21.0.0'
     compile 'com.android.support:recyclerview-v7:21.0.0'
+    compile 'com.github.brnunes:swipeablerecyclerview:1.0.1'
     // Navigation Drawer Design
     compile 'com.android.support:support-v4'
     compile 'de.hdodenhof:circleimageview:1.2.1'

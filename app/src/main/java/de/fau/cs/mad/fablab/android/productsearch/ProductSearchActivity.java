@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android;
+package de.fau.cs.mad.fablab.android.productsearch;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -7,25 +7,62 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.cart.Cart;
+import de.fau.cs.mad.fablab.android.cart.RecyclerItemClickListener;
 import de.fau.cs.mad.fablab.android.cart.RecyclerViewAdapter;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
+import de.fau.cs.mad.fablab.android.productsearch.ProductDialog;
+import de.fau.cs.mad.fablab.rest.ProductApiClient;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.fau.cs.mad.fablab.rest.core.Product;
+import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class ProductSearchActivity extends ActionBarActivity {
 
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerViewAdapter productAdapter;
-
+    private SlidingUpPanelLayout mLayout;
     private AppbarDrawerInclude appbarDrawer;
+    //only for testing
+    private ArrayList<Product> productEntries;
+    //our rest-callback interface
+    private ProductApi mProductApi;
 
+    //This callback is used for product Search.
+    private Callback<List<Product>> mSearchCallback = new Callback<List<Product>>() {
+        @Override
+        public void success(List<Product> products, Response response) {
+            if (products.isEmpty()) {
+                Toast.makeText(getBaseContext(), R.string.product_not_found, Toast.LENGTH_LONG).show();
+            }
+            for (Product product : products) {
+                productAdapter.addProduct(new CartEntry(product, 1));
+                productEntries.add(product);
+            }
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            Toast.makeText(getBaseContext(), R.string.retrofit_callback_failure, Toast.LENGTH_LONG).show();
+        }
+    };
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +70,9 @@ public class ProductSearchActivity extends ActionBarActivity {
 
         appbarDrawer = new AppbarDrawerInclude(this);
         appbarDrawer.create();
+
+        // Setting up Basket and SlidingUpPanel
+        Cart.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), true);
 
         //get search view and set searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -47,6 +87,31 @@ public class ProductSearchActivity extends ActionBarActivity {
         recyclerView.setLayoutManager(layoutManager);
         productAdapter = new RecyclerViewAdapter(new ArrayList<CartEntry>());
         recyclerView.setAdapter(productAdapter);
+        mProductApi = new ProductApiClient(this).get();
+
+        //add listener to handle click events
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView,
+                new RecyclerItemClickListener.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(View view, int position) {
+                //show dialog
+                Bundle arguments = new Bundle();
+                arguments.putSerializable(ProductDialog.PRODUCT_KEY, productEntries.get(position));
+                ProductDialog dialog = new ProductDialog();
+                dialog.setArguments(arguments);
+                dialog.show(getFragmentManager(), "product_dialog");
+
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                //do nothing
+                return;
+            }
+
+        }));
+
 
         //handle intent
         handleIntent(getIntent());
@@ -94,7 +159,7 @@ public class ProductSearchActivity extends ActionBarActivity {
 
     private void handleIntent(Intent intent) {
         //verify the action and get the query
-        if(Intent.ACTION_SEARCH.equals(intent.getAction())) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             search(query);
         }
@@ -102,29 +167,10 @@ public class ProductSearchActivity extends ActionBarActivity {
 
     private void search(String query) {
         //show products containing the query
+        productEntries = new ArrayList<Product>();
         productAdapter.clear();
-        List<Product> products = getDummyProducts();
-        for(Product product : products) {
-            if(product.getName().contains(query)) {
-                productAdapter.addProduct(new CartEntry(product, 0));
-            }
-        }
-    }
-
-    private List<Product> getDummyProducts() {
-        //create dummy products
-        List<Product> products= new ArrayList<Product>();
-        Product p1 = new Product(1,"Produkt1",1,1,"Category1", "Unit1");
-        products.add(p1);
-        Product p2 = new Product(2,"Produkt2",2,2,"Category2", "Unit2");
-        products.add(p2);
-        Product p3 = new Product(3,"Produkt3",3,3,"Category3", "Unit3");
-        products.add(p3);
-        Product p4 = new Product(4,"Produkt4",4,4,"Category4", "Unit4");
-        products.add(p4);
-        Product p5 = new Product(5,"Produkt5",5,5,"Category5", "Unit5");
-        products.add(p5);
-        return products;
+        //TODO maybe add a limit here?
+        mProductApi.findByName(query, 0, 0, mSearchCallback);
     }
 
 }
