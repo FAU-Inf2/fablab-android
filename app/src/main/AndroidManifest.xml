@@ -47,12 +47,8 @@
 
         <activity android:name=".ui.NewsActivity"/>
 
-        <activity
-            android:name=".ProductMap.ProductMapActivity"
-            android:parentActivityName=".MainActivity" >
-        </activity>
-        <activity android:name=".ProductMap.ProductMapFineActivity"></activity>
-        
+        <activity android:name=".productMap.ProductMapActivity" />
+
         <activity
             android:name=".ProductSearchActivity"
             android:launchMode="singleTop" >
