@@ -18,6 +18,7 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import java.util.List;
 
+import de.fau.cs.mad.fablab.android.FabButton;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.db.DatabaseHelper;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
@@ -42,6 +43,9 @@ public class CartActivity extends ActionBarActivity{
 
         // Setting up Basket without SlidingUpPanel
         Cart.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), false);
+
+        // Setting up FloatingButton
+        FabButton.MYFABUTTON.init(findViewById(android.R.id.content));
 
     }
 
