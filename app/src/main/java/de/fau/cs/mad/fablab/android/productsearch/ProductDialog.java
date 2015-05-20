@@ -48,6 +48,9 @@ public class ProductDialog extends DialogFragment {
             public void onClick(View v) {
                 //show location
                 Intent intent = new Intent(getActivity(), ProductMapActivity.class);
+
+                //TODO: send product location to activity
+                //intent.putExtra("location",location)
                 startActivity(intent);
 
             }

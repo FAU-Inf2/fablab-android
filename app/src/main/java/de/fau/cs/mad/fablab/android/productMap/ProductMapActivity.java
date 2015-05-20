@@ -21,13 +21,10 @@ import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 public class ProductMapActivity extends ActionBarActivity
 {
 
-    private int xWerkstatt = 75;
-    private int yWerkstatt = 75;
-    private int xSchrank = 10;
-    private int ySchrank =10;
-    private boolean show ;
+    private boolean isMainViewActive ;
 
     private DrawingActivity drawView;
+    private ProductLocation productLocation;
 
 
     @Override
@@ -36,35 +33,34 @@ public class ProductMapActivity extends ActionBarActivity
 
         //setContentView(R.layout.activity_product_map);
 
-        //location interface
+        //TODO: get location
         //getIntent().getExtras().getString("location");
-        show = true;
-        createView(this, xWerkstatt, yWerkstatt);
+        isMainViewActive = true;
+        productLocation = ProductLocation.BOX_SPAX_SCREW;
+        createView(this);
 
     }
 
 
-    protected void createView(Context context, int xCoord, int yCoord)
+    protected void createView(Context context)
     {
-        drawView = new DrawingActivity(context, xCoord, yCoord);
+        drawView = new DrawingActivity(context, FablabView.MAIN_ROOM, productLocation.getMainPositionX(), productLocation.getMainPositionY(), productLocation.getLocationName());
         drawView.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                if(show == true)
+                if(isMainViewActive == true)
                 {
-                    drawView.setCoords(xSchrank, ySchrank);
-                    drawView.setView(FablabView.ELECTRIC_WORKSHOP);
+                    drawView.setDrawingParameter(productLocation.getView(), productLocation.getPositionX(), productLocation.getPositionY());
                     drawView.invalidate();
-                    show = false;
+                    isMainViewActive = false;
                 }
                 else
                 {
-                    drawView.setCoords(xWerkstatt, yWerkstatt);
-                    drawView.setView(FablabView.MAIN_ROOM);
+                    drawView.setDrawingParameter(FablabView.MAIN_ROOM, productLocation.getMainPositionX(), productLocation.getMainPositionY());
                     drawView.invalidate();
-                    show = true;
+                    isMainViewActive = true;
                 }
             }
         });
