@@ -3,9 +3,11 @@ package de.fau.cs.mad.fablab.android.navdrawer;
 import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,9 +25,12 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     private NavigationDrawer navdrawer;
     private ActionBarActivity mainActivity;
 
+    public void setMainActivity(ActionBarActivity mainActivity) {
+        this.mainActivity = mainActivity;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         int holderID;
-        boolean loggedIn;
 
         TextView navdrawer_textView;
         ImageView navdrawer_imageView;
@@ -80,8 +85,8 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
              */
             if(drupalLoginUsername.getText().toString().equals("admin")
                     && drupalLoginPassword.getText().toString().equals("admin")) {
-                navdrawer.setEmail("Was neues");
-                navdrawer.setName("Mein NAAAME");
+                navdrawer.setEmail("logged@in.fab");
+                navdrawer.setName("Logged in User");
                 navdrawer.setIcon(R.drawable.avatar);
 
                 // Inflating new Layout
@@ -95,18 +100,26 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
                 navdrawer_name.setText(navdrawer.getName());
                 navdrawer_email.setText(navdrawer.getEmail());
                 navdrawer_icon.setImageDrawable(mainActivity.getResources().getDrawable(navdrawer.getIcon()));
+
+                InputMethodManager imm = (InputMethodManager) mainActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                try {
+                    imm.hideSoftInputFromWindow(mainActivity.getCurrentFocus().getWindowToken(), 0);
+                } catch(NullPointerException e) {
+                    Log.i("KEYBOARD", "NullPointerException on hiding keyboard");
+                }
+
+                loggedIn = true;
             }
         }
     }
 
     public NavigationDrawerAdapter(NavigationDrawer navdrawer) {
-       this.navdrawer = navdrawer;
+        this.navdrawer = navdrawer;
     }
 
-    public NavigationDrawerAdapter(NavigationDrawer navdrawer, boolean loggedIn, ActionBarActivity mainActivity) {
+    public NavigationDrawerAdapter(NavigationDrawer navdrawer, boolean loggedIn) {
         this.navdrawer = navdrawer;
         this.loggedIn = loggedIn;
-        this.mainActivity = mainActivity;
     }
 
     @Override

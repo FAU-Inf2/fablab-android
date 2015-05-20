@@ -56,7 +56,7 @@ public class NewsActivity extends RoboActionBarActivity {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        appbarDrawer = new AppbarDrawerInclude(this);
+        appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
 
         //no animations of the shopping cart when clicked

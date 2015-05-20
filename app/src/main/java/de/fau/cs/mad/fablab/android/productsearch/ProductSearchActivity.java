@@ -71,7 +71,7 @@ public class ProductSearchActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_search);
 
-        appbarDrawer = new AppbarDrawerInclude(this);
+        appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
 
         // Setting up Basket and SlidingUpPanel

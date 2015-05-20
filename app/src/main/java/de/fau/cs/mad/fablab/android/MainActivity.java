@@ -24,7 +24,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        appbarDrawer = new AppbarDrawerInclude(this);
+        appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
 
         // init db and cart - always do this on app start

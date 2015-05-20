@@ -15,7 +15,6 @@
         android:orientation="vertical"
         android:layout_marginTop="14dp">
 
-
         <EditText
             android:id="@+id/drupal_login_username"
             android:layout_width="match_parent"
@@ -24,7 +23,11 @@
             android:layout_marginRight="50dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:hint="Username" />
+            android:inputType="text"
+            android:hint="Username"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:textColor="@android:color/white" />
 
         <EditText
             android:id="@+id/drupal_login_password"
@@ -35,7 +38,9 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:singleLine="true"
+            android:inputType="textPassword"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/drupal_login_button"

@@ -22,9 +22,9 @@ import net.spaceapi.State;
 
 import de.fau.cs.mad.fablab.android.BarcodeScannerActivity;
 import de.fau.cs.mad.fablab.android.MainActivity;
-import de.fau.cs.mad.fablab.android.productsearch.ProductSearchActivity;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.cart.CartActivity;
+import de.fau.cs.mad.fablab.android.productsearch.ProductSearchActivity;
 import de.fau.cs.mad.fablab.android.ui.NewsActivity;
 import de.fau.cs.mad.fablab.rest.SpaceApiClient;
 import retrofit.Callback;
@@ -33,11 +33,13 @@ import retrofit.client.Response;
 
 
 public class AppbarDrawerInclude  {
+    volatile static private AppbarDrawerInclude instance;
+
     private NavigationDrawer navdrawer;
     private DrawerLayout mDrawerLayout;
     private ActionBarActivity mainActivity;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private NavigationDrawerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private DrawerLayout Drawer;
     private Toolbar toolbar;
@@ -51,11 +53,22 @@ public class AppbarDrawerInclude  {
     public String openedMessage;
     private Menu menu;
     private boolean loggedIn = false;
-
+    private boolean opened = false;
+    private TextView timeView;
+    private MenuItem item;
+    private long time;
 
 
     final long REFRESH_MILLIS = 60 * 1000; // 1 minute
-    final long FIRST_MILLIS = 500;
+
+    static public synchronized AppbarDrawerInclude getInstance(ActionBarActivity mainActivity) {
+        if(instance == null) {
+            instance = new AppbarDrawerInclude(mainActivity);
+        } else {
+            instance.setActivity(mainActivity);
+        }
+        return instance;
+    }
 
     public AppbarDrawerInclude(ActionBarActivity mainActivity) {
         this.mainActivity = mainActivity;
@@ -67,7 +80,7 @@ public class AppbarDrawerInclude  {
         navdrawer.addItem(new NavigationDrawerItem("Warenkorb", CartActivity.class, R.drawable.warenkorb));
         navdrawer.addItem(new NavigationDrawerItem("Produktsuche", ProductSearchActivity.class, R.drawable.produktsuche));
         navdrawer.addItem(new NavigationDrawerItem("News", NewsActivity.class, R.drawable.news));
-
+        mAdapter = new NavigationDrawerAdapter(navdrawer, false);
     }
 
     public void create() {
@@ -78,12 +91,9 @@ public class AppbarDrawerInclude  {
 
         mRecyclerView = (RecyclerView) mainActivity.findViewById(R.id.navdrawer_RecyclerView);
         mRecyclerView.setHasFixedSize(true);
-        mAdapter = new NavigationDrawerAdapter(navdrawer, false, mainActivity);
         mRecyclerView.setAdapter(mAdapter);
-
-
-
-        //drupalLoginButton.setOnClickListener(new DrupalLogin());
+        mAdapter.setMainActivity(mainActivity);
+        timeView = (TextView) mainActivity.findViewById(R.id.appbar_time);
 
         final GestureDetector mGestureDetector = new GestureDetector(mainActivity, new GestureDetector.SimpleOnGestureListener() {
             @Override public boolean onSingleTapUp(MotionEvent e) {
@@ -98,7 +108,7 @@ public class AppbarDrawerInclude  {
 
                 if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
                     int child_id = recyclerView.getChildPosition(child);
-                    if(child_id > 0) {
+                    if (child_id > 0) {
                         Drawer.closeDrawers();
                         Intent intent = new Intent(mainActivity.getApplicationContext(), navdrawer.getItems().get(child_id - 1).getIntent());
                         mainActivity.startActivity(intent);
@@ -147,8 +157,29 @@ public class AppbarDrawerInclude  {
     public void createMenu(Menu menu) {
         if(menu != null) {
             this.menu = menu;
-            mainActivity.getMenuInflater().inflate(R.menu.menu_main, this.menu);
+            mainActivity.getMenuInflater().inflate(R.menu.menu_main, menu);
+            item = menu.findItem(R.id.action_opened);
+            updateAppbar();
         }
+    }
+
+    private void updateAppbar() {
+        if (opened) {
+            item.setIcon(R.drawable.opened);
+            item.setTitle(R.string.appbar_opened);
+            timeView.setTextColor(mainActivity.getResources().getColor(R.color.AppbarColorOpened));
+            // } else if (!state.getOpen() && item.getTitle().toString().equals(mainActivity.getString(R.string.appbar_opened))) {
+        } else {
+            item.setIcon(R.drawable.closed);
+            item.setTitle(R.string.appbar_closed);
+            timeView.setTextColor(mainActivity.getResources().getColor(R.color.AppbarColorClosed));
+        }
+
+        timeView.setText(getTime(time));
+    }
+
+    public void setActivity(ActionBarActivity activity) {
+        this.mainActivity = activity;
     }
 
     class OpenedStateRunner implements Runnable {
@@ -169,7 +200,22 @@ public class AppbarDrawerInclude  {
         // Handler instead of TimerTask for opened / close state
         if(menu != null) {
             openedStateRunner = new OpenedStateRunner(menu);
-            openendStateHandler.postDelayed(openedStateRunner, FIRST_MILLIS);
+            openendStateHandler.post(openedStateRunner);
+        }
+    }
+
+    private String getTime(long time) {
+        if (time < 60)
+            return time + "m";
+        else if (time < (60 * 24)) {
+            long hours = time / 60;
+            long minutes = time % 60;
+            if (minutes == 0)
+                return hours + "h";
+            else
+                return hours + "h " + minutes + "m";
+        } else {
+            return "";
         }
     }
 
@@ -186,38 +232,19 @@ public class AppbarDrawerInclude  {
                 // success
                 State state = hackerSpace.getState();
                 if (state != null) {
-                    TextView timeView = (TextView) mainActivity.findViewById(R.id.appbar_time);
-
                     double currentMillis = System.currentTimeMillis() / 1000L;
                     double millisDelta = (currentMillis - state.getLastchange()) / 60;
-                    long time = new Double(millisDelta).longValue();
+                    time = new Double(millisDelta).longValue();
 
-                    if (state.getOpen() && item.getTitle().toString().equals(mainActivity.getString(R.string.appbar_closed))) {
-                        item.setIcon(R.drawable.opened);
-                        item.setTitle(R.string.appbar_opened);
-                        timeView.setTextColor(mainActivity.getResources().getColor(R.color.AppbarColorOpened));
-                    } else if (!state.getOpen() && item.getTitle().toString().equals(mainActivity.getString(R.string.appbar_opened))) {
-                        item.setIcon(R.drawable.closed);
-                        item.setTitle(R.string.appbar_closed);
-                        timeView.setTextColor(mainActivity.getResources().getColor(R.color.AppbarColorClosed));
+                    if (state.getOpen()) {
+                        opened = true;
+                    } else {
+                        opened = false;
                     }
-                    timeView.setText(getTime(time));
-                    openedMessage = state.getMessage();
-                }
-            }
 
-            private String getTime(long time) {
-                if(time < 60)
-                    return time + "m";
-                else if(time < (60*24)) {
-                    long hours = time / 60;
-                    long minutes = time % 60;
-                    if(minutes == 0)
-                        return hours + "h";
-                    else
-                        return hours + "h " + minutes + "m";
-                } else {
-                    return "";
+                    updateAppbar();
+
+                    openedMessage = state.getMessage();
                 }
             }
 
