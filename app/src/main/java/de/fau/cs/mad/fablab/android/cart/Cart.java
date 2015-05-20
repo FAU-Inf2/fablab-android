@@ -231,6 +231,11 @@ public enum Cart {
         return false;
     }
 
+    public void removeAllEntries() {
+        dao.delete(products);
+        products.clear();
+    }
+
     // add product to cart
     public void addProduct(Product product){
         // update existing cart entry
