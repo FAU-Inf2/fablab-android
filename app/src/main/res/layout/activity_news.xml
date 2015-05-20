@@ -18,7 +18,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingTop="@dimen/news_activity_actionbar_recyclerview_margin"
             android:orientation="vertical"
             android:layout_below="@+id/appbar">
@@ -26,7 +26,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/dates_view_pager"
                 android:layout_width="match_parent"
-                android:layout_height="130dp">
+                android:layout_height="@dimen/news_activity_dates_viewpager_height">
             </android.support.v4.view.ViewPager>
 
             <android.support.v7.widget.RecyclerView

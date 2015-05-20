@@ -1,6 +1,9 @@
 package de.fau.cs.mad.fablab.android.ui;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +11,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,11 +24,15 @@ import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
+import de.fau.cs.mad.fablab.rest.api.ICalApi;
+import de.fau.cs.mad.fablab.rest.core.ICal;
+import de.fau.cs.mad.fablab.rest.core.News;
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
@@ -39,9 +47,9 @@ public class NewsActivity extends RoboActionBarActivity {
     @InjectView(R.id.dates_view_pager) ViewPager datesViewPager;
     private DatesSlidePagerAdapter datesSlidePagerAdapter;
     private RecyclerView.LayoutManager newsLayoutManager;
-    //private RecyclerView.LayoutManager datesLayoutManager;
     private NewsAdapter newsAdapter;
-    //private DatesAdapter datesAdapter;
+
+    private ICalApi icalApi;
 
     private AppbarDrawerInclude appbarDrawer;
 
@@ -49,8 +57,8 @@ public class NewsActivity extends RoboActionBarActivity {
     static final String TITLE = "TITLE";
     static final String TEXT = "TEXT";
 
-    static final String LIST= "LIST";
-    static final String POSITION = "POSITION";
+    static final String ICAL1 = "ICAL1";
+    static final String ICAL2 = "ICAL2";
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -68,24 +76,30 @@ public class NewsActivity extends RoboActionBarActivity {
         testNews.add("News1");
         testNews.add("News2");
         testNews.add("News3");
-        newsAdapter = new NewsAdapter(testNews);
+        List<News> listNews = new ArrayList<>();
+        News news1 = new News(); news1.setLinkToPreviewImage(null);news1.setTitle("News 1"); news1.setDescription("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
+        listNews.add(news1);
+        News news2 = new News(); news2.setLinkToPreviewImage(null);news2.setTitle("News 2"); news2.setDescription("blablablablabla");
+        listNews.add(news2);
+        News news3 = new News(); news3.setLinkToPreviewImage("http://www.jpl.nasa.gov/spaceimages/images/mediumsize/PIA17011_ip.jpg");news3.setTitle("News 3"); news3.setDescription("texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttext");
+        listNews.add(news3);
+        newsAdapter = new NewsAdapter(listNews);
         news.setLayoutManager(newsLayoutManager);
         news.setAdapter(newsAdapter);
 
-        //datesLayoutManager = new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false);
+        List<ICal> listDates = new ArrayList<>();
+        ICal date1 = new ICal(); date1.setLocation("Fablab"); date1.setSummery("OpenLab");
+        listDates.add(date1);
+        ICal date2 = new ICal(); date2.setLocation("Fablab"); date2.setSummery("SelfLab");
+        listDates.add(date2);
+        ICal date3 = new ICal(); date3.setLocation("Cafete"); date3.setSummery("Kaffeetrinken");
+        listDates.add(date3);
+        ICal date4 = new ICal(); date4.setLocation("ziemlich lange location"); date4.setSummery("ziemlich langer Veranstaltungstitel");
+        listDates.add(date4);
+        ICal date5 = new ICal(); date5.setLocation("CIP"); date5.setSummery("Test ungerade");
+        listDates.add(date5);
 
-        ArrayList<String> testDates = new ArrayList<>();
-        testDates.add("Selflab");
-        testDates.add("Open Lab");
-        testDates.add("Versammlung");
-        /*
-        datesAdapter = new DatesAdapter(testDates);
-        dates.setLayoutManager(datesLayoutManager);
-        dates.setAdapter(datesAdapter);
-        */
-
-
-        datesSlidePagerAdapter = new DatesSlidePagerAdapter(getSupportFragmentManager(), testDates);
+        datesSlidePagerAdapter = new DatesSlidePagerAdapter(getSupportFragmentManager(), listDates);
         datesViewPager.setAdapter(datesSlidePagerAdapter);
 
 
@@ -139,7 +153,7 @@ public class NewsActivity extends RoboActionBarActivity {
 
     public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
 
-        private List<String> news = new ArrayList<String>();
+        private List<News> news = new ArrayList<>();
 
         @Override
         public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -149,8 +163,7 @@ public class NewsActivity extends RoboActionBarActivity {
 
         @Override
         public void onBindViewHolder(NewsViewHolder holder, int position) {
-            holder.setNews(news.get(position), "texttexttexttexttexttexttexttexttexttexttexttexttexttexttext" +
-                    "texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttextext");
+            holder.setNews(news.get(position));
         }
 
         @Override
@@ -158,7 +171,7 @@ public class NewsActivity extends RoboActionBarActivity {
             return news.size();
         }
 
-        public NewsAdapter(List<String> newsList)
+        public NewsAdapter(List<News> newsList)
         {
             this.news = newsList;
         }
@@ -177,11 +190,15 @@ public class NewsActivity extends RoboActionBarActivity {
                 this.iconView = (ImageView) view.findViewById(R.id.icon_news_entry);
             }
 
-            public void setNews(String title, String subtitle)
+            public void setNews(News news)
             {
-                this.titleView.setText(title);
-                this.subTitleView.setText(subtitle);
-                //this.iconView.setImageDrawable(image.getDrawable());
+                this.titleView.setText(news.getTitle());
+                this.subTitleView.setText(news.getDescription());
+                if(news.getLinkToPreviewImage() != null) {
+                    new DownloadImageTask(iconView)
+                            .execute(news.getLinkToPreviewImage());
+                }
+
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -203,12 +220,12 @@ public class NewsActivity extends RoboActionBarActivity {
 
     private class DatesSlidePagerAdapter extends FragmentStatePagerAdapter {
 
-        ArrayList<String> dates = new ArrayList<>();
+        List<ICal> dates = new ArrayList<>();
         public DatesSlidePagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
-        public DatesSlidePagerAdapter(FragmentManager fm, ArrayList<String> dates)
+        public DatesSlidePagerAdapter(FragmentManager fm, List<ICal> dates)
         {
             super(fm);
             this.dates = dates;
@@ -216,69 +233,49 @@ public class NewsActivity extends RoboActionBarActivity {
 
         @Override
         public Fragment getItem(int position) {
-                int arrayPosition = position *2;
-                Bundle args = new Bundle();
-                args.putStringArrayList(LIST, dates);
-                args.putInt(POSITION, arrayPosition);
-                DatesFragment datesFragment = new DatesFragment();
-                datesFragment.setArguments(args);
-                return datesFragment;
+            int arrayPosition = position *2;
+
+            Bundle args = new Bundle();
+            args.putSerializable(ICAL1, dates.get(arrayPosition));
+            if(arrayPosition+1 < dates.size())
+            {
+                args.putSerializable(ICAL2, dates.get(arrayPosition+1));
+            }
+            DatesFragment datesFragment = new DatesFragment();
+            datesFragment.setArguments(args);
+            return datesFragment;
 
         }
 
         @Override
         public int getCount() {
-            return (int)(dates.size()+1)/2;
+            return (dates.size()+1)/2;
         }
     }
 
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
 
-    /*
-    public class DatesAdapter extends RecyclerView.Adapter<DatesAdapter.DatesViewHolder> {
-
-        private List<String> dates = new ArrayList<String>();
-
-        @Override
-        public DatesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.dates_entry, parent, false);
-            return new DatesViewHolder(view);
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
         }
 
-        @Override
-        public void onBindViewHolder(DatesViewHolder holder, int position) {
-            holder.setDates(dates.get(position), "29.05.2015", "10.00");
-        }
-
-        @Override
-        public int getItemCount() {
-            return dates.size();
-        }
-
-        public DatesAdapter(List<String> datesList)
-        {
-            this.dates = datesList;
-        }
-
-        public class DatesViewHolder extends RecyclerView.ViewHolder {
-
-            private final View view;
-            private final TextView titleView, dateView, timeView;
-
-            public DatesViewHolder(View view) {
-                super(view);
-                this.view = view;
-                this.titleView = (TextView) view.findViewById(R.id.title_dates_entry);
-                this.dateView = (TextView) view.findViewById(R.id.date_dates_entry);
-                this.timeView = (TextView) view.findViewById(R.id.time_dates_entry);
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
             }
+            return mIcon11;
+        }
 
-            public void setDates(String title, String date, String time)
-            {
-                this.titleView.setText(title);
-                this.dateView.setText(date);
-                this.timeView.setText(time);
-            }
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
         }
     }
-    */
+
 }
