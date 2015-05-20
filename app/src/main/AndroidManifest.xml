@@ -48,7 +48,8 @@
 
         <activity android:name=".ui.NewsActivity"/>
 
-        <activity android:name=".productMap.ProductMapActivity" />
+        <activity android:name=".productMap.ProductMapActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".productsearch.ProductSearchActivity"

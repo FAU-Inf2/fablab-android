@@ -14,53 +14,52 @@ import android.view.View;
 public class DrawingActivity extends View
 {
 
-    private FablabView view;
-    private int xCoord;
-    private int yCoord;
+    private FablabView fablabView;
+    private int positionX;
+    private int positionY;
+    private Canvas canvas;
+    private String locationName;
 
-    public DrawingActivity(Context context, int xCoord, int yCoord)
+
+
+    public DrawingActivity(Context context, FablabView fablabView, int positionX, int positionY, String locationName)
     {
         super(context);
-        view = FablabView.MAIN_ROOM;
-        this.xCoord = xCoord;
-        this.yCoord = yCoord;
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.fablabView = fablabView;
+        this.locationName = locationName;
     }
 
-    public void setCoords(int xCoord, int yCoord)
+    public void setDrawingParameter(FablabView fablabView, int positionX, int positionY)
     {
-        this.xCoord = xCoord;
-        this.yCoord = yCoord;
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.fablabView = fablabView;
     }
 
-    public void setView(FablabView view)
-    {
-        this.view = view;
-    }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(Canvas canvas)
+    {
         super.onDraw(canvas);
-
-        draw(canvas, xCoord, yCoord);
-
+        this.canvas = canvas;
+        draw();
     }
 
-    protected void draw(Canvas canvas, int x, int y)
+    protected void draw()
     {
-
-        switch (view)
+        switch (fablabView)
         {
             case MAIN_ROOM:
                 drawFablabLayout(canvas);
-                drawLocation(canvas, x, y);
+                drawLocation(canvas, positionX, positionY);
                 break;
             case ELECTRIC_WORKSHOP:
                 drawElectricWorkshop(canvas);
-                drawLocation(canvas, x, y);
+                drawLocation(canvas, positionX, positionY);
                 break;
         }
-
-
 
     }
 
@@ -87,6 +86,11 @@ public class DrawingActivity extends View
         shelfPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         shelfPaint.setStrokeWidth(10);
 
+        // text painting
+        Paint textPaint = new Paint();
+        textPaint.setColor(Color.BLACK);
+        textPaint.setTextSize(30);
+
         //contours
 
         // fablab contour
@@ -106,6 +110,7 @@ public class DrawingActivity extends View
         //shelf top top
         Rect shelfTop = new Rect(outerWall.left + padding, outerWall.top + 10, outerWall.right - 10, outerWall.top + 100);
         canvas.drawRect(shelfTop, shelfPaint);
+        canvas.drawText(FablabView.ELECTRIC_WORKSHOP.getProductName(), shelfTop.centerX(), shelfTop.centerY(), textPaint);
 
         //shelf top middle
         int centreOfRoom = (outerWall.centerY() - outerWall.top)/2;
@@ -113,13 +118,14 @@ public class DrawingActivity extends View
         canvas.drawRect(shelfTopMiddle, shelfPaint);
 
         // shelf top bottom
-        Rect shelfTopBottom = new Rect(outerWall.left + padding, outerWall.centerY() - 100, outerWall.right - 250, outerWall.centerY()-padding);
+        Rect shelfTopBottom = new Rect(outerWall.left + padding, outerWall.centerY() - 100, outerWall.right - 250, outerWall.centerY() - padding);
         canvas.drawRect(shelfTopBottom, shelfPaint);
 
     }
 
     private void drawElectricWorkshop(Canvas canvas)
     {
+
         int padding = 10;
         // paintings
         // room painting
@@ -128,12 +134,55 @@ public class DrawingActivity extends View
         roomPaint.setStyle(Paint.Style.STROKE);
         roomPaint.setStrokeWidth(10);
 
-        Rect outerWall = new Rect();
-        outerWall.set(padding, padding, canvas.getWidth() - padding, canvas.getHeight() - padding);
-        canvas.drawRect(outerWall, roomPaint);
+        Rect electricWorkshopOutline = new Rect();
+
+        if(canvas.getWidth() >= canvas.getHeight())
+        {
+            int height = canvas.getHeight()/2;
+            electricWorkshopOutline.set(padding, height/2, canvas.getWidth() - padding, canvas.getHeight() - height/2);
+        }
+        else
+        {
+            int width = canvas.getWidth()/2;
+            electricWorkshopOutline.set(width/2, padding, canvas.getWidth() - width/2, canvas.getHeight() - padding);
+        }
+        canvas.drawRect(electricWorkshopOutline, roomPaint);
+
+        //shelves
+        if(electricWorkshopOutline.width() >= electricWorkshopOutline.height())
+        {
+            canvas.drawLine(padding, electricWorkshopOutline.centerY(), canvas.getWidth() - padding, electricWorkshopOutline.centerY(), roomPaint);
+            canvas.drawLine(electricWorkshopOutline.centerX(), padding, electricWorkshopOutline.centerX(), canvas.getHeight() - padding, roomPaint);
+            canvas.drawLine(electricWorkshopOutline.centerX()/2, electricWorkshopOutline.top, electricWorkshopOutline.centerX()/2, electricWorkshopOutline.bottom, roomPaint);
+            canvas.drawLine(electricWorkshopOutline.right - electricWorkshopOutline.centerX()/2,electricWorkshopOutline.top, electricWorkshopOutline.right - electricWorkshopOutline.centerX()/2, electricWorkshopOutline.bottom, roomPaint );
+        }
+        else
+        {
+            canvas.drawLine(electricWorkshopOutline.centerX(), padding, electricWorkshopOutline.centerX(), canvas.getHeight() - padding, roomPaint);
+            canvas.drawLine(electricWorkshopOutline.left, electricWorkshopOutline.centerY(), electricWorkshopOutline.right, electricWorkshopOutline.centerY(), roomPaint);
+            canvas.drawLine(electricWorkshopOutline.left, electricWorkshopOutline.centerY()/2, electricWorkshopOutline.right, electricWorkshopOutline.centerY()/2, roomPaint);
+            canvas.drawLine(electricWorkshopOutline.left, electricWorkshopOutline.bottom - electricWorkshopOutline.centerY()/2, electricWorkshopOutline.right, electricWorkshopOutline.bottom - electricWorkshopOutline.centerY()/2, roomPaint );
+        }
+
+        // Description
+        Paint textBrush = new Paint();
+        textBrush.setColor(Color.BLACK);
+        textBrush.setTextSize(50);
+
+        String description = "Electric Workshop";
+
+        if(canvas.getWidth() >= canvas.getHeight())
+            canvas.drawText(description, electricWorkshopOutline.centerX(), padding, textBrush);
+        else
+        {
+            canvas.save();
+            canvas.rotate(-90, padding + 50, electricWorkshopOutline.bottom - padding);
+            canvas.drawText(description, padding+50, electricWorkshopOutline.bottom - padding, textBrush);
+            canvas.restore();
+        }
     }
 
-    private void drawLocation(Canvas canvas, int x, int y)
+    private void drawLocation(Canvas canvas, int positionX, int positionY)
     {
         Paint locationBrush = new Paint();
         locationBrush.setColor(Color.RED);
@@ -145,11 +194,8 @@ public class DrawingActivity extends View
         textBrush.setColor(Color.BLACK);
         textBrush.setTextSize(30);
 
-
-        //canvas.drawRect(outerWall, room);
-        //canvas.drawRect(cupboard, room);
-        canvas.drawCircle(canvas.getWidth() - x, canvas.getHeight()/2 - y, 20, locationBrush);
-        canvas.drawText("Regal 41", canvas.getWidth() - x, canvas.getHeight()/2 - y, textBrush );
+        canvas.drawCircle(positionX, positionY, 20, locationBrush);
+        canvas.drawText(locationName, positionX, positionY, textBrush );
     }
 
 
