@@ -4,15 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
-import com.j256.ormlite.dao.RuntimeExceptionDao;
-
 import java.util.regex.Pattern;
 
 import de.fau.cs.mad.fablab.android.cart.AddToCartDialog;
-import de.fau.cs.mad.fablab.android.cart.Cart;
-import de.fau.cs.mad.fablab.android.db.DatabaseHelper;
 import de.fau.cs.mad.fablab.rest.ProductApiClient;
-import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.fau.cs.mad.fablab.rest.core.Product;
 import eu.livotov.zxscan.ScannerView;
 import retrofit.Callback;
@@ -27,7 +22,6 @@ public class BarcodeScannerActivity extends ActionBarActivity
     private long lastTimeScanned;
     private boolean isDialogStarted;
     private Pattern barcodePattern = Pattern.compile("200(00000)?\\d{5}");
-    private Product scannedProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,26 +62,30 @@ public class BarcodeScannerActivity extends ActionBarActivity
             }
             productId /= 10;
 
+            final AddToCartDialog.DialogListener listener = this;
             ProductApiClient productApiClient = new ProductApiClient(this);
             productApiClient.get().findById(productId, new Callback<Product>() {
                 @Override
                 public void success(Product product, Response response) {
-                    scannedProduct = product;
-                    AddToCartDialog.newInstance(product.getName(), product.getUnit(),
-                            product.getPrice()).show(getSupportFragmentManager(), "add_to_cart");
+                    startAddToCartDialog(product, listener);
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     Log.e(TAG, error.getMessage());
-                    AddToCartDialog.newInstance().show(getSupportFragmentManager(),
-                            "add_to_cart");
+                    startAddToCartDialog(null, listener);
                 }
             });
             return true;
         }
         isDialogStarted = false;
         return false;
+    }
+
+    private void startAddToCartDialog(Product product, AddToCartDialog.DialogListener listener) {
+        AddToCartDialog dialog = AddToCartDialog.newInstance(product);
+        dialog.setDialogListener(listener);
+        dialog.show(getSupportFragmentManager(), "add_to_cart_dialog");
     }
 
     @Override
@@ -101,15 +99,7 @@ public class BarcodeScannerActivity extends ActionBarActivity
     }
 
     @Override
-    public void onDialogPositiveClick() {
-        Product product = scannedProduct;
-        isDialogStarted = false;
-
-        Cart.MYCART.addProduct(product);
-    }
-
-    @Override
-    public void onDialogNegativeClick() {
+    public void onDialogDismissed() {
         isDialogStarted = false;
     }
 }

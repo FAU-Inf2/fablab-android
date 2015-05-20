@@ -1,6 +1,5 @@
 package de.fau.cs.mad.fablab.android.cart;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -11,29 +10,19 @@ import android.view.View;
 import android.widget.TextView;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class AddToCartDialog extends DialogFragment {
     public interface DialogListener {
-        void onDialogPositiveClick();
-        void onDialogNegativeClick();
+        void onDialogDismissed();
     }
 
     private DialogListener listener;
 
-    public static AddToCartDialog newInstance(String name, String unit, double price) {
+    public static AddToCartDialog newInstance(Product product) {
         AddToCartDialog dialog = new AddToCartDialog();
         Bundle bundle = new Bundle();
-        bundle.putString("name", name);
-        bundle.putString("unit", unit);
-        bundle.putDouble("price", price);
-        dialog.setArguments(bundle);
-        return dialog;
-    }
-
-    public static AddToCartDialog newInstance() {
-        AddToCartDialog dialog = new AddToCartDialog();
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("product_not_found", true);
+        bundle.putSerializable("product", product);
         dialog.setArguments(bundle);
         return dialog;
     }
@@ -42,51 +31,35 @@ public class AddToCartDialog extends DialogFragment {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        if (!getArguments().getBoolean("product_not_found")) {
+        final Product product = (Product) getArguments().getSerializable("product");
+        if (product != null) {
             View v = View.inflate(getActivity(), R.layout.dialog_add_to_cart, null);
-            String name = getArguments().getString("name");
-            String unit = getArguments().getString("unit");
-            double price = getArguments().getDouble("price");
-            ((TextView) v.findViewById(R.id.add_to_cart_name)).setText(name);
-            ((TextView) v.findViewById(R.id.add_to_cart_price)).setText(price + "€"
-                    + getResources().getString(R.string.price_per_unit) + unit);
+            ((TextView) v.findViewById(R.id.add_to_cart_name)).setText(product.getName());
+            ((TextView) v.findViewById(R.id.add_to_cart_price)).setText(product.getPrice() + "€ "
+                    + getResources().getString(R.string.price_per_unit) + " " + product.getUnit());
             builder.setView(v)
                     .setPositiveButton(R.string.add_to_cart, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
-                            listener.onDialogPositiveClick();
+                            Cart.MYCART.addProduct(product);
                         }
                     })
-                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            listener.onDialogNegativeClick();
-                        }
-                    });
+                    .setNegativeButton(android.R.string.cancel, null);
         } else {
             builder.setMessage(R.string.product_not_found);
-            builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    listener.onDialogNegativeClick();
-                }
-            });
+            builder.setPositiveButton(android.R.string.ok, null);
         }
         return builder.create();
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            listener = (DialogListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException((activity.toString() + "must implement DialogListener"));
+    public void onDismiss(DialogInterface dialog) {
+        if (listener != null) {
+            listener.onDialogDismissed();
         }
     }
 
-    @Override
-    public void onCancel(DialogInterface dialog) {
-        listener.onDialogNegativeClick();
+    public void setDialogListener(DialogListener listener) {
+        this.listener = listener;
     }
 }

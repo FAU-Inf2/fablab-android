@@ -34,7 +34,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class ProductSearchActivity extends ActionBarActivity
-        implements ProductDialog.ProductDialogListener, AddToCartDialog.DialogListener {
+        implements ProductDialog.ProductDialogListener {
 
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerViewAdapter productAdapter;
@@ -189,25 +189,12 @@ public class ProductSearchActivity extends ActionBarActivity
         //dismiss product dialog
         productDialog.dismiss();
         //show add to cart dialog
-        AddToCartDialog.newInstance(selectedProduct.getName(), selectedProduct.getUnit(),
-                selectedProduct.getPrice()).show(getSupportFragmentManager(), "add_to_cart_dialog");
+        AddToCartDialog.newInstance(selectedProduct).show(getSupportFragmentManager(),
+                "add_to_cart_dialog");
     }
 
     @Override
     public void onReportClick() {
         //report missing product
-    }
-
-
-    @Override
-    public void onDialogPositiveClick() {
-        //add selected product to cart
-        Cart.MYCART.addProduct(selectedProduct);
-    }
-
-    @Override
-    public void onDialogNegativeClick() {
-        //do nothing
-        return;
     }
 }
