@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import de.fau.cs.mad.fablab.android.cart.Cart;
 import de.fau.cs.mad.fablab.android.cart.CartActivity;
+import de.fau.cs.mad.fablab.android.cart.CheckoutActivity;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.android.productsearch.ProductSearchActivity;
 import de.fau.cs.mad.fablab.android.ui.NewsActivity;
@@ -24,7 +25,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        appbarDrawer = new AppbarDrawerInclude(this);
+        appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
 
         // init db and cart - always do this on app start
@@ -87,5 +88,8 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-
+    public void startCheckout(View view) {
+        Intent intent = new Intent(this, CheckoutActivity.class);
+        startActivity(intent);
+    }
 }

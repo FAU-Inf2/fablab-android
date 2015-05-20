@@ -7,7 +7,8 @@
     android:weightSum="2"
     >
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -30,6 +31,7 @@
 
             <TextView
                 android:id="@+id/title_dates_entry_left"
+                android:singleLine="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
@@ -101,6 +103,19 @@
                         android:layout_marginTop="-3dp"
                         />
 
+                    <TextView
+                        android:id="@+id/location_dates_entry_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:text="Subtitle"
+                        android:singleLine="true"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/dates_entry_icon_date_margin"
+                        android:layout_toRightOf="@+id/icon_dates_entry"
+                        android:layout_marginTop="-3dp"
+                        />
+
                 </LinearLayout>
 
             </RelativeLayout>
@@ -134,6 +149,7 @@
                 android:id="@+id/title_dates_entry_right"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:gravity="left"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
@@ -192,6 +208,19 @@
 
                     <TextView
                         android:id="@+id/time_dates_entry_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        android:text="Subtitle"
+                        android:singleLine="true"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/dates_entry_icon_date_margin"
+                        android:layout_toRightOf="@+id/icon_dates_entry"
+                        android:layout_marginTop="-3dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/location_dates_entry_right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/white"

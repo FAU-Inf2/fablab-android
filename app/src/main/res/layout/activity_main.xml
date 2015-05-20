@@ -56,8 +56,16 @@
             android:onClick="startNewsActivity"
             android:layout_below="@+id/button_product_search"
             android:layout_centerHorizontal="true" />
-    
-    
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button_start_paying"
+            android:layout_below="@+id/news_activity"
+            android:layout_centerHorizontal="true"
+            android:onClick="startCheckout"
+            android:text="Checkout" />
+
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView

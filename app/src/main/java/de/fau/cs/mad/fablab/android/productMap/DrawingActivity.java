@@ -118,7 +118,7 @@ public class DrawingActivity extends View
         canvas.drawRect(shelfTopMiddle, shelfPaint);
 
         // shelf top bottom
-        Rect shelfTopBottom = new Rect(outerWall.left + padding, outerWall.centerY() - 100, outerWall.right - 250, outerWall.centerY()-padding);
+        Rect shelfTopBottom = new Rect(outerWall.left + padding, outerWall.centerY() - 100, outerWall.right - 250, outerWall.centerY() - padding);
         canvas.drawRect(shelfTopBottom, shelfPaint);
 
     }

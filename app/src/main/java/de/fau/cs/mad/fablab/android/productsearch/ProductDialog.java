@@ -1,9 +1,8 @@
 package de.fau.cs.mad.fablab.android.productsearch;
 
-import android.app.Application;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +11,19 @@ import android.view.Window;
 import android.widget.TextView;
 
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.cart.CartActivity;
-import de.fau.cs.mad.fablab.android.productMap.ProductMapActivity;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class ProductDialog extends DialogFragment {
 
+    public interface ProductDialogListener {
+        void onShowLocationClick();
+        void onAddToCartClick();
+        void onReportClick();
+    }
+
     public static final String      PRODUCT_KEY = "product_key";
     private Product                 product;
+    private ProductDialogListener   productDialogListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,26 +50,19 @@ public class ProductDialog extends DialogFragment {
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //show location
-                Intent intent = new Intent(getActivity(), ProductMapActivity.class);
-
-                //TODO: send product location to activity
-                //intent.putExtra("location",location)
-                startActivity(intent);
-
+                productDialogListener.onShowLocationClick();
             }
         });
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //add to cart
-
+                productDialogListener.onAddToCartClick();
             }
         });
         report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //report
+                productDialogListener.onReportClick();
 
             }
         });
@@ -81,6 +78,17 @@ public class ProductDialog extends DialogFragment {
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
         return dialog;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            productDialogListener = (ProductDialogListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException((activity.toString() +
+                    "must implement ProductDialogListener"));
+        }
     }
 
 

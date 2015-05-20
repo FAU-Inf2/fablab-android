@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,11 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.cart.AddToCartDialog;
 import de.fau.cs.mad.fablab.android.cart.Cart;
 import de.fau.cs.mad.fablab.android.cart.RecyclerItemClickListener;
 import de.fau.cs.mad.fablab.android.cart.RecyclerViewAdapter;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
-import de.fau.cs.mad.fablab.android.productsearch.ProductDialog;
+import de.fau.cs.mad.fablab.android.productMap.ProductMapActivity;
 import de.fau.cs.mad.fablab.rest.ProductApiClient;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.fau.cs.mad.fablab.rest.core.Product;
@@ -33,7 +33,8 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class ProductSearchActivity extends ActionBarActivity {
+public class ProductSearchActivity extends ActionBarActivity
+        implements ProductDialog.ProductDialogListener {
 
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerViewAdapter productAdapter;
@@ -43,6 +44,8 @@ public class ProductSearchActivity extends ActionBarActivity {
     private ArrayList<Product> productEntries;
     //our rest-callback interface
     private ProductApi mProductApi;
+    private ProductDialog productDialog;
+    private Product selectedProduct;
 
     //This callback is used for product Search.
     private Callback<List<Product>> mSearchCallback = new Callback<List<Product>>() {
@@ -68,7 +71,7 @@ public class ProductSearchActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_search);
 
-        appbarDrawer = new AppbarDrawerInclude(this);
+        appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
 
         // Setting up Basket and SlidingUpPanel
@@ -95,13 +98,14 @@ public class ProductSearchActivity extends ActionBarActivity {
 
             @Override
             public void onItemClick(View view, int position) {
+                //set selected product
+                selectedProduct = productEntries.get(position);
                 //show dialog
                 Bundle arguments = new Bundle();
-                arguments.putSerializable(ProductDialog.PRODUCT_KEY, productEntries.get(position));
-                ProductDialog dialog = new ProductDialog();
-                dialog.setArguments(arguments);
-                dialog.show(getFragmentManager(), "product_dialog");
-
+                arguments.putSerializable(ProductDialog.PRODUCT_KEY, selectedProduct);
+                productDialog = new ProductDialog();
+                productDialog.setArguments(arguments);
+                productDialog.show(getFragmentManager(), "product_dialog");
             }
 
             @Override
@@ -173,4 +177,24 @@ public class ProductSearchActivity extends ActionBarActivity {
         mProductApi.findByName(query, 0, 0, mSearchCallback);
     }
 
+    @Override
+    public void onShowLocationClick() {
+        //show location
+        Intent intent = new Intent(this, ProductMapActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onAddToCartClick() {
+        //dismiss product dialog
+        productDialog.dismiss();
+        //show add to cart dialog
+        AddToCartDialog.newInstance(selectedProduct).show(getSupportFragmentManager(),
+                "add_to_cart_dialog");
+    }
+
+    @Override
+    public void onReportClick() {
+        //report missing product
+    }
 }

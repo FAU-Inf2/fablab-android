@@ -77,7 +77,6 @@
     </LinearLayout>
 
     <include
-        android:id="@+id/fab_button"
         layout="@layout/fab_button" />
 
 </RelativeLayout>
