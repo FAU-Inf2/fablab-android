@@ -2,6 +2,7 @@ package de.fau.cs.mad.fablab.android.ui;
 
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -23,6 +24,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fau.cs.mad.fablab.android.FabButton;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import roboguice.activity.RoboActionBarActivity;
@@ -32,9 +34,6 @@ import roboguice.inject.InjectView;
 @ContentView(R.layout.activity_news)
 public class NewsActivity extends RoboActionBarActivity {
 
-    @InjectView(R.id.shopping_cart_FAM) FloatingActionMenu shoppingCartButton;
-    @InjectView(R.id.search_FAB) FloatingActionButton searchButton;
-    @InjectView(R.id.scan_FAB) FloatingActionButton scanButton;
     @InjectView(R.id.news) RecyclerView news;
     @InjectView(R.id.dates_view_pager) ViewPager datesViewPager;
     private DatesSlidePagerAdapter datesSlidePagerAdapter;
@@ -59,8 +58,8 @@ public class NewsActivity extends RoboActionBarActivity {
         appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
 
-        //no animations of the shopping cart when clicked
-        shoppingCartButton.setIconAnimated(false);
+        // init Floating Action Menu
+        FabButton.MYFABUTTON.init(findViewById(android.R.id.content));
 
         //get news and set them
         newsLayoutManager = new LinearLayoutManager(this);
@@ -89,19 +88,6 @@ public class NewsActivity extends RoboActionBarActivity {
         datesViewPager.setAdapter(datesSlidePagerAdapter);
 
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        scanButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     @Override

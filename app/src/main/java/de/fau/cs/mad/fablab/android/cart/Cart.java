@@ -210,6 +210,8 @@ public enum Cart {
             if(temp.getProductId() == entry.getProductId()){
                 temp.setAmount(entry.getAmount());
                 dao.update(temp);
+                adapter.notifyDataSetChanged();
+                refreshTotalPrice();
             }
         }
     }
@@ -220,6 +222,8 @@ public enum Cart {
             if(products.get(i).getProductId() == entry.getProductId()){
                 dao.delete(entry);
                 products.remove(i);
+                adapter.notifyDataSetChanged();
+                refreshTotalPrice();
                 return true;
             }
         }
@@ -234,6 +238,8 @@ public enum Cart {
             if (temp.getProductId() == product.getProductId()){
                 temp.setAmount(temp.getAmount() + 1);
                 dao.update(temp);
+                adapter.notifyDataSetChanged();
+                refreshTotalPrice();
                 return;
             }
         }
@@ -242,6 +248,8 @@ public enum Cart {
         CartEntry new_entry = new CartEntry(product,1);
         dao.create(new_entry);
         products.add(new_entry);
+        adapter.notifyDataSetChanged();
+        refreshTotalPrice();
     }
 
     // return total price

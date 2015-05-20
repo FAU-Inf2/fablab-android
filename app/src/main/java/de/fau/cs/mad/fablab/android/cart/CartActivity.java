@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import de.fau.cs.mad.fablab.android.FabButton;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
@@ -31,6 +32,9 @@ public class CartActivity extends ActionBarActivity{
 
         // Setting up Basket without SlidingUpPanel
         Cart.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), false);
+
+        // Setting up FloatingButton
+        FabButton.MYFABUTTON.init(findViewById(android.R.id.content));
 
     }
 
