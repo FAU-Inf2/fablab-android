@@ -21,16 +21,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
-
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fau.cs.mad.fablab.android.FabButton;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
-import de.fau.cs.mad.fablab.rest.api.ICalApi;
 import de.fau.cs.mad.fablab.rest.core.ICal;
 import de.fau.cs.mad.fablab.rest.core.News;
 import roboguice.activity.RoboActionBarActivity;
@@ -40,16 +37,11 @@ import roboguice.inject.InjectView;
 @ContentView(R.layout.activity_news)
 public class NewsActivity extends RoboActionBarActivity {
 
-    @InjectView(R.id.shopping_cart_FAM) FloatingActionMenu shoppingCartButton;
-    @InjectView(R.id.search_FAB) FloatingActionButton searchButton;
-    @InjectView(R.id.scan_FAB) FloatingActionButton scanButton;
     @InjectView(R.id.news) RecyclerView news;
     @InjectView(R.id.dates_view_pager) ViewPager datesViewPager;
     private DatesSlidePagerAdapter datesSlidePagerAdapter;
     private RecyclerView.LayoutManager newsLayoutManager;
     private NewsAdapter newsAdapter;
-
-    private ICalApi icalApi;
 
     private AppbarDrawerInclude appbarDrawer;
 
@@ -64,11 +56,11 @@ public class NewsActivity extends RoboActionBarActivity {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        appbarDrawer = new AppbarDrawerInclude(this);
+        appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
 
-        //no animations of the shopping cart when clicked
-        shoppingCartButton.setIconAnimated(false);
+        // init Floating Action Menu
+        FabButton.MYFABUTTON.init(findViewById(android.R.id.content));
 
         //get news and set them
         newsLayoutManager = new LinearLayoutManager(this);
@@ -103,19 +95,6 @@ public class NewsActivity extends RoboActionBarActivity {
         datesViewPager.setAdapter(datesSlidePagerAdapter);
 
 
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        scanButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     @Override

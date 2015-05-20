@@ -23,5 +23,9 @@
     <dimen name="news_activity_dates_viewpager_height">150dp</dimen>
 
     <dimen name="dates_entry_icon_date_margin">10dp</dimen>
+
     <dimen name="dates_entry_event_icon_size">50dp</dimen>
+
+    <dimen name="product_dialog_margin">24dp</dimen>
+
 </resources>
