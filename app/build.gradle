@@ -57,6 +57,8 @@ android {
 
 dependencies {
     compile files('../../fablab-common/build/libs/fablab-common-1.0.jar')
+    // jackson annotations are required for POJOs
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.1.4'
     compile 'com.android.support:appcompat-v7:21.0.0'
     // Libraries for the REST Client (Retrofit)
     compile 'com.squareup.retrofit:retrofit:1.6.1'
