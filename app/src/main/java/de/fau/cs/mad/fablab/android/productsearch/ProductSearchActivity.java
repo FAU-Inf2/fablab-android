@@ -18,6 +18,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fau.cs.mad.fablab.android.FabButton;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.cart.AddToCartDialog;
 import de.fau.cs.mad.fablab.android.cart.Cart;
@@ -76,6 +77,9 @@ public class ProductSearchActivity extends ActionBarActivity
 
         // Setting up Basket and SlidingUpPanel
         Cart.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), true);
+
+        // init Floating Action Menu
+        FabButton.MYFABUTTON.init(findViewById(android.R.id.content));
 
         //get search view and set searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
