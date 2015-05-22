@@ -2,8 +2,11 @@ package de.fau.cs.mad.fablab.android.cart;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -71,7 +74,7 @@ public enum Cart {
                                     adapter.notifyItemRemoved(position);
                                 }
                                 adapter.notifyDataSetChanged();
-                                refreshTotalPrice();
+                                refresh();
                             }
 
                             @Override
@@ -81,7 +84,7 @@ public enum Cart {
                                     adapter.notifyItemRemoved(position);
                                 }
                                 adapter.notifyDataSetChanged();
-                                refreshTotalPrice();
+                                refresh();
                             }
                         });
 
@@ -90,12 +93,7 @@ public enum Cart {
         // Set up listeners to be able to change the quantity for a product in the cart (popup)
         cart_rv.addOnItemTouchListener(new RecyclerItemClickListener(context, cart_rv, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                Toast.makeText(context, R.string.cart_entry_popup_info, Toast.LENGTH_SHORT).show();
-            }
-            @Override
-            public void onItemLongClick(View view, final int position)
-            {
+            public void onItemClick(View view, final int position) {
                 dialog = new Dialog(context);
                 dialog.setContentView(R.layout.cart_entry_dialog);
                 dialog.setTitle(R.string.cart_entry_popup_title);
@@ -140,7 +138,7 @@ public enum Cart {
                             Cart.MYCART.updateEntry(products.get(position));
                             adapter.notifyItemChanged(position);
                         }
-                        refreshTotalPrice();
+                        refresh();
                         dialog.dismiss();
                     }
                 });
@@ -148,12 +146,17 @@ public enum Cart {
                 // open popup
                 dialog.show();
             }
+            @Override
+            public void onItemLongClick(View view, final int position)
+            {
+
+            }
 
         }));
 
 
         // set total price
-        refreshTotalPrice();
+        refresh();
 
         // Basket empty?
         if(products.size() == 0){
@@ -163,40 +166,58 @@ public enum Cart {
         // Set up Sliding up Panel
         if(slidingUp) {
             mLayout = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
+
+            // only the top should be draggable
+            mLayout.setDragView(view.findViewById(R.id.dragPart));
+
+
             mLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
                 @Override
                 public void onPanelSlide(View panel, float slideOffset) {
-                    Log.i("app", "onPanelSlide, offset " + slideOffset);
+                    View bg = view.findViewById(R.id.dragPart);
+                    Drawable background = bg.getBackground();
+                    background.setAlpha(255 - (int) (slideOffset*255));
+
+                    TextView cart_title_closed = (TextView) view.findViewById(R.id.cart_title_closed);
+                    cart_title_closed.setAlpha(1 - slideOffset);
+                    TextView cart_title_opened = (TextView) view.findViewById(R.id.cart_title_opened);
+                    cart_title_opened.setAlpha(slideOffset);
+                    TextView total_price_top = (TextView) view.findViewById(R.id.cart_total_price_preview);
+                    total_price_top.setAlpha(1 - slideOffset);
                 }
 
                 @Override
                 public void onPanelExpanded(View panel) {
-                    Log.i("app", "onPanelExpanded");
+                    //Log.i("app", "onPanelExpanded");
 
                 }
 
                 @Override
                 public void onPanelCollapsed(View panel) {
-                    Log.i("app", "onPanelCollapsed");
+                    //Log.i("app", "onPanelCollapsed");
                 }
 
                 @Override
                 public void onPanelAnchored(View panel) {
-                    Log.i("app", "onPanelAnchored");
+                   //Log.i("app", "onPanelAnchored");
                 }
 
                 @Override
                 public void onPanelHidden(View panel) {
-                    Log.i("app", "onPanelHidden");
+                    //Log.i("app", "onPanelHidden");
                 }
             });
         }
     }
 
-    // refresh TextView of the total price
-    private void refreshTotalPrice(){
+    // refresh TextView of the total price and #items in cart
+    private void refresh(){
         TextView total_price = (TextView) view.findViewById(R.id.cart_total_price);
         total_price.setText(Cart.MYCART.totalPrice() + " €");
+        String base = " <b>" + products.size() + " Artikel" +
+                "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + Cart.MYCART.totalPrice() + " €</b>";
+        TextView total_price_top = (TextView) view.findViewById(R.id.cart_total_price_preview);
+        total_price_top.setText(Html.fromHtml(base));
     }
 
     // returns all existing products of the cart
@@ -211,7 +232,7 @@ public enum Cart {
                 temp.setAmount(entry.getAmount());
                 dao.update(temp);
                 adapter.notifyDataSetChanged();
-                refreshTotalPrice();
+                refresh();
             }
         }
     }
@@ -223,7 +244,7 @@ public enum Cart {
                 dao.delete(entry);
                 products.remove(i);
                 adapter.notifyDataSetChanged();
-                refreshTotalPrice();
+                refresh();
                 return true;
             }
         }
@@ -244,7 +265,7 @@ public enum Cart {
                 temp.setAmount(temp.getAmount() + 1);
                 dao.update(temp);
                 adapter.notifyDataSetChanged();
-                refreshTotalPrice();
+                refresh();
                 return;
             }
         }
@@ -254,7 +275,7 @@ public enum Cart {
         dao.create(new_entry);
         products.add(new_entry);
         adapter.notifyDataSetChanged();
-        refreshTotalPrice();
+        refresh();
     }
 
     // return total price

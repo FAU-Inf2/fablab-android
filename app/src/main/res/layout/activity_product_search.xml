@@ -6,14 +6,23 @@
     android:layout_height="match_parent"
     android:elevation="7dp">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            android:id="@+id/appbar"
+            layout="@layout/appbar" />
+    </RelativeLayout>
+
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
         xmlns:sothree="http://schemas.android.com/apk/res-auto"
         android:id="@+id/sliding_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
         android:gravity="bottom"
-        sothree:umanoPanelHeight="68dp"
-        sothree:umanoShadowHeight="4dp"
+        sothree:umanoPanelHeight="40dp"
+        sothree:umanoShadowHeight="0dp"
         sothree:umanoParalaxOffset="100dp"
         sothree:umanoDragView="@+id/dragView"
         sothree:umanoOverlay="true">
@@ -23,13 +32,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include
-                android:id="@+id/appbar"
-                layout="@layout/appbar" />
 
             <SearchView
                 android:id="@+id/product_search_view"
-                android:layout_below="@+id/appbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
