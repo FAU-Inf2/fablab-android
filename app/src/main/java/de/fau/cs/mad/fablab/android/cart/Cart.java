@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,6 +76,7 @@ public enum Cart {
                                 }
                                 adapter.notifyDataSetChanged();
                                 refresh();
+                                updateVisibility();
                             }
 
                             @Override
@@ -85,6 +87,7 @@ public enum Cart {
                                 }
                                 adapter.notifyDataSetChanged();
                                 refresh();
+                                updateVisibility();
                             }
                         });
 
@@ -132,8 +135,8 @@ public enum Cart {
                         products.get(position).setAmount(amount_new);
 
                         if(amount_new == 0.0){
-                            Cart.MYCART.removeEntry(products.get(position));
-                            adapter.notifyItemRemoved(position);
+                            Toast.makeText(context,  R.string.cart_entry_popup_valid_amount, Toast.LENGTH_LONG).show();
+                            return;
                         }else{
                             Cart.MYCART.updateEntry(products.get(position));
                             adapter.notifyItemChanged(position);
@@ -158,8 +161,8 @@ public enum Cart {
         // set total price
         refresh();
 
-        // Basket empty?
-        if(products.size() == 0){
+        // Basket empty? -> show msg if slidinguppanel is not used
+        if(products.size() == 0 && !slidingUp){
             Toast.makeText(context,  R.string.cart_empty, Toast.LENGTH_LONG).show();
         }
 
@@ -176,7 +179,7 @@ public enum Cart {
                 public void onPanelSlide(View panel, float slideOffset) {
                     View bg = view.findViewById(R.id.dragPart);
                     Drawable background = bg.getBackground();
-                    background.setAlpha(255 - (int) (slideOffset*255));
+                    background.setAlpha(255 - (int) (slideOffset * 255));
 
                     TextView cart_title_closed = (TextView) view.findViewById(R.id.cart_title_closed);
                     cart_title_closed.setAlpha(1 - slideOffset);
@@ -199,7 +202,7 @@ public enum Cart {
 
                 @Override
                 public void onPanelAnchored(View panel) {
-                   //Log.i("app", "onPanelAnchored");
+                    //Log.i("app", "onPanelAnchored");
                 }
 
                 @Override
@@ -207,6 +210,7 @@ public enum Cart {
                     //Log.i("app", "onPanelHidden");
                 }
             });
+            updateVisibility();
         }
     }
 
@@ -218,6 +222,16 @@ public enum Cart {
                 "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + Cart.MYCART.totalPrice() + " €</b>";
         TextView total_price_top = (TextView) view.findViewById(R.id.cart_total_price_preview);
         total_price_top.setText(Html.fromHtml(base));
+    }
+
+    // panel only visible if cart is not empty
+    private void updateVisibility(){
+        if(products.size() == 0){
+            mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            mLayout.setPanelHeight((int) (view.getResources().getDimension(R.dimen.zero) / view.getResources().getDisplayMetrics().density));
+        }else{
+            mLayout.setPanelHeight((int) view.getResources().getDimension(R.dimen.slidinguppanel_panel_height));
+        }
     }
 
     // returns all existing products of the cart
@@ -233,6 +247,7 @@ public enum Cart {
                 dao.update(temp);
                 adapter.notifyDataSetChanged();
                 refresh();
+                updateVisibility();
             }
         }
     }
@@ -245,6 +260,7 @@ public enum Cart {
                 products.remove(i);
                 adapter.notifyDataSetChanged();
                 refresh();
+                updateVisibility();
                 return true;
             }
         }
@@ -255,6 +271,8 @@ public enum Cart {
     public void removeAllEntries() {
         dao.delete(products);
         products.clear();
+        refresh();
+        updateVisibility();
     }
 
     // add product to cart
@@ -266,6 +284,7 @@ public enum Cart {
                 dao.update(temp);
                 adapter.notifyDataSetChanged();
                 refresh();
+                updateVisibility();
                 return;
             }
         }
@@ -276,6 +295,7 @@ public enum Cart {
         products.add(new_entry);
         adapter.notifyDataSetChanged();
         refresh();
+        updateVisibility();
     }
 
     // return total price
