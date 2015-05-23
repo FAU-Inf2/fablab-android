@@ -7,16 +7,17 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import de.fau.cs.mad.fablab.android.cart.RecyclerItemClickListener;
 import de.fau.cs.mad.fablab.android.cart.RecyclerViewAdapter;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.android.productMap.ProductMapActivity;
+import de.fau.cs.mad.fablab.android.ui.UiUtils;
 import de.fau.cs.mad.fablab.rest.ProductApiClient;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.fau.cs.mad.fablab.rest.core.Product;
@@ -56,6 +58,10 @@ public class ProductSearchActivity extends ActionBarActivity
     private ProductDialog productDialog;
     private Product selectedProduct;
 
+    private UiUtils uiUtils;
+    private View spinnerContainerView;
+    private ImageView spinnerImageView;
+
     //This callback is used for product Search.
     private Callback<List<Product>> mSearchCallback = new Callback<List<Product>>() {
         @Override
@@ -67,11 +73,15 @@ public class ProductSearchActivity extends ActionBarActivity
                 productAdapter.addProduct(new CartEntry(product, 1));
                 productEntries.add(product);
             }
+            uiUtils.hideSpinner(spinnerContainerView, spinnerImageView);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
         public void failure(RetrofitError error) {
             Toast.makeText(getBaseContext(), R.string.retrofit_callback_failure, Toast.LENGTH_LONG).show();
+            uiUtils.hideSpinner(spinnerContainerView, spinnerImageView);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
     };
 
@@ -83,6 +93,11 @@ public class ProductSearchActivity extends ActionBarActivity
         AutoCompleteHelper.getInstance().loadProductNames(this);
 
         mProductApi = new ProductApiClient(this).get();
+
+        uiUtils = new UiUtils(this);
+        spinnerContainerView = (View) findViewById(R.id.spinner);
+        spinnerImageView = (ImageView) findViewById(R.id.spinner_image);
+
 
         appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
@@ -110,6 +125,8 @@ public class ProductSearchActivity extends ActionBarActivity
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
                     search(searchView.getText().toString());
                     handled = true;
                 }
@@ -233,6 +250,12 @@ public class ProductSearchActivity extends ActionBarActivity
         productEntries = new ArrayList<>();
         productAdapter.clear();
         //TODO maybe add a limit here?
+
+        //show spinner and disable input
+        uiUtils.showSpinner(spinnerContainerView, spinnerImageView);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
         mProductApi.findByName(query, 0, 0, mSearchCallback);
     }
 

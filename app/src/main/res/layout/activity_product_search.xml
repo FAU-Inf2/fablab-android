@@ -69,4 +69,7 @@
         android:scrollbars="vertical">
 
     </android.support.v7.widget.RecyclerView>
+
+    <include layout="@layout/spinner"/>
+
 </android.support.v4.widget.DrawerLayout>
