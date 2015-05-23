@@ -7,11 +7,10 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -28,6 +27,7 @@ import de.fau.cs.mad.fablab.android.cart.RecyclerItemClickListener;
 import de.fau.cs.mad.fablab.android.cart.RecyclerViewAdapter;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.android.productMap.ProductMapActivity;
+import de.fau.cs.mad.fablab.android.ui.UiUtils;
 import de.fau.cs.mad.fablab.rest.ProductApiClient;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.fau.cs.mad.fablab.rest.core.Product;
@@ -50,6 +50,10 @@ public class ProductSearchActivity extends ActionBarActivity
     private ProductDialog productDialog;
     private Product selectedProduct;
 
+    private UiUtils uiUtils;
+    private View spinnerContainerView;
+    private ImageView spinnerImageView;
+
     //This callback is used for product Search.
     private Callback<List<Product>> mSearchCallback = new Callback<List<Product>>() {
         @Override
@@ -61,11 +65,15 @@ public class ProductSearchActivity extends ActionBarActivity
                 productAdapter.addProduct(new CartEntry(product, 1));
                 productEntries.add(product);
             }
+            uiUtils.hideSpinner(spinnerContainerView, spinnerImageView);
+            uiUtils.enableActivityInput(ProductSearchActivity.this);
         }
 
         @Override
         public void failure(RetrofitError error) {
             Toast.makeText(getBaseContext(), R.string.retrofit_callback_failure, Toast.LENGTH_LONG).show();
+            uiUtils.hideSpinner(spinnerContainerView, spinnerImageView);
+            uiUtils.enableActivityInput(ProductSearchActivity.this);
         }
     };
     
@@ -73,6 +81,11 @@ public class ProductSearchActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_search);
+
+        uiUtils = new UiUtils(this);
+        spinnerContainerView = (View) findViewById(R.id.spinner);
+        spinnerImageView = (ImageView) findViewById(R.id.spinner_image);
+
 
         appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
@@ -180,7 +193,10 @@ public class ProductSearchActivity extends ActionBarActivity
         productEntries = new ArrayList<Product>();
         productAdapter.clear();
         //TODO maybe add a limit here?
+        uiUtils.showSpinner(spinnerContainerView, spinnerImageView);
+        uiUtils.disableActivityInput(this);
         mProductApi.findByName(query, 0, 0, mSearchCallback);
+
     }
 
     @Override

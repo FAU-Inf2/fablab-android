@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="spinner_anim_frame_length">200</integer>
+</resources>

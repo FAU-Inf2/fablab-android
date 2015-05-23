@@ -12,4 +12,6 @@
     <color name="slidingUpPanelStroke">#B1BCBE</color>
     <color name="slidingUpPanel_bg">#FFFFFF</color>
     <color name="slidingUpPanel_cart_text">#000000</color>
+
+    <color name="spinner_background">#ffcecece</color>
 </resources>
