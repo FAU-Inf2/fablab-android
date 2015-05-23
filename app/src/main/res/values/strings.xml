@@ -15,11 +15,7 @@
     <string name="cart_empty">Ihr Warenkorb ist leider noch leer</string>
     <string name="cart_total_price_title">Gesamtpreis</string>
     <string name="cart_button_checkout">Zur Kasse</string>
-    <string name="cart_entry_popup_title">Menge ändern...</string>
-    <string name="cart_entry_popup_ok">OK</string>
-    <string name="cart_entry_popup_cancel">Abbrechen</string>
     <string name="cart_entry_unit_null_exception"></string>
-    <string name="cart_entry_popup_valid_amount">Bitte gib eine gültige Menge ein</string>
     <string name="cart_article_label"><![CDATA[&nbsp;Artikel]]></string>
     <string name="cart_preview_delimiter"><![CDATA[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]]></string>
     <string name="search_hint">Suche Produkt</string>

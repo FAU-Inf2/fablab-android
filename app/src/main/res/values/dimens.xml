@@ -47,4 +47,7 @@
     <dimen name="slidinguppanel_bottom_part_padding">10dp</dimen>
     <dimen name="slidinguppanel_bottom_total_price_textsize">25sp</dimen>
     <dimen name="slidinguppanel_btn_checkout_textsize">14sp</dimen>
+    <dimen name="product_card_height">60dp</dimen>
+    <dimen name="product_card_margin">3dp</dimen>
+    <dimen name="product_price_padding">6dp</dimen>
 </resources>

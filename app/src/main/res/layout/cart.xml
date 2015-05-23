@@ -79,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="3"
+            android:weightSum="4"
             android:layout_marginRight="@dimen/slidinguppanel_title_margin_left"
             android:layout_marginLeft="@dimen/slidinguppanel_title_margin_left"
             android:layout_marginTop="@dimen/slidinguppanel_title_margin_top"
@@ -89,9 +89,9 @@
                 android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:id="@+id/cart_total_price"
-                android:gravity="center_vertical"
+                android:gravity="center_vertical|center"
                 android:paddingLeft="@dimen/slidinguppanel_bottom_part_padding"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:textSize="@dimen/slidinguppanel_bottom_total_price_textsize"
                 android:textStyle="bold"/>
 
@@ -103,7 +103,7 @@
                 android:gravity="center_vertical|center"
                 android:paddingRight="@dimen/slidinguppanel_bottom_part_padding"
                 android:paddingLeft="@dimen/slidinguppanel_bottom_part_padding"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:text="@string/cart_button_checkout"/>
 
         </LinearLayout>

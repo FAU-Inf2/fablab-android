@@ -30,7 +30,6 @@ public enum Cart {
     private List<CartEntry> products;
     private RuntimeExceptionDao<CartEntry, Long> dao;
     private RecyclerViewAdapter adapter;
-    private Dialog dialog;
     private Context context;
     private View view;
     private SlidingUpPanelLayout mLayout;
@@ -91,69 +90,25 @@ public enum Cart {
 
         cart_rv.addOnItemTouchListener(swipeTouchListener);
 
-        // Set up listeners to be able to change the quantity for a product in the cart (popup)
+        // Set up listener to show more than just one line of the product name
         cart_rv.addOnItemTouchListener(new RecyclerItemClickListener(context, cart_rv, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
-                dialog = new Dialog(context);
-                dialog.setContentView(R.layout.cart_entry_dialog);
-                dialog.setTitle(R.string.cart_entry_popup_title);
+                TextView product_title = (TextView) view.findViewById(R.id.cart_product_name);
 
-                CartEntry temp = products.get(position);
-                EditText amount = (EditText) dialog.findViewById(R.id.cart_entry_popup_input);
-                amount.setText(String.valueOf(temp.getAmount()));
-                TextView unit = (TextView) dialog.findViewById(R.id.cart_entry_popup_unit);
-                if(temp.getUnit() == null){
-                    unit.setText(R.string.cart_entry_unit_null_exception);
+                if(product_title.getLineCount() == 1){
+                    product_title.setSingleLine(false);
                 }else{
-                    unit.setText(temp.getUnit());
+                    product_title.setSingleLine(true);
                 }
-
-                Button button_ok = (Button) dialog.findViewById(R.id.cart_entry_popup_ok);
-                Button button_cancel = (Button) dialog.findViewById(R.id.cart_entry_popup_cancel);
-
-                // close popup
-                button_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-
-                // save changes
-                button_ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        TextView temp = (TextView) dialog.findViewById(R.id.cart_entry_popup_input);
-                        if(temp.getText().toString().isEmpty()){
-                            Toast.makeText(context,  R.string.cart_entry_popup_valid_amount, Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        double amount_new = Double.parseDouble(temp.getText().toString());
-                        products.get(position).setAmount(amount_new);
-
-                        if(amount_new == 0.0){
-                            Toast.makeText(context,  R.string.cart_entry_popup_valid_amount, Toast.LENGTH_LONG).show();
-                            return;
-                        }else{
-                            Cart.MYCART.updateEntry(products.get(position));
-                            adapter.notifyItemChanged(position);
-                        }
-                        refresh();
-                        dialog.dismiss();
-                    }
-                });
-
-                // open popup
-                dialog.show();
             }
+
             @Override
-            public void onItemLongClick(View view, final int position)
-            {
+            public void onItemLongClick(View view, final int position){
 
             }
-
         }));
+
 
 
         // set total price
@@ -306,7 +261,7 @@ public enum Cart {
             total += products.get(i).getPrice()*products.get(i).getAmount();
         }
 
-        return String.format( "%.2f", total ) + view.getResources().getString(R.string.non_breaking_space) +
+        return String.format( "%.2f", total ) + Html.fromHtml(view.getResources().getString(R.string.non_breaking_space)) +
                 view.getResources().getString(R.string.currency);
     }
 
