@@ -12,6 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -37,7 +45,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class ProductSearchActivity extends ActionBarActivity
-        implements ProductDialog.ProductDialogListener {
+        implements ProductDialog.ProductDialogListener,AdapterView.OnItemClickListener,AdapterView.OnItemSelectedListener {
 
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerViewAdapter productAdapter;
@@ -47,6 +55,7 @@ public class ProductSearchActivity extends ActionBarActivity
     private ArrayList<Product> productEntries;
     //our rest-callback interface
     private ProductApi mProductApi;
+
     private ProductDialog productDialog;
     private Product selectedProduct;
 
@@ -76,11 +85,15 @@ public class ProductSearchActivity extends ActionBarActivity
             uiUtils.enableActivityInput(ProductSearchActivity.this);
         }
     };
-    
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_search);
+        AutoCompleteHelper.getInstance().loadProductNames(this);
+
+        mProductApi = new ProductApiClient(this).get();
 
         uiUtils = new UiUtils(this);
         spinnerContainerView = (View) findViewById(R.id.spinner);
@@ -98,10 +111,33 @@ public class ProductSearchActivity extends ActionBarActivity
 
         //get search view and set searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) findViewById(R.id.product_search_view);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        //For Autocomplete
+        final AutoCompleteTextView searchView = (AutoCompleteTextView) findViewById(R.id.product_search_view);
+        searchView.setThreshold(2); //min 2 chars before autocomplete
+
+        //Set adapter to AutoCompleteTextView
+        ArrayAdapter<String>adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, AutoCompleteHelper.getInstance().getPossibleAutoCompleteWords());
+        searchView.setAdapter(adapter);
+        searchView.setOnItemSelectedListener(this);
+        searchView.setOnItemClickListener(this);
+        searchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    search(searchView.getText().toString());
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
+
+
+        //searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         //do not iconify search view
-        searchView.setIconified(false);
+        //searchView.setIconified(false);
 
         //get recycler view and set layout manager and adapter
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.product_recycler_view);
@@ -109,7 +145,7 @@ public class ProductSearchActivity extends ActionBarActivity
         recyclerView.setLayoutManager(layoutManager);
         productAdapter = new RecyclerViewAdapter(new ArrayList<CartEntry>());
         recyclerView.setAdapter(productAdapter);
-        mProductApi = new ProductApiClient(this).get();
+
 
         //add listener to handle click events
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView,
@@ -139,6 +175,26 @@ public class ProductSearchActivity extends ActionBarActivity
         //handle intent
         handleIntent(getIntent());
     }
+
+    //For Autocomplete
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        search(String.valueOf(parent.getItemAtPosition(position)));
+    }
+
+    //For Autocomplete
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        search(String.valueOf(parent.getItemAtPosition(position)));
+    }
+
+    //For Autocomplete
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        InputMethodManager imm = (InputMethodManager) getSystemService( INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -190,7 +246,7 @@ public class ProductSearchActivity extends ActionBarActivity
 
     private void search(String query) {
         //show products containing the query
-        productEntries = new ArrayList<Product>();
+        productEntries = new ArrayList<>();
         productAdapter.clear();
         //TODO maybe add a limit here?
         uiUtils.showSpinner(spinnerContainerView, spinnerImageView);

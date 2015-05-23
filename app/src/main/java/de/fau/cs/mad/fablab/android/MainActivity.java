@@ -13,6 +13,7 @@ import de.fau.cs.mad.fablab.android.cart.Cart;
 import de.fau.cs.mad.fablab.android.cart.CartActivity;
 import de.fau.cs.mad.fablab.android.cart.CheckoutActivity;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
+import de.fau.cs.mad.fablab.android.productsearch.AutoCompleteHelper;
 import de.fau.cs.mad.fablab.android.productsearch.ProductSearchActivity;
 import de.fau.cs.mad.fablab.android.ui.NewsActivity;
 
@@ -27,6 +28,11 @@ public class MainActivity extends ActionBarActivity {
 
         appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
+
+
+        //Load Autocompleteionwords
+        AutoCompleteHelper.getInstance().loadProductNames(this);
+
 
         // init db and cart - always do this on app start
         Cart.MYCART.init(getApplication());
@@ -49,6 +55,9 @@ public class MainActivity extends ActionBarActivity {
     public void onResume() {
         super.onResume();
        appbarDrawer.startTimer();
+
+        //Load Autocompleteionwords
+        AutoCompleteHelper.getInstance().loadProductNames(this);
     }
 
     @Override
