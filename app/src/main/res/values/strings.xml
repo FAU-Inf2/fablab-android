@@ -20,7 +20,8 @@
     <string name="cart_entry_popup_cancel">Abbrechen</string>
     <string name="cart_entry_unit_null_exception"></string>
     <string name="cart_entry_popup_valid_amount">Bitte gib eine gültige Menge ein</string>
-    <string name="cart_entry_popup_info">Drücke länger, um die Mengenangabe zu ändern</string>
+    <string name="cart_article_label"><![CDATA[&nbsp;Artikel]]></string>
+    <string name="cart_preview_delimiter"><![CDATA[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]]></string>
     <string name="search_hint">Suche Produkt</string>
     <string name="add_to_cart">In den Warenkorb</string>
     <string name="price_per_unit">pro</string>
@@ -31,4 +32,9 @@
     <string name="retrofit_callback_failure">Leider ist bei der Abfrage ein Fehler aufgetreten</string>
     <string name="checkout_pay">Jetzt an der Kasse bezahlen</string>
     <string name="checkout_error">Fehler beim Übertragen des Warenkorbs</string>
+
+    <string name="bold_start"><![CDATA[<b>]]></string>
+    <string name="bold_end"><![CDATA[</b>]]></string>
+    <string name="currency">€</string>
+    <string name="non_breaking_space"><![CDATA[&nbsp;]]></string>
 </resources>

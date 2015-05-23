@@ -2,7 +2,6 @@ package de.fau.cs.mad.fablab.android.cart;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -217,9 +215,12 @@ public enum Cart {
     // refresh TextView of the total price and #items in cart
     private void refresh(){
         TextView total_price = (TextView) view.findViewById(R.id.cart_total_price);
-        total_price.setText(Cart.MYCART.totalPrice() + " €");
-        String base = " <b>" + products.size() + " Artikel" +
-                "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + Cart.MYCART.totalPrice() + " €</b>";
+        total_price.setText(Cart.MYCART.totalPrice());
+        String base = view.getResources().getString(R.string.bold_start) + products.size() +
+                view.getResources().getString(R.string.cart_article_label) +
+                view.getResources().getString(R.string.cart_preview_delimiter) +
+                Cart.MYCART.totalPrice() +
+                view.getResources().getString(R.string.bold_end);
         TextView total_price_top = (TextView) view.findViewById(R.id.cart_total_price_preview);
         total_price_top.setText(Html.fromHtml(base));
     }
@@ -299,17 +300,14 @@ public enum Cart {
     }
 
     // return total price
-    public double totalPrice(){
+    public String totalPrice(){
         double total = 0;
         for(int i=0;i<products.size();i++){
             total += products.get(i).getPrice()*products.get(i).getAmount();
         }
 
-        if (total == 0){
-            return total;
-        }else{
-            return (total/100);
-        }
+        return String.format( "%.2f", total ) + view.getResources().getString(R.string.non_breaking_space) +
+                view.getResources().getString(R.string.currency);
     }
 
 }

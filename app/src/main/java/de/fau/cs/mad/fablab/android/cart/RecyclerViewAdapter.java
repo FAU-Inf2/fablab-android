@@ -2,6 +2,7 @@ package de.fau.cs.mad.fablab.android.cart;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import de.fau.cs.mad.fablab.rest.core.CartEntry;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ProductViewHolder> {
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
-        private CardView card_view;
         private TextView cart_product_name;
         private TextView cart_product_quantity;
         private ImageView cart_product_photo;
@@ -26,7 +26,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ProductViewHolder(View itemView) {
             super(itemView);
 
-            this.card_view = (CardView) itemView.findViewById(R.id.cart_card_view);
             this.cart_product_name = (TextView) itemView.findViewById(R.id.cart_product_name);
             this.cart_product_quantity = (TextView) itemView.findViewById(R.id.cart_product_quantity);
             this.cart_product_photo = (ImageView) itemView.findViewById(R.id.cart_product_photo);
@@ -76,6 +75,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         productViewHolder.cart_product_name.setText(products.get(i).getName());
         productViewHolder.cart_product_price.setText(String.valueOf(products.get(i).getPrice()));
         productViewHolder.cart_product_photo.setImageResource(R.drawable.no_image_avl);
-        productViewHolder.cart_product_quantity.setText(String.valueOf(products.get(i).getAmount()) +" " + products.get(i).getUnit());
+        productViewHolder.cart_product_quantity.setText(String.valueOf(products.get(i).getAmount()) +
+                Html.fromHtml(productViewHolder.itemView.getResources().getString(R.string.non_breaking_space)) +
+                products.get(i).getUnit());
     }
 }
