@@ -12,15 +12,17 @@ import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.productsearch.AutoCompleteWords;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "fablab.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 8;
     private static final String TAG = DatabaseHelper.class.getSimpleName();
 
     private static DatabaseHelper instance;
     private RuntimeExceptionDao<CartEntry, Long> cartEntryDao;
+    private RuntimeExceptionDao<AutoCompleteWords, Long> autoCompleteWordsDao;
 
     private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);
@@ -37,6 +39,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
         try {
             TableUtils.createTable(connectionSource, CartEntry.class);
+            TableUtils.createTable(connectionSource, AutoCompleteWords.class);
         } catch (SQLException e) {
             Log.e(TAG, "Can't create database", e);
             throw new RuntimeException(e);
@@ -48,6 +51,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                           int newVersion) {
         try {
             TableUtils.dropTable(connectionSource, CartEntry.class, true);
+            TableUtils.dropTable(connectionSource, AutoCompleteWords.class, true);
             onCreate(db, connectionSource);
         } catch (SQLException e) {
             Log.e(TAG, "Can't drop database", e);
@@ -62,9 +66,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return cartEntryDao;
     }
 
+    public RuntimeExceptionDao<AutoCompleteWords, Long> getAutoCompleteWordsDao() {
+        if (autoCompleteWordsDao == null) {
+            autoCompleteWordsDao = getRuntimeExceptionDao(AutoCompleteWords.class);
+        }
+        return autoCompleteWordsDao;
+    }
+
     @Override
     public void close() {
         super.close();
         cartEntryDao = null;
+        autoCompleteWordsDao = null;
     }
 }

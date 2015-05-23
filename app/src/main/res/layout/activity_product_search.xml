@@ -32,11 +32,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+                <AutoCompleteTextView
+                    android:id="@+id/product_search_view"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:textStyle="bold"
+                    android:imeOptions="actionSend"
+                    android:singleLine="true"
+                    android:width="250dip" />
 
-            <SearchView
-                android:id="@+id/product_search_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/product_recycler_view"
