@@ -28,11 +28,14 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:id="@+id/cart_product_photo"
-                android:layout_margin="@dimen/zero"
+                android:layout_marginBottom="@dimen/zero"
+                android:layout_marginRight="@dimen/product_card_margin"
+                android:layout_marginLeft="@dimen/zero"
+                android:layout_marginTop="@dimen/zero"
                 android:layout_gravity="center_vertical|left"/>
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -43,7 +46,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/product_name_size"
                     android:textStyle="bold"
                     android:singleLine="true"/>
 
@@ -52,19 +55,40 @@
                     android:layout_height="fill_parent"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/cart_product_quantity"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        />
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/cart_product_quantity"
+                            android:layout_weight="1"
+                            android:gravity="bottom"/>
+
+                        <Spinner
+                            android:id="@+id/cart_product_quantity_spinner"
+                            android:layout_width="@dimen/slidinguppanel_spinner_width"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/slidinguppanel_spinner_margin"
+                            android:spinnerMode="dropdown"
+                            android:gravity="bottom"
+                            style="@android:style/Widget.Holo.Light.Spinner"
+                            android:layout_weight="1"
+                            />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/cart_product_price"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:gravity="right|bottom"
-                        android:layout_weight="0.5"/>
+                        android:layout_weight="0.5"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/product_price_size"
+                        android:textColor="@color/slidingUpPanel_cart_text"/>
                 </LinearLayout>
 
             </LinearLayout>

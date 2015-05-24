@@ -1,15 +1,13 @@
 package de.fau.cs.mad.fablab.android.cart;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +31,7 @@ public enum Cart {
     private Context context;
     private View view;
     private SlidingUpPanelLayout mLayout;
+    private boolean slidingUp;
 
     Cart(){
     }
@@ -47,14 +46,17 @@ public enum Cart {
     public void setSlidingUpPanel(Context c, View v, boolean slidingUp){
         this.context = c;
         this.view = v;
+        this.slidingUp = slidingUp;
         // Set Layout and Recyclerview
         RecyclerView cart_rv = (RecyclerView) v.findViewById(R.id.cart_recycler_view);
         LinearLayoutManager llm = new LinearLayoutManager(context);
         cart_rv.setLayoutManager(llm);
         cart_rv.setHasFixedSize(true);
         // Add Entries to view
-        adapter = new RecyclerViewAdapter(products);
+        adapter = new RecyclerViewAdapter(this.context, products);
         cart_rv.setAdapter(adapter);
+
+
 
         // Set up listener to be able to swipe to left/right to remove items
         SwipeableRecyclerViewTouchListener swipeTouchListener =
@@ -90,17 +92,37 @@ public enum Cart {
 
         cart_rv.addOnItemTouchListener(swipeTouchListener);
 
+
         // Set up listener to show more than just one line of the product name
         cart_rv.addOnItemTouchListener(new RecyclerItemClickListener(context, cart_rv, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, final int position) {
+            public void onItemClick(View view, final int position, MotionEvent e) {
                 TextView product_title = (TextView) view.findViewById(R.id.cart_product_name);
 
-                if(product_title.getLineCount() == 1){
-                    product_title.setSingleLine(false);
-                }else{
-                    product_title.setSingleLine(true);
+                Spinner cart_product_quantity_spinner = (Spinner) view.findViewById(R.id.cart_product_quantity_spinner);
+
+                int x = (int)e.getRawX();
+                int y = (int)e.getRawY();
+
+                if(!inViewInBounds(cart_product_quantity_spinner, x, y)){
+                    if(product_title.getLineCount() == 1){
+                        product_title.setSingleLine(false);
+                    }else{
+                        product_title.setSingleLine(true);
+                    }
                 }
+
+            }
+
+            // check the touch position for quantity change / card click
+            @Override
+            public boolean inViewInBounds(View view, int x, int y){
+                Rect outRect = new Rect();
+                int[] location = new int[2];
+                view.getDrawingRect(outRect);
+                view.getLocationOnScreen(location);
+                outRect.offset(location[0], location[1]);
+                return outRect.contains(x, y);
             }
 
             @Override
@@ -130,14 +152,6 @@ public enum Cart {
             mLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
                 @Override
                 public void onPanelSlide(View panel, float slideOffset) {
-                    View bg = view.findViewById(R.id.dragPart);
-                    Drawable background = bg.getBackground();
-                    background.setAlpha(255 - (int) (slideOffset * 255));
-
-                    TextView cart_title_closed = (TextView) view.findViewById(R.id.cart_title_closed);
-                    cart_title_closed.setAlpha(1 - slideOffset);
-                    TextView cart_title_opened = (TextView) view.findViewById(R.id.cart_title_opened);
-                    cart_title_opened.setAlpha(slideOffset);
                     TextView total_price_top = (TextView) view.findViewById(R.id.cart_total_price_preview);
                     total_price_top.setAlpha(1 - slideOffset);
                 }
@@ -167,8 +181,9 @@ public enum Cart {
         }
     }
 
+
     // refresh TextView of the total price and #items in cart
-    private void refresh(){
+    public void refresh(){
         TextView total_price = (TextView) view.findViewById(R.id.cart_total_price);
         total_price.setText(Cart.MYCART.totalPrice());
         String base = view.getResources().getString(R.string.bold_start) + products.size() +
@@ -181,12 +196,14 @@ public enum Cart {
     }
 
     // panel only visible if cart is not empty
-    private void updateVisibility(){
-        if(products.size() == 0){
-            mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-            mLayout.setPanelHeight((int) (view.getResources().getDimension(R.dimen.zero) / view.getResources().getDisplayMetrics().density));
-        }else{
-            mLayout.setPanelHeight((int) view.getResources().getDimension(R.dimen.slidinguppanel_panel_height));
+    public void updateVisibility(){
+        if(this.slidingUp) {
+            if (products.size() == 0) {
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                mLayout.setPanelHeight((int) (view.getResources().getDimension(R.dimen.zero) / view.getResources().getDisplayMetrics().density));
+            } else {
+                mLayout.setPanelHeight((int) view.getResources().getDimension(R.dimen.slidinguppanel_panel_height));
+            }
         }
     }
 

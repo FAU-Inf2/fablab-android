@@ -3,6 +3,7 @@ package de.fau.cs.mad.fablab.android.productsearch;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -144,7 +146,7 @@ public class ProductSearchActivity extends ActionBarActivity
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.product_recycler_view);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        productAdapter = new RecyclerViewAdapter(new ArrayList<CartEntry>());
+        productAdapter = new RecyclerViewAdapter(getApplicationContext(),new ArrayList<CartEntry>());
         recyclerView.setAdapter(productAdapter);
 
 
@@ -153,7 +155,7 @@ public class ProductSearchActivity extends ActionBarActivity
                 new RecyclerItemClickListener.OnItemClickListener() {
 
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(View view, int position, MotionEvent e) {
                 //set selected product
                 selectedProduct = productEntries.get(position);
                 //show dialog
@@ -168,6 +170,12 @@ public class ProductSearchActivity extends ActionBarActivity
             public void onItemLongClick(View view, int position) {
                 //do nothing
                 return;
+            }
+
+            @Override
+            public boolean inViewInBounds(View view, int x, int y){
+                // used in cart, cf Cart.java for further information
+                return false;
             }
 
         }));
