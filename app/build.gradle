@@ -55,6 +55,8 @@ android {
     }
 }
 
+preBuild.dependsOn(":../fablab-common:build")
+
 dependencies {
     compile files('../../fablab-common/build/libs/fablab-common-1.0.jar')
     // jackson annotations are required for POJOs
