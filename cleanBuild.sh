@@ -75,6 +75,6 @@ if [ "$BUILD_COMMON_ONLY" == "yes" ]; then
 	echo Starting gradle build for common repo
 	./gradlew :../fablab-common:build
 else
-	echo Startign gradle build
+	echo Starting gradle build
 	./gradlew build
 fi
