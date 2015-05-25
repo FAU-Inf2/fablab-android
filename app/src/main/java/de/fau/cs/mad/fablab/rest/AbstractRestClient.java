@@ -41,7 +41,7 @@ public abstract class AbstractRestClient{
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(API_URL)
                 .setClient(new OkClient(httpClient))
-                .setLogLevel(RestAdapter.LogLevel.FULL);
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE);
 
         restAdapter = builder.build();
     }
