@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +83,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(final ProductViewHolder productViewHolder, final int i) {
-        productViewHolder.cart_product_name.setText(products.get(i).getName());
+        String[] name = products.get(i).getName().split(" ");
+
+        String product_name = "";
+        for(int k=0;k<name.length;k++){
+            if(k == 0){
+                product_name += productViewHolder.itemView.getResources().getString(R.string.bold_start) +
+                        name[k] +
+                        productViewHolder.itemView.getResources().getString(R.string.bold_end) +
+                        productViewHolder.itemView.getResources().getString(R.string.non_breaking_space);
+            }else{
+                product_name +=  name[k] +
+                        productViewHolder.itemView.getResources().getString(R.string.non_breaking_space);
+            }
+        }
+
+        productViewHolder.cart_product_name.setText(Html.fromHtml(product_name));
         String formated_price = String.format("%.2f", products.get(i).getPrice());
         productViewHolder.cart_product_price.setText(formated_price +
                 Html.fromHtml(productViewHolder.itemView.getResources().getString(R.string.non_breaking_space)) +

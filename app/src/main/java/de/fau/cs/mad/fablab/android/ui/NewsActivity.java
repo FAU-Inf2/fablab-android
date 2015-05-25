@@ -27,6 +27,7 @@ import java.util.List;
 
 import de.fau.cs.mad.fablab.android.FabButton;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.cart.Cart;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.rest.core.ICal;
 import de.fau.cs.mad.fablab.rest.core.News;
@@ -37,6 +38,7 @@ import roboguice.inject.InjectView;
 @ContentView(R.layout.activity_news)
 public class NewsActivity extends RoboActionBarActivity {
 
+    @InjectView(R.id.cart_recycler_view) RecyclerView cart_rv;
     @InjectView(R.id.news) RecyclerView news;
     @InjectView(R.id.dates_view_pager) ViewPager datesViewPager;
     private DatesSlidePagerAdapter datesSlidePagerAdapter;
@@ -59,11 +61,16 @@ public class NewsActivity extends RoboActionBarActivity {
         appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
 
+        // init cart panel
+        Cart.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), true);
+
         // init Floating Action Menu
         FabButton.MYFABUTTON.init(findViewById(android.R.id.content));
 
+
         //get news and set them
-        newsLayoutManager = new LinearLayoutManager(this);
+        newsLayoutManager = new LinearLayoutManager(getApplicationContext());
+        news.setLayoutManager(newsLayoutManager);
         List<String> testNews = new ArrayList<>();
         testNews.add("News1");
         testNews.add("News2");
@@ -76,7 +83,6 @@ public class NewsActivity extends RoboActionBarActivity {
         News news3 = new News(); news3.setLinkToPreviewImage("http://www.jpl.nasa.gov/spaceimages/images/mediumsize/PIA17011_ip.jpg");news3.setTitle("News 3"); news3.setDescription("texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttext");
         listNews.add(news3);
         newsAdapter = new NewsAdapter(listNews);
-        news.setLayoutManager(newsLayoutManager);
         news.setAdapter(newsAdapter);
 
         List<ICal> listDates = new ArrayList<>();

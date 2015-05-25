@@ -37,6 +37,7 @@ public enum Cart {
     }
 
     // initialization of the db - getting all products that are in the cart
+    // call this method on startup activity
     public void init(Context context){
         dao = DatabaseHelper.getHelper(context).getCartEntryDao();
         products = dao.queryForAll();
@@ -179,6 +180,7 @@ public enum Cart {
             });
             updateVisibility();
         }
+
     }
 
 

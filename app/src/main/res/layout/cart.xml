@@ -120,7 +120,5 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-    <include
-        layout="@layout/fab_button" />
 
 </RelativeLayout>
