@@ -20,6 +20,8 @@ public class DrawingActivity extends View
     private Canvas canvas;
     private String locationName;
 
+    protected int padding = 10;
+
 
 
     public DrawingActivity(Context context, FablabView fablabView, int positionX, int positionY, String locationName)
@@ -67,120 +69,112 @@ public class DrawingActivity extends View
     {
         int padding = 10;
 
-        // paintings
-        // room painting
-        Paint roomPaint = new Paint();
-        roomPaint.setColor(Color.BLACK);
-        roomPaint.setStyle(Paint.Style.STROKE);
-        roomPaint.setStrokeWidth(10);
-
-        // door painting
-        Paint doorPaint = new Paint();
-        doorPaint.setColor(Color.GREEN);
-        doorPaint.setStyle(Paint.Style.STROKE);
-        doorPaint.setStrokeWidth(10);
-
-        // shelf painting
-        Paint shelfPaint = new Paint();
-        shelfPaint.setColor(Color.GRAY);
-        shelfPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        shelfPaint.setStrokeWidth(10);
-
-        // text painting
-        Paint textPaint = new Paint();
-        textPaint.setColor(Color.BLACK);
-        textPaint.setTextSize(30);
-
         //contours
 
         // fablab contour
         Rect outerWall = new Rect();
         outerWall.set(padding, padding, canvas.getWidth() - padding, canvas.getHeight() - padding);
-        canvas.drawRect(outerWall, roomPaint);
+        canvas.drawRect(outerWall, Paintings.ROOM_PAINTING.getPaint());
+
+        int shelfStrokeWith = Paintings.ROOM_PAINTING.getStrokeWith();
+        int positionX  = ((outerWall.right-shelfStrokeWith/2) - (outerWall.left+shelfStrokeWith/2))/4;
+        int positionY = ((outerWall.centerY()-shelfStrokeWith/2) - (outerWall.top+shelfStrokeWith/2))/8;
+
+        int leftShelfPosition = outerWall.left + shelfStrokeWith/2;
+        int rightShelfPosition = outerWall.right - shelfStrokeWith/2;
+        int horizontalMiddleShelfPosition = leftShelfPosition + positionX*3;
+
+
 
         // wall between rooms
-        canvas.drawLine(outerWall.left, outerWall.centerY(), outerWall.right, outerWall.centerY(), roomPaint);
+        canvas.drawLine(outerWall.left, outerWall.centerY(), outerWall.right, outerWall.centerY(), Paintings.ROOM_PAINTING.getPaint());
 
         // entry door
-        canvas.drawLine(outerWall.left, outerWall.centerY() + 100, outerWall.left, outerWall.centerY() + 250, doorPaint);
+        canvas.drawLine(outerWall.left, outerWall.centerY() + 100, outerWall.left, outerWall.centerY() + 250, Paintings.DOOR_PAINTING.getPaint());
 
         // room door
-        canvas.drawLine(outerWall.right - 100, outerWall.centerY(), outerWall.right - 250, outerWall.centerY(), doorPaint);
+        canvas.drawLine((outerWall.left + shelfStrokeWith) + positionX*3, outerWall.centerY(), outerWall.right - 50, outerWall.centerY(), Paintings.DOOR_PAINTING.getPaint());
 
         //shelf top top
-        Rect shelfTop = new Rect(outerWall.left + padding, outerWall.top + 10, outerWall.right - 10, outerWall.top + 100);
-        canvas.drawRect(shelfTop, shelfPaint);
-        canvas.drawText(FablabView.ELECTRIC_WORKSHOP.getProductName(), shelfTop.centerX(), shelfTop.centerY(), textPaint);
+        Rect shelfTop = new Rect(leftShelfPosition, outerWall.top + shelfStrokeWith/2, rightShelfPosition, outerWall.top + shelfStrokeWith/2 + positionY);
+        canvas.drawRect(shelfTop, Paintings.SHELF_FILL_DARK_PAINTING.getPaint());
 
         //shelf top middle
-        int centreOfRoom = (outerWall.centerY() - outerWall.top)/2;
-        Rect shelfTopMiddle = new Rect(outerWall.left + padding, centreOfRoom - 50, outerWall.right - 200, centreOfRoom + 50);
-        canvas.drawRect(shelfTopMiddle, shelfPaint);
+        Rect shelfTopMiddle = new Rect(leftShelfPosition, outerWall.top + shelfStrokeWith/2 + positionY*3, horizontalMiddleShelfPosition, outerWall.top + shelfStrokeWith/2 + positionY*4);
+        canvas.drawRect(shelfTopMiddle, Paintings.SHELF_FILL_LIGHT_PAINTING.getPaint());
+
+        Rect shelfBottomMiddle = new Rect(leftShelfPosition, outerWall.top + shelfStrokeWith/2 + positionY*4, horizontalMiddleShelfPosition, outerWall.top + shelfStrokeWith/2 + positionY*5);
+        canvas.drawRect(shelfBottomMiddle, Paintings.SHELF_FILL_DARK_PAINTING.getPaint());
 
         // shelf top bottom
-        Rect shelfTopBottom = new Rect(outerWall.left + padding, outerWall.centerY() - 100, outerWall.right - 250, outerWall.centerY() - padding);
-        canvas.drawRect(shelfTopBottom, shelfPaint);
+        Rect shelfTopBottom = new Rect(leftShelfPosition, outerWall.top + shelfStrokeWith/2 + positionY*7, horizontalMiddleShelfPosition, outerWall.centerY() - shelfStrokeWith/2);
+        canvas.drawRect(shelfTopBottom, Paintings.SHELF_FILL_LIGHT_PAINTING.getPaint());
+
+        // shelf bottom top
+        Rect shelfBottomTop = new Rect(leftShelfPosition, outerWall.centerY() + shelfStrokeWith/2, horizontalMiddleShelfPosition, outerWall.centerY() + shelfStrokeWith/2 + positionY);
+        canvas.drawRect(shelfBottomTop, Paintings.SHELF_FILL_DARK_PAINTING.getPaint());
 
     }
 
-    private void drawElectricWorkshop(Canvas canvas)
+    protected void drawElectricWorkshop(Canvas canvas)
     {
 
-        int padding = 10;
-        // paintings
-        // room painting
-        Paint roomPaint = new Paint();
-        roomPaint.setColor(Color.BLACK);
-        roomPaint.setStyle(Paint.Style.STROKE);
-        roomPaint.setStrokeWidth(10);
-
-        Rect electricWorkshopOutline = new Rect();
-
-        if(canvas.getWidth() >= canvas.getHeight())
-        {
-            int height = canvas.getHeight()/2;
-            electricWorkshopOutline.set(padding, height/2, canvas.getWidth() - padding, canvas.getHeight() - height/2);
-        }
-        else
-        {
-            int width = canvas.getWidth()/2;
-            electricWorkshopOutline.set(width/2, padding, canvas.getWidth() - width/2, canvas.getHeight() - padding);
-        }
-        canvas.drawRect(electricWorkshopOutline, roomPaint);
+        Paint electricWorkshopPaint = Paintings.SHELF_STROKE_DARK_PAINTING.getPaint();
+        Rect electricWorkshopOutline = drawLocalViewBaseLayout(canvas, electricWorkshopPaint, "Elektrowerkstatt");
 
         //shelves
         if(electricWorkshopOutline.width() >= electricWorkshopOutline.height())
         {
-            canvas.drawLine(padding, electricWorkshopOutline.centerY(), canvas.getWidth() - padding, electricWorkshopOutline.centerY(), roomPaint);
-            canvas.drawLine(electricWorkshopOutline.centerX(), padding, electricWorkshopOutline.centerX(), canvas.getHeight() - padding, roomPaint);
-            canvas.drawLine(electricWorkshopOutline.centerX()/2, electricWorkshopOutline.top, electricWorkshopOutline.centerX()/2, electricWorkshopOutline.bottom, roomPaint);
-            canvas.drawLine(electricWorkshopOutline.right - electricWorkshopOutline.centerX()/2,electricWorkshopOutline.top, electricWorkshopOutline.right - electricWorkshopOutline.centerX()/2, electricWorkshopOutline.bottom, roomPaint );
+            canvas.drawLine(padding, electricWorkshopOutline.centerY(), canvas.getWidth() - padding, electricWorkshopOutline.centerY(), electricWorkshopPaint);
+            canvas.drawLine(electricWorkshopOutline.centerX(), padding, electricWorkshopOutline.centerX(), canvas.getHeight() - padding, electricWorkshopPaint);
+            canvas.drawLine(electricWorkshopOutline.centerX()/2, electricWorkshopOutline.top, electricWorkshopOutline.centerX()/2, electricWorkshopOutline.bottom, electricWorkshopPaint);
+            canvas.drawLine(electricWorkshopOutline.right - electricWorkshopOutline.centerX()/2,electricWorkshopOutline.top, electricWorkshopOutline.right - electricWorkshopOutline.centerX()/2, electricWorkshopOutline.bottom, electricWorkshopPaint );
         }
         else
         {
-            canvas.drawLine(electricWorkshopOutline.centerX(), padding, electricWorkshopOutline.centerX(), canvas.getHeight() - padding, roomPaint);
-            canvas.drawLine(electricWorkshopOutline.left, electricWorkshopOutline.centerY(), electricWorkshopOutline.right, electricWorkshopOutline.centerY(), roomPaint);
-            canvas.drawLine(electricWorkshopOutline.left, electricWorkshopOutline.centerY()/2, electricWorkshopOutline.right, electricWorkshopOutline.centerY()/2, roomPaint);
-            canvas.drawLine(electricWorkshopOutline.left, electricWorkshopOutline.bottom - electricWorkshopOutline.centerY()/2, electricWorkshopOutline.right, electricWorkshopOutline.bottom - electricWorkshopOutline.centerY()/2, roomPaint );
+            canvas.drawLine(electricWorkshopOutline.centerX(), padding, electricWorkshopOutline.centerX(), canvas.getHeight() - padding, electricWorkshopPaint);
+            canvas.drawLine(electricWorkshopOutline.left, electricWorkshopOutline.centerY(), electricWorkshopOutline.right, electricWorkshopOutline.centerY(), electricWorkshopPaint);
+            canvas.drawLine(electricWorkshopOutline.left, electricWorkshopOutline.centerY() / 2, electricWorkshopOutline.right, electricWorkshopOutline.centerY() / 2, electricWorkshopPaint);
+            canvas.drawLine(electricWorkshopOutline.left, electricWorkshopOutline.bottom - electricWorkshopOutline.centerY() / 2, electricWorkshopOutline.right, electricWorkshopOutline.bottom - electricWorkshopOutline.centerY() / 2, electricWorkshopPaint);
         }
 
-        // Description
-        Paint textBrush = new Paint();
-        textBrush.setColor(Color.BLACK);
-        textBrush.setTextSize(50);
 
-        String description = "Electric Workshop";
+    }
+
+    protected Rect drawLocalViewBaseLayout(Canvas canvas, Paint shelfPaint, String viewName)
+    {
+        Rect localViewBaseShelf = new Rect();
 
         if(canvas.getWidth() >= canvas.getHeight())
-            canvas.drawText(description, electricWorkshopOutline.centerX(), padding, textBrush);
+        {
+            int height = canvas.getHeight()/6;
+            localViewBaseShelf.set(padding, height, canvas.getWidth() - padding, canvas.getHeight() - height);
+        }
         else
         {
-            canvas.save();
-            canvas.rotate(-90, padding + 50, electricWorkshopOutline.bottom - padding);
-            canvas.drawText(description, padding+50, electricWorkshopOutline.bottom - padding, textBrush);
-            canvas.restore();
+            int width = canvas.getWidth()/6;
+            localViewBaseShelf.set(width, padding, canvas.getWidth() - width, canvas.getHeight() - padding);
         }
+        canvas.drawRect(localViewBaseShelf, shelfPaint);
+
+
+        if(canvas.getWidth() >= canvas.getHeight())
+            canvas.drawText(viewName, padding, padding, Paintings.TEXT_PAINTING_LARGE.getPaint());
+        else
+        {
+            int textOffsetX = Paintings.TEXT_PAINTING_LARGE.getStrokeWith() + padding;
+            canvas.save();
+            canvas.rotate(90, canvas.getWidth() - Paintings.TEXT_PAINTING_LARGE.getStrokeWith() - padding, padding);
+            canvas.drawText(viewName, canvas.getWidth() - textOffsetX, padding, Paintings.TEXT_PAINTING_LARGE.getPaint());
+            canvas.restore();
+
+        }
+
+
+        return localViewBaseShelf;
+
     }
+
 
     private void drawLocation(Canvas canvas, int positionX, int positionY)
     {
@@ -197,7 +191,5 @@ public class DrawingActivity extends View
         canvas.drawCircle(positionX, positionY, 20, locationBrush);
         canvas.drawText(locationName, positionX, positionY, textBrush );
     }
-
-
 
 }

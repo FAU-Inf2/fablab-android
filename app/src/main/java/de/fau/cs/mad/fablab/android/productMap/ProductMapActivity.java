@@ -1,19 +1,9 @@
 package de.fau.cs.mad.fablab.android.productMap;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 
 /**
  * Created by Michael on 07.05.2015.
@@ -35,8 +25,11 @@ public class ProductMapActivity extends ActionBarActivity
 
         //TODO: get location
         //getIntent().getExtras().getString("location");
+        String locationString = "tatsächliche Lagerorte / FAU FabLab / Elektrowerkstatt / Regal / Kiste Spaxschrauben";
         isMainViewActive = true;
-        productLocation = ProductLocation.BOX_SPAX_SCREW;
+
+
+        productLocation = LocationParser.getLocation(locationString);
         createView(this);
 
     }
@@ -52,7 +45,7 @@ public class ProductMapActivity extends ActionBarActivity
             {
                 if(isMainViewActive == true)
                 {
-                    drawView.setDrawingParameter(productLocation.getView(), productLocation.getPositionX(), productLocation.getPositionY());
+                    drawView.setDrawingParameter(productLocation.getView(), productLocation.getViewPositionX(), productLocation.getViewPositionY());
                     drawView.invalidate();
                     isMainViewActive = false;
                 }
