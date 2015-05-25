@@ -9,6 +9,8 @@ import com.github.clans.fab.FloatingActionMenu;
 public enum FabButton {
     MYFABUTTON;
 
+    private boolean isActive = false;
+
     FabButton(){
 
     }
@@ -19,6 +21,8 @@ public enum FabButton {
         FloatingActionMenu shoppingCartButton = (FloatingActionMenu) view.findViewById(R.id.shopping_cart_FAM);
 
         shoppingCartButton.setIconAnimated(false);
+
+        isActive = true;
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,5 +37,9 @@ public enum FabButton {
 
             }
         });
+    }
+
+    public boolean getActice(){
+        return isActive;
     }
 }

@@ -33,16 +33,17 @@
 
     <dimen name="slidinguppanel_corner_radius_top">10dp</dimen>
     <dimen name="slidinguppanel_stroke_width">3dp</dimen>
-    <dimen name="slidinguppanel_panel_height">40dp</dimen>
+    <dimen name="slidinguppanel_panel_height">100dp</dimen>
+    <dimen name="slidinguppanel_panel_height_opened">45dp</dimen>
     <dimen name="slidinguppanel_elevation">7dp</dimen>
     <dimen name="slidinguppanel_drag_bg_stroke_margin">3dp</dimen>
     <dimen name="slidinguppanel_drag_bg_padding_right">26dp</dimen>
     <dimen name="slidinguppanel_drag_bg_padding_top">3dp</dimen>
-    <dimen name="slidinguppanel_title_margin_left">6dp</dimen>
-    <dimen name="slidinguppanel_title_margin_top">3dp</dimen>
+    <dimen name="slidinguppanel_title_margin_left">15dp</dimen>
+    <dimen name="slidinguppanel_title_margin_top">10dp</dimen>
     <dimen name="slidinguppanel_title_margin_bottom">3dp</dimen>
-    <dimen name="slidinguppanel_preview_margin_right">20dp</dimen>
-    <dimen name="slidinguppanel_preview_margin_top">6dp</dimen>
+    <dimen name="slidinguppanel_preview_margin_right">70dp</dimen>
+    <dimen name="slidinguppanel_preview_margin_bottom">15dp</dimen>
     <dimen name="slidinguppanel_textsize">18sp</dimen>
     <dimen name="slidinguppanel_bottom_part_padding">10dp</dimen>
     <dimen name="slidinguppanel_bottom_total_price_textsize">25sp</dimen>

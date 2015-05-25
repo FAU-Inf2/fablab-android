@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -155,6 +156,16 @@ public enum Cart {
                 public void onPanelSlide(View panel, float slideOffset) {
                     TextView total_price_top = (TextView) view.findViewById(R.id.cart_total_price_preview);
                     total_price_top.setAlpha(1 - slideOffset);
+                    int diff = (int) (view.getResources().getDimension(R.dimen.slidinguppanel_panel_height) - view.getResources().getDimension(R.dimen.slidinguppanel_panel_height_opened));
+
+                    LinearLayout drag = (LinearLayout) view.findViewById(R.id.dragPart);
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            (int) (view.getResources().getDimension(R.dimen.slidinguppanel_panel_height) -
+                                     (diff*slideOffset)));
+
+                    layoutParams.setMargins((int) view.getResources().getDimension(R.dimen.slidinguppanel_drag_bg_stroke_margin),0,(int) view.getResources().getDimension(R.dimen.slidinguppanel_drag_bg_stroke_margin),0);
+                    drag.setLayoutParams(layoutParams);
                 }
 
                 @Override

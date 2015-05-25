@@ -22,7 +22,7 @@
             android:background="@drawable/slidinguppanel_drag_bg"
             android:layout_marginLeft="@dimen/slidinguppanel_drag_bg_stroke_margin"
             android:layout_marginRight="@dimen/slidinguppanel_drag_bg_stroke_margin"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -36,11 +36,11 @@
 
             <TextView
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:id="@+id/cart_total_price_preview"
                 android:layout_marginRight="@dimen/slidinguppanel_preview_margin_right"
-                android:layout_marginTop="@dimen/slidinguppanel_preview_margin_top"
-                android:gravity="right|center_vertical"
+                android:layout_marginBottom="@dimen/slidinguppanel_preview_margin_bottom"
+                android:gravity="center"
                 android:textSize="@dimen/slidinguppanel_textsize"
                 android:textStyle="bold"
                 android:textColor="@color/AppBarTextColor"/>
@@ -56,7 +56,7 @@
 <!-- Footer-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:orientation="vertical"
             android:background="@color/slidingUpPanel_footer_bg"
             android:layout_marginLeft="@dimen/slidinguppanel_drag_bg_stroke_margin"
