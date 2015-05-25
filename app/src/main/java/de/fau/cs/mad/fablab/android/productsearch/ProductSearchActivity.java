@@ -3,14 +3,10 @@ package de.fau.cs.mad.fablab.android.productsearch;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,18 +19,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import de.fau.cs.mad.fablab.android.FabButton;
+import de.fau.cs.mad.fablab.android.BaseActivity;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.cart.AddToCartDialog;
-import de.fau.cs.mad.fablab.android.cart.Cart;
 import de.fau.cs.mad.fablab.android.cart.RecyclerItemClickListener;
 import de.fau.cs.mad.fablab.android.cart.RecyclerViewAdapter;
-import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.android.productMap.ProductMapActivity;
 import de.fau.cs.mad.fablab.android.ui.UiUtils;
 import de.fau.cs.mad.fablab.rest.ProductApiClient;
@@ -45,13 +37,11 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class ProductSearchActivity extends ActionBarActivity
+public class ProductSearchActivity extends BaseActivity
         implements ProductDialog.ProductDialogListener,AdapterView.OnItemClickListener,AdapterView.OnItemSelectedListener {
 
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerViewAdapter productAdapter;
-    private SlidingUpPanelLayout mLayout;
-    private AppbarDrawerInclude appbarDrawer;
     //only for testing
     private ArrayList<Product> productEntries;
     //our rest-callback interface
@@ -89,9 +79,12 @@ public class ProductSearchActivity extends ActionBarActivity
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void baseSetContentView() {
         setContentView(R.layout.activity_product_search);
+    }
+
+    @Override
+    protected void baseOnCreate(Bundle savedInstanceState) {
         AutoCompleteHelper.getInstance().loadProductNames(this);
 
         mProductApi = new ProductApiClient(this).get();
@@ -100,15 +93,8 @@ public class ProductSearchActivity extends ActionBarActivity
         spinnerContainerView = (View) findViewById(R.id.spinner);
         spinnerImageView = (ImageView) findViewById(R.id.spinner_image);
 
-
-        appbarDrawer = AppbarDrawerInclude.getInstance(this);
-        appbarDrawer.create();
-
-        // Setting up Basket and SlidingUpPanel
-        Cart.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), true);
-
-        // init Floating Action Menu
-        FabButton.MYFABUTTON.init(findViewById(android.R.id.content));
+        initCartPanel(true);
+        initFabButton();
 
         //get search view and set searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -202,40 +188,6 @@ public class ProductSearchActivity extends ActionBarActivity
     public void onNothingSelected(AdapterView<?> parent) {
         InputMethodManager imm = (InputMethodManager) getSystemService( INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        appbarDrawer.createMenu(menu);
-        appbarDrawer.startTimer();
-        return true;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        appbarDrawer.stopTimer();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        appbarDrawer.startTimer();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_opened) {
-            appbarDrawer.updateOpenState(item);
-            Toast appbar_opened_toast = Toast.makeText(this, appbarDrawer.openedMessage, Toast.LENGTH_SHORT);
-            appbar_opened_toast.show();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
