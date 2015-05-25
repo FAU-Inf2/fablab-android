@@ -25,3 +25,11 @@ project(':app') {
     }
 }
 
+task cleanup(type: Delete) {
+    delete 'build', 'app/src/main/java-gen'
+}
+
+task cleanupProject(type: Delete) {
+    delete '.idea', 'fablab-server.iml', '.gradle', '../fablab-common/.._fablab-common.iml', 'app/app.iml'
+}
+
