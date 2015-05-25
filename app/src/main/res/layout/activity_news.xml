@@ -7,21 +7,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:elevation="7dp">
-    <RelativeLayout
-        xmlns:fab="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <include
             android:id="@+id/appbar"
             layout="@layout/appbar" />
+    </RelativeLayout>
 
-        <LinearLayout
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/sliding_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
+        android:gravity="bottom"
+        sothree:umanoPanelHeight="40dp"
+        sothree:umanoShadowHeight="0dp"
+        sothree:umanoParalaxOffset="100dp"
+        sothree:umanoDragView="@+id/dragView"
+        sothree:umanoOverlay="true">
+
+
+ <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/news_activity_actionbar_recyclerview_margin"
-            android:orientation="vertical"
-            android:layout_below="@+id/appbar">
+            android:orientation="vertical">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/dates_view_pager"
@@ -35,12 +48,23 @@
                 android:layout_width="match_parent"
                 />
 
-        </LinearLayout>
+</LinearLayout>
 
+        <!-- Cart Sliding Up Panel -->
         <include
-            layout="@layout/fab_button"/>
+            android:id="@+id/cart"
+            layout="@layout/cart"/>
 
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include
+            layout="@layout/fab_button" />
     </RelativeLayout>
+
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/navdrawer_RecyclerView"

@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:focusable="false"
-    android:elevation="7dp"
-    android:background="#ffffff">
+    android:elevation="@dimen/slidinguppanel_elevation"
+    android:background="@drawable/slidinguppanel_bg">
 
 
     <LinearLayout
@@ -15,14 +15,36 @@
         android:orientation="vertical"
         android:layout_marginTop="@dimen/card_vertical_margin">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/cart_title"
-            android:text="@string/cart_title"
-            android:layout_marginLeft="@dimen/card_horizontal_margin"
-            android:layout_marginTop="@dimen/card_vertical_margin"
-            android:textSize="18sp"/>
+            android:layout_height="@dimen/slidinguppanel_panel_height"
+            android:id="@+id/dragPart"
+            android:background="@drawable/slidinguppanel_drag_bg"
+            android:layout_marginLeft="@dimen/slidinguppanel_drag_bg_stroke_margin"
+            android:layout_marginRight="@dimen/slidinguppanel_drag_bg_stroke_margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cart_title_closed"
+                android:text="@string/cart_title"
+                android:layout_marginLeft="@dimen/slidinguppanel_title_margin_left"
+                android:layout_marginTop="@dimen/slidinguppanel_title_margin_top"
+                android:textSize="@dimen/slidinguppanel_textsize"
+                android:textColor="@color/AppBarTextColor" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/cart_total_price_preview"
+                android:layout_marginRight="@dimen/slidinguppanel_preview_margin_right"
+                android:layout_marginBottom="@dimen/slidinguppanel_preview_margin_bottom"
+                android:gravity="center"
+                android:textSize="@dimen/slidinguppanel_textsize"
+                android:textStyle="bold"
+                android:textColor="@color/AppBarTextColor"/>
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/cart_recycler_view"
@@ -31,52 +53,72 @@
             android:layout_weight=".70"
             android:scrollbars="vertical"/>
 
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/cart_total_price_title"
-            android:text="@string/cart_total_price_title"
-            android:layout_marginLeft="@dimen/card_horizontal_margin"
-            android:layout_marginTop="@dimen/card_vertical_margin"
-            android:layout_marginBottom="@dimen/card_vertical_margin"
-            android:textSize="18sp"/>
-
+<!-- Footer-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3"
-            android:layout_marginRight="@dimen/card_horizontal_margin"
-            android:layout_marginLeft="@dimen/card_horizontal_margin"
-            android:layout_marginTop="@dimen/card_vertical_margin"
-            android:layout_marginBottom="@dimen/fab_padding">
-
+            android:layout_height="100dp"
+            android:orientation="vertical"
+            android:background="@color/slidingUpPanel_footer_bg"
+            android:layout_marginLeft="@dimen/slidinguppanel_drag_bg_stroke_margin"
+            android:layout_marginRight="@dimen/slidinguppanel_drag_bg_stroke_margin"
+            android:layout_marginBottom="@dimen/slidinguppanel_drag_bg_stroke_margin">
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/cart_total_price"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:layout_weight="1"
-                android:textSize="25sp"
-                android:textStyle="bold"/>
+                android:id="@+id/cart_total_price_title"
+                android:text="@string/cart_total_price_title"
+                android:layout_marginLeft="@dimen/slidinguppanel_title_margin_left"
+                android:layout_marginTop="@dimen/slidinguppanel_title_margin_top"
+                android:layout_marginBottom="@dimen/slidinguppanel_title_margin_bottom"
+                android:textSize="@dimen/slidinguppanel_textsize"/>
 
-            <Button
-                android:id="@+id/cart_button_checkout"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:gravity="center_vertical|center"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:layout_weight="1"
-                android:text="@string/cart_button_checkout"/>
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_marginRight="@dimen/slidinguppanel_title_margin_left"
+                android:layout_marginLeft="@dimen/slidinguppanel_title_margin_left"
+                android:layout_marginTop="@dimen/slidinguppanel_title_margin_top"
+                android:layout_marginBottom="@dimen/fab_padding">
 
+                <LinearLayout
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:orientation="vertical"
+                    android:gravity="right"
+                    android:layout_gravity="right"
+                    android:paddingRight="@dimen/slidinguppanel_total_price_margin">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cart_total_price"
+                        android:gravity="center_vertical|center"
+                        android:textSize="@dimen/slidinguppanel_bottom_total_price_textsize"
+                        android:textStyle="bold"
+                        android:textColor="@color/slidingUpPanel_cart_text"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cart_total_price_betterment_tax"
+                        android:gravity="bottom|center"
+                        android:text="@string/betterment_tax"/>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/cart_button_checkout"
+                    android:layout_width="@dimen/zero"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/slidinguppanel_btn_checkout_textsize"
+                    android:gravity="center_vertical|center"
+                    android:paddingRight="@dimen/slidinguppanel_bottom_part_padding"
+                    android:paddingLeft="@dimen/slidinguppanel_bottom_part_padding"
+                    android:layout_weight="1.5"
+                    android:text="@string/cart_button_checkout"/>
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-    <include
-        layout="@layout/fab_button" />
 
 </RelativeLayout>

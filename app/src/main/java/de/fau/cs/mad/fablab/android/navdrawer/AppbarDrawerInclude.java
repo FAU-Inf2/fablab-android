@@ -24,6 +24,7 @@ import de.fau.cs.mad.fablab.android.BarcodeScannerActivity;
 import de.fau.cs.mad.fablab.android.MainActivity;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.cart.CartActivity;
+import de.fau.cs.mad.fablab.android.eventbus.DoorEvent;
 import de.fau.cs.mad.fablab.android.productsearch.ProductSearchActivity;
 import de.fau.cs.mad.fablab.android.ui.NewsActivity;
 import de.fau.cs.mad.fablab.rest.SpaceApiClient;
@@ -81,6 +82,8 @@ public class AppbarDrawerInclude  {
         navdrawer.addItem(new NavigationDrawerItem("Produktsuche", ProductSearchActivity.class, R.drawable.produktsuche));
         navdrawer.addItem(new NavigationDrawerItem("News", NewsActivity.class, R.drawable.news));
         mAdapter = new NavigationDrawerAdapter(navdrawer, false);
+
+        time = -1;
     }
 
     public void create() {
@@ -205,7 +208,9 @@ public class AppbarDrawerInclude  {
     }
 
     private String getTime(long time) {
-        if (time < 60)
+        if (time < 0)
+            return "";
+        else if (time < 60)
             return time + "m";
         else if (time < (60 * 24)) {
             long hours = time / 60;
@@ -254,5 +259,16 @@ public class AppbarDrawerInclude  {
                 Log.i("App", error.getMessage());
             }
         });
+    }
+
+    public void updateOpenStateEvent(DoorEvent event) {
+        if (event.isOpened()) {
+            opened = true;
+        } else {
+            opened = false;
+        }
+        updateAppbar();
+
+        openedMessage = event.getMessage();
     }
 }

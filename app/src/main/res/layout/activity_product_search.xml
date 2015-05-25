@@ -6,32 +6,41 @@
     android:layout_height="match_parent"
     android:elevation="7dp">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            android:id="@+id/appbar"
+            layout="@layout/appbar" />
+    </RelativeLayout>
+
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
         xmlns:sothree="http://schemas.android.com/apk/res-auto"
         android:id="@+id/sliding_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
         android:gravity="bottom"
-        sothree:umanoPanelHeight="68dp"
-        sothree:umanoShadowHeight="4dp"
+        sothree:umanoPanelHeight="40dp"
+        sothree:umanoShadowHeight="0dp"
         sothree:umanoParalaxOffset="100dp"
         sothree:umanoDragView="@+id/dragView"
         sothree:umanoOverlay="true">
-
-        <!-- Main Content -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include
-                android:id="@+id/appbar"
-                layout="@layout/appbar" />
-
-            <SearchView
+            <AutoCompleteTextView
                 android:id="@+id/product_search_view"
-                android:layout_below="@+id/appbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:textStyle="bold"
+                android:imeOptions="actionSend"
+                android:singleLine="true"
+                android:width="250dip" />
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/product_recycler_view"
@@ -48,6 +57,13 @@
 
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include
+            layout="@layout/fab_button" />
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/navdrawer_RecyclerView"
         android:layout_width="320dp"
@@ -57,4 +73,7 @@
         android:scrollbars="vertical">
 
     </android.support.v7.widget.RecyclerView>
+
+    <include layout="@layout/spinner"/>
+
 </android.support.v4.widget.DrawerLayout>

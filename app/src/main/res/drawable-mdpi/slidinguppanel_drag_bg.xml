@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/AppBarColorPrimary"/>
+    <corners
+        android:radius="@dimen/one"
+        android:topLeftRadius="@dimen/slidinguppanel_corner_radius_top"
+        android:topRightRadius="@dimen/slidinguppanel_corner_radius_top"
+        android:bottomLeftRadius="@dimen/zero"
+        android:bottomRightRadius="@dimen/zero"/>
+    <padding android:left="@dimen/zero" android:top="@dimen/zero" android:right="@dimen/zero" android:bottom="@dimen/zero" />
+</shape>

@@ -55,8 +55,12 @@ android {
     }
 }
 
+preBuild.dependsOn(":../fablab-common:build")
+
 dependencies {
     compile files('../../fablab-common/build/libs/fablab-common-1.0.jar')
+    // jackson annotations are required for POJOs
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.1.4'
     compile 'com.android.support:appcompat-v7:21.0.0'
     // Libraries for the REST Client (Retrofit)
     compile 'com.squareup.retrofit:retrofit:1.6.1'
@@ -79,6 +83,7 @@ dependencies {
     compile 'com.github.clans:fab:1.5.0'
     compile 'org.roboguice:roboguice:3.0.1'
     provided 'org.roboguice:roboblender:3.0.1'
+    compile 'de.greenrobot:eventbus:2.4.0'
 }
 
 allprojects {

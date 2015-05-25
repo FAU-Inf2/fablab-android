@@ -66,6 +66,16 @@
             android:onClick="startCheckout"
             android:text="Checkout" />
 
+        <!--<include
+            android:id="@+id/cart"
+            layout="@layout/cart"
+            android:layout_below="@+id/appbar"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"/>-->
+
+        <include
+            layout="@layout/fab_button"/>
+
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
