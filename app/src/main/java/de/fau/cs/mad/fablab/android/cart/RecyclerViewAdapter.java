@@ -83,7 +83,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(final ProductViewHolder productViewHolder, final int i) {
         productViewHolder.cart_product_name.setText(products.get(i).getName());
-        productViewHolder.cart_product_price.setText(String.valueOf(products.get(i).getPrice()) +
+        String formated_price = String.format("%.2f", products.get(i).getPrice());
+        productViewHolder.cart_product_price.setText(formated_price +
                 Html.fromHtml(productViewHolder.itemView.getResources().getString(R.string.non_breaking_space)) +
                 Html.fromHtml(productViewHolder.itemView.getResources().getString(R.string.currency)));
         productViewHolder.cart_product_photo.setImageResource(R.drawable.no_image_avl);
