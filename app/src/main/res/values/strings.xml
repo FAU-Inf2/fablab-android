@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">FAU Fablab</string>
 
+    <string name="API_URL">https://ec2-52-28-16-59.eu-central-1.compute.amazonaws.com</string>
+    <string name="development_truststore_pass">dummypass4dev</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="button_start_barcode_scanner">Start barcode scanner</string>
-    <string name="API_URL">http://ec2-52-28-16-59.eu-central-1.compute.amazonaws.com</string>
     <string name="SpaceName">FAU+FabLab</string>
     <string name="appbar_fau">FAU</string>
     <string name="appbar_fablab">FabLab</string>
