@@ -113,8 +113,6 @@ public class ProductSearchActivity extends BaseActivity
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
                     search(searchView.getText().toString());
                     handled = true;
                 }
@@ -215,6 +213,8 @@ public class ProductSearchActivity extends BaseActivity
         uiUtils.showSpinner(spinnerContainerView, spinnerImageView);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 
         mProductApi.findByName(query, 0, 0, mSearchCallback);
     }
