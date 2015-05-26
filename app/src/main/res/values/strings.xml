@@ -40,4 +40,5 @@
     <string name="non_breaking_space"><![CDATA[&nbsp;]]></string>
     <string name="colon">:</string>
     <string name="betterment_tax">inkl. MwSt.</string>
+    <string name="title_activity_push">PushActivity</string>
 </resources>
