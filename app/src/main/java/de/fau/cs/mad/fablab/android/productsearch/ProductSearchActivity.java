@@ -113,6 +113,7 @@ public class ProductSearchActivity extends BaseActivity
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    searchView.dismissDropDown();
                     search(searchView.getText().toString());
                     handled = true;
                 }
