@@ -25,6 +25,17 @@ public class ProductDialog extends DialogFragment {
     private Product                 product;
     private ProductDialogListener   productDialogListener;
 
+    public static ProductDialog newInstance(Product product) {
+        ProductDialog productDialog = new ProductDialog();
+
+        //supply product as an argument
+        Bundle arguments = new Bundle();
+        arguments.putSerializable(PRODUCT_KEY, product);
+        productDialog.setArguments(arguments);
+
+        return productDialog;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -145,11 +145,8 @@ public class ProductSearchActivity extends BaseActivity
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //set selected product
                 selectedProduct = productAdapter.getItem(position);
-                //show dialog
-                Bundle arguments = new Bundle();
-                arguments.putSerializable(ProductDialog.PRODUCT_KEY, selectedProduct);
-                productDialog = new ProductDialog();
-                productDialog.setArguments(arguments);
+                //show product dialog
+                productDialog = ProductDialog.newInstance(selectedProduct);
                 productDialog.show(getFragmentManager(), "product_dialog");
             }
 
