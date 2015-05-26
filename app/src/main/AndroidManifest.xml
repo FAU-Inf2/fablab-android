@@ -12,6 +12,16 @@
         android:name="android.permission.VIBRATE"
         tools:node="remove" />
 
+
+    <!-- Permission for pushservice-->
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <permission android:name="de.fau.cs.mad.fablab.android.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="de.fau.cs.mad.fablab.android.permission.C2D_MESSAGE" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false"
@@ -44,6 +54,8 @@
         <activity android:name=".cart.CartActivity" />
         <activity android:name=".cart.CheckoutActivity" />
         <activity android:name=".ui.NewsActivity" />
+        <activity android:name=".pushservice.PushActivity"/>
+
         <activity
             android:name=".productMap.ProductMapActivity"
             android:screenOrientation="portrait" />
@@ -58,10 +70,18 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity
-            android:name=".pushservice.PushActivity"
-            android:label="@string/title_activity_push" >
-        </activity>
+
+
+        <receiver
+            android:name=".pushservice.PushBroatCastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.example.gcm" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".pushservice.PushIntentService" />
+
     </application>
 
 </manifest>
