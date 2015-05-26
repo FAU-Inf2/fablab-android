@@ -13,6 +13,10 @@
     <color name="slidingUpPanel_bg">#FFFFFF</color>
     <color name="slidingUpPanel_cart_text">#000000</color>
     <color name="slidingUpPanel_footer_bg">#F2F2F2</color>
+    <color name="slidingUpPanel_footer_button_bg">#e1e1e1</color>
+    <color name="slidingUpPanel_footer_button_bg_pressed">#94ce18</color>
+    <color name="slidingUpPanel_footer_button_txt">#154b85</color>
+    <color name="slidingUpPanel_footer_button_txt_pressed">#FFFFFF</color>
 
     <color name="spinner_background">#ffcecece</color>
 </resources>
