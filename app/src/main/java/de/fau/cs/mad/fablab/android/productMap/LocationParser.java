@@ -1,11 +1,9 @@
 package de.fau.cs.mad.fablab.android.productMap;
 
-/**
- * Created by Michael on 22.05.2015.
- */
+
 public final class LocationParser
 {
-    String teststring = "tatsächliche Lagerorte / FAU FabLab / Elektrowerkstatt / Regal / Kiste Spaxschrauben";
+    String teststring = "tats\u00e4chliche Lagerorte / FAU FabLab / Elektrowerkstatt / Regal / Kiste Spaxschrauben";
     private LocationParser(){   }
 
     public static ProductLocation getLocation(String locationString)

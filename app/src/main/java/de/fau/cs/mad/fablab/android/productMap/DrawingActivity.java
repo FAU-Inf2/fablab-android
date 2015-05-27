@@ -8,9 +8,6 @@ import android.graphics.Rect;
 import android.view.View;
 
 
-/**
- * Created by Michael on 11.05.2015.
- */
 public class DrawingActivity extends View
 {
 
@@ -64,6 +61,9 @@ public class DrawingActivity extends View
             case ACRYLIC_GLAS_SHELF:
                 drawAcrylicShelf(canvas);
                 drawLocation(canvas, positionX, positionY, true);
+                break;
+            default:
+
         }
 
     }
@@ -212,6 +212,11 @@ public class DrawingActivity extends View
             canvas.drawLine(electricWorkshopOutline.left, electricWorkshopOutline.centerY() / 2, electricWorkshopOutline.right, electricWorkshopOutline.centerY() / 2, electricWorkshopPaint);
             canvas.drawLine(electricWorkshopOutline.left, electricWorkshopOutline.bottom - electricWorkshopOutline.centerY() / 2, electricWorkshopOutline.right, electricWorkshopOutline.bottom - electricWorkshopOutline.centerY() / 2, electricWorkshopPaint);
         }
+
+    }
+
+    protected  void drawErrorScreen(Canvas canvas)
+    {
 
     }
 
