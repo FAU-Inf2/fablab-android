@@ -10,6 +10,10 @@ public enum Paintings
 {
     ROOM_PAINTING(Color.BLACK, Paint.Style.STROKE, 10),
     DOOR_PAINTING(Color.GREEN, Paint.Style.STROKE, 10),
+    WINDOW_PAINTING(Color.argb(255,0,255,255), Paint.Style.STROKE, 10),
+
+    GRAY_PAINTING(Color.GRAY, Paint.Style.FILL, 10),
+    LOCATION_PAINTING(Color.RED, Paint.Style.FILL, 20),
 
     SHELF_STROKE_DARK_PAINTING(Color.argb(255,139,69,19), Paint.Style.STROKE, 10),
     SHELF_STROKE_LIGHT_PAINTING(Color.argb(255, 205, 133, 63), Paint.Style.STROKE, 10),

@@ -22,26 +22,36 @@ public enum ProductLocation
 
 
     //Level 2
-    //ACRYLIC_GLAS_SHELF(),
+    ACRYLIC_GLAS_SHELF(FablabView.ACRYLIC_GLAS_SHELF, ELECTRIC_WORKSHOP, 0, 0, 0, 0,"Plexiglasregal" ),
     SHELF(FablabView.ELECTRIC_WORKSHOP, ELECTRIC_WORKSHOP, 0, 0, ELECTRIC_WORKSHOP.getMainPositionX() + 300, ELECTRIC_WORKSHOP.getMainPositionY(), "Regal"),
 
     //Level 3
-    BOX_SPAX_SCREW(FablabView.ELECTRIC_WORKSHOP, SHELF, 0, 0, SHELF.getMainPositionX(), SHELF.getMainPositionY(), "Kiste Spaxschrauben");
+    BOX_SPAX_SCREW(FablabView.ELECTRIC_WORKSHOP, SHELF, 0, 0, SHELF.getMainPositionX(), SHELF.getMainPositionY(), "Kiste Spaxschrauben"),
+    ACRYLIC_GLAS(FablabView.ACRYLIC_GLAS_SHELF, ACRYLIC_GLAS_SHELF, 0.20, 0.65, 0.60, 0.45, "Plexiglas");
 
 
     private FablabView fablabView;
 
     private ProductLocation parent;
 
-    private int viewPositionX;
-    private int viewPositionY;
+    /*
+    ######################
+    #          y         #
+    #                    #      x coordinate to the right and
+    #          |         #      y coordinate to the bottom
+    #         \|/  x --> #
+    #                    #      in BOTH! views. Main and specific view
+    ######################
+    */
+    private double viewPositionX;
+    private double viewPositionY;
 
-    private int mainPositionX;
-    private int mainPositionY;
+    private double mainPositionX;
+    private double mainPositionY;
 
     private String locationName;
 
-    private ProductLocation(FablabView fablabView, ProductLocation parent, int viewPositionX, int viewPositionY, int mainPositionX, int mainPositionY, String locationName)
+    private ProductLocation(FablabView fablabView, ProductLocation parent, double viewPositionX, double viewPositionY, double mainPositionX, double mainPositionY, String locationName)
     {
         this.fablabView = fablabView;
 
@@ -56,16 +66,16 @@ public enum ProductLocation
         this.locationName = locationName;
     }
 
-    public int getViewPositionX() {
+    public double getViewPositionX() {
         return viewPositionX;
     }
-    public int getViewPositionY() {
+    public double getViewPositionY() {
         return viewPositionY;
     }
-    public int getMainPositionX() {
+    public double getMainPositionX() {
         return mainPositionX;
     }
-    public int getMainPositionY() {
+    public double getMainPositionY() {
         return mainPositionY;
     }
     public FablabView getView() {

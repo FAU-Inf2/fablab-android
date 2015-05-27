@@ -25,7 +25,7 @@ public class ProductMapActivity extends ActionBarActivity
 
         //TODO: get location
         //getIntent().getExtras().getString("location");
-        String locationString = "tatsächliche Lagerorte / FAU FabLab / Elektrowerkstatt / Regal / Kiste Spaxschrauben";
+        String locationString = "tatsächliche Lagerorte / FAU FabLab / Elektrowerkstatt / Regal / Plexiglas";
         isMainViewActive = true;
 
 
