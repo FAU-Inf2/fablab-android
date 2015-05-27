@@ -20,7 +20,6 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class CheckoutActivity extends ActionBarActivity implements ScannerView.ScannerViewEventListener {
-    private static final String TAG = CheckoutActivity.class.getSimpleName();
     private ScannerFragment scannerFragment;
     private ProgressBar progressBar;
     private Pattern qrCodePattern = Pattern.compile("(-)?\\d{1,19}");
@@ -32,11 +31,9 @@ public class CheckoutActivity extends ActionBarActivity implements ScannerView.S
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         if (savedInstanceState == null) {
-            if (scannerFragment == null) {
-                scannerFragment = new ScannerFragment();
-                scannerFragment.setScannerViewEventListener(this);
-            }
-
+            scannerFragment = ScannerFragment.newInstance(getResources().getString(
+                    R.string.title_scan_product));
+            scannerFragment.setScannerViewEventListener(this);
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
                     scannerFragment).commit();
         }

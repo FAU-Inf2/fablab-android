@@ -49,7 +49,6 @@ public class ProductSearchActivity extends BaseActivity
     private ProductDialog productDialog;
     private Product selectedProduct;
 
-    private UiUtils uiUtils;
     private View spinnerContainerView;
     private ImageView spinnerImageView;
 
@@ -69,14 +68,14 @@ public class ProductSearchActivity extends BaseActivity
             productAdapter.addAll(results);
             productAdapter.notifyDataSetChanged();
 
-            uiUtils.hideSpinner(spinnerContainerView, spinnerImageView);
+            UiUtils.hideSpinner(spinnerContainerView, spinnerImageView);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
 
         @Override
         public void failure(RetrofitError error) {
             Toast.makeText(getBaseContext(), R.string.retrofit_callback_failure, Toast.LENGTH_LONG).show();
-            uiUtils.hideSpinner(spinnerContainerView, spinnerImageView);
+            UiUtils.hideSpinner(spinnerContainerView, spinnerImageView);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
     };
@@ -93,7 +92,6 @@ public class ProductSearchActivity extends BaseActivity
 
         mProductApi = new ProductApiClient(this).get();
 
-        uiUtils = new UiUtils(this);
         spinnerContainerView = (View) findViewById(R.id.spinner);
         spinnerImageView = (ImageView) findViewById(R.id.spinner_image);
 
@@ -171,8 +169,7 @@ public class ProductSearchActivity extends BaseActivity
     //For Autocomplete
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        InputMethodManager imm = (InputMethodManager) getSystemService( INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        UiUtils.hideKeyboard(this);
     }
 
     @Override
@@ -196,11 +193,10 @@ public class ProductSearchActivity extends BaseActivity
         //TODO maybe add a limit here?
 
         //show spinner and disable input
-        uiUtils.showSpinner(spinnerContainerView, spinnerImageView);
+        UiUtils.showSpinner(spinnerContainerView, spinnerImageView);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        UiUtils.hideKeyboard(this);
 
         mProductApi.findByName(query, 0, 0, mSearchCallback);
     }
@@ -217,8 +213,9 @@ public class ProductSearchActivity extends BaseActivity
         //dismiss product dialog
         productDialog.dismiss();
         //show add to cart dialog
-        AddToCartDialog.newInstance(selectedProduct).show(getSupportFragmentManager(),
-                "add_to_cart_dialog");
+        Intent intent = new Intent(this, AddToCartActivity.class);
+        intent.putExtra("product", selectedProduct);
+        startActivity(intent);
     }
 
     @Override

@@ -29,6 +29,7 @@ import de.fau.cs.mad.fablab.android.FabButton;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.cart.Cart;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
+import de.fau.cs.mad.fablab.android.productsearch.AutoCompleteHelper;
 import de.fau.cs.mad.fablab.rest.core.ICal;
 import de.fau.cs.mad.fablab.rest.core.News;
 import roboguice.activity.RoboActionBarActivity;
@@ -61,11 +62,14 @@ public class NewsActivity extends RoboActionBarActivity {
         appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
 
+        // init db and cart - always do this on app start
+        Cart.MYCART.init(getApplication());
+
         // init cart panel
         Cart.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), true);
 
         // init Floating Action Menu
-        FabButton.MYFABUTTON.init(findViewById(android.R.id.content));
+        FabButton.MYFABUTTON.init(findViewById(android.R.id.content), this);
 
 
         //get news and set them
@@ -100,7 +104,8 @@ public class NewsActivity extends RoboActionBarActivity {
         datesSlidePagerAdapter = new DatesSlidePagerAdapter(getSupportFragmentManager(), listDates);
         datesViewPager.setAdapter(datesSlidePagerAdapter);
 
-
+        //Load Autocompleteionwords
+        AutoCompleteHelper.getInstance().loadProductNames(this);
     }
 
     @Override
@@ -120,6 +125,9 @@ public class NewsActivity extends RoboActionBarActivity {
     public void onResume() {
         super.onResume();
         appbarDrawer.startTimer();
+
+        //Load Autocompleteionwords
+        AutoCompleteHelper.getInstance().loadProductNames(this);
     }
 
     @Override

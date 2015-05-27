@@ -1,12 +1,14 @@
 package de.fau.cs.mad.fablab.android.cart;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -133,6 +135,18 @@ public enum Cart {
             }
         }));
 
+        Button checkoutButton = (Button) v.findViewById(R.id.cart_button_checkout);
+        checkoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (products.size() == 0) {
+                    Toast.makeText(context, R.string.cart_empty, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                Intent intent = new Intent(context, CheckoutActivity.class);
+                context.startActivity(intent);
+            }
+        });
 
 
         // set total price
@@ -262,26 +276,26 @@ public enum Cart {
     }
 
     // add product to cart
-    public void addProduct(Product product){
+    public void addProduct(Product product, double amount){
         // update existing cart entry
         for(CartEntry temp : products){
             if (temp.getProductId() == product.getProductId()){
-                temp.setAmount(temp.getAmount() + 1);
+                temp.setAmount(temp.getAmount() + amount);
                 dao.update(temp);
-                adapter.notifyDataSetChanged();
-                refresh();
-                updateVisibility();
+                //adapter.notifyDataSetChanged();
+                //refresh();
+                //updateVisibility();
                 return;
             }
         }
 
         // create new one
-        CartEntry new_entry = new CartEntry(product,1);
+        CartEntry new_entry = new CartEntry(product, amount);
         dao.create(new_entry);
         products.add(new_entry);
-        adapter.notifyDataSetChanged();
-        refresh();
-        updateVisibility();
+        //adapter.notifyDataSetChanged();
+        //refresh();
+        //updateVisibility();
     }
 
     // return total price
