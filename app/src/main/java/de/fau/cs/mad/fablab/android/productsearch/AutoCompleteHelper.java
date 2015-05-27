@@ -34,7 +34,7 @@ public class AutoCompleteHelper{
      -resume of device
      -start product search activity
 
-     -> It gets alle product names from the server, creates autocomplete words and stores them in the DB
+     -> It gets all product names from the server, creates autocomplete words and stores them in the DB
      -->All 24h (changeable) updates are requestet
 
      */
@@ -53,11 +53,18 @@ public class AutoCompleteHelper{
 
                 @Override
                 public void failure(RetrofitError error) {
+                    //error -> Autocomplete doesn't work... but everything else is still fine
                     System.out.println(error);
-                    //error -> Autocomplete doesnt work...
                 }
             });
         }
+    }
+
+    public void forceReloadProductNames(Context c) {
+        dao = DatabaseHelper.getHelper(c).getAutoCompleteWordsDao();
+        if(dao.queryForId((long) 0) != null)
+            dao.deleteById((long)0);
+        loadProductNames(c);
     }
 
     private void createAutocompleteStrings(List<String> strings){
@@ -84,8 +91,6 @@ public class AutoCompleteHelper{
             if(w == null)
                 dao.create(new AutoCompleteWords(tempList.toArray(new String[tempList.size()])));
             else{
-                // TODO This is not tested --> I am not able to manipulate the words from openERP.
-                // Not sure if updates are really stored and so on...
                 w.setPossibleAutoCompleteWords(tempList.toArray(new String[tempList.size()]));
                 dao.update(w);
             }
