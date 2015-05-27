@@ -21,7 +21,6 @@ import net.spaceapi.HackerSpace;
 import net.spaceapi.State;
 
 import de.fau.cs.mad.fablab.android.BarcodeScannerActivity;
-import de.fau.cs.mad.fablab.android.MainActivity;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.cart.CartActivity;
 import de.fau.cs.mad.fablab.android.eventbus.DoorEvent;
@@ -77,11 +76,10 @@ public class AppbarDrawerInclude  {
 
         // Navigation Drawer
         navdrawer = new NavigationDrawer("Fablab User", "usermail@user.mail", R.drawable.avatar);
-        navdrawer.addItem(new NavigationDrawerItem("Main", MainActivity.class, R.drawable.main));
-        navdrawer.addItem(new NavigationDrawerItem("Barcode", BarcodeScannerActivity.class, R.drawable.barcode));
-        navdrawer.addItem(new NavigationDrawerItem("Warenkorb", CartActivity.class, R.drawable.warenkorb));
-        navdrawer.addItem(new NavigationDrawerItem("Produktsuche", ProductSearchActivity.class, R.drawable.produktsuche));
         navdrawer.addItem(new NavigationDrawerItem("News", NewsActivity.class, R.drawable.news));
+        navdrawer.addItem(new NavigationDrawerItem("Produkt scannen", BarcodeScannerActivity.class, R.drawable.barcode));
+        navdrawer.addItem(new NavigationDrawerItem("Produktsuche", ProductSearchActivity.class, R.drawable.produktsuche));
+        navdrawer.addItem(new NavigationDrawerItem("Warenkorb", CartActivity.class, R.drawable.warenkorb));
         navdrawer.addItem(new NavigationDrawerItem("Push", PushActivity.class, R.drawable.news));
         mAdapter = new NavigationDrawerAdapter(navdrawer, false);
 

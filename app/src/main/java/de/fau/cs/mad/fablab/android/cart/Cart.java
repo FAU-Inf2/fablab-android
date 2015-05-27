@@ -1,12 +1,14 @@
 package de.fau.cs.mad.fablab.android.cart;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -133,6 +135,18 @@ public enum Cart {
             }
         }));
 
+        Button checkoutButton = (Button) v.findViewById(R.id.cart_button_checkout);
+        checkoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (products.size() == 0) {
+                    Toast.makeText(context, R.string.cart_empty, Toast.LENGTH_LONG).show();
+                    return;
+                }
+                Intent intent = new Intent(context, CheckoutActivity.class);
+                context.startActivity(intent);
+            }
+        });
 
 
         // set total price

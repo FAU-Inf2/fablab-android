@@ -40,7 +40,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     }
 
     public void initFabButton() {
-        FabButton.MYFABUTTON.init(findViewById(android.R.id.content));
+        FabButton.MYFABUTTON.init(findViewById(android.R.id.content), this);
     }
 
     public void initCartPanel(boolean show) {
