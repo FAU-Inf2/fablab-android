@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/product_card_height"
+        android:layout_marginRight="@dimen/product_card_margin"
+        android:layout_marginLeft="@dimen/product_card_margin"
+        android:layout_marginTop="@dimen/product_card_margin"
+        android:layout_marginBottom="@dimen/product_card_margin"
+        card_view:cardCornerRadius="@dimen/zero" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginRight="@dimen/product_card_margin"
+            android:layout_marginLeft="@dimen/product_card_margin"
+            android:layout_marginTop="@dimen/product_card_margin"
+            android:layout_marginBottom="@dimen/product_card_margin"
+            android:weightSum="1">
+
+            <ImageView
+                android:id="@+id/product_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/no_image_avl" />
+
+            <TextView
+                android:id="@+id/product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:textSize="@dimen/product_name_size"
+                android:text="Hallo Test" />
+
+            <TextView
+                android:id="@+id/product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/product_price_size"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:text="Price"/>
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

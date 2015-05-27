@@ -1,0 +1,10 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/slidingUpPanel_footer_button_bg_pressed"/>
+    <corners
+        android:radius="@dimen/one"
+        android:topLeftRadius="@dimen/slidinguppanel_corner_radius_top"
+        android:topRightRadius="@dimen/slidinguppanel_corner_radius_top"
+        android:bottomLeftRadius="@dimen/slidinguppanel_corner_radius_top"
+        android:bottomRightRadius="@dimen/slidinguppanel_corner_radius_top"/>
+    <padding android:left="@dimen/zero" android:top="@dimen/zero" android:right="@dimen/zero" android:bottom="@dimen/zero" />
+</shape>

@@ -115,7 +115,9 @@
                     android:paddingRight="@dimen/slidinguppanel_bottom_part_padding"
                     android:paddingLeft="@dimen/slidinguppanel_bottom_part_padding"
                     android:layout_weight="1.5"
-                    android:text="@string/cart_button_checkout"/>
+                    android:text="@string/cart_button_checkout"
+                    android:textColor="@color/slidinguppanel_footer_bg_textcolor"
+                    android:background="@drawable/slidinguppanel_button_selector"/>
 
             </LinearLayout>
         </LinearLayout>

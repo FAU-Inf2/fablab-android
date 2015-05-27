@@ -41,12 +41,13 @@
                 android:singleLine="true"
                 android:width="250dip" />
 
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/product_recycler_view"
+            <de.fau.cs.mad.fablab.android.productsearch.IndexableListView
+                android:id="@+id/product_indexable_list_view"
                 android:layout_below="@+id/product_search_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:dividerHeight="0dp"/>
 
         </RelativeLayout>
 

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.fau.cs.mad.fablab.android.BaseActivity;
@@ -41,9 +42,7 @@ public class ProductSearchActivity extends BaseActivity
         implements ProductDialog.ProductDialogListener,AdapterView.OnItemClickListener,AdapterView.OnItemSelectedListener {
 
     private RecyclerView.LayoutManager layoutManager;
-    private RecyclerViewAdapter productAdapter;
-    //only for testing
-    private ArrayList<Product> productEntries;
+    private ProductAdapter productAdapter;
     //our rest-callback interface
     private ProductApi mProductApi;
 
@@ -61,10 +60,15 @@ public class ProductSearchActivity extends BaseActivity
             if (products.isEmpty()) {
                 Toast.makeText(getBaseContext(), R.string.product_not_found, Toast.LENGTH_LONG).show();
             }
+
+            ArrayList<Product> results = new ArrayList<Product>();
             for (Product product : products) {
-                productAdapter.addProduct(new CartEntry(product, 1));
-                productEntries.add(product);
+                results.add(product);
             }
+            Collections.sort(results, new ProductSort());
+            productAdapter.addAll(results);
+            productAdapter.notifyDataSetChanged();
+
             uiUtils.hideSpinner(spinnerContainerView, spinnerImageView);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
@@ -113,8 +117,7 @@ public class ProductSearchActivity extends BaseActivity
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+                    searchView.dismissDropDown();
                     search(searchView.getText().toString());
                     handled = true;
                 }
@@ -128,44 +131,26 @@ public class ProductSearchActivity extends BaseActivity
         //do not iconify search view
         //searchView.setIconified(false);
 
-        //get recycler view and set layout manager and adapter
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.product_recycler_view);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        productAdapter = new RecyclerViewAdapter(getApplicationContext(),new ArrayList<CartEntry>());
-        recyclerView.setAdapter(productAdapter);
-
+        //get indexable list view and set adapter
+        IndexableListView indexableListView = (IndexableListView)
+                findViewById(R.id.product_indexable_list_view);
+        productAdapter = new ProductAdapter(getApplicationContext(), R.layout.product_entry);
+        indexableListView.setAdapter(productAdapter);
+        indexableListView.setFastScrollEnabled(true);
 
         //add listener to handle click events
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView,
-                new RecyclerItemClickListener.OnItemClickListener() {
+        indexableListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(View view, int position, MotionEvent e) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //set selected product
-                selectedProduct = productEntries.get(position);
-                //show dialog
-                Bundle arguments = new Bundle();
-                arguments.putSerializable(ProductDialog.PRODUCT_KEY, selectedProduct);
-                productDialog = new ProductDialog();
-                productDialog.setArguments(arguments);
+                selectedProduct = productAdapter.getItem(position);
+                //show product dialog
+                productDialog = ProductDialog.newInstance(selectedProduct);
                 productDialog.show(getFragmentManager(), "product_dialog");
             }
 
-            @Override
-            public void onItemLongClick(View view, int position) {
-                //do nothing
-                return;
-            }
-
-            @Override
-            public boolean inViewInBounds(View view, int x, int y){
-                // used in cart, cf Cart.java for further information
-                return false;
-            }
-
-        }));
-
+        });
 
         //handle intent
         handleIntent(getIntent());
@@ -207,7 +192,6 @@ public class ProductSearchActivity extends BaseActivity
 
     private void search(String query) {
         //show products containing the query
-        productEntries = new ArrayList<>();
         productAdapter.clear();
         //TODO maybe add a limit here?
 
@@ -215,6 +199,8 @@ public class ProductSearchActivity extends BaseActivity
         uiUtils.showSpinner(spinnerContainerView, spinnerImageView);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 
         mProductApi.findByName(query, 0, 0, mSearchCallback);
     }
