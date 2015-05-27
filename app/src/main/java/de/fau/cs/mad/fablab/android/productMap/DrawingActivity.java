@@ -78,11 +78,11 @@ public class DrawingActivity extends View
         Rect outerWall = new Rect();
         outerWall.set(padding, padding, canvas.getWidth() - padding, canvas.getHeight() - padding);
         canvas.drawRect(outerWall, Paintings.ROOM_PAINTING.getPaint());
+        canvas.drawText("FabLab", outerWall.left + padding, outerWall.top + Paintings.TEXT_PAINTING_LARGE.getPaint().getTextSize() + padding, Paintings.TEXT_PAINTING_LARGE.getPaint());
 
         int wallOffset = Paintings.ROOM_PAINTING.getStrokeWith()/2;
         int roomHeight = (outerWall.centerY() - outerWall.top);
         int roomWidth = (outerWall.right - outerWall.left) - Paintings.ROOM_PAINTING.getStrokeWith();
-
 
 
 
@@ -135,11 +135,13 @@ public class DrawingActivity extends View
         int millingMachineRightPoint = offsetLeftWall + roomWidth/4;
         Rect millingMachine = new Rect(leftPoint, bottomTopPoint, millingMachineRightPoint, entryDoorTopPoint);
         canvas.drawRect(millingMachine, Paintings.GRAY_PAINTING.getPaint());
+        canvas.drawText("Fr\u00e4se", leftPoint + padding, millingMachine.centerY(), Paintings.TEXT_PAINTING_SMALL.getPaint());
 
         // workbench
         int workbenchBottomPoint = bottomTopPoint + roomHeight/8;
         Rect workbench = new Rect(millingMachineRightPoint, bottomTopPoint, doorLeftPoint, workbenchBottomPoint );
         canvas.drawRect(workbench, Paintings.SHELF_FILL_LIGHT_PAINTING.getPaint());
+        canvas.drawText("Werkbank", workbench.left + padding, workbench.centerY(), Paintings.TEXT_PAINTING_SMALL.getPaint());
 
         Rect workbench2 = new Rect(doorLeftPoint - roomWidth/5, workbenchBottomPoint, doorLeftPoint, bottomTopPoint + roomHeight/8*2);
         canvas.drawRect(workbench2, Paintings.SHELF_FILL_LIGHT_PAINTING.getPaint());
@@ -153,19 +155,24 @@ public class DrawingActivity extends View
         int chemistryBench2TopPoint = bottomPoint - roomHeight/8;
         Rect chemistryBench2 = new Rect(chemistryBenchRightPoint, chemistryBench2TopPoint, chemistryBench2RightPoint, bottomPoint);
         canvas.drawRect(chemistryBench2, Paintings.SHELF_FILL_LIGHT_PAINTING.getPaint());
+        canvas.drawText("Chemietisch", chemistryBench.left + padding, chemistryBench.bottom - padding, Paintings.TEXT_PAINTING_SMALL.getPaint());
+
 
         // engine lathe
         Rect engineLathe = new Rect(chemistryBench2RightPoint, chemistryBench2TopPoint, doorLeftPoint, bottomPoint );
         canvas.drawRect(engineLathe, Paintings.GRAY_PAINTING.getPaint());
+        canvas.drawText("Drehbank", engineLathe.left + padding, engineLathe.bottom - padding, Paintings.TEXT_PAINTING_SMALL.getPaint());
 
         //tables
         Rect tablesBottomRoom = new Rect(leftPoint + roomWidth/2, bottomTopPoint + roomHeight/7*3, rightPoint, bottomTopPoint + roomHeight/7*5);
         canvas.drawRect(tablesBottomRoom, Paintings.SHELF_FILL_DARK_PAINTING.getPaint());
+        canvas.drawText("Labortisch", tablesBottomRoom.left + padding, tablesBottomRoom.centerY(), Paintings.TEXT_PAINTING_SMALL.getPaint());
 
         // top room
         // acrylic shelf
         Rect acrylicShelf = new Rect(leftPoint,topBottomPoint - roomHeight/6, doorLeftPoint, topBottomPoint );
         canvas.drawRect(acrylicShelf, Paintings.SHELF_FILL_LIGHT_PAINTING.getPaint());
+        canvas.drawText("Plexiglasregal", acrylicShelf.left + padding, acrylicShelf.bottom - padding, Paintings.TEXT_PAINTING_SMALL.getPaint());
 
         // screw shelf
         Rect screwShelf = new Rect(rightPoint - roomWidth/8, topPoint + windowWith*2, rightPoint, topPoint + windowWith*4);
@@ -178,6 +185,7 @@ public class DrawingActivity extends View
         // tables
         Rect tablesTopRoom = new Rect(leftPoint, topPoint + roomHeight/5, leftPoint + roomWidth/3*2, topPoint + roomHeight/5*3);
         canvas.drawRect(tablesTopRoom, Paintings.SHELF_FILL_DARK_PAINTING.getPaint());
+        canvas.drawText("Labortisch", tablesTopRoom.left + padding, tablesTopRoom.centerY(), Paintings.TEXT_PAINTING_SMALL.getPaint());
 
 
 
@@ -261,7 +269,7 @@ public class DrawingActivity extends View
 
 
         // text
-        int textOffsetX = Paintings.TEXT_PAINTING_LARGE.getStrokeWith() + padding;
+        float textOffsetX = Paintings.TEXT_PAINTING_LARGE.getPaint().getTextSize() + padding;
         canvas.save();
         canvas.rotate(90, canvas.getWidth() - Paintings.TEXT_PAINTING_LARGE.getStrokeWith() - padding, padding);
         canvas.drawText("Plexiglasregal", canvas.getWidth() - textOffsetX, padding, Paintings.TEXT_PAINTING_LARGE.getPaint());
