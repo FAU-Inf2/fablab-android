@@ -276,26 +276,26 @@ public enum Cart {
     }
 
     // add product to cart
-    public void addProduct(Product product){
+    public void addProduct(Product product, double amount){
         // update existing cart entry
         for(CartEntry temp : products){
             if (temp.getProductId() == product.getProductId()){
-                temp.setAmount(temp.getAmount() + 1);
+                temp.setAmount(temp.getAmount() + amount);
                 dao.update(temp);
-                adapter.notifyDataSetChanged();
-                refresh();
-                updateVisibility();
+                //adapter.notifyDataSetChanged();
+                //refresh();
+                //updateVisibility();
                 return;
             }
         }
 
         // create new one
-        CartEntry new_entry = new CartEntry(product,1);
+        CartEntry new_entry = new CartEntry(product, amount);
         dao.create(new_entry);
         products.add(new_entry);
-        adapter.notifyDataSetChanged();
-        refresh();
-        updateVisibility();
+        //adapter.notifyDataSetChanged();
+        //refresh();
+        //updateVisibility();
     }
 
     // return total price

@@ -48,7 +48,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BarcodeScannerActivity" />
+        <activity
+            android:name=".BarcodeScannerActivity"
+            android:theme="@style/AppTheme.PlainActionBar" />
         <activity android:name=".cart.CartActivity" />
         <activity android:name=".cart.CheckoutActivity" />
         <activity android:name=".pushservice.PushActivity" />
@@ -67,6 +69,9 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+        <activity
+            android:name=".productsearch.AddToCartActivity"
+            android:theme="@style/AppTheme.PlainActionBar" />
 
 
         <receiver
