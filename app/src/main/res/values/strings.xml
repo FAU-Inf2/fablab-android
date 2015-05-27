@@ -31,6 +31,10 @@
     <string name="checkout_pay">Jetzt an der Kasse bezahlen</string>
     <string name="checkout_error">Fehler beim Übertragen des Warenkorbs</string>
 
+
+
+    <string name="search_all_hint">(leer => alle Produkte)</string>
+
     <string name="bold_start"><![CDATA[<b>]]></string>
     <string name="bold_end"><![CDATA[</b>]]></string>
     <string name="italic_start"><![CDATA[<i>]]></string>
