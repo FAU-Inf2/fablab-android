@@ -4,6 +4,8 @@ package de.fau.cs.mad.fablab.rest;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.io.InputStream;
@@ -15,8 +17,10 @@ import javax.net.ssl.TrustManagerFactory;
 
 import de.fau.cs.mad.fablab.android.BuildConfig;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.rest.core.Format;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
+import retrofit.converter.GsonConverter;
 
 /** Super class for the individual clients
  * that implements common methods and features.
@@ -38,9 +42,14 @@ public abstract class AbstractRestClient{
         OkHttpClient httpClient = new OkHttpClient();
         httpClient.setSslSocketFactory(getPinnedCertSslSocketFactory());
 
+        Gson gson = new GsonBuilder()
+                .setDateFormat(Format.DATE_FORMAT)
+                .create();
+
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(API_URL)
                 .setClient(new OkClient(httpClient))
+                .setConverter(new GsonConverter(gson))
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE);
 
         restAdapter = builder.build();
