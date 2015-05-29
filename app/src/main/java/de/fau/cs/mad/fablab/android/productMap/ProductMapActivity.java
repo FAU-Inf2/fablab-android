@@ -1,13 +1,11 @@
 package de.fau.cs.mad.fablab.android.productMap;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
-/**
- * Created by Michael on 07.05.2015.
- */
 public class ProductMapActivity extends ActionBarActivity
 {
 
@@ -37,26 +35,43 @@ public class ProductMapActivity extends ActionBarActivity
 
     protected void createView(Context context)
     {
-        drawView = new DrawingActivity(context, FablabView.MAIN_ROOM, productLocation.getMainPositionX(), productLocation.getMainPositionY(), productLocation.getLocationName());
-        drawView.setOnClickListener(new View.OnClickListener()
+        if(productLocation == null)
         {
-            @Override
-            public void onClick(View v)
+            throw new IllegalArgumentException("no product location");
+        }
+        else
+        {
+            try
             {
-                if(isMainViewActive == true)
+
+                drawView = new DrawingActivity(context, FablabView.MAIN_ROOM, productLocation.getMainPositionX(), productLocation.getMainPositionY(), productLocation.getLocationName());
+                drawView.setOnClickListener(new View.OnClickListener()
                 {
-                    drawView.setDrawingParameter(productLocation.getView(), productLocation.getViewPositionX(), productLocation.getViewPositionY());
-                    drawView.invalidate();
-                    isMainViewActive = false;
-                }
-                else
-                {
-                    drawView.setDrawingParameter(FablabView.MAIN_ROOM, productLocation.getMainPositionX(), productLocation.getMainPositionY());
-                    drawView.invalidate();
-                    isMainViewActive = true;
-                }
+                    @Override
+                    public void onClick(View v)
+                    {
+                        if (isMainViewActive == true)
+                        {
+                            drawView.setDrawingParameter(productLocation.getView(), productLocation.getViewPositionX(), productLocation.getViewPositionY());
+                            drawView.invalidate();
+                            isMainViewActive = false;
+                        } else
+                        {
+                            drawView.setDrawingParameter(FablabView.MAIN_ROOM, productLocation.getMainPositionX(), productLocation.getMainPositionY());
+                            drawView.invalidate();
+                            isMainViewActive = true;
+                        }
+                    }
+                });
+                throw new IllegalArgumentException("ob das wohl geht");
             }
-        });
+            catch(IllegalArgumentException exception)
+            {
+                new AlertDialog.Builder(this)
+                        .setTitle("test")
+                        .setMessage("something went wrong");
+            }
+        }
 
         setContentView(drawView);
 

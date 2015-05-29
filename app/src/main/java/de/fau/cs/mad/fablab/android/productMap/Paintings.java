@@ -3,9 +3,6 @@ package de.fau.cs.mad.fablab.android.productMap;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-/**
- * Created by Michael on 22.05.2015.
- */
 public enum Paintings
 {
     ROOM_PAINTING(Color.BLACK, Paint.Style.STROKE, 10),
@@ -23,7 +20,8 @@ public enum Paintings
 
     SHELF_PAINTING(Color.argb(255,139,69,19), Paint.Style.FILL_AND_STROKE, 10),
     TEXT_PAINTING_LARGE(Color.BLACK, Paint.Style.STROKE, 50),
-    TEXT_PAINTING_SMALL(Color.BLACK, Paint.Style.STROKE, 30);
+    TEXT_PAINTING_SMALL(Color.BLACK, Paint.Style.STROKE, 30),
+    TEXT_PAINTING_ERROR(Color.RED, Paint.Style.STROKE, 50);
 
     private int color;
     private Paint.Style style;

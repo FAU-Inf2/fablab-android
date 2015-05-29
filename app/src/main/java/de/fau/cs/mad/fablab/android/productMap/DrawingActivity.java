@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.view.View;
 
 
@@ -48,6 +49,7 @@ public class DrawingActivity extends View
 
     protected void draw()
     {
+
         switch (fablabView)
         {
             case MAIN_ROOM:
@@ -62,7 +64,6 @@ public class DrawingActivity extends View
                 drawAcrylicShelf(canvas);
                 drawLocation(canvas, positionX, positionY, true);
                 break;
-            default:
 
         }
 
@@ -217,6 +218,22 @@ public class DrawingActivity extends View
 
     protected  void drawErrorScreen(Canvas canvas)
     {
+        int offset = padding*5;
+        Paint paint = Paintings.TEXT_PAINTING_ERROR.getPaint();
+        String text = "Keinen\nLagerort\ngefunden";
+        String largestWordInText = "Lagerort";
+        Rect areaRect = new Rect(offset, offset, canvas.getWidth() - offset, canvas.getHeight() - offset);
+
+        RectF bounds = new RectF(areaRect);
+        // measure text width
+        bounds.right = paint.measureText(largestWordInText, 0, largestWordInText.length());
+        // measure text height
+        bounds.bottom = paint.descent() - paint.ascent();
+
+        bounds.left += (areaRect.width() - bounds.right) / 2.0f;
+        bounds.top += (areaRect.height() - bounds.bottom) / 2.0f;
+
+        canvas.drawText(text, bounds.left, bounds.top - paint.ascent(), paint);
 
     }
 
