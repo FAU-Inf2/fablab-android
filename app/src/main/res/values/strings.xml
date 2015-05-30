@@ -29,6 +29,7 @@
     <string name="product_dialog_cart">Zum Warenkorb hinzufügen</string>
     <string name="product_dialog_report">Ausgegangenes Produkt melden</string>
     <string name="retrofit_callback_failure">Leider ist bei der Abfrage ein Fehler aufgetreten</string>
+    <string name="title_scan_qr_code">QR-Code an der Kasse scannen</string>
     <string name="checkout_pay">Jetzt an der Kasse bezahlen</string>
     <string name="checkout_error">Fehler beim Übertragen des Warenkorbs</string>
     <string name="checkout_invalid_qr_code">Ungültiger QR-Code</string>

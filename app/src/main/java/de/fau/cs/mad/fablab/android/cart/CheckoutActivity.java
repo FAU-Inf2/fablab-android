@@ -33,7 +33,7 @@ public class CheckoutActivity extends ActionBarActivity implements ScannerView.S
 
         if (savedInstanceState == null) {
             scannerFragment = ScannerFragment.newInstance(getResources().getString(
-                    R.string.title_scan_product));
+                    R.string.title_scan_qr_code));
             scannerFragment.setScannerViewEventListener(this);
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
                     scannerFragment).commit();
