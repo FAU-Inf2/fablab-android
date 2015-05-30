@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
+import de.fau.cs.mad.fablab.android.productsearch.ProductSearchActivity;
+
 public class ProductMapActivity extends ActionBarActivity
 {
 
@@ -21,9 +23,8 @@ public class ProductMapActivity extends ActionBarActivity
 
         //setContentView(R.layout.activity_product_map);
 
-        //TODO: get location
-        //getIntent().getExtras().getString("location");
-        String locationString = "tatsächliche Lagerorte / FAU FabLab / Elektrowerkstatt / Regal / Plexiglas";
+        //get location
+        String locationString = getIntent().getStringExtra(ProductSearchActivity.KEY_LOCATION);
         isMainViewActive = true;
 
 
@@ -35,42 +36,38 @@ public class ProductMapActivity extends ActionBarActivity
 
     protected void createView(Context context)
     {
-        if(productLocation == null)
-        {
-            throw new IllegalArgumentException("no product location");
-        }
-        else
-        {
-            try
-            {
 
-                drawView = new DrawingActivity(context, FablabView.MAIN_ROOM, productLocation.getMainPositionX(), productLocation.getMainPositionY(), productLocation.getLocationName());
-                drawView.setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        if (isMainViewActive == true)
-                        {
-                            drawView.setDrawingParameter(productLocation.getView(), productLocation.getViewPositionX(), productLocation.getViewPositionY());
-                            drawView.invalidate();
-                            isMainViewActive = false;
-                        } else
-                        {
-                            drawView.setDrawingParameter(FablabView.MAIN_ROOM, productLocation.getMainPositionX(), productLocation.getMainPositionY());
-                            drawView.invalidate();
-                            isMainViewActive = true;
-                        }
-                    }
-                });
-                throw new IllegalArgumentException("ob das wohl geht");
-            }
-            catch(IllegalArgumentException exception)
+        //assert productLocation != null;
+
+        try
+        {
+
+            drawView = new DrawingActivity(context, FablabView.MAIN_ROOM, productLocation.getMainPositionX(), productLocation.getMainPositionY(), productLocation.getLocationName());
+            drawView.setOnClickListener(new View.OnClickListener()
             {
-                new AlertDialog.Builder(this)
-                        .setTitle("test")
-                        .setMessage("something went wrong");
-            }
+                @Override
+                public void onClick(View v)
+                {
+                    if (isMainViewActive == true)
+                    {
+                        drawView.setDrawingParameter(productLocation.getView(), productLocation.getViewPositionX(), productLocation.getViewPositionY());
+                        drawView.invalidate();
+                        isMainViewActive = false;
+                    } else
+                    {
+                        drawView.setDrawingParameter(FablabView.MAIN_ROOM, productLocation.getMainPositionX(), productLocation.getMainPositionY());
+                        drawView.invalidate();
+                        isMainViewActive = true;
+                    }
+                }
+            });
+            throw new IllegalArgumentException("ob das wohl geht");
+        }
+        catch(IllegalArgumentException exception)
+        {
+            new AlertDialog.Builder(this)
+                    .setTitle("test")
+                    .setMessage("something went wrong");
         }
 
         setContentView(drawView);

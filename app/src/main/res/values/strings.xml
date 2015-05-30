@@ -33,6 +33,8 @@
     <string name="checkout_pay">Jetzt an der Kasse bezahlen</string>
     <string name="checkout_error">Fehler beim Übertragen des Warenkorbs</string>
     <string name="checkout_invalid_qr_code">Ungültiger QR-Code</string>
+    <string name="ok">OK</string>
+    <string name="invalid_location">Standort nicht verfügbar</string>
 
 
 
