@@ -62,7 +62,8 @@ public class BarcodeScannerActivity extends ActionBarActivity
             });
             return true;
         }
-        return false;
+        Toast.makeText(this, R.string.add_to_cart_invalid_barcode, Toast.LENGTH_LONG).show();
+        return true;
     }
 
     @Override
