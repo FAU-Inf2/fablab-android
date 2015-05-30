@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.productsearch;
 
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -40,6 +41,10 @@ import retrofit.client.Response;
 
 public class ProductSearchActivity extends BaseActivity
         implements ProductDialog.ProductDialogListener,AdapterView.OnItemClickListener,AdapterView.OnItemSelectedListener {
+
+    private final String KEY_SEARCHED_PRODUCTS  = "searched_products";
+    private final String KEY_SELECTED_PRODUCT   = "selected_product";
+    private final String KEY_PRODUCT_DIALOG     = "product_dialog";
 
     private RecyclerView.LayoutManager layoutManager;
     private ProductAdapter productAdapter;
@@ -150,6 +155,17 @@ public class ProductSearchActivity extends BaseActivity
 
         });
 
+        if (savedInstanceState != null) {
+            //recreate saved instance state
+            productAdapter.addAll((ArrayList<Product>) savedInstanceState
+                    .getSerializable(KEY_SEARCHED_PRODUCTS));
+            selectedProduct = (Product) savedInstanceState.getSerializable(KEY_SELECTED_PRODUCT);
+            if(selectedProduct != null && savedInstanceState.getBoolean(KEY_PRODUCT_DIALOG)) {
+                productDialog = ProductDialog.newInstance(selectedProduct);
+                productDialog.show(getFragmentManager(),"product_dialog");
+            }
+        }
+
         //handle intent
         handleIntent(getIntent());
     }
@@ -221,5 +237,22 @@ public class ProductSearchActivity extends BaseActivity
     @Override
     public void onReportClick() {
         //report missing product
+    }
+
+    @Override
+    protected void onSaveInstanceState (Bundle outState) {
+        //save searched products
+        outState.putSerializable(KEY_SEARCHED_PRODUCTS, productAdapter.getAllItems());
+        //save selected product
+        outState.putSerializable(KEY_SELECTED_PRODUCT, selectedProduct);
+        //save product dialog
+        boolean dialogIsShowing = false;
+        if(productDialog != null) {
+            Dialog dialog = productDialog.getDialog();
+            if(dialog != null && dialog.isShowing()) {
+                dialogIsShowing = true;
+            }
+        }
+        outState.putBoolean(KEY_PRODUCT_DIALOG,dialogIsShowing);
     }
 }
