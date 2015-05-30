@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -50,6 +51,7 @@ public class NewsActivity extends RoboActionBarActivity {
     private DatesSlidePagerAdapter datesSlidePagerAdapter;
     private RecyclerView.LayoutManager newsLayoutManager;
     private NewsAdapter newsAdapter;
+    private UiUtils uiUtils;
 
     private List<News> newsList;
     private NewsApi newsApi;
@@ -73,6 +75,7 @@ public class NewsActivity extends RoboActionBarActivity {
             }
             newsList.clear();
             for (News singleNews : news) {
+                singleNews.setDescription(uiUtils.processNewsText(singleNews.getDescription()));
                 newsList.add(singleNews);
             }
 
@@ -92,6 +95,8 @@ public class NewsActivity extends RoboActionBarActivity {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        uiUtils = new UiUtils();
 
         appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
@@ -200,6 +205,7 @@ public class NewsActivity extends RoboActionBarActivity {
             private final View view;
             private final TextView titleView, subTitleView;
             private final ImageView iconView;
+            private String description;
 
             public NewsViewHolder(View view) {
                 super(view);
@@ -211,8 +217,9 @@ public class NewsActivity extends RoboActionBarActivity {
 
             public void setNews(News news)
             {
+                description = news.getDescription();
                 this.titleView.setText(news.getTitle());
-                this.subTitleView.setText(news.getDescription());
+                this.subTitleView.setText(Html.fromHtml(description));
                 if(news.getLinkToPreviewImage() != null) {
                     new DownloadImageTask(iconView)
                             .execute(news.getLinkToPreviewImage());
@@ -226,7 +233,7 @@ public class NewsActivity extends RoboActionBarActivity {
                         ImageView image = (ImageView) v.findViewById(R.id.icon_news_entry);
                         Bundle args = new Bundle();
                         args.putString(TITLE, title.getText().toString());
-                        args.putString(TEXT, text.getText().toString());
+                        args.putString(TEXT, description);
                         args.putParcelable(IMAGE, ((BitmapDrawable) image.getDrawable()).getBitmap());
                         NewsDialog dialog = new NewsDialog();
                         dialog.setArguments(args);

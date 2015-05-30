@@ -35,4 +35,20 @@ public class UiUtils {
                     0);
         }
     }
+
+    public String processNewsText(String text)
+    {
+        //replace relative paths
+        String res = text;
+        res = res.replace("href=\"/", "href=\"https://fablab.fau.de/");
+
+        //remove image at beginning
+        if(res.indexOf("<p>")==0 || res.indexOf("<p>")==1 || res.indexOf("<a")==0)
+        {
+            res = res.substring(res.indexOf("</a>")+4);
+        }
+        System.out.println(res);
+
+        return res;
+    }
 }
