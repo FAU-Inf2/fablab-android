@@ -1,72 +1,28 @@
 #
-# generated on 2015/05/17 10:04:45
+# generated on 2015/06/01 01:25:18
 #
 # --table-start--
 dataClass=de.fau.cs.mad.fablab.rest.core.CartEntry
-tableName=cart
+tableName=cartentry
 # --table-fields-start--
+# --field-start--
+fieldName=id
+dataPersister=LONG
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=cart
+foreign=true
+# --field-end--
+# --field-start--
+fieldName=product
+foreign=true
+useGetSet=true
+# --field-end--
 # --field-start--
 fieldName=amount
 columnName=amount
 dataPersister=DOUBLE
-width=255
-useGetSet=true
-# --field-end--
-# --field-start--
-fieldName=productId
-columnName=product_id
-dataPersister=LONG
-width=255
-id=true
-useGetSet=true
-# --field-end--
-# --field-start--
-fieldName=name
-columnName=name
-dataPersister=STRING
-width=255
-canBeNull=false
-useGetSet=true
-# --field-end--
-# --field-start--
-fieldName=description
-columnName=description
-dataPersister=STRING
-width=255
-useGetSet=true
-# --field-end--
-# --field-start--
-fieldName=unit
-columnName=unit
-dataPersister=STRING
-width=255
-useGetSet=true
-# --field-end--
-# --field-start--
-fieldName=categoryId
-columnName=category_id
-dataPersister=LONG
-width=255
-useGetSet=true
-# --field-end--
-# --field-start--
-fieldName=categoryString
-columnName=category_string
-dataPersister=STRING
-width=255
-useGetSet=true
-# --field-end--
-# --field-start--
-fieldName=price
-columnName=price
-dataPersister=DOUBLE
-width=255
-useGetSet=true
-# --field-end--
-# --field-start--
-fieldName=itemsAvailable
-columnName=available
-dataPersister=INTEGER
 width=255
 useGetSet=true
 # --field-end--
