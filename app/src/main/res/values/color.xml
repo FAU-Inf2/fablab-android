@@ -17,6 +17,7 @@
     <color name="slidingUpPanel_footer_button_bg_pressed">#94ce18</color>
     <color name="slidingUpPanel_footer_button_txt">#154b85</color>
     <color name="slidingUpPanel_footer_button_txt_pressed">#FFFFFF</color>
+    <color name="slidingUpPanel_product_removed">#696969</color>
 
     <color name="spinner_background">#ffcecece</color>
 </resources>

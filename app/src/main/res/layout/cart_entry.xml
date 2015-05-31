@@ -24,7 +24,8 @@
             android:paddingBottom="@dimen/product_card_margin"
             android:paddingTop="@dimen/product_card_margin"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:id="@+id/product_view">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -91,6 +92,57 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Undo part -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:background="@color/slidingUpPanel_product_removed"
+            android:alpha="0"
+            android:clickable="false"
+            android:id="@+id/cart_entry_undo"
+            android:weightSum="11"
+            android:paddingLeft="@dimen/slidinguppanel_product_removed_padding"
+            android:paddingRight="@dimen/slidinguppanel_product_removed_padding">
+
+            <TextView
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:id="@+id/cart_product_removed"
+                android:clickable="false"
+                android:textSize="@dimen/slidinguppanel_product_removed_textsize"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/slidingUpPanel_bg"
+                android:layout_weight="6.1"/>
+            <ImageView
+                android:layout_width="@dimen/zero"
+                android:layout_height="65dp"
+                android:id="@+id/cart_product_removed_vertical_bar"
+                android:layout_weight="0.05"
+                android:background="@color/slidingUpPanel_bg"
+                android:layout_marginRight="@dimen/slidinguppanel_product_removed_margin"/>
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="25dp"
+                android:id="@+id/cart_product_undo_img"
+                android:src="@drawable/undo"
+                android:layout_weight="1.05"
+                android:clickable="true"/>
+
+            <Button
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:id="@+id/cart_product_undo"
+                android:layout_weight="3.5"
+                android:textSize="@dimen/slidinguppanel_product_undo_button"
+                android:textStyle="bold"
+                android:gravity="right|center_vertical"
+                android:textColor="@color/slidingUpPanel_bg"
+                android:background="@android:color/transparent"/>
 
         </LinearLayout>
     </android.support.v7.widget.CardView>

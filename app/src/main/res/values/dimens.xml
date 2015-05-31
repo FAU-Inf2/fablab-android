@@ -54,6 +54,10 @@
     <dimen name="slidinguppanel_spinner_textsize">16dip</dimen>
     <dimen name="slidinguppanel_spinner_dropdown_padding">5dp</dimen>
     <dimen name="slidinguppanel_spinner_dropdown_textsize">18sp</dimen>
+    <dimen name="slidinguppanel_product_removed_padding">17dp</dimen>
+    <dimen name="slidinguppanel_product_removed_margin">5dp</dimen>
+    <dimen name="slidinguppanel_product_removed_textsize">18dp</dimen>
+    <dimen name="slidinguppanel_product_undo_button">14dp</dimen>
     <dimen name="product_card_height">100dp</dimen>
     <dimen name="product_card_margin">3dp</dimen>
     <dimen name="product_price_padding">6dp</dimen>
