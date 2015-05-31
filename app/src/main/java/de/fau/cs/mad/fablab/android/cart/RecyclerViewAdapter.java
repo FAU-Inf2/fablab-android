@@ -63,7 +63,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public void addProduct(CartEntry product) {
         for(int i = 0; i< products.size(); i++){
-            if(products.get(i).getProductId() == product.getProductId()){
+            if(products.get(i).getProduct().getProductId() == product.getProduct().getProductId()){
                 products.get(i).setAmount(products.get(i).getAmount() + 1);
                 notifyItemChanged(i);
                 return;
@@ -98,7 +98,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }else{
             productViewHolder.ll.setVisibility(View.GONE);
         }
-        String[] name = products.get(i).getName().split(" ");
+        String[] name = products.get(i).getProduct().getName().split(" ");
 
         String product_name = "";
         for(int k=0;k<name.length;k++){
@@ -114,7 +114,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         productViewHolder.cart_product_name.setText(Html.fromHtml(product_name));
-        String formated_price = String.format("%.2f", products.get(i).getPrice());
+        String formated_price = String.format("%.2f", products.get(i).getProduct().getPrice());
         productViewHolder.cart_product_price.setText(formated_price +
                 Html.fromHtml(productViewHolder.itemView.getResources().getString(R.string.non_breaking_space)) +
                 Html.fromHtml(productViewHolder.itemView.getResources().getString(R.string.currency)));
@@ -127,7 +127,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         String italic_unit = productViewHolder.itemView.getResources().getString(R.string.cart_product_quantity) +
                     productViewHolder.itemView.getResources().getString(R.string.non_breaking_space) +
                     productViewHolder.itemView.getResources().getString(R.string.italic_start) +
-                    products.get(i).getUnit() +
+                    products.get(i).getProduct().getUnit() +
                     productViewHolder.itemView.getResources().getString(R.string.italic_end) +
                     productViewHolder.itemView.getResources().getString(R.string.colon);
 

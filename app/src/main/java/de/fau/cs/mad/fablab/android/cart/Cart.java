@@ -253,7 +253,7 @@ public enum Cart {
 
     public void addToRemovedProducts(CartEntry entry){
         for(int i=0;i<products.size();i++){
-            if(products.get(i).getProductId() == entry.getProductId()){
+            if(products.get(i).getProduct().getProductId() == entry.getProduct().getProductId()){
                 removed_products.add(products.get(i));
                 dao.delete(entry);
             }
@@ -310,7 +310,7 @@ public enum Cart {
     // update CartEntry
     public void updateEntry(CartEntry entry){
         for(CartEntry temp : products){
-            if(temp.getProductId() == entry.getProductId()){
+            if(temp.getProduct().getProductId() == entry.getProduct().getProductId()){
                 temp.setAmount(entry.getAmount());
                 dao.update(temp);
                 adapter.notifyDataSetChanged();
@@ -323,7 +323,7 @@ public enum Cart {
     // remove CartEntry
     public void removeEntry(CartEntry entry){
         for(int i=0; i<products.size(); i++){
-            if(products.get(i).getProductId() == entry.getProductId()){
+            if(products.get(i).getProduct().getProductId() == entry.getProduct().getProductId()){
                 dao.delete(entry);
                 products.remove(i);
                 isProductRemoved.remove(i);
@@ -336,7 +336,7 @@ public enum Cart {
 
 
         for(int j=0;j<removed_products.size();j++){
-            if(removed_products.get(j).getProductId() == entry.getProductId()){
+            if(removed_products.get(j).getProduct().getProductId() == entry.getProduct().getProductId()){
                 removed_products.remove(j);
 
             }
@@ -356,7 +356,7 @@ public enum Cart {
     public void addProduct(Product product, double amount){
         // update existing cart entry
         for(CartEntry temp : products){
-            if (temp.getProductId() == product.getProductId()){
+            if (temp.getProduct().getProductId() == product.getProductId()){
                 temp.setAmount(temp.getAmount() + amount);
                 dao.update(temp);
                 adapter.notifyDataSetChanged();
@@ -382,7 +382,7 @@ public enum Cart {
         double total = 0;
         for(int i=0;i<products.size();i++){
             if(!removed_products.contains(products.get(i)))
-                total += products.get(i).getPrice()*products.get(i).getAmount();
+                total += products.get(i).getProduct().getPrice()*products.get(i).getAmount();
         }
 
 
