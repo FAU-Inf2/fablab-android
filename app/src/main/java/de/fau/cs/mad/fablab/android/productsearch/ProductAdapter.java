@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+import java.util.ArrayList;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
@@ -56,6 +57,14 @@ public class ProductAdapter extends ArrayAdapter<Product> implements SectionInde
         productPrice.setText(Html.fromHtml(formattedProductPrice));
 
         return view;
+    }
+
+    public ArrayList<Product> getAllItems() {
+        ArrayList<Product> allItems = new ArrayList<Product>();
+        for (int i = 0; i < getCount(); i++) {
+            allItems.add(getItem(i));
+        }
+        return allItems;
     }
 
     @Override

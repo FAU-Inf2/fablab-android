@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class CheckoutActivity extends ActionBarActivity implements ScannerView.S
 
         if (savedInstanceState == null) {
             scannerFragment = ScannerFragment.newInstance(getResources().getString(
-                    R.string.title_scan_product));
+                    R.string.title_scan_qr_code));
             scannerFragment.setScannerViewEventListener(this);
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
                     scannerFragment).commit();
@@ -46,7 +47,8 @@ public class CheckoutActivity extends ActionBarActivity implements ScannerView.S
             try {
                 cartId = Long.parseLong(data);
             } catch (NumberFormatException e) {
-                return false;
+                Toast.makeText(this, R.string.checkout_invalid_qr_code, Toast.LENGTH_LONG).show();
+                return true;
             }
             getSupportFragmentManager().beginTransaction().remove(scannerFragment).commit();
             progressBar.setVisibility(View.VISIBLE);
@@ -74,7 +76,8 @@ public class CheckoutActivity extends ActionBarActivity implements ScannerView.S
             });
             return true;
         }
-        return false;
+        Toast.makeText(this, R.string.checkout_invalid_qr_code, Toast.LENGTH_LONG).show();
+        return true;
     }
 
     @Override

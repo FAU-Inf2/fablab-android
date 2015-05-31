@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,8 +31,13 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.cart.Cart;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.android.productsearch.AutoCompleteHelper;
+import de.fau.cs.mad.fablab.rest.NewsApiClient;
 import de.fau.cs.mad.fablab.rest.core.ICal;
 import de.fau.cs.mad.fablab.rest.core.News;
+import de.fau.cs.mad.fablab.rest.myapi.NewsApi;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
@@ -40,11 +46,15 @@ import roboguice.inject.InjectView;
 public class NewsActivity extends RoboActionBarActivity {
 
     @InjectView(R.id.cart_recycler_view) RecyclerView cart_rv;
-    @InjectView(R.id.news) RecyclerView news;
+    @InjectView(R.id.news) RecyclerView news_rv;
     @InjectView(R.id.dates_view_pager) ViewPager datesViewPager;
     private DatesSlidePagerAdapter datesSlidePagerAdapter;
     private RecyclerView.LayoutManager newsLayoutManager;
     private NewsAdapter newsAdapter;
+    private UiUtils uiUtils;
+
+    private List<News> newsList;
+    private NewsApi newsApi;
 
     private AppbarDrawerInclude appbarDrawer;
 
@@ -55,9 +65,38 @@ public class NewsActivity extends RoboActionBarActivity {
     static final String ICAL1 = "ICAL1";
     static final String ICAL2 = "ICAL2";
 
+
+    //This callback is used for product Search.
+    private Callback<List<News>> newsCallback = new Callback<List<News>>() {
+        @Override
+        public void success(List<News> news, Response response) {
+            if (news.isEmpty()) {
+                Toast.makeText(getBaseContext(), R.string.product_not_found, Toast.LENGTH_LONG).show();
+            }
+            newsList.clear();
+            for (News singleNews : news) {
+                singleNews.setDescription(uiUtils.processNewsText(singleNews.getDescription()));
+                newsList.add(singleNews);
+            }
+
+            newsAdapter = new NewsAdapter(newsList);
+            news_rv.setAdapter(newsAdapter);
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            Toast.makeText(getBaseContext(), R.string.retrofit_callback_failure, Toast.LENGTH_LONG).show();
+            newsAdapter = new NewsAdapter(newsList);
+            news_rv.setAdapter(newsAdapter);
+        }
+    };
+
+
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        uiUtils = new UiUtils();
 
         appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
@@ -71,23 +110,13 @@ public class NewsActivity extends RoboActionBarActivity {
         // init Floating Action Menu
         FabButton.MYFABUTTON.init(findViewById(android.R.id.content), this);
 
-
         //get news and set them
         newsLayoutManager = new LinearLayoutManager(getApplicationContext());
-        news.setLayoutManager(newsLayoutManager);
-        List<String> testNews = new ArrayList<>();
-        testNews.add("News1");
-        testNews.add("News2");
-        testNews.add("News3");
-        List<News> listNews = new ArrayList<>();
-        News news1 = new News(); news1.setLinkToPreviewImage(null);news1.setTitle("News 1"); news1.setDescription("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
-        listNews.add(news1);
-        News news2 = new News(); news2.setLinkToPreviewImage(null);news2.setTitle("News 2"); news2.setDescription("blablablablabla");
-        listNews.add(news2);
-        News news3 = new News(); news3.setLinkToPreviewImage("http://www.jpl.nasa.gov/spaceimages/images/mediumsize/PIA17011_ip.jpg");news3.setTitle("News 3"); news3.setDescription("texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttext");
-        listNews.add(news3);
-        newsAdapter = new NewsAdapter(listNews);
-        news.setAdapter(newsAdapter);
+        news_rv.setLayoutManager(newsLayoutManager);
+        newsList = new ArrayList<>();
+        newsApi = new NewsApiClient(this).get();
+        newsApi.findAll(newsCallback);
+
 
         List<ICal> listDates = new ArrayList<>();
         ICal date1 = new ICal(); date1.setLocation("Fablab"); date1.setSummery("OpenLab");
@@ -98,7 +127,9 @@ public class NewsActivity extends RoboActionBarActivity {
         listDates.add(date3);
         ICal date4 = new ICal(); date4.setLocation("ziemlich lange location"); date4.setSummery("ziemlich langer Veranstaltungstitel");
         listDates.add(date4);
-        ICal date5 = new ICal(); date5.setLocation("CIP"); date5.setSummery("Test ungerade");
+        ICal date5 = new ICal();
+        date5.setLocation("CIP");
+        date5.setSummery("Test ungerade");
         listDates.add(date5);
 
         datesSlidePagerAdapter = new DatesSlidePagerAdapter(getSupportFragmentManager(), listDates);
@@ -174,6 +205,7 @@ public class NewsActivity extends RoboActionBarActivity {
             private final View view;
             private final TextView titleView, subTitleView;
             private final ImageView iconView;
+            private String description;
 
             public NewsViewHolder(View view) {
                 super(view);
@@ -185,8 +217,9 @@ public class NewsActivity extends RoboActionBarActivity {
 
             public void setNews(News news)
             {
+                description = news.getDescription();
                 this.titleView.setText(news.getTitle());
-                this.subTitleView.setText(news.getDescription());
+                this.subTitleView.setText(Html.fromHtml(description));
                 if(news.getLinkToPreviewImage() != null) {
                     new DownloadImageTask(iconView)
                             .execute(news.getLinkToPreviewImage());
@@ -200,7 +233,7 @@ public class NewsActivity extends RoboActionBarActivity {
                         ImageView image = (ImageView) v.findViewById(R.id.icon_news_entry);
                         Bundle args = new Bundle();
                         args.putString(TITLE, title.getText().toString());
-                        args.putString(TEXT, text.getText().toString());
+                        args.putString(TEXT, description);
                         args.putParcelable(IMAGE, ((BitmapDrawable) image.getDrawable()).getBitmap());
                         NewsDialog dialog = new NewsDialog();
                         dialog.setArguments(args);

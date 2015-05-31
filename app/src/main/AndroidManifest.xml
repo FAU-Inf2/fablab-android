@@ -52,7 +52,9 @@
             android:name=".BarcodeScannerActivity"
             android:theme="@style/AppTheme.PlainActionBar" />
         <activity android:name=".cart.CartActivity" />
-        <activity android:name=".cart.CheckoutActivity" />
+        <activity
+            android:name=".cart.CheckoutActivity"
+            android:theme="@style/AppTheme.PlainActionBar" />
         <activity android:name=".pushservice.PushActivity" />
 
         <activity

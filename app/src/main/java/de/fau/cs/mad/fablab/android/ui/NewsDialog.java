@@ -3,6 +3,8 @@ package de.fau.cs.mad.fablab.android.ui;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,10 +43,12 @@ public class NewsDialog extends DialogFragment {
 
         TextView title_TV = (TextView) v.findViewById(R.id.title_news_dialog);
         TextView text_TV = (TextView) v.findViewById((R.id.news_text_news_dialog));
+        text_TV.setLinksClickable(true);
+        text_TV.setMovementMethod(LinkMovementMethod.getInstance());
         ImageView image_IV = (ImageView) v.findViewById((R.id.image_news_dialog));
 
+        text_TV.setText(Html.fromHtml(text));
         title_TV.setText(title);
-        text_TV.setText(text);
         image_IV.setImageBitmap(image);
 
         Button okButton = (Button) v.findViewById(R.id.ok_button_news_dialog);

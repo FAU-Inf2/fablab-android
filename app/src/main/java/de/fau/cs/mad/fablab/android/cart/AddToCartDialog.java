@@ -64,6 +64,7 @@ public class AddToCartDialog extends DialogFragment implements NumberPicker.OnVa
         numberPicker.setMaxValue(50);
         numberPicker.setValue((int) amount);
         numberPicker.setOnValueChangedListener(this);
+        numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
         ((ActionBarActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((ActionBarActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(
