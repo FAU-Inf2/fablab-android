@@ -122,14 +122,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         productViewHolder.cart_product_removed.setText(productViewHolder.itemView.getResources().getString(R.string.cart_product_removed));
         productViewHolder.cart_product_undo.setText(productViewHolder.itemView.getResources().getString(R.string.cart_product_undo));
 
-        // Set quantity text
-        productViewHolder.cart_product_quantity.setText(
-                productViewHolder.itemView.getResources().getString(R.string.cart_product_quantity) +
-                Html.fromHtml(productViewHolder.itemView.getResources().getString(R.string.non_breaking_space)) +
-                Html.fromHtml(productViewHolder.itemView.getResources().getString(R.string.italic_start)) +
-                products.get(i).getUnit() +
-                Html.fromHtml(productViewHolder.itemView.getResources().getString(R.string.italic_end)) +
-                productViewHolder.itemView.getResources().getString(R.string.colon));
+
+        // check the availability of attribute "unit" from product
+        String italic_unit = productViewHolder.itemView.getResources().getString(R.string.cart_product_quantity) +
+                    productViewHolder.itemView.getResources().getString(R.string.non_breaking_space) +
+                    productViewHolder.itemView.getResources().getString(R.string.italic_start) +
+                    products.get(i).getUnit() +
+                    productViewHolder.itemView.getResources().getString(R.string.italic_end) +
+                    productViewHolder.itemView.getResources().getString(R.string.colon);
+
+
+
+        // Set unit text/quantity title
+        productViewHolder.cart_product_quantity.setText(Html.fromHtml(italic_unit));
 
         List<String> list = new ArrayList<>();
         // TODO: adapt this later to the available amount of the product

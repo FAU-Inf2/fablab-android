@@ -87,10 +87,6 @@ public enum Cart {
                                     LinearLayout ll = (LinearLayout) card.findViewById(R.id.cart_entry_undo);
                                     LinearLayout ll_before = (LinearLayout) card.findViewById(R.id.product_view);
                                     if(isProductRemoved.get(position) == true){
-                                    //if(ll.getVisibility() == View.VISIBLE){
-                                        //if(removed_products.size() != 0)
-                                            //removed_products.remove(0);
-                                        //ll.setVisibility(View.GONE);
                                         ll_before.setClickable(true);
                                         ll.setClickable(false);
                                         Cart.MYCART.removeEntry(products.get(position));
@@ -101,8 +97,6 @@ public enum Cart {
                                         Cart.MYCART.addToRemovedProducts(products.get(position));
                                         ll_before.setClickable(false);
                                         ll.setClickable(true);
-                                        //ll.setVisibility(View.VISIBLE);
-                                        Log.i(("drin"),("drin"));
                                     }
                                 }
                                 refresh();
@@ -119,23 +113,21 @@ public enum Cart {
 
                                     if(ll.getVisibility() == View.VISIBLE){
                                         Cart.MYCART.removeEntry(products.get(position));
-                                        //if(removed_products.size() != 0)
-                                            //removed_products.remove(0);
-                                        ll.setVisibility(View.GONE);
                                         ll_before.setClickable(true);
                                         ll.setClickable(false);
                                         adapter.notifyItemRemoved(position);
-                                        adapter.notifyDataSetChanged();
                                         updateVisibility();
                                     }else{
+                                        isProductRemoved.set(position, true);
                                         Cart.MYCART.addToRemovedProducts(products.get(position));
                                         ll_before.setClickable(false);
-                                        ll.setVisibility(View.VISIBLE);
                                         ll.setClickable(true);
                                     }
 
                                 }
                                 refresh();
+
+                                adapter.notifyDataSetChanged();
                             }
                         });
 
