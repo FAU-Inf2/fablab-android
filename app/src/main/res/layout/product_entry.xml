@@ -41,14 +41,28 @@
                 android:layout_weight="1"
                 android:textSize="@dimen/product_name_size" />
 
-            <TextView
-                android:id="@+id/product_price"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/product_price_size"
-                android:textStyle="bold"
-                android:layout_gravity="center_vertical"/>
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical" >
 
+                <TextView
+                    android:id="@+id/product_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="@dimen/product_price_size"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/product_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="@dimen/product_price_size"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -33,6 +33,7 @@ public class ProductAdapter extends ArrayAdapter<Product> implements SectionInde
         ImageView productPhoto = (ImageView) view.findViewById(R.id.product_photo);
         TextView productName = (TextView) view.findViewById(R.id.product_name);
         TextView productPrice = (TextView) view.findViewById(R.id.product_price);
+        TextView productUnit = (TextView) view.findViewById(R.id.product_unit);
 
         //set product photo
         productPhoto.setImageResource(R.drawable.no_image_avl);
@@ -59,6 +60,9 @@ public class ProductAdapter extends ArrayAdapter<Product> implements SectionInde
                 + view.getResources().getString(R.string.currency);
         productPrice.setText(Html.fromHtml(formattedProductPrice));
 
+        //set product unit
+        productUnit.setText(getItem(position).getUnit());
+
         //handling for unsaleable products
         //for testing: price > 250 -> unsaleable
         if(getItem(position).getPrice() > 250) {
@@ -70,6 +74,8 @@ public class ProductAdapter extends ArrayAdapter<Product> implements SectionInde
             productPrice.setTextColor(getContext().getResources().getColor(R.color
                     .primary_text_disabled_material_light));
             productPrice.setText(Html.fromHtml("-,- €"));
+            productUnit.setTextColor(getContext().getResources().getColor(R.color
+                    .primary_text_disabled_material_light));
         }
 
         return view;
