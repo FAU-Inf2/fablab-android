@@ -4,6 +4,7 @@ package de.fau.cs.mad.fablab.android.cart;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,6 +93,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(final ProductViewHolder productViewHolder, final int i) {
+        if(Cart.MYCART.getIsProductRemoved().get(i) == true){
+            productViewHolder.ll.setVisibility(View.VISIBLE);
+        }else{
+            productViewHolder.ll.setVisibility(View.GONE);
+        }
         String[] name = products.get(i).getName().split(" ");
 
         String product_name = "";
@@ -149,7 +153,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         productViewHolder.cart_product_quantity_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (Integer.parseInt((String)parent.getSelectedItem()) != (int) products.get(i).getAmount()) {
+                if (Integer.parseInt((String) parent.getSelectedItem()) != (int) products.get(i).getAmount()) {
                     double amount_new = Double.parseDouble(((String) parent.getSelectedItem()).replaceAll("\\s+", ""));
                     products.get(i).setAmount(amount_new);
                     Cart.MYCART.refresh();
@@ -158,7 +162,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent){
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
@@ -167,8 +171,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         productViewHolder.cart_product_undo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Cart.MYCART.addRemovedProduct();
-                productViewHolder.ll.setAlpha(0);
+                Cart.MYCART.addRemovedProduct(i);
+                Cart.MYCART.getIsProductRemoved().set(i, false);
+                productViewHolder.ll.setVisibility(View.GONE);
                 productViewHolder.ll.setClickable(false);
             }
         });

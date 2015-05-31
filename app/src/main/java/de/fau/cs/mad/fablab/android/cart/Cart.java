@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +32,7 @@ public enum Cart {
     MYCART;
 
     private List<CartEntry> products;
+    private List<Boolean> isProductRemoved;
     private List<CartEntry> removed_products;
     private RuntimeExceptionDao<CartEntry, Long> dao;
     private RecyclerViewAdapter adapter;
@@ -50,6 +50,10 @@ public enum Cart {
     public void init(Context context){
         dao = DatabaseHelper.getHelper(context).getCartEntryDao();
         products = dao.queryForAll();
+        isProductRemoved = new ArrayList<>();
+        for(int i=0;i<products.size();i++){
+            isProductRemoved.add(false);
+        }
         removed_products = new ArrayList<>();
     }
 
@@ -67,8 +71,6 @@ public enum Cart {
         adapter = new RecyclerViewAdapter(this.context, products);
         cart_rv.setAdapter(adapter);
 
-
-
         // Set up listener to be able to swipe to left/right to remove items
         SwipeableRecyclerViewTouchListener swipeTouchListener =
                 new SwipeableRecyclerViewTouchListener(cart_rv,
@@ -84,25 +86,28 @@ public enum Cart {
                                     View card = recyclerView.getChildAt(position);
                                     LinearLayout ll = (LinearLayout) card.findViewById(R.id.cart_entry_undo);
                                     LinearLayout ll_before = (LinearLayout) card.findViewById(R.id.product_view);
-
-                                    if(ll.getAlpha() == 1){
-                                        Cart.MYCART.removeEntry(products.get(position));
+                                    if(isProductRemoved.get(position) == true){
+                                    //if(ll.getVisibility() == View.VISIBLE){
                                         //if(removed_products.size() != 0)
-                                        //    removed_products.remove(0);
-                                        ll.setAlpha(0);
+                                            //removed_products.remove(0);
+                                        //ll.setVisibility(View.GONE);
                                         ll_before.setClickable(true);
                                         ll.setClickable(false);
+                                        Cart.MYCART.removeEntry(products.get(position));
                                         adapter.notifyItemRemoved(position);
+                                        updateVisibility();
                                     }else{
-                                        //Cart.MYCART.addToRemovedProducts(products.get(position));
+                                        isProductRemoved.set(position, true);
+                                        Cart.MYCART.addToRemovedProducts(products.get(position));
                                         ll_before.setClickable(false);
                                         ll.setClickable(true);
-                                        ll.setAlpha(1);
+                                        //ll.setVisibility(View.VISIBLE);
+                                        Log.i(("drin"),("drin"));
                                     }
                                 }
-                                adapter.notifyDataSetChanged();
                                 refresh();
-                                updateVisibility();
+
+                                adapter.notifyDataSetChanged();
                             }
 
                             @Override
@@ -112,25 +117,25 @@ public enum Cart {
                                     LinearLayout ll = (LinearLayout) card.findViewById(R.id.cart_entry_undo);
                                     LinearLayout ll_before = (LinearLayout) card.findViewById(R.id.product_view);
 
-                                    if(ll.getAlpha() == 1){
+                                    if(ll.getVisibility() == View.VISIBLE){
                                         Cart.MYCART.removeEntry(products.get(position));
                                         //if(removed_products.size() != 0)
-                                        //    removed_products.remove(0);
-                                        ll.setAlpha(0);
+                                            //removed_products.remove(0);
+                                        ll.setVisibility(View.GONE);
                                         ll_before.setClickable(true);
                                         ll.setClickable(false);
                                         adapter.notifyItemRemoved(position);
+                                        adapter.notifyDataSetChanged();
+                                        updateVisibility();
                                     }else{
-                                        //Cart.MYCART.addToRemovedProducts(products.get(position));
+                                        Cart.MYCART.addToRemovedProducts(products.get(position));
                                         ll_before.setClickable(false);
-                                        ll.setAlpha(1);
+                                        ll.setVisibility(View.VISIBLE);
                                         ll.setClickable(true);
                                     }
 
                                 }
-                                adapter.notifyDataSetChanged();
                                 refresh();
-                                updateVisibility();
                             }
                         });
 
@@ -152,13 +157,13 @@ public enum Cart {
                 int y = (int)e.getRawY();
 
                 if(!inViewInBounds(cart_product_quantity_spinner, x, y) &&
-                        ll.getAlpha() == 0){
+                        ll.getVisibility() == View.GONE){
                     if(product_title.getLineCount() == 1){
                         product_title.setSingleLine(false);
                     }else{
                         product_title.setSingleLine(true);
                     }
-                }else if(inViewInBounds(undo_img, x, y) && ll.getAlpha() == 1){
+                }else if(inViewInBounds(undo_img, x, y) && ll.getVisibility() == View.VISIBLE){
                     undo.performClick();
                 }
 
@@ -254,20 +259,7 @@ public enum Cart {
 
     }
 
-    //TODO: FIX BUGS HERE
-    /*// remember deleted products to get them back
     public void addToRemovedProducts(CartEntry entry){
-        if(removed_products.size() != 0){
-            for(int i=0;i<products.size();i++) {
-                if (products.get(i).getProductId() == removed_products.get(0).getProductId()) {
-                    products.remove(i);
-                    removed_products.remove(0);
-                    refresh();
-                    updateVisibility();
-                    break;
-                }
-            }
-        }
         for(int i=0;i<products.size();i++){
             if(products.get(i).getProductId() == entry.getProductId()){
                 removed_products.add(products.get(i));
@@ -277,15 +269,21 @@ public enum Cart {
     }
 
     // remove product from deleted list
-    public void addRemovedProduct(){
+    public void addRemovedProduct(int position){
         if(removed_products.size() != 0) {
-            dao.create(removed_products.get(0));
-            removed_products.remove(0);
+            CartEntry entry = products.get(position);
+            dao.create(entry);
+            removed_products.remove(entry);
+            adapter.notifyDataSetChanged();
             refresh();
         }
-    }*/
+    }
 
 
+    // Getter for RecyclerViewAdapter class to check whether a product has an active removed view or not
+    public List<Boolean> getIsProductRemoved(){
+        return isProductRemoved;
+    }
 
     // refresh TextView of the total price and #items in cart
     public void refresh(){
@@ -336,6 +334,7 @@ public enum Cart {
             if(products.get(i).getProductId() == entry.getProductId()){
                 dao.delete(entry);
                 products.remove(i);
+                isProductRemoved.remove(i);
                 adapter.notifyDataSetChanged();
                 refresh();
                 updateVisibility();
@@ -356,6 +355,7 @@ public enum Cart {
     public void removeAllEntries() {
         dao.delete(products);
         products.clear();
+        isProductRemoved.clear();
         refresh();
         updateVisibility();
     }
@@ -367,9 +367,9 @@ public enum Cart {
             if (temp.getProductId() == product.getProductId()){
                 temp.setAmount(temp.getAmount() + amount);
                 dao.update(temp);
-                //adapter.notifyDataSetChanged();
-                //refresh();
-                //updateVisibility();
+                adapter.notifyDataSetChanged();
+                refresh();
+                updateVisibility();
                 return;
             }
         }
@@ -378,16 +378,14 @@ public enum Cart {
         CartEntry new_entry = new CartEntry(product, amount);
         dao.create(new_entry);
         products.add(new_entry);
-        //adapter.notifyDataSetChanged();
-        //refresh();
-        //updateVisibility();
+        isProductRemoved.add(false);
+        adapter.notifyDataSetChanged();
+        refresh();
+        updateVisibility();
     }
 
     // return total price
     public String totalPrice(){
-        if(products == null)
-            return "0.00" +  Html.fromHtml(view.getResources().getString(R.string.non_breaking_space)) +
-                    view.getResources().getString(R.string.currency);
 
         double total = 0;
         for(int i=0;i<products.size();i++){
