@@ -37,6 +37,8 @@ public class BarcodeScannerActivity extends ActionBarActivity
     @Override
     public boolean onCodeScanned(final String data) {
         if (barcodePattern.matcher(data).matches()) {
+
+            /*
             long productId = Long.parseLong(data);
             if (data.length() == 13) {
                 productId -= 2000000000000L;
@@ -44,9 +46,10 @@ public class BarcodeScannerActivity extends ActionBarActivity
                 productId -= 20000000L;
             }
             productId /= 10;
+            */
 
             ProductApiClient productApiClient = new ProductApiClient(this);
-            productApiClient.get().findById(productId, new Callback<Product>() {
+            productApiClient.get().findById(data, new Callback<Product>() {
                 @Override
                 public void success(Product product, Response response) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
