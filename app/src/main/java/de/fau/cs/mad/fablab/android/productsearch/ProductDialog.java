@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.rest.core.Product;
@@ -57,26 +58,38 @@ public class ProductDialog extends DialogFragment {
         //set product name as title
         title.setText(product.getName());
 
-        //set listeners for click events
+        //handling for unsaleable products
+        //for testing: price > 250 -> unsaleable
+        if(product.getPrice() > 250) {
+            cart.setTextColor(getActivity().getResources().getColor(R.color
+                    .primary_text_disabled_material_light));
+            report.setTextColor(getActivity().getResources().getColor(R.color
+                    .primary_text_disabled_material_light));
+        }
+
+        //set listeners for click events for all products
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 productDialogListener.onShowLocationClick();
             }
         });
-        cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                productDialogListener.onAddToCartClick();
-            }
-        });
-        report.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                productDialogListener.onReportClick();
+        //set listeners for click events for saleable products
+        if(!(product.getPrice() > 250)) {
+            cart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    productDialogListener.onAddToCartClick();
+                }
+            });
+            report.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    productDialogListener.onReportClick();
 
-            }
-        });
+                }
+            });
+        }
 
         return view;
     }

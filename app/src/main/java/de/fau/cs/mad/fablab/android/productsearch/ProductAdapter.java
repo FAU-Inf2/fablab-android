@@ -1,6 +1,8 @@
 package de.fau.cs.mad.fablab.android.productsearch;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,7 @@ public class ProductAdapter extends ArrayAdapter<Product> implements SectionInde
                 parent, false);
 
         //get gui elements
+        CardView productCardView = (CardView) view.findViewById(R.id.product_card_view);
         ImageView productPhoto = (ImageView) view.findViewById(R.id.product_photo);
         TextView productName = (TextView) view.findViewById(R.id.product_name);
         TextView productPrice = (TextView) view.findViewById(R.id.product_price);
@@ -55,6 +58,19 @@ public class ProductAdapter extends ArrayAdapter<Product> implements SectionInde
                 + view.getResources().getString(R.string.non_breaking_space)
                 + view.getResources().getString(R.string.currency);
         productPrice.setText(Html.fromHtml(formattedProductPrice));
+
+        //handling for unsaleable products
+        //for testing: price > 250 -> unsaleable
+        if(getItem(position).getPrice() > 250) {
+            productCardView.setCardBackgroundColor(getContext().getResources()
+                    .getColor(R.color.spinner_background));
+            productPhoto.setAlpha(0.5f);
+            productName.setTextColor(getContext().getResources().getColor(R.color
+                    .primary_text_disabled_material_light));
+            productPrice.setTextColor(getContext().getResources().getColor(R.color
+                    .primary_text_disabled_material_light));
+            productPrice.setText(Html.fromHtml("-,- €"));
+        }
 
         return view;
     }
