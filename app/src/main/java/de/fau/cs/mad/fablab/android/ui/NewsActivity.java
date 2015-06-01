@@ -28,7 +28,7 @@ import java.util.List;
 
 import de.fau.cs.mad.fablab.android.FabButton;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.cart.Cart;
+import de.fau.cs.mad.fablab.android.cart.CartSingleton;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.android.productsearch.AutoCompleteHelper;
 import de.fau.cs.mad.fablab.rest.NewsApiClient;
@@ -102,10 +102,10 @@ public class NewsActivity extends RoboActionBarActivity {
         appbarDrawer.create();
 
         // init db and cart - always do this on app start
-        Cart.MYCART.init(getApplication());
+        CartSingleton.MYCART.init(getApplication());
 
         // init cart panel
-        Cart.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), true);
+        CartSingleton.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), true);
 
         // init Floating Action Menu
         FabButton.MYFABUTTON.init(findViewById(android.R.id.content), this);

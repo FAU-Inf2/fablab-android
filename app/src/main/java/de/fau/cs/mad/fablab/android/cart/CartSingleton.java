@@ -6,7 +6,6 @@ import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -18,43 +17,66 @@ import android.widget.Toast;
 
 import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.db.DatabaseHelper;
+import de.fau.cs.mad.fablab.rest.core.Cart;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
+import de.fau.cs.mad.fablab.rest.core.CartStatusEnum;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
-public enum Cart {
+public enum CartSingleton {
     MYCART;
 
-    private List<CartEntry> products;
     private List<Boolean> isProductRemoved;
-    private List<CartEntry> removed_products;
-    private RuntimeExceptionDao<CartEntry, Long> dao;
+    private List<CartEntry> guiProducts;
+    private RuntimeExceptionDao<Cart, Long> cartDao;
     private RecyclerViewAdapter adapter;
     private Context context;
     private View view;
     private SlidingUpPanelLayout mLayout;
     private boolean slidingUp;
 
+    private Cart cart;
 
-    Cart(){
+
+    CartSingleton(){
+    }
+
+    public Cart getCart()
+    {
+        return cart;
     }
 
     // initialization of the db - getting all products that are in the cart
     // call this method on startup activity
     public void init(Context context){
-        dao = DatabaseHelper.getHelper(context).getCartEntryDao();
-        products = dao.queryForAll();
-        isProductRemoved = new ArrayList<>();
-        for(int i=0;i<products.size();i++){
-            isProductRemoved.add(false);
+        cartDao = DatabaseHelper.getHelper(context).getCartDao();
+        QueryBuilder<Cart, Long> queryBuilder = cartDao.queryBuilder();
+        try {
+            queryBuilder.where().eq("status", CartStatusEnum.SHOPPING).or().eq("status", CartStatusEnum.PENDING);
+            cart = cartDao.queryForFirst(queryBuilder.prepare());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        removed_products = new ArrayList<>();
+
+        if(cart == null)
+        {
+            cart = new Cart();
+        }
+
+        isProductRemoved = new ArrayList<>();
+        guiProducts = new ArrayList<>();
+        for(int i=0;i<cart.getProducts().size();i++){
+            isProductRemoved.add(false);
+            guiProducts.add(cart.getProducts().get(i));
+        }
     }
 
     // Setting up the view for every context c including the sliding up panel
@@ -68,7 +90,7 @@ public enum Cart {
         cart_rv.setLayoutManager(llm);
         cart_rv.setHasFixedSize(true);
         // Add Entries to view
-        adapter = new RecyclerViewAdapter(this.context, products);
+        adapter = new RecyclerViewAdapter(this.context, guiProducts);
         cart_rv.setAdapter(adapter);
 
         // Set up listener to be able to swipe to left/right to remove items
@@ -89,12 +111,12 @@ public enum Cart {
                                     if(isProductRemoved.get(position) == true){
                                         ll_before.setClickable(true);
                                         ll.setClickable(false);
-                                        Cart.MYCART.removeEntry(products.get(position));
+                                        isProductRemoved.remove(position);
+                                        guiProducts.remove(position);
                                         adapter.notifyItemRemoved(position);
-                                        updateVisibility();
                                     }else{
                                         isProductRemoved.set(position, true);
-                                        Cart.MYCART.addToRemovedProducts(products.get(position));
+                                        CartSingleton.MYCART.removeEntry(guiProducts.get(position));
                                         ll_before.setClickable(false);
                                         ll.setClickable(true);
                                     }
@@ -102,6 +124,7 @@ public enum Cart {
                                 refresh();
 
                                 adapter.notifyDataSetChanged();
+                                updateVisibility();
                             }
 
                             @Override
@@ -112,14 +135,14 @@ public enum Cart {
                                     LinearLayout ll_before = (LinearLayout) card.findViewById(R.id.product_view);
 
                                     if(ll.getVisibility() == View.VISIBLE){
-                                        Cart.MYCART.removeEntry(products.get(position));
                                         ll_before.setClickable(true);
                                         ll.setClickable(false);
+                                        guiProducts.remove(position);
+                                        isProductRemoved.remove(position);
                                         adapter.notifyItemRemoved(position);
-                                        updateVisibility();
                                     }else{
                                         isProductRemoved.set(position, true);
-                                        Cart.MYCART.addToRemovedProducts(products.get(position));
+                                        CartSingleton.MYCART.removeEntry(guiProducts.get(position));
                                         ll_before.setClickable(false);
                                         ll.setClickable(true);
                                     }
@@ -128,6 +151,7 @@ public enum Cart {
                                 refresh();
 
                                 adapter.notifyDataSetChanged();
+                                updateVisibility();
                             }
                         });
 
@@ -182,11 +206,11 @@ public enum Cart {
         checkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (products.size() == 0) {
+                if (cart.getProducts().size() == 0) {
                     Toast.makeText(context, R.string.cart_empty, Toast.LENGTH_LONG).show();
                     return;
                 }
-                Intent intent = new Intent(context, CheckoutActivity.class);
+                Intent intent = new Intent(context, CheckoutActivity2.class);
                 context.startActivity(intent);
             }
         });
@@ -196,7 +220,7 @@ public enum Cart {
         refresh();
 
         // Basket empty? -> show msg if slidinguppanel is not used
-        if(products.size() == 0 && !slidingUp){
+        if(guiProducts.size() == 0 && !slidingUp){
             Toast.makeText(context,  R.string.cart_empty, Toast.LENGTH_LONG).show();
         }
 
@@ -251,21 +275,11 @@ public enum Cart {
 
     }
 
-    public void addToRemovedProducts(CartEntry entry){
-        for(int i=0;i<products.size();i++){
-            if(products.get(i).getProduct().getProductId() == entry.getProduct().getProductId()){
-                removed_products.add(products.get(i));
-                dao.delete(entry);
-            }
-        }
-    }
-
     // remove product from deleted list
     public void addRemovedProduct(int position){
-        if(removed_products.size() != 0) {
-            CartEntry entry = products.get(position);
-            dao.create(entry);
-            removed_products.remove(entry);
+        if(guiProducts.size() != 0) {
+            cart.getProducts().add(position, guiProducts.get(position));
+            cartDao.update(cart);
             adapter.notifyDataSetChanged();
             refresh();
         }
@@ -280,11 +294,11 @@ public enum Cart {
     // refresh TextView of the total price and #items in cart
     public void refresh(){
         TextView total_price = (TextView) view.findViewById(R.id.cart_total_price);
-        total_price.setText(Cart.MYCART.totalPrice());
-        String base = view.getResources().getString(R.string.bold_start) + products.size() +
+        total_price.setText(CartSingleton.MYCART.totalPrice());
+        String base = view.getResources().getString(R.string.bold_start) + cart.getProducts().size() +
                 view.getResources().getString(R.string.cart_article_label) +
                 view.getResources().getString(R.string.cart_preview_delimiter) +
-                Cart.MYCART.totalPrice() +
+                CartSingleton.MYCART.totalPrice() +
                 view.getResources().getString(R.string.bold_end);
         TextView total_price_top = (TextView) view.findViewById(R.id.cart_total_price_preview);
         total_price_top.setText(Html.fromHtml(base));
@@ -293,7 +307,7 @@ public enum Cart {
     // panel only visible if cart is not empty
     public void updateVisibility(){
         if(this.slidingUp) {
-            if (products.size() == 0) {
+            if (guiProducts.size() == 0) {
                 mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                 mLayout.setPanelHeight((int) (view.getResources().getDimension(R.dimen.zero) / view.getResources().getDisplayMetrics().density));
             } else {
@@ -304,49 +318,29 @@ public enum Cart {
 
     // returns all existing products of the cart
     public List<CartEntry> getProducts(){
-        return products;
+        return cart.getProducts();
     }
 
     // update CartEntry
-    public void updateEntry(CartEntry entry){
-        for(CartEntry temp : products){
-            if(temp.getProduct().getProductId() == entry.getProduct().getProductId()){
-                temp.setAmount(entry.getAmount());
-                dao.update(temp);
-                adapter.notifyDataSetChanged();
-                refresh();
-                updateVisibility();
-            }
-        }
+    public void updateProducts(int position){
+        cart.getProducts().get(position).setAmount(guiProducts.get(position).getAmount());
+        cartDao.update(cart);
     }
 
     // remove CartEntry
     public void removeEntry(CartEntry entry){
-        for(int i=0; i<products.size(); i++){
-            if(products.get(i).getProduct().getProductId() == entry.getProduct().getProductId()){
-                dao.delete(entry);
-                products.remove(i);
-                isProductRemoved.remove(i);
-                adapter.notifyDataSetChanged();
-                refresh();
-                updateVisibility();
-                break;
-            }
-        }
-
-
-        for(int j=0;j<removed_products.size();j++){
-            if(removed_products.get(j).getProduct().getProductId() == entry.getProduct().getProductId()){
-                removed_products.remove(j);
-
-            }
-        }
-
+        cart.getProducts().remove(entry);
+        cartDao.update(cart);
+        adapter.notifyDataSetChanged();
+        refresh();
+        updateVisibility();
     }
 
+    // remove all entries from GUI and db
     public void removeAllEntries() {
-        dao.delete(products);
-        products.clear();
+        cart.getProducts().clear();
+        cartDao.update(cart);
+        guiProducts.clear();
         isProductRemoved.clear();
         refresh();
         updateVisibility();
@@ -355,10 +349,12 @@ public enum Cart {
     // add product to cart
     public void addProduct(Product product, double amount){
         // update existing cart entry
-        for(CartEntry temp : products){
+        for(CartEntry temp : guiProducts){
             if (temp.getProduct().getProductId() == product.getProductId()){
                 temp.setAmount(temp.getAmount() + amount);
-                dao.update(temp);
+                int pos = cart.getProducts().indexOf(temp);
+                cart.getProducts().get(pos).setAmount(temp.getAmount());
+                cartDao.update(cart);
                 adapter.notifyDataSetChanged();
                 refresh();
                 updateVisibility();
@@ -368,8 +364,9 @@ public enum Cart {
 
         // create new one
         CartEntry new_entry = new CartEntry(product, amount);
-        dao.create(new_entry);
-        products.add(new_entry);
+        cart.getProducts().add(new_entry);
+        cartDao.update(cart);
+        guiProducts.add(new_entry);
         isProductRemoved.add(false);
         adapter.notifyDataSetChanged();
         refresh();
@@ -380,9 +377,8 @@ public enum Cart {
     public String totalPrice(){
 
         double total = 0;
-        for(int i=0;i<products.size();i++){
-            if(!removed_products.contains(products.get(i)))
-                total += products.get(i).getProduct().getPrice()*products.get(i).getAmount();
+        for(int i=0;i<cart.getProducts().size();i++){
+            total += cart.getProducts().get(i).getProduct().getPrice()*cart.getProducts().get(i).getAmount();
         }
 
 

@@ -78,7 +78,7 @@ public class AddToCartDialog extends DialogFragment implements NumberPicker.OnVa
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_to_cart:
-                Cart.MYCART.addProduct(product, amount);
+                CartSingleton.MYCART.addProduct(product, amount);
                 finish();
                 return true;
             case android.R.id.home:

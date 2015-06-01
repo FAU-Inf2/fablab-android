@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import de.fau.cs.mad.fablab.android.cart.Cart;
+import de.fau.cs.mad.fablab.android.cart.CartSingleton;
 import de.fau.cs.mad.fablab.android.eventbus.DoorEvent;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.greenrobot.event.EventBus;
@@ -44,7 +44,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     }
 
     public void initCartPanel(boolean show) {
-        Cart.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), show);
+        CartSingleton.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), show);
     }
 
     @Override

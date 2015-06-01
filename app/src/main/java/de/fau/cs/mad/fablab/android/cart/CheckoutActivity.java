@@ -13,12 +13,8 @@ import java.util.regex.Pattern;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.ScannerFragment;
-import de.fau.cs.mad.fablab.rest.CartApiClient;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import eu.livotov.zxscan.ScannerView;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class CheckoutActivity extends ActionBarActivity implements ScannerView.ScannerViewEventListener {
     private ScannerFragment scannerFragment;
@@ -53,11 +49,12 @@ public class CheckoutActivity extends ActionBarActivity implements ScannerView.S
             getSupportFragmentManager().beginTransaction().remove(scannerFragment).commit();
             progressBar.setVisibility(View.VISIBLE);
 
-            List<CartEntry> products = Cart.MYCART.getProducts();
+            List<CartEntry> products = CartSingleton.MYCART.getProducts();
             de.fau.cs.mad.fablab.rest.core.Cart cart = new de.fau.cs.mad.fablab.rest.core.Cart();
             cart.setProducts(new ArrayList<>(products));
-            cart.setId(Long.toString(cartId));
+            //cart.setId(Long.toString(cartId));
 
+            /*
             CartApiClient cartApiClient = new CartApiClient((this));
             cartApiClient.get().create(cart, new Callback<de.fau.cs.mad.fablab.rest.core.Cart>() {
                 @Override
@@ -74,6 +71,7 @@ public class CheckoutActivity extends ActionBarActivity implements ScannerView.S
                             CheckoutFragment.newInstance(true)).commit();
                 }
             });
+            */
             return true;
         }
         Toast.makeText(this, R.string.checkout_invalid_qr_code, Toast.LENGTH_LONG).show();
@@ -92,7 +90,7 @@ public class CheckoutActivity extends ActionBarActivity implements ScannerView.S
 
     public void finish(View view) {
         if (((Button) view).getText().toString().equals("Bezahlt")) {
-            Cart.MYCART.removeAllEntries();
+            CartSingleton.MYCART.removeAllEntries();
         }
         finish();
     }

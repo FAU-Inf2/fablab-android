@@ -1,5 +1,5 @@
 #
-# generated on 2015/06/01 01:25:18
+# generated on 2015/06/01 04:28:29
 #
 # --table-start--
 dataClass=de.fau.cs.mad.fablab.rest.core.CartEntry
@@ -23,6 +23,47 @@ useGetSet=true
 fieldName=amount
 columnName=amount
 dataPersister=DOUBLE
+width=255
+useGetSet=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=de.fau.cs.mad.fablab.rest.core.Cart
+tableName=cart
+# --table-fields-start--
+# --field-start--
+fieldName=id
+columnName=id
+dataPersister=LONG
+width=255
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=cart_code
+columnName=cart_code
+dataPersister=STRING
+width=255
+# --field-end--
+# --field-start--
+fieldName=status
+columnName=status
+dataPersister=ENUM_STRING
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=pushId
+columnName=push_id
+dataPersister=STRING
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=paidTimestamp
+columnName=paidTimestamp
+dataPersister=LONG
 width=255
 useGetSet=true
 # --field-end--

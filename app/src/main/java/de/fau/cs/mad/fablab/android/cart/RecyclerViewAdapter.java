@@ -4,7 +4,6 @@ package de.fau.cs.mad.fablab.android.cart;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,7 +92,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(final ProductViewHolder productViewHolder, final int i) {
-        if(Cart.MYCART.getIsProductRemoved().get(i) == true){
+        if(CartSingleton.MYCART.getIsProductRemoved().get(i) == true){
             productViewHolder.ll.setVisibility(View.VISIBLE);
         }else{
             productViewHolder.ll.setVisibility(View.GONE);
@@ -161,8 +160,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 if (Integer.parseInt((String) parent.getSelectedItem()) != (int) products.get(i).getAmount()) {
                     double amount_new = Double.parseDouble(((String) parent.getSelectedItem()).replaceAll("\\s+", ""));
                     products.get(i).setAmount(amount_new);
-                    Cart.MYCART.refresh();
-                    Cart.MYCART.updateVisibility();
+                    CartSingleton.MYCART.refresh();
+                    CartSingleton.MYCART.updateVisibility();
+                    CartSingleton.MYCART.updateProducts(position);
                 }
             }
 
@@ -176,8 +176,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         productViewHolder.cart_product_undo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cart.MYCART.addRemovedProduct(i);
-                Cart.MYCART.getIsProductRemoved().set(i, false);
+                CartSingleton.MYCART.addRemovedProduct(i);
+                CartSingleton.MYCART.getIsProductRemoved().set(i, false);
                 productViewHolder.ll.setVisibility(View.GONE);
                 productViewHolder.ll.setClickable(false);
             }

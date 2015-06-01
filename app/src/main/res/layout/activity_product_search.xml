@@ -52,7 +52,7 @@
 
         </RelativeLayout>
 
-        <!-- Cart Sliding Up Panel -->
+        <!-- CartSingleton Sliding Up Panel -->
         <include
             android:id="@+id/cart"
             layout="@layout/cart"/>
