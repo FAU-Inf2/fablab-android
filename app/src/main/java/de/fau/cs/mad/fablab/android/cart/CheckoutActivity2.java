@@ -12,7 +12,6 @@ import de.fau.cs.mad.fablab.android.db.DatabaseHelper;
 import de.fau.cs.mad.fablab.rest.CartApiClient;
 import de.fau.cs.mad.fablab.rest.core.Cart;
 import de.fau.cs.mad.fablab.rest.core.CartStatusEnum;
-import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -21,8 +20,6 @@ public class CheckoutActivity2 extends ActionBarActivity {
 
     private String cartID;
     private RuntimeExceptionDao<Cart,Long> cartDao;
-
-    private EventBus eventBus = EventBus.getDefault();
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -47,7 +44,6 @@ public class CheckoutActivity2 extends ActionBarActivity {
             @Override
             public void success(Response response1, Response response2) {
                 Toast.makeText(getApplicationContext(), "bezahlen!", Toast.LENGTH_SHORT).show();
-                eventBus.register(this);
             }
 
             @Override
