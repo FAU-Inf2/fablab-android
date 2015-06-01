@@ -56,7 +56,7 @@ public class CheckoutActivity extends ActionBarActivity implements ScannerView.S
             List<CartEntry> products = Cart.MYCART.getProducts();
             de.fau.cs.mad.fablab.rest.core.Cart cart = new de.fau.cs.mad.fablab.rest.core.Cart();
             cart.setProducts(new ArrayList<>(products));
-            cart.setId(cartId);
+            cart.setId(Long.toString(cartId));
 
             CartApiClient cartApiClient = new CartApiClient((this));
             cartApiClient.get().create(cart, new Callback<de.fau.cs.mad.fablab.rest.core.Cart>() {
