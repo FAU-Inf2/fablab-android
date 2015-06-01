@@ -376,10 +376,7 @@ public enum CartSingleton {
     // return total price
     public String totalPrice(){
 
-        double total = 0;
-        for(int i=0;i<cart.getProducts().size();i++){
-            total += cart.getProducts().get(i).getProduct().getPrice()*cart.getProducts().get(i).getAmount();
-        }
+        double total = cart.getTotal();
 
 
         return String.format( "%.2f", total ) + Html.fromHtml(view.getResources().getString(R.string.non_breaking_space)) +
