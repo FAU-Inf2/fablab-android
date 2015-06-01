@@ -1,5 +1,5 @@
 #
-# generated on 2015/06/01 04:28:29
+# generated on 2015/06/01 08:52:51
 #
 # --table-start--
 dataClass=de.fau.cs.mad.fablab.rest.core.CartEntry
@@ -9,10 +9,12 @@ tableName=cartentry
 fieldName=id
 dataPersister=LONG
 generatedId=true
+useGetSet=true
 # --field-end--
 # --field-start--
 fieldName=cart
 foreign=true
+useGetSet=true
 # --field-end--
 # --field-start--
 fieldName=product
@@ -34,17 +36,12 @@ dataClass=de.fau.cs.mad.fablab.rest.core.Cart
 tableName=cart
 # --table-fields-start--
 # --field-start--
-fieldName=id
-columnName=id
-dataPersister=LONG
-width=255
-generatedId=true
-# --field-end--
-# --field-start--
-fieldName=cart_code
+fieldName=cartCode
 columnName=cart_code
 dataPersister=STRING
 width=255
+id=true
+useGetSet=true
 # --field-end--
 # --field-start--
 fieldName=status
