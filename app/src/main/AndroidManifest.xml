@@ -57,6 +57,9 @@
             android:name=".cart.CheckoutActivity"
             android:theme="@style/AppTheme.PlainActionBar" />
         <activity android:name=".pushservice.PushActivity" />
+        <activity
+            android:name=".cart.CheckoutActivity2"
+            android:theme="@style/AppTheme.PlainActionBar" />
 
         <activity
             android:name=".productMap.ProductMapActivity"
