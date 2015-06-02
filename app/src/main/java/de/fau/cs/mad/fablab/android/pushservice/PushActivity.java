@@ -18,6 +18,12 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.rest.PushApiClient;
+import de.fau.cs.mad.fablab.rest.core.RegistrationId;
+import de.fau.cs.mad.fablab.rest.myapi.PushApi;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class PushActivity extends ActionBarActivity {
 
@@ -50,6 +56,7 @@ public class PushActivity extends ActionBarActivity {
                 gcm = GoogleCloudMessaging.getInstance(this);
                 regid = getRegistrationId(mContext);
                 mRegistrationIdEditText.setText(regid);
+                sendRegistrationIdToBackend(regid);
                 if (regid.isEmpty()) {
                     registerInBackground();
                 }
@@ -77,7 +84,7 @@ public class PushActivity extends ActionBarActivity {
                     // so it can use GCM/HTTP or CCS to send messages to your app.
                     // The request to your server should be authenticated if your app
                     // is using accounts.
-                    sendRegistrationIdToBackend();
+                    sendRegistrationIdToBackend(regid);
 
                     // For this demo: we don't need to send it because the device
                     // will send upstream messages to a server that echo back the
@@ -106,8 +113,28 @@ public class PushActivity extends ActionBarActivity {
         }.execute(null, null, null);
     }
 
-    private void sendRegistrationIdToBackend() {
+    private void sendRegistrationIdToBackend(String aRegId) {
+
         Log.i(TAG,"SendRegistrationIdToBackend");
+
+        PushApiClient client;
+        client = new PushApiClient(getApplicationContext());
+
+        PushApi api = client.get();
+
+        api.addRegistrationId(new RegistrationId(aRegId), new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                Log.i(TAG,"Success " + response.getStatus());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.i(TAG,"Success" + error.getMessage());
+            }
+        });
+
+
     }
 
     private void storeRegistrationId(Context context, String regId) {
