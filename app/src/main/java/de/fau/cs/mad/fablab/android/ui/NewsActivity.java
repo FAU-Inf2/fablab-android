@@ -101,8 +101,10 @@ public class NewsActivity extends RoboActionBarActivity {
         appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
 
-        // init db and cart - always do this on app start
-        CartSingleton.MYCART.init(getApplication());
+        if (savedInstanceState == null) {
+            // init db and cart - always do this on app start
+            CartSingleton.MYCART.init(getApplication());
+        }
 
         // init cart panel
         CartSingleton.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), true);
@@ -155,6 +157,7 @@ public class NewsActivity extends RoboActionBarActivity {
     @Override
     public void onResume() {
         super.onResume();
+        CartSingleton.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), true);
         appbarDrawer.startTimer();
 
         //Load Autocompleteionwords

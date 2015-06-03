@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="de.fau.cs.mad.fablab.android" >
+    package="de.fau.cs.mad.fablab.android">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission
-        android:name="android.permission.FLASHLIGHT"
-        tools:node="remove" />
-    <uses-permission
-        android:name="android.permission.VIBRATE"
-        tools:node="remove" />
-
 
 
     <!-- Permission for pushservice-->
@@ -25,17 +17,7 @@
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false"
-        tools:replace="android:required" />
-    <uses-feature
-        android:name="android.hardware.camera.flash"
-        tools:node="remove" />
-    <uses-feature
-        android:name="android.hardware.screen.landscape"
-        tools:node="remove" />
-    <uses-feature
-        android:name="android.hardware.touchscreen"
-        tools:node="remove" />
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -50,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".BarcodeScannerActivity"
+            android:name=".barcodescanner.BarcodeScannerActivity"
             android:theme="@style/AppTheme.PlainActionBar" />
         <activity android:name=".cart.CartActivity" />
         <activity

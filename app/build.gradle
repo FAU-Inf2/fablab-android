@@ -70,7 +70,7 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-core:4.48'
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'javax.persistence:persistence-api:1.0'
-    compile ('eu.livotov.labs:zxscanlib:2.0.1@aar') {transitive=true}
+    compile 'me.dm7.barcodescanner:zxing:1.7.2'
     // CartSingleton Sliding Up Panel
     compile 'com.sothree.slidinguppanel:library:3.0.0'
     // CartSingleton CardView and RecyclerView and Sqipe-To-Remove lib

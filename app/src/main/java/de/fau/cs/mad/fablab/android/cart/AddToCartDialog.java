@@ -2,6 +2,7 @@ package de.fau.cs.mad.fablab.android.cart;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,13 +14,12 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.ui.UiUtils;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class AddToCartDialog extends DialogFragment implements NumberPicker.OnValueChangeListener {
-    private Product product;
-    private double amount;
-    private TextView priceTotalTextView;
+    private Product mProduct;
+    private double mAmount;
+    private TextView mPriceTotalTextView;
 
     public static AddToCartDialog newInstance(Product product) {
         AddToCartDialog dialog = new AddToCartDialog();
@@ -33,11 +33,12 @@ public class AddToCartDialog extends DialogFragment implements NumberPicker.OnVa
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        product = (Product) getArguments().getSerializable("product");
+
+        mProduct = (Product) getArguments().getSerializable("product");
         if (savedInstanceState != null) {
-            amount = savedInstanceState.getDouble("amount");
+            mAmount = savedInstanceState.getDouble("amount");
         } else {
-            amount = 1;
+            mAmount = 1;
         }
     }
 
@@ -52,24 +53,25 @@ public class AddToCartDialog extends DialogFragment implements NumberPicker.OnVa
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_add_to_cart, container, false);
 
-        ((TextView) view.findViewById(R.id.add_to_cart_name)).setText(product.getName());
-        ((TextView) view.findViewById(R.id.add_to_cart_price)).setText(product.getPrice()
+        ((TextView) view.findViewById(R.id.add_to_cart_name)).setText(mProduct.getName());
+        ((TextView) view.findViewById(R.id.add_to_cart_price)).setText(mProduct.getPrice()
                 + getResources().getString(R.string.currency) + " "
-                + getResources().getString(R.string.add_to_cart_price_per_unit) + " " + product.getUnit());
-        priceTotalTextView = (TextView) view.findViewById(R.id.add_to_cart_price_total);
-        priceTotalTextView.setText(String.format("%.2f", product.getPrice())
+                + getResources().getString(R.string.add_to_cart_price_per_unit) + " "
+                + mProduct.getUnit());
+        mPriceTotalTextView = (TextView) view.findViewById(R.id.add_to_cart_price_total);
+        mPriceTotalTextView.setText(String.format("%.2f", mProduct.getPrice())
                 + getResources().getString(R.string.currency));
         NumberPicker numberPicker = (NumberPicker) view.findViewById(R.id.add_to_cart_numberPicker);
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(50);
-        numberPicker.setValue((int) amount);
+        numberPicker.setValue((int) mAmount);
         numberPicker.setOnValueChangedListener(this);
         numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
-        ((ActionBarActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((ActionBarActivity) getActivity()).getSupportActionBar().setHomeAsUpIndicator(
-                android.R.drawable.ic_menu_close_clear_cancel);
-        ((ActionBarActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(android.R.drawable.ic_menu_close_clear_cancel);
+        actionBar.setDisplayShowTitleEnabled(false);
 
         return view;
     }
@@ -78,7 +80,7 @@ public class AddToCartDialog extends DialogFragment implements NumberPicker.OnVa
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_to_cart:
-                CartSingleton.MYCART.addProduct(product, amount);
+                CartSingleton.MYCART.addProduct(mProduct, mAmount);
                 finish();
                 return true;
             case android.R.id.home:
@@ -90,22 +92,22 @@ public class AddToCartDialog extends DialogFragment implements NumberPicker.OnVa
     }
 
     private void finish() {
-        UiUtils.hideKeyboard(getActivity());
-        ((ActionBarActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((ActionBarActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
+        ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(true);
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putDouble("amount", amount);
+        outState.putDouble("amount", mAmount);
     }
 
     @Override
     public void onValueChange(NumberPicker numberPicker, int oldVal, int newVal) {
-        priceTotalTextView.setText(String.format("%.2f", newVal * product.getPrice())
+        mPriceTotalTextView.setText(String.format("%.2f", newVal * mProduct.getPrice())
                 + getResources().getString(R.string.currency));
-        amount = newVal;
+        mAmount = newVal;
     }
 }
