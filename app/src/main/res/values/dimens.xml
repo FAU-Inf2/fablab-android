@@ -17,6 +17,9 @@
     <dimen name="news_entry_card_padding">15dp</dimen>
     <dimen name="news_entry_left_text_margin">20dp</dimen>
     <dimen name="news_entry_bottom_title_margin">5dp</dimen>
+    <dimen name="news_entry_scrollview_margin">40dp</dimen>
+    <dimen name="news_entry_button_margin">-40dp</dimen>
+    <dimen name="news_entry_title_maxheight">100dp</dimen>
 
     <dimen name="fab_padding">15dp</dimen>
     <dimen name="news_activity_actionbar_recyclerview_margin">5dp</dimen>
