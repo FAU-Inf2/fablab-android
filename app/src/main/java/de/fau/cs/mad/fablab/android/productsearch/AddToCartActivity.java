@@ -14,9 +14,11 @@ public class AddToCartActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_container);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
-                AddToCartDialog.newInstance((Product) getIntent().getSerializableExtra("product")))
-                .commit();
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
+                    AddToCartDialog.newInstance((Product) getIntent().getSerializableExtra(
+                            "product"))).commit();
+        }
     }
 
     @Override
