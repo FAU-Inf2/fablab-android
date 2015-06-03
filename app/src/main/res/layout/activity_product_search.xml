@@ -66,6 +66,8 @@
             layout="@layout/fab_button" />
     </RelativeLayout>
 
+    <include layout="@layout/spinner" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/navdrawer_RecyclerView"
         android:layout_width="320dp"
@@ -75,7 +77,5 @@
         android:scrollbars="vertical">
 
     </android.support.v7.widget.RecyclerView>
-
-    <include layout="@layout/spinner"/>
 
 </android.support.v4.widget.DrawerLayout>
