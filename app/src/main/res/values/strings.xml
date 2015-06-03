@@ -25,7 +25,7 @@
     <string name="action_add_to_cart">In den Warenkorb</string>
     <string name="add_to_cart_price_per_unit">pro</string>
     <string name="add_to_cart_amount">Menge:</string>
-    <string name="add_to_cart_invalid_barcode">Ungültiger Barcode</string>
+    <string name="barcode_scanner_invalid_barcode">Ungültiger Barcode</string>
     <string name="product_not_found">Produkt nicht gefunden</string>
     <string name="product_dialog_location">Standort anzeigen</string>
     <string name="product_dialog_cart">Zum Warenkorb hinzufügen</string>

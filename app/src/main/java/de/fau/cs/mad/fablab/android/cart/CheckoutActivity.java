@@ -4,50 +4,48 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.Result;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.ScannerFragment;
+import de.fau.cs.mad.fablab.android.barcodescanner.ScannerFragment;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
-import eu.livotov.zxscan.ScannerView;
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class CheckoutActivity extends ActionBarActivity implements ScannerView.ScannerViewEventListener {
-    private ScannerFragment scannerFragment;
-    private ProgressBar progressBar;
-    private Pattern qrCodePattern = Pattern.compile("(-)?\\d{1,19}");
+public class CheckoutActivity extends ActionBarActivity implements ZXingScannerView.ResultHandler {
+    private Pattern mQrCodePattern = Pattern.compile("(-)?\\d{1,19}");
+    private ScannerFragment mScannerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_container);
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         if (savedInstanceState == null) {
-            scannerFragment = ScannerFragment.newInstance(getResources().getString(
+            mScannerFragment = ScannerFragment.newInstance(getResources().getString(
                     R.string.title_scan_qr_code));
-            scannerFragment.setScannerViewEventListener(this);
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
-                    scannerFragment).commit();
+                    mScannerFragment, "scanner").commit();
+        } else {
+            mScannerFragment = (ScannerFragment) getSupportFragmentManager().findFragmentByTag(
+                    "scanner");
         }
     }
 
     @Override
-    public boolean onCodeScanned(String data) {
-        if (qrCodePattern.matcher(data).matches()) {
-            long cartId;
-            try {
-                cartId = Long.parseLong(data);
-            } catch (NumberFormatException e) {
-                Toast.makeText(this, R.string.checkout_invalid_qr_code, Toast.LENGTH_LONG).show();
-                return true;
-            }
-            getSupportFragmentManager().beginTransaction().remove(scannerFragment).commit();
-            progressBar.setVisibility(View.VISIBLE);
+    public void handleResult(Result result) {
+        String qrCodeText = result.getText();
+
+        if (mQrCodePattern.matcher(qrCodeText).matches()
+                && BarcodeFormat.QR_CODE.equals(result.getBarcodeFormat())) {
+            getSupportFragmentManager().beginTransaction().remove(mScannerFragment).commit();
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
 
             List<CartEntry> products = CartSingleton.MYCART.getProducts();
             de.fau.cs.mad.fablab.rest.core.Cart cart = new de.fau.cs.mad.fablab.rest.core.Cart();
@@ -59,33 +57,21 @@ public class CheckoutActivity extends ActionBarActivity implements ScannerView.S
             cartApiClient.get().create(cart, new Callback<de.fau.cs.mad.fablab.rest.core.Cart>() {
                 @Override
                 public void success(de.fau.cs.mad.fablab.rest.core.Cart cart, Response response) {
-                    progressBar.setVisibility(View.GONE);
                     getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
                             CheckoutFragment.newInstance()).commit();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    progressBar.setVisibility(View.GONE);
                     getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
                             CheckoutFragment.newInstance(true)).commit();
                 }
             });
             */
-            return true;
+        } else {
+            Toast.makeText(this, R.string.checkout_invalid_qr_code, Toast.LENGTH_LONG).show();
+            mScannerFragment.startCamera();
         }
-        Toast.makeText(this, R.string.checkout_invalid_qr_code, Toast.LENGTH_LONG).show();
-        return true;
-    }
-
-    @Override
-    public void onScannerFailure(int cameraError) {
-
-    }
-
-    @Override
-    public void onScannerReady() {
-
     }
 
     public void finish(View view) {

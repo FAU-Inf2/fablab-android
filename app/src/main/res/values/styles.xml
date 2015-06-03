@@ -12,7 +12,9 @@
     <style name="AppTheme.PlainActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/AppBarColorPrimary</item>
         <item name="colorPrimaryDark">@color/AppBarColorPrimaryDark</item>
+        <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="windowActionBarOverlay">true</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">

@@ -20,7 +20,7 @@ import android.widget.TextView;
 import net.spaceapi.HackerSpace;
 import net.spaceapi.State;
 
-import de.fau.cs.mad.fablab.android.BarcodeScannerActivity;
+import de.fau.cs.mad.fablab.android.barcodescanner.BarcodeScannerActivity;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.cart.CartActivity;
 import de.fau.cs.mad.fablab.android.eventbus.DoorEvent;
