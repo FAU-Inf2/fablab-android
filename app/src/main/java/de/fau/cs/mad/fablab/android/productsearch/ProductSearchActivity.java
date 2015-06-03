@@ -264,6 +264,8 @@ public class ProductSearchActivity extends BaseActivity
 
     @Override
     protected void onSaveInstanceState (Bundle outState) {
+        super.onSaveInstanceState(outState);
+
         //save searched products
         outState.putSerializable(KEY_SEARCHED_PRODUCTS, productAdapter.getAllItems());
         //save selected product

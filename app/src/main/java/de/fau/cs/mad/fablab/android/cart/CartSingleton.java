@@ -308,7 +308,7 @@ public enum CartSingleton {
     public void updateVisibility(){
         if(this.slidingUp) {
             if (guiProducts.size() == 0) {
-                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
                 mLayout.setPanelHeight((int) (view.getResources().getDimension(R.dimen.zero) / view.getResources().getDisplayMetrics().density));
             } else {
                 mLayout.setPanelHeight((int) view.getResources().getDimension(R.dimen.slidinguppanel_panel_height));
@@ -331,9 +331,6 @@ public enum CartSingleton {
     public void removeEntry(CartEntry entry){
         cart.getProducts().remove(entry);
         cartDao.update(cart);
-        adapter.notifyDataSetChanged();
-        refresh();
-        updateVisibility();
     }
 
     // remove all entries from GUI and db
@@ -342,8 +339,6 @@ public enum CartSingleton {
         cartDao.update(cart);
         guiProducts.clear();
         isProductRemoved.clear();
-        refresh();
-        updateVisibility();
     }
 
     // add product to cart
@@ -355,9 +350,6 @@ public enum CartSingleton {
                 int pos = cart.getProducts().indexOf(temp);
                 cart.getProducts().get(pos).setAmount(temp.getAmount());
                 cartDao.update(cart);
-                adapter.notifyDataSetChanged();
-                refresh();
-                updateVisibility();
                 return;
             }
         }
@@ -368,9 +360,6 @@ public enum CartSingleton {
         cartDao.update(cart);
         guiProducts.add(new_entry);
         isProductRemoved.add(false);
-        adapter.notifyDataSetChanged();
-        refresh();
-        updateVisibility();
     }
 
     // return total price

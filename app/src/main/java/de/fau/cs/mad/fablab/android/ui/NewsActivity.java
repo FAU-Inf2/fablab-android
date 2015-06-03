@@ -155,6 +155,7 @@ public class NewsActivity extends RoboActionBarActivity {
     @Override
     public void onResume() {
         super.onResume();
+        CartSingleton.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), true);
         appbarDrawer.startTimer();
 
         //Load Autocompleteionwords

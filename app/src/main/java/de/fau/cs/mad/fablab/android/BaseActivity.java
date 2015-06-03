@@ -12,9 +12,13 @@ import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.greenrobot.event.EventBus;
 
 public abstract class BaseActivity extends ActionBarActivity {
+    private static final int DISPLAY_CART_NONE = 0;
+    private static final int DISPLAY_CART_SLIDING_UP = 1;
+    private static final int DISPLAY_CART_FULL = 2;
     // Navigation Drawer
     public AppbarDrawerInclude appbarDrawer;
     private EventBus eventBus = EventBus.getDefault();
+    private int cartDisplayOptions = DISPLAY_CART_NONE;
 
     protected abstract void baseOnCreate(Bundle savedInstanceState);
     protected abstract void baseSetContentView();
@@ -29,6 +33,10 @@ public abstract class BaseActivity extends ActionBarActivity {
         appbarDrawer.create();
 
         eventBus.register(this);
+
+        if (savedInstanceState != null) {
+            cartDisplayOptions = savedInstanceState.getInt("display_cart");
+        }
 
         baseOnCreate(savedInstanceState);
 
@@ -45,6 +53,7 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     public void initCartPanel(boolean show) {
         CartSingleton.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), show);
+        cartDisplayOptions = show ? DISPLAY_CART_SLIDING_UP : DISPLAY_CART_FULL;
     }
 
     @Override
@@ -71,7 +80,17 @@ public abstract class BaseActivity extends ActionBarActivity {
     @Override
     final public void onResume() {
         baseOnResume();
+        if (cartDisplayOptions != DISPLAY_CART_NONE) {
+            CartSingleton.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content),
+                    cartDisplayOptions == DISPLAY_CART_SLIDING_UP);
+        }
         super.onResume();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("display_cart", cartDisplayOptions);
     }
 
     protected void baseOnPause() {
