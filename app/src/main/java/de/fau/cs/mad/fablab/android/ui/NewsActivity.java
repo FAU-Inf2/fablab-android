@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -75,7 +74,6 @@ public class NewsActivity extends RoboActionBarActivity {
             }
             newsList.clear();
             for (News singleNews : news) {
-                singleNews.setDescription(uiUtils.processNewsText(singleNews.getDescription()));
                 newsList.add(singleNews);
             }
 
@@ -220,13 +218,13 @@ public class NewsActivity extends RoboActionBarActivity {
 
             public void setNews(News news)
             {
-                description = news.getDescription();
                 this.titleView.setText(news.getTitle());
-                this.subTitleView.setText(Html.fromHtml(description));
+                this.subTitleView.setText(news.getDescriptionShort());
                 if(news.getLinkToPreviewImage() != null) {
                     new DownloadImageTask(iconView)
                             .execute(news.getLinkToPreviewImage());
                 }
+                description = news.getDescription();
 
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
