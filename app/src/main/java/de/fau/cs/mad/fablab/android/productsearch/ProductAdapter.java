@@ -63,9 +63,8 @@ public class ProductAdapter extends ArrayAdapter<Product> implements SectionInde
         //set product unit
         productUnit.setText(getItem(position).getUnit());
 
-        //handling for unsaleable products
-        //for testing: price > 250 -> unsaleable
-        if(getItem(position).getPrice() > 250) {
+        //handling for zero-priced products
+        if(getItem(position).getPrice() == 0) {
             productCardView.setCardBackgroundColor(getContext().getResources()
                     .getColor(R.color.spinner_background));
             productPhoto.setAlpha(0.5f);
@@ -73,7 +72,6 @@ public class ProductAdapter extends ArrayAdapter<Product> implements SectionInde
                     .primary_text_disabled_material_light));
             productPrice.setTextColor(getContext().getResources().getColor(R.color
                     .primary_text_disabled_material_light));
-            productPrice.setText(Html.fromHtml("-,- €"));
             productUnit.setTextColor(getContext().getResources().getColor(R.color
                     .primary_text_disabled_material_light));
         }

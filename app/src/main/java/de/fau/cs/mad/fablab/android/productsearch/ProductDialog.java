@@ -58,9 +58,8 @@ public class ProductDialog extends DialogFragment {
         //set product name as title
         title.setText(product.getName());
 
-        //handling for unsaleable products
-        //for testing: price > 250 -> unsaleable
-        if(product.getPrice() > 250) {
+        //handling for zero-priced products
+        if(product.getPrice() == 0) {
             cart.setTextColor(getActivity().getResources().getColor(R.color
                     .primary_text_disabled_material_light));
             report.setTextColor(getActivity().getResources().getColor(R.color
@@ -74,8 +73,8 @@ public class ProductDialog extends DialogFragment {
                 productDialogListener.onShowLocationClick();
             }
         });
-        //set listeners for click events for saleable products
-        if(!(product.getPrice() > 250)) {
+        //set listeners for click events for not zero-priced products
+        if(product.getPrice() != 0) {
             cart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -51,7 +51,7 @@
                     android:id="@+id/product_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="right"
                     android:textSize="@dimen/product_price_size"
                     android:textStyle="bold"/>
 
@@ -60,7 +60,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:textSize="@dimen/product_price_size"/>
+                    android:textSize="@dimen/product_name_size"/>
 
             </LinearLayout>
 
