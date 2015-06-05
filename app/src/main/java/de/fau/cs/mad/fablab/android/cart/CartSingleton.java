@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -71,6 +72,7 @@ public enum CartSingleton {
             cart = new Cart();
         }
 
+        Log.i("hi","hi");
         isProductRemoved = new ArrayList<>();
         guiProducts = new ArrayList<>();
         for(int i=0;i<cart.getProducts().size();i++){
@@ -323,7 +325,8 @@ public enum CartSingleton {
 
     // update CartEntry
     public void updateProducts(int position){
-        cart.getProducts().get(position).setAmount(guiProducts.get(position).getAmount());
+        int pos = cart.getProducts().indexOf(guiProducts.get(position));
+        cart.getProducts().get(pos).setAmount(guiProducts.get(position).getAmount());
         cartDao.update(cart);
     }
 
