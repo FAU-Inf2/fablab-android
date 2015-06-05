@@ -162,7 +162,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     products.get(i).setAmount(amount_new);
                     CartSingleton.MYCART.refresh();
                     CartSingleton.MYCART.updateVisibility();
-                    CartSingleton.MYCART.updateProducts(position);
+                    CartSingleton.MYCART.updateProducts(i);
                 }
             }
 
