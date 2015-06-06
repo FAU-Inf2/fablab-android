@@ -49,7 +49,7 @@ public class CheckoutActivity extends ActionBarActivity implements ZXingScannerV
 
             List<CartEntry> products = CartSingleton.MYCART.getProducts();
             de.fau.cs.mad.fablab.rest.core.Cart cart = new de.fau.cs.mad.fablab.rest.core.Cart();
-            cart.setProducts(new ArrayList<>(products));
+            //cart.setProducts(new ArrayList<>(products));
             //cart.setId(Long.toString(cartId));
 
             /*

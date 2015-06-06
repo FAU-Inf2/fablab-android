@@ -1,5 +1,5 @@
 #
-# generated on 2015/06/01 08:52:51
+# generated on 2015/06/06 12:30:02
 #
 # --table-start--
 dataClass=de.fau.cs.mad.fablab.rest.core.CartEntry
@@ -13,13 +13,16 @@ useGetSet=true
 # --field-end--
 # --field-start--
 fieldName=cart
+columnName=cart_id
 foreign=true
-useGetSet=true
+foreignAutoRefresh=true
 # --field-end--
 # --field-start--
 fieldName=product
+columnName=product_id
+canBeNull=false
 foreign=true
-useGetSet=true
+foreignAutoRefresh=true
 # --field-end--
 # --field-start--
 fieldName=amount
@@ -51,6 +54,10 @@ width=255
 useGetSet=true
 # --field-end--
 # --field-start--
+fieldName=products
+foreignCollection=true
+# --field-end--
+# --field-start--
 fieldName=pushId
 columnName=push_id
 dataPersister=STRING
@@ -61,6 +68,78 @@ useGetSet=true
 fieldName=paidTimestamp
 columnName=paidTimestamp
 dataPersister=LONG
+width=255
+useGetSet=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=de.fau.cs.mad.fablab.rest.core.Product
+tableName=product
+# --table-fields-start--
+# --field-start--
+fieldName=productId
+columnName=product_id
+dataPersister=STRING
+width=255
+id=true
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=name
+columnName=name
+dataPersister=STRING
+width=255
+canBeNull=false
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=description
+columnName=description
+dataPersister=STRING
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=unit
+columnName=unit
+dataPersister=STRING
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=categoryId
+columnName=category_id
+dataPersister=LONG
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=categoryString
+columnName=category_string
+dataPersister=STRING
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=price
+columnName=price
+dataPersister=DOUBLE
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=itemsAvailable
+columnName=available
+dataPersister=INTEGER
+width=255
+useGetSet=true
+# --field-end--
+# --field-start--
+fieldName=location
+columnName=location
+dataPersister=STRING
 width=255
 useGetSet=true
 # --field-end--

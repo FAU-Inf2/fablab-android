@@ -16,14 +16,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.j256.ormlite.dao.CloseableIterator;
+import com.j256.ormlite.dao.ForeignCollection;
+
 import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.db.DatabaseHelper;
@@ -37,7 +42,9 @@ public enum CartSingleton {
 
     private List<Boolean> isProductRemoved;
     private List<CartEntry> guiProducts;
-    private RuntimeExceptionDao<Cart, Long> cartDao;
+    private RuntimeExceptionDao<CartEntry, Long> cartEntryDao;
+    private RuntimeExceptionDao<Cart, String> cartDao;
+    private RuntimeExceptionDao<Product, String> productDao;
     private RecyclerViewAdapter adapter;
     private Context context;
     private View view;
@@ -45,6 +52,7 @@ public enum CartSingleton {
     private boolean slidingUp;
 
     private Cart cart;
+    private List<CartEntry> products;
 
 
     CartSingleton(){
@@ -59,7 +67,9 @@ public enum CartSingleton {
     // call this method on startup activity
     public void init(Context context){
         cartDao = DatabaseHelper.getHelper(context).getCartDao();
-        QueryBuilder<Cart, Long> queryBuilder = cartDao.queryBuilder();
+        cartEntryDao = DatabaseHelper.getHelper(context).getCartEntryDao();
+        productDao = DatabaseHelper.getHelper(context).getProductDao();
+        QueryBuilder<Cart, String> queryBuilder = cartDao.queryBuilder();
         try {
             queryBuilder.where().eq("status", CartStatusEnum.SHOPPING).or().eq("status", CartStatusEnum.PENDING);
             cart = cartDao.queryForFirst(queryBuilder.prepare());
@@ -70,15 +80,26 @@ public enum CartSingleton {
         if(cart == null)
         {
             cart = new Cart();
+            cart.setCartCode(Long.toString(new Random().nextLong()));
+            cartDao.create(cart);
+            products = new ArrayList<>();
+        }else{
+            products = cartEntryDao.queryForEq("cart_id", cart.getCartCode());
         }
 
-        Log.i("hi","hi");
+
+        //List<Product> list = productDao.queryForAll();
+       // Log.i("app", list.get(0).getName());
+        //Log.i("app", String.valueOf(products.get(0).getCart().getCartCode()));
+       // Log.i("app", String.valueOf(products.get(0).getProduct().getName()));
         isProductRemoved = new ArrayList<>();
         guiProducts = new ArrayList<>();
-        for(int i=0;i<cart.getProducts().size();i++){
+
+        for(int i=0;i<products.size();i++){
             isProductRemoved.add(false);
-            guiProducts.add(cart.getProducts().get(i));
+            guiProducts.add(products.get(i));
         }
+
     }
 
     // Setting up the view for every context c including the sliding up panel
@@ -280,8 +301,7 @@ public enum CartSingleton {
     // remove product from deleted list
     public void addRemovedProduct(int position){
         if(guiProducts.size() != 0) {
-            cart.getProducts().add(position, guiProducts.get(position));
-            cartDao.update(cart);
+            cartEntryDao.create(guiProducts.get(position));
             adapter.notifyDataSetChanged();
             refresh();
         }
@@ -297,7 +317,7 @@ public enum CartSingleton {
     public void refresh(){
         TextView total_price = (TextView) view.findViewById(R.id.cart_total_price);
         total_price.setText(CartSingleton.MYCART.totalPrice());
-        String base = view.getResources().getString(R.string.bold_start) + cart.getProducts().size() +
+        String base = view.getResources().getString(R.string.bold_start) + guiProducts.size() +
                 view.getResources().getString(R.string.cart_article_label) +
                 view.getResources().getString(R.string.cart_preview_delimiter) +
                 CartSingleton.MYCART.totalPrice() +
@@ -320,26 +340,31 @@ public enum CartSingleton {
 
     // returns all existing products of the cart
     public List<CartEntry> getProducts(){
-        return cart.getProducts();
+        return products;
     }
 
     // update CartEntry
     public void updateProducts(int position){
-        int pos = cart.getProducts().indexOf(guiProducts.get(position));
-        cart.getProducts().get(pos).setAmount(guiProducts.get(position).getAmount());
-        cartDao.update(cart);
+        int pos = products.indexOf(guiProducts.get(position));
+        products.get(pos).setAmount(guiProducts.get(position).getAmount());
+        cartEntryDao.update(products.get(pos));
     }
 
     // remove CartEntry
     public void removeEntry(CartEntry entry){
-        cart.getProducts().remove(entry);
-        cartDao.update(cart);
+        products.remove(entry);
+        cartEntryDao.update(entry);
     }
 
     // remove all entries from GUI and db
     public void removeAllEntries() {
-        cart.getProducts().clear();
-        cartDao.update(cart);
+        DeleteBuilder db = cartEntryDao.deleteBuilder();
+        try {
+            db.where().eq("cart_id", cart.getCartCode());
+            cartEntryDao.delete(db.prepare());
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
         guiProducts.clear();
         isProductRemoved.clear();
     }
@@ -350,17 +375,21 @@ public enum CartSingleton {
         for(CartEntry temp : guiProducts){
             if (temp.getProduct().getProductId() == product.getProductId()){
                 temp.setAmount(temp.getAmount() + amount);
-                int pos = cart.getProducts().indexOf(temp);
-                cart.getProducts().get(pos).setAmount(temp.getAmount());
-                cartDao.update(cart);
+                int pos = products.indexOf(temp);
+                products.get(pos).setAmount(temp.getAmount());
+                cartEntryDao.update(products.get(pos));
                 return;
             }
         }
 
         // create new one
+
         CartEntry new_entry = new CartEntry(product, amount);
-        cart.getProducts().add(new_entry);
-        cartDao.update(cart);
+        products.add(new_entry);
+        productDao.create(product);
+        new_entry.setCart(cart);
+        new_entry.setProduct(product);
+        cartEntryDao.create(new_entry);
         guiProducts.add(new_entry);
         isProductRemoved.add(false);
     }
@@ -368,7 +397,10 @@ public enum CartSingleton {
     // return total price
     public String totalPrice(){
 
-        double total = cart.getTotal();
+        double total = 0;
+        for (int i=0;i<guiProducts.size();i++){
+            total += guiProducts.get(i).getTotal();
+        }
 
 
         return String.format( "%.2f", total ) + Html.fromHtml(view.getResources().getString(R.string.non_breaking_space)) +

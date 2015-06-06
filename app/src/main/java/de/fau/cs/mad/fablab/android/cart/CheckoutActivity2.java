@@ -19,7 +19,7 @@ import retrofit.client.Response;
 public class CheckoutActivity2 extends ActionBarActivity {
 
     private String cartID;
-    private RuntimeExceptionDao<Cart,Long> cartDao;
+    private RuntimeExceptionDao<Cart, String> cartDao;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
