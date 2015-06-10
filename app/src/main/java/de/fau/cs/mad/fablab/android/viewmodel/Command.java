@@ -3,8 +3,8 @@ package de.fau.cs.mad.fablab.android.viewmodel;
 public abstract class Command<T> {
 
     private CommandListener commandListener;
-    private boolean isAvailable = false;
-    private boolean isExecutable = false;
+    private boolean isAvailable = true;
+    private boolean isExecutable = true;
 
     public void setListener(CommandListener commandListener)
     {

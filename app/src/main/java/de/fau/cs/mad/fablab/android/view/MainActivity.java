@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.model.StorageFragment;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -17,6 +18,8 @@ public class MainActivity extends ActionBarActivity {
         if(savedInstanceState == null)
         {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new NewsFragment()).commit();
+            //initialize our storage
+            StorageFragment.initializeStorage();
         }
     }
 

@@ -25,6 +25,8 @@ public class ButtonBinding extends Binding implements CommandListener, View.OnCl
 
         this.button = button;
         this.command = command;
+
+        this.button.setOnClickListener(this);
     }
 
     @Override
@@ -39,6 +41,8 @@ public class ButtonBinding extends Binding implements CommandListener, View.OnCl
 
     @Override
     public void onClick(View v) {
-
+        if (command.isExecutable()) {
+            command.execute(null);
+        }
     }
 }
