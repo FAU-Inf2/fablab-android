@@ -1,28 +1,18 @@
 package de.fau.cs.mad.fablab.android.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.rest.core.News;
 
 /***
  * This class acts as a storage for our fetched news
+ * //TODO persistence!
  */
 public class NewsStorage {
 
-    private ArrayList<News> news;
-    private int currentOffset = 0;
+    private ObservableArrayList<News> news;
 
     public NewsStorage(){
-        news = new ArrayList<>();
-    }
-
-    public int getCurrentOffset(){
-        return currentOffset;
-    }
-
-    public void setCurrentOffset(int newOffset){
-        this.currentOffset = newOffset;
+        news = new ObservableArrayList<>();
     }
 
     public News getNews(int position){
@@ -33,7 +23,7 @@ public class NewsStorage {
         this.news.add(news);
     }
 
-    public List<News> getAllNews(){
+    public ObservableArrayList<News> getAllNews(){
         return news;
     }
 }

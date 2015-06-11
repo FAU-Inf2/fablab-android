@@ -6,16 +6,16 @@ import android.util.Log;
 
 import de.fau.cs.mad.fablab.android.viewmodel.Command;
 
-public class RecyclerViewBinding extends Binding {
+public class RecyclerViewCommandBinding extends Binding {
 
-    private static final String LOG_TAG = "RecyclerViewBinding";
+    private static final String LOG_TAG = "RecyclerViewCommand";
 
     private final RecyclerView recyclerView;
     private final Command<?> command;
 
     private LinearLayoutManager layoutManager;
 
-    public RecyclerViewBinding(RecyclerView recyclerView, final Command command){
+    public RecyclerViewCommandBinding(RecyclerView recyclerView, final Command command){
         this.recyclerView = recyclerView;
         this.command = command;
 

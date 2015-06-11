@@ -6,15 +6,18 @@ import android.widget.Button;
 import de.fau.cs.mad.fablab.android.viewmodel.Command;
 import de.fau.cs.mad.fablab.android.viewmodel.CommandListener;
 
-public class ButtonBinding extends Binding implements CommandListener, View.OnClickListener {
+/***
+ *
+ */
+public class ViewCommandBinding extends Binding implements CommandListener, View.OnClickListener {
 
 
-    private final View button;
+    private final View view;
     private final Command<?> command;
 
-    public ButtonBinding(Button button, Command command)
+    public ViewCommandBinding(View view, Command command)
     {
-        if(button == null)
+        if(view == null)
         {
             throw new IllegalArgumentException("button must not be null");
         }
@@ -23,10 +26,10 @@ public class ButtonBinding extends Binding implements CommandListener, View.OnCl
             throw new IllegalArgumentException("command must not be null");
         }
 
-        this.button = button;
+        this.view = view;
         this.command = command;
 
-        this.button.setOnClickListener(this);
+        this.view.setOnClickListener(this);
     }
 
     @Override

@@ -1,12 +1,13 @@
 package de.fau.cs.mad.fablab.android.view;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.NewsFragment;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -19,7 +20,7 @@ public class MainActivity extends ActionBarActivity {
         {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new NewsFragment()).commit();
             //initialize our storage
-            StorageFragment.initializeStorage();
+            StorageFragment.initializeStorage(this);
         }
     }
 

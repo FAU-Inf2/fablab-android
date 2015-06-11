@@ -1,12 +1,11 @@
 package de.fau.cs.mad.fablab.android.viewmodel;
 
-import android.content.Context;
-
 import de.fau.cs.mad.fablab.android.model.NewsModel;
+import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
+import de.fau.cs.mad.fablab.rest.core.News;
 
 public class NewsFragmentViewModel{
 
-    private Context context;
     private NewsModel model;
 
     private Command commandGetNews = new Command() {
@@ -16,12 +15,15 @@ public class NewsFragmentViewModel{
         }
     };
 
-    public NewsFragmentViewModel(Context c){
-        this.context = c;
-        this.model = new NewsModel(context);
+    public NewsFragmentViewModel(){
+        this.model = new NewsModel();
     }
 
     public Command getNewsCommand(){
         return commandGetNews;
+    }
+
+    public ObservableArrayList<News> getNewsList(){
+        return model.getNewsList();
     }
 }
