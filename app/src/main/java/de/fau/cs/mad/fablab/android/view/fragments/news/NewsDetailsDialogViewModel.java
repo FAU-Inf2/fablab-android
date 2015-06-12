@@ -5,7 +5,6 @@ import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
-import de.fau.cs.mad.fablab.rest.core.News;
 
 public class NewsDetailsDialogViewModel extends BaseViewModel {
 
@@ -69,10 +68,10 @@ public class NewsDetailsDialogViewModel extends BaseViewModel {
         this.imageZoom = imageZoom;
     }
 
-    public void setNews(News news) {
-        this.title = news.getTitle();
-        this.text = news.getDescription();
-        this.imageLink = news.getLinkToPreviewImage();
+    public void setData(String title, String content, String imageLink) {
+        this.title = title;
+        this.text = content;
+        this.imageLink = imageLink;
     }
 
     public Command getImageClickCommand() {
@@ -81,6 +80,11 @@ public class NewsDetailsDialogViewModel extends BaseViewModel {
 
     public Command getDismissCommand() {
         return dismissCommand;
+    }
+
+    @Override
+    public void setData(Object data) {
+
     }
 
     public interface Listener extends BaseViewModel.Listener{

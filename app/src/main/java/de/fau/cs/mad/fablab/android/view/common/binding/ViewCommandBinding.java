@@ -8,7 +8,7 @@ import de.fau.cs.mad.fablab.android.viewmodel.common.commands.CommandListener;
 /***
  *
  */
-public class ViewCommandBinding extends Binding implements CommandListener, View.OnClickListener {
+public class ViewCommandBinding extends BaseBinding implements CommandListener, View.OnClickListener {
 
 
     private final View view;

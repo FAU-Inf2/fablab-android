@@ -7,7 +7,7 @@ import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.rest.core.News;
 
-public class NewsViewHolderViewModel extends BaseViewModel{
+public class NewsViewHolderViewModel extends BaseViewModel<News>{
 
     News news;
     NewsDetailsDialogViewModel detailsDialogViewModel;
@@ -24,9 +24,9 @@ public class NewsViewHolderViewModel extends BaseViewModel{
         this.detailsDialogViewModel = detailsDialogViewModel;
     }
 
-    public void setNews(News news){
+    public void setData(News news){
         this.news = news;
-        this.detailsDialogViewModel.setNews(news);
+        this.detailsDialogViewModel.setData(news.getTitle(), news.getDescription(), news.getLinkToPreviewImage());
     }
 
     public Command getShowDialogCommand(){
@@ -41,8 +41,12 @@ public class NewsViewHolderViewModel extends BaseViewModel{
         return news.getTitle();
     }
 
-    public String getDescription() {
-        return news.getDescription();
+    public String getDescriptionShort() {
+        return news.getDescriptionShort();
+    }
+
+    public String getPreviewImageLink(){
+        return news.getLinkToPreviewImage();
     }
 
     public interface NewsViewHolderListener extends Listener{

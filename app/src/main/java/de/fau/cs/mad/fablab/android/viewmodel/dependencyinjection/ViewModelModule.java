@@ -2,7 +2,6 @@ package de.fau.cs.mad.fablab.android.viewmodel.dependencyinjection;
 
 import android.app.Activity;
 
-
 import dagger.Module;
 import dagger.Provides;
 

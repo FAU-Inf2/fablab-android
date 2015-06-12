@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.fau.cs.mad.fablab.android.view.common.binding.Bindable;
-import de.fau.cs.mad.fablab.android.view.common.binding.Binding;
+import de.fau.cs.mad.fablab.android.view.common.binding.BaseBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
@@ -23,7 +23,7 @@ import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 public abstract class BaseFragment extends Fragment implements Bindable{
 
     //to hold all bindings declared in this instance
-    private List<Binding> bindings;
+    private List<BaseBinding> bindings;
 
     protected BaseFragment() {
         bindings = new LinkedList<>();

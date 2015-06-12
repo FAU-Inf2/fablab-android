@@ -4,15 +4,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import de.fau.cs.mad.fablab.android.viewmodel.common.BaseAdapterViewModel;
+import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 
 /***
  * This class represents the base class for all our RecyclerView Adapters
  * @param <ViewHolderType> The ViewHolder we want to use (must extend BaseViewHolder)
  */
-public abstract class BaseAdapter<ViewHolderType extends BaseViewHolder> extends RecyclerView.Adapter<ViewHolderType>{
+public abstract class BaseAdapter<ContentType, ViewHolderType extends BaseViewHolder, ViewModelType extends BaseViewModel> extends RecyclerView.Adapter<ViewHolderType>{
 
     //holds the data displayed by this adapter
-    protected final BaseAdapterViewModel viewModel;
+    protected final BaseAdapterViewModel<ContentType> viewModel;
+    protected ViewModelType viewHolderViewModel;
 
     /***
      * We only want derived classes
@@ -26,7 +28,8 @@ public abstract class BaseAdapter<ViewHolderType extends BaseViewHolder> extends
 
     @Override
     public final void onBindViewHolder(ViewHolderType holder, int position) {
-        holder.setData(viewModel.getData().get(position));
+        viewHolderViewModel.setData(viewModel.getData().get(position));
+        holder.setViewModel(viewHolderViewModel);
     }
 
     @Override

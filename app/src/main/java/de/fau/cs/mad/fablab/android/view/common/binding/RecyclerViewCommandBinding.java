@@ -6,7 +6,7 @@ import android.util.Log;
 
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 
-public class RecyclerViewCommandBinding extends Binding {
+public class RecyclerViewCommandBinding extends BaseBinding {
 
     private static final String LOG_TAG = "RecyclerViewCommand";
 

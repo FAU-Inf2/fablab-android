@@ -10,8 +10,9 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragmentViewModel;
 import de.fau.cs.mad.fablab.android.view.common.recyclerview.BaseAdapter;
 import de.fau.cs.mad.fablab.android.viewmodel.dependencyinjection.ViewModelModule;
+import de.fau.cs.mad.fablab.rest.core.News;
 
-public class NewsAdapter extends BaseAdapter<NewsViewHolder> {
+public class NewsAdapter extends BaseAdapter<News, NewsViewHolder, NewsViewHolderViewModel> {
 
     public NewsAdapter(NewsFragmentViewModel viewModel)
     {
@@ -23,8 +24,8 @@ public class NewsAdapter extends BaseAdapter<NewsViewHolder> {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_entry, parent, false);
 
         ObjectGraph objectGraph = ObjectGraph.create(new ViewModelModule((Activity) parent.getContext()));
-        NewsViewHolderViewModel viewModel = objectGraph.get(NewsViewHolderViewModel.class);
+        viewHolderViewModel = objectGraph.get(NewsViewHolderViewModel.class);
 
-        return new NewsViewHolder(view, viewModel);
+        return new NewsViewHolder(view);
     }
 }

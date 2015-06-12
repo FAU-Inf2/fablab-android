@@ -12,7 +12,9 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.recyclerview.BaseViewHolder;
 import de.fau.cs.mad.fablab.rest.core.News;
 
-public class NewsViewHolder extends BaseViewHolder<News> {
+public class NewsViewHolder extends BaseViewHolder<NewsViewHolderViewModel> {
+
+    View view;
 
     @InjectView(R.id.title_news_entry)
     TextView titleView;
@@ -23,23 +25,22 @@ public class NewsViewHolder extends BaseViewHolder<News> {
 
     NewsViewHolderViewModel viewModel;
 
-    public NewsViewHolder(View view, NewsViewHolderViewModel viewModel) {
+    public NewsViewHolder(View view) {
         super(view);
         ButterKnife.inject(this, view);
-
-        this.viewModel = viewModel;
-        bindViewToCommand(view, viewModel.getShowDialogCommand());
+        this.view = view;
     }
 
     @Override
-    public void setData(News data) {
-        viewModel.setNews(data);
+    public void setViewModel(NewsViewHolderViewModel viewModel) {
+        this.viewModel = viewModel;
+        bindViewToCommand(view, viewModel.getShowDialogCommand());
 
-        titleView.setText(data.getTitle());
-        subTitleView.setText(data.getDescriptionShort());
+        titleView.setText(viewModel.getTitle());
+        subTitleView.setText(viewModel.getDescriptionShort());
 
-        if(data.getLinkToPreviewImage() != null) {
-            Picasso.with(iconView.getContext()).load(data.getLinkToPreviewImage()).into(iconView);
+        if(viewModel.getPreviewImageLink() != null) {
+            Picasso.with(iconView.getContext()).load(viewModel.getPreviewImageLink()).into(iconView);
         }
     }
 }
