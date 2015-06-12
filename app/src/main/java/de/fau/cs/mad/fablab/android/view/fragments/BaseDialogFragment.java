@@ -1,35 +1,26 @@
 package de.fau.cs.mad.fablab.android.view.fragments;
 
-
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import de.fau.cs.mad.fablab.android.view.binding.Bindable;
 import de.fau.cs.mad.fablab.android.view.binding.Binding;
-import de.fau.cs.mad.fablab.android.view.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.binding.RecyclerViewCommandBinding;
+import de.fau.cs.mad.fablab.android.view.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.viewmodel.common.Command;
 
-/***
- * Base class for all Fragments
- */
-public abstract class BaseFragment extends Fragment implements Bindable{
+public abstract class BaseDialogFragment extends DialogFragment implements Bindable{
 
     //to hold all bindings declared in this instance
     private List<Binding> bindings;
 
-    protected BaseFragment() {
+    protected BaseDialogFragment() {
         bindings = new LinkedList<>();
     }
-
-    public abstract View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
     public final void bindViewToCommand(View view, Command command)
     {
@@ -37,7 +28,8 @@ public abstract class BaseFragment extends Fragment implements Bindable{
         bindings.add(binding);
     }
 
-    public final void bindRecyclerView(RecyclerView recycler, Command command){
+    @Override
+    public void bindRecyclerView(RecyclerView recycler, Command command) {
         RecyclerViewCommandBinding binding = new RecyclerViewCommandBinding(recycler, command);
         bindings.add(binding);
     }
