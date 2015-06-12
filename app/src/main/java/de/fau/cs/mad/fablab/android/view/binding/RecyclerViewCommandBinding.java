@@ -4,7 +4,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import de.fau.cs.mad.fablab.android.viewmodel.Command;
+import de.fau.cs.mad.fablab.android.viewmodel.common.Command;
 
 public class RecyclerViewCommandBinding extends Binding {
 

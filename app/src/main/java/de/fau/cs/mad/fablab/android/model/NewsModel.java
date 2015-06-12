@@ -29,7 +29,7 @@ public class NewsModel {
     public NewsModel(){
         this.newsApi = new NewsApiClient(StorageFragment.getApplicationContext()).get();
         this.storage = StorageFragment.getNewsStorage();
-        newsApi.find(currentOffset, ELEMENT_COUNT, newsApiCallback);
+        fetchNextNews();
     }
 
     public void fetchNextNews(){

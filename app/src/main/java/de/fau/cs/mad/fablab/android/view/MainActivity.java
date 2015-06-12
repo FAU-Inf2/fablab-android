@@ -7,7 +7,7 @@ import android.view.MenuItem;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.NewsFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -22,6 +22,17 @@ public class MainActivity extends ActionBarActivity {
             //initialize our storage
             StorageFragment.initializeStorage(this);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StorageFragment.initializeStorage(this);
     }
 
     @Override

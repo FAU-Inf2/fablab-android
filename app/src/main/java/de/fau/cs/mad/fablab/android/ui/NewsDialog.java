@@ -1,19 +1,25 @@
 package de.fau.cs.mad.fablab.android.ui;
 
-import android.graphics.Bitmap;
+import android.app.DialogFragment;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.model.StorageFragment;
 
 public class NewsDialog extends DialogFragment {
 
@@ -21,17 +27,41 @@ public class NewsDialog extends DialogFragment {
     static final String TITLE = "TITLE";
     static final String TEXT = "TEXT";
 
-    private Bitmap image;
+    private String imageLink;
     private String title;
     private String text;
+
+    private boolean imageZoom = false;
+
+    @InjectView(R.id.title_news_dialog)
+    TextView tv_title;
+    @InjectView(R.id.news_text_news_dialog)
+    TextView tv_content;
+    @InjectView(R.id.image_news_dialog)
+    ImageView iv_image;
+
+    @OnClick(R.id.ok_button_news_dialog) void okClick(){
+        dismiss();
+    }
+
+    @OnClick(R.id.image_news_dialog) void imageClick(){
+        Toast.makeText(getActivity(), "Image Click!", Toast.LENGTH_LONG).show();
+        if(!imageZoom){
+            iv_image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            imageZoom = true;
+        }
+        else{
+            iv_image.setLayoutParams(new LinearLayout.LayoutParams((int)getResources().getDimension(R.dimen.news_dialog_icon_size), (int)getResources().getDimension(R.dimen.news_dialog_icon_size)));
+            imageZoom = false;
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-
-        image = args.getParcelable(IMAGE);
+        imageLink = args.getString(IMAGE);
         title = args.getString(TITLE);
         text = args.getString(TEXT);
     }
@@ -40,24 +70,14 @@ public class NewsDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_news_dialog, container, false);
+        ButterKnife.inject(this, v);
 
-        TextView title_TV = (TextView) v.findViewById(R.id.title_news_dialog);
-        TextView text_TV = (TextView) v.findViewById((R.id.news_text_news_dialog));
-        text_TV.setLinksClickable(true);
-        text_TV.setMovementMethod(LinkMovementMethod.getInstance());
-        ImageView image_IV = (ImageView) v.findViewById((R.id.image_news_dialog));
+        tv_content.setLinksClickable(true);
+        tv_content.setMovementMethod(LinkMovementMethod.getInstance());
+        tv_content.setText(Html.fromHtml(text));
+        tv_title.setText(title);
 
-        text_TV.setText(Html.fromHtml(text));
-        title_TV.setText(title);
-        image_IV.setImageBitmap(image);
-
-        Button okButton = (Button) v.findViewById(R.id.ok_button_news_dialog);
-        okButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        Picasso.with(iv_image.getContext()).load(imageLink).into(iv_image);
 
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 

@@ -12,18 +12,15 @@ import android.widget.Button;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.fau.cs.mad.fablab.android.view.binding.RecyclerViewAdapterBinding;
 import de.fau.cs.mad.fablab.android.view.binding.Binding;
 import de.fau.cs.mad.fablab.android.view.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.binding.RecyclerViewCommandBinding;
-import de.fau.cs.mad.fablab.android.view.list.BaseAdapter;
-import de.fau.cs.mad.fablab.android.viewmodel.Command;
-import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
+import de.fau.cs.mad.fablab.android.viewmodel.common.Command;
 
 /***
  * Base class for all Fragments
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment{
 
     //to hold all bindings declared in this instance
     private List<Binding> bindings;
@@ -44,11 +41,4 @@ public abstract class BaseFragment extends Fragment {
         RecyclerViewCommandBinding binding = new RecyclerViewCommandBinding(recycler, command);
         bindings.add(binding);
     }
-
-    protected final void bindAdapterToRecyclerView(RecyclerView recycler, ObservableArrayList list, BaseAdapter adapter){
-        RecyclerViewAdapterBinding binding = new RecyclerViewAdapterBinding(recycler, list, adapter);
-        bindings.add(binding);
-    }
-
-
 }

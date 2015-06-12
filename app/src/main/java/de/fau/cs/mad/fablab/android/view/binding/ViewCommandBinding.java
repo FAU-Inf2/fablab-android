@@ -1,10 +1,9 @@
 package de.fau.cs.mad.fablab.android.view.binding;
 
 import android.view.View;
-import android.widget.Button;
 
-import de.fau.cs.mad.fablab.android.viewmodel.Command;
-import de.fau.cs.mad.fablab.android.viewmodel.CommandListener;
+import de.fau.cs.mad.fablab.android.viewmodel.common.Command;
+import de.fau.cs.mad.fablab.android.viewmodel.common.CommandListener;
 
 /***
  *

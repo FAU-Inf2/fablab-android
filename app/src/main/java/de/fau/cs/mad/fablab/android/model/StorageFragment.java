@@ -12,8 +12,6 @@ import android.support.v7.app.ActionBarActivity;
 public class StorageFragment extends Fragment {
 
     private static Context applicationContext;
-    private static Context activityContext;
-    private static FragmentManager fragmentManager;
 
     private static NewsStorage newsStorage;
 
@@ -23,26 +21,22 @@ public class StorageFragment extends Fragment {
         setRetainInstance(true);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
     public static void initializeStorage(ActionBarActivity context){
         newsStorage = new NewsStorage();
-        applicationContext = context.getApplicationContext();
-        activityContext = context;
-        fragmentManager = context.getSupportFragmentManager();
+        applicationContext = context.getApplication();
     }
 
     public static Context getApplicationContext(){
         return applicationContext;
     }
 
-    public static Context getContext(){
-        return activityContext;
-    }
-
-    public static FragmentManager getActivityFragmentManager(){
-        return fragmentManager;
-    }
-
     public static NewsStorage getNewsStorage(){
         return newsStorage;
     }
+
 }
