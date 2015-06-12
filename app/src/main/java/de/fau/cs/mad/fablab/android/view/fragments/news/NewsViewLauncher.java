@@ -1,28 +1,30 @@
 package de.fau.cs.mad.fablab.android.view.fragments.news;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.os.Bundle;
 
 import de.fau.cs.mad.fablab.android.view.common.ViewLauncher;
 
 public class NewsViewLauncher extends ViewLauncher {
 
-    static final String IMAGE = "IMAGE";
-    static final String TITLE = "TITLE";
-    static final String TEXT = "TEXT";
+    private NewsDetailsDialogFragment dialog;
 
     public NewsViewLauncher(Activity activity) {
         super(activity);
     }
 
-    public void showNewsDialogFragment(String title, String content, String imageLink){
+    public void showNewsDialogFragment(NewsDetailsDialogViewModel viewModel, String title, String content, String imageLink){
         Bundle args = new Bundle();
-        args.putString(TITLE, title);
-        args.putString(TEXT, content);
-        args.putString(IMAGE, imageLink);
-        DialogFragment dialog = new NewsDetailsDialog();
+        args.putString(NewsConstants.TITLE, title);
+        args.putString(NewsConstants.CONTENT, content);
+        args.putString(NewsConstants.IMAGE, imageLink);
+        dialog = new NewsDetailsDialogFragment();
+        dialog.setViewModel(viewModel);
         dialog.setArguments(args);
         dialog.show(activity.getFragmentManager(), "NewsDialog");
+    }
+
+    public void dismissNewsDialogFragmend(){
+        dialog.dismiss();
     }
 }

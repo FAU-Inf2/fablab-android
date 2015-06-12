@@ -6,6 +6,7 @@ import android.app.Activity;
 import dagger.Module;
 import dagger.Provides;
 
+import de.fau.cs.mad.fablab.android.view.fragments.news.NewsDetailsDialogViewModel;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragmentViewModel;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsViewLauncher;
 import de.fau.cs.mad.fablab.android.view.fragments.news.list.NewsViewHolderViewModel;
@@ -27,6 +28,11 @@ public class ViewModelModule {
     @Provides
     Activity provideActivity(){
         return mActivity;
+    }
+
+    @Provides
+    NewsDetailsDialogViewModel provideNewsDetailsDialogViewModel(NewsViewLauncher viewLauncher){
+        return new NewsDetailsDialogViewModel(viewLauncher);
     }
 
 }
