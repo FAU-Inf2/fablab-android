@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.viewmodel.common;
+package de.fau.cs.mad.fablab.android.viewmodel.common.commands;
 
 public interface CommandListener {
 

@@ -6,8 +6,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.NewsModel;
-import de.fau.cs.mad.fablab.android.viewmodel.BaseAdapterViewModel;
-import de.fau.cs.mad.fablab.android.viewmodel.common.Command;
+import de.fau.cs.mad.fablab.android.viewmodel.common.BaseAdapterViewModel;
+import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.News;
 
 public class NewsFragmentViewModel extends BaseAdapterViewModel<News>{

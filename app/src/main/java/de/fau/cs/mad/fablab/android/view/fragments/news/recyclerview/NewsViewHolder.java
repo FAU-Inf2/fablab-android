@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.view.fragments.news.list;
+package de.fau.cs.mad.fablab.android.view.fragments.news.recyclerview;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -9,9 +9,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.model.StorageFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.news.list.NewsViewHolderViewModel;
-import de.fau.cs.mad.fablab.android.view.list.BaseViewHolder;
+import de.fau.cs.mad.fablab.android.view.common.recyclerview.BaseViewHolder;
 import de.fau.cs.mad.fablab.rest.core.News;
 
 public class NewsViewHolder extends BaseViewHolder<News> {

@@ -1,9 +1,9 @@
-package de.fau.cs.mad.fablab.android.view.binding;
+package de.fau.cs.mad.fablab.android.view.common.binding;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import de.fau.cs.mad.fablab.android.viewmodel.common.Command;
+import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 
 public interface Bindable {
 

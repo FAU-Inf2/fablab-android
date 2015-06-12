@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.view.fragments.news.list;
+package de.fau.cs.mad.fablab.android.view.fragments.news.recyclerview;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import dagger.ObjectGraph;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragmentViewModel;
-import de.fau.cs.mad.fablab.android.view.list.BaseAdapter;
+import de.fau.cs.mad.fablab.android.view.common.recyclerview.BaseAdapter;
 import de.fau.cs.mad.fablab.android.viewmodel.dependencyinjection.ViewModelModule;
 
 public class NewsAdapter extends BaseAdapter<NewsViewHolder> {

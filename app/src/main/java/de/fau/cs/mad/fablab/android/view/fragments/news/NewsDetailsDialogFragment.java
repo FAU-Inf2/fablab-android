@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.view.fragments.BaseDialogFragment;
+import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 
 public class NewsDetailsDialogFragment extends BaseDialogFragment implements NewsDetailsDialogViewModel.Listener{
 

@@ -1,10 +1,10 @@
-package de.fau.cs.mad.fablab.android.view.fragments.news.list;
+package de.fau.cs.mad.fablab.android.view.fragments.news.recyclerview;
 
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsDetailsDialogViewModel;
-import de.fau.cs.mad.fablab.android.viewmodel.common.Command;
-import de.fau.cs.mad.fablab.android.viewmodel.BaseViewModel;
+import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
+import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.rest.core.News;
 
 public class NewsViewHolderViewModel extends BaseViewModel{

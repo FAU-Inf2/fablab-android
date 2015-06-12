@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.view.list;
+package de.fau.cs.mad.fablab.android.view.common.recyclerview;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -6,9 +6,9 @@ import android.view.View;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.fau.cs.mad.fablab.android.view.binding.Binding;
-import de.fau.cs.mad.fablab.android.view.binding.ViewCommandBinding;
-import de.fau.cs.mad.fablab.android.viewmodel.common.Command;
+import de.fau.cs.mad.fablab.android.view.common.binding.Binding;
+import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
+import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 
 /***
  * Base class for ViewHolders. Extends RecyclerView ViewHolder

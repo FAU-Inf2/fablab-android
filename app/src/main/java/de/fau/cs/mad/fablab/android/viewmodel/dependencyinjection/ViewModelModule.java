@@ -9,7 +9,7 @@ import dagger.Provides;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsDetailsDialogViewModel;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragmentViewModel;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsViewLauncher;
-import de.fau.cs.mad.fablab.android.view.fragments.news.list.NewsViewHolderViewModel;
+import de.fau.cs.mad.fablab.android.view.fragments.news.recyclerview.NewsViewHolderViewModel;
 
 @Module(injects = {NewsViewHolderViewModel.class, NewsFragmentViewModel.class})
 public class ViewModelModule {

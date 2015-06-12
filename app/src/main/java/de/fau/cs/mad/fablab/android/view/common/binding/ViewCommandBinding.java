@@ -1,9 +1,9 @@
-package de.fau.cs.mad.fablab.android.view.binding;
+package de.fau.cs.mad.fablab.android.view.common.binding;
 
 import android.view.View;
 
-import de.fau.cs.mad.fablab.android.viewmodel.common.Command;
-import de.fau.cs.mad.fablab.android.viewmodel.common.CommandListener;
+import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
+import de.fau.cs.mad.fablab.android.viewmodel.common.commands.CommandListener;
 
 /***
  *

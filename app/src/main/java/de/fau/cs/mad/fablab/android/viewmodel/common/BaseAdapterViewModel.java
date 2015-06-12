@@ -1,8 +1,6 @@
-package de.fau.cs.mad.fablab.android.viewmodel;
+package de.fau.cs.mad.fablab.android.viewmodel.common;
 
 import java.util.List;
-
-import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 
 public abstract class BaseAdapterViewModel<ListContentType> extends BaseViewModel implements ObservableArrayList.Listener<ListContentType>{
 

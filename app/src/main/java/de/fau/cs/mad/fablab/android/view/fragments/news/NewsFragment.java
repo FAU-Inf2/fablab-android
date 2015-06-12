@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import dagger.ObjectGraph;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.view.fragments.BaseFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.news.list.NewsAdapter;
+import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.news.recyclerview.NewsAdapter;
 import de.fau.cs.mad.fablab.android.viewmodel.dependencyinjection.ViewModelModule;
 
 /**

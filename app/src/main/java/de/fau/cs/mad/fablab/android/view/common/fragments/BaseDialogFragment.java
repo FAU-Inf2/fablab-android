@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.view.fragments;
+package de.fau.cs.mad.fablab.android.view.common.fragments;
 
 import android.app.DialogFragment;
 import android.support.v7.widget.RecyclerView;
@@ -7,11 +7,11 @@ import android.view.View;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.fau.cs.mad.fablab.android.view.binding.Bindable;
-import de.fau.cs.mad.fablab.android.view.binding.Binding;
-import de.fau.cs.mad.fablab.android.view.binding.RecyclerViewCommandBinding;
-import de.fau.cs.mad.fablab.android.view.binding.ViewCommandBinding;
-import de.fau.cs.mad.fablab.android.viewmodel.common.Command;
+import de.fau.cs.mad.fablab.android.view.common.binding.Bindable;
+import de.fau.cs.mad.fablab.android.view.common.binding.Binding;
+import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewCommandBinding;
+import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
+import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 
 public abstract class BaseDialogFragment extends DialogFragment implements Bindable{
 

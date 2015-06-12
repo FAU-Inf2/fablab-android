@@ -1,13 +1,9 @@
-package de.fau.cs.mad.fablab.android.view.list;
+package de.fau.cs.mad.fablab.android.view.common.recyclerview;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import de.fau.cs.mad.fablab.android.viewmodel.BaseAdapterViewModel;
-import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
+import de.fau.cs.mad.fablab.android.viewmodel.common.BaseAdapterViewModel;
 
 /***
  * This class represents the base class for all our RecyclerView Adapters
