@@ -21,7 +21,7 @@ import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "fablab.db";
-    private static final int DATABASE_VERSION = 24;
+    private static final int DATABASE_VERSION = 25;
     private static final String TAG = DatabaseHelper.class.getSimpleName();
 
     private static DatabaseHelper instance;
