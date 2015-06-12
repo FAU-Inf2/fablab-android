@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.os.Bundle;
 
-import de.fau.cs.mad.fablab.android.ui.NewsDialog;
 import de.fau.cs.mad.fablab.android.view.common.ViewLauncher;
 
 public class NewsViewLauncher extends ViewLauncher {
@@ -22,7 +21,7 @@ public class NewsViewLauncher extends ViewLauncher {
         args.putString(TITLE, title);
         args.putString(TEXT, content);
         args.putString(IMAGE, imageLink);
-        DialogFragment dialog = new NewsDialog();
+        DialogFragment dialog = new NewsDetailsDialog();
         dialog.setArguments(args);
         dialog.show(activity.getFragmentManager(), "NewsDialog");
     }

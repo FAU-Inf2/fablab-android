@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.ui;
+package de.fau.cs.mad.fablab.android.view.fragments.news;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
@@ -19,9 +19,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.model.StorageFragment;
 
-public class NewsDialog extends DialogFragment {
+public class NewsDetailsDialog extends DialogFragment {
 
     static final String IMAGE = "IMAGE";
     static final String TITLE = "TITLE";
