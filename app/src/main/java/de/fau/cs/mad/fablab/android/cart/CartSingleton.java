@@ -6,7 +6,6 @@ import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -15,9 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.j256.ormlite.dao.CloseableIterator;
-import com.j256.ormlite.dao.ForeignCollection;
 
 import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
@@ -87,11 +83,6 @@ public enum CartSingleton {
             products = cartEntryDao.queryForEq("cart_id", cart.getCartCode());
         }
 
-
-        //List<Product> list = productDao.queryForAll();
-       // Log.i("app", list.get(0).getName());
-        //Log.i("app", String.valueOf(products.get(0).getCart().getCartCode()));
-       // Log.i("app", String.valueOf(products.get(0).getProduct().getName()));
         isProductRemoved = new ArrayList<>();
         guiProducts = new ArrayList<>();
 
@@ -195,6 +186,7 @@ public enum CartSingleton {
                 int x = (int)e.getRawX();
                 int y = (int)e.getRawY();
 
+                // show / hide full text title
                 if(!inViewInBounds(cart_product_quantity_spinner, x, y) &&
                         ll.getVisibility() == View.GONE){
                     if(product_title.getLineCount() == 1){
@@ -203,6 +195,7 @@ public enum CartSingleton {
                         product_title.setSingleLine(true);
                     }
                 }else if(inViewInBounds(undo_img, x, y) && ll.getVisibility() == View.VISIBLE){
+                    // recognize undo click
                     undo.performClick();
                 }
 
@@ -225,6 +218,7 @@ public enum CartSingleton {
             }
         }));
 
+        // checkout button
         Button checkoutButton = (Button) v.findViewById(R.id.cart_button_checkout);
         checkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -299,6 +293,7 @@ public enum CartSingleton {
     }
 
     // remove product from deleted list
+    // re-add product to cart, to the db tables, respectively
     public void addRemovedProduct(int position){
         if(guiProducts.size() != 0) {
             cartEntryDao.create(guiProducts.get(position));
@@ -339,34 +334,52 @@ public enum CartSingleton {
     }
 
     // returns all existing products of the cart
+    // <-> don't necessarily need to be the same as guiProducts
     public List<CartEntry> getProducts(){
         return products;
     }
 
-    // update CartEntry
+    // update CartEntry in db table
     public void updateProducts(int position){
         int pos = products.indexOf(guiProducts.get(position));
         products.get(pos).setAmount(guiProducts.get(position).getAmount());
         cartEntryDao.update(products.get(pos));
     }
 
-    // remove CartEntry
+    // remove CartEntry from db table
     public void removeEntry(CartEntry entry){
         products.remove(entry);
-        cartEntryDao.update(entry);
-    }
-
-    // remove all entries from GUI and db
-    public void removeAllEntries() {
-        DeleteBuilder db = cartEntryDao.deleteBuilder();
+        DeleteBuilder db_entry = cartEntryDao.deleteBuilder();
         try {
-            db.where().eq("cart_id", cart.getCartCode());
-            cartEntryDao.delete(db.prepare());
+            db_entry.where().eq("id", entry.getId());
+            cartEntryDao.delete(db_entry.prepare());
         }catch(SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    // remove all entries from GUI and db tables
+    public void removeAllEntries() {
+        DeleteBuilder db_cart = cartDao.deleteBuilder();
+        DeleteBuilder db_entries = cartEntryDao.deleteBuilder();
+
+        try {
+            db_entries.where().eq("cart_id", cart.getCartCode());
+            cartEntryDao.delete(db_entries.prepare());
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            db_cart.where().eq("cart_id", cart.getCartCode());
+            cartDao.delete(db_cart.prepare());
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+
         guiProducts.clear();
         isProductRemoved.clear();
+        products.clear();
     }
 
     // add product to cart
@@ -383,13 +396,12 @@ public enum CartSingleton {
         }
 
         // create new one
-
         CartEntry new_entry = new CartEntry(product, amount);
-        products.add(new_entry);
-        productDao.create(product);
         new_entry.setCart(cart);
         new_entry.setProduct(product);
         cartEntryDao.create(new_entry);
+
+        products.add(new_entry);
         guiProducts.add(new_entry);
         isProductRemoved.add(false);
     }
@@ -397,12 +409,7 @@ public enum CartSingleton {
     // return total price
     public String totalPrice(){
 
-        double total = 0;
-        for (int i=0;i<guiProducts.size();i++){
-            total += guiProducts.get(i).getTotal();
-        }
-
-
+        double total = cart.getTotal();
         return String.format( "%.2f", total ) + Html.fromHtml(view.getResources().getString(R.string.non_breaking_space)) +
                 view.getResources().getString(R.string.currency);
     }
