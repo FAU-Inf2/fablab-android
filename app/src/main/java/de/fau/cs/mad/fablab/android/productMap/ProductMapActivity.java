@@ -18,13 +18,13 @@ public class ProductMapActivity extends ActionBarActivity
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-
-        //setContentView(R.layout.activity_product_map);
 
         //get location
         String locationString = getIntent().getStringExtra(ProductSearchActivity.KEY_LOCATION);
+
         isMainViewActive = true;
 
 
@@ -37,42 +37,32 @@ public class ProductMapActivity extends ActionBarActivity
     protected void createView(Context context)
     {
 
-        //assert productLocation != null;
+        drawView = new DrawingActivity(context, FablabView.MAIN_ROOM, productLocation.getMainPositionX(), productLocation.getMainPositionY(), productLocation.getLocationName());
 
-        try
-        {
-
-            drawView = new DrawingActivity(context, FablabView.MAIN_ROOM, productLocation.getMainPositionX(), productLocation.getMainPositionY(), productLocation.getLocationName());
-            drawView.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    if (isMainViewActive == true)
-                    {
-                        drawView.setDrawingParameter(productLocation.getView(), productLocation.getViewPositionX(), productLocation.getViewPositionY());
-                        drawView.invalidate();
-                        isMainViewActive = false;
-                    } else
-                    {
-                        drawView.setDrawingParameter(FablabView.MAIN_ROOM, productLocation.getMainPositionX(), productLocation.getMainPositionY());
-                        drawView.invalidate();
-                        isMainViewActive = true;
-                    }
-                }
-            });
-            throw new IllegalArgumentException("ob das wohl geht");
-        }
-        catch(IllegalArgumentException exception)
-        {
-            new AlertDialog.Builder(this)
-                    .setTitle("test")
-                    .setMessage("something went wrong");
-        }
+        // later when details are clear
+//        drawView.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                if (isMainViewActive == true)
+//                {
+//                    drawView.setDrawingParameter(productLocation.getView(), productLocation.getViewPositionX(), productLocation.getViewPositionY());
+//                    drawView.invalidate();
+//                    isMainViewActive = false;
+//                } else
+//                {
+//                    drawView.setDrawingParameter(FablabView.MAIN_ROOM, productLocation.getMainPositionX(), productLocation.getMainPositionY());
+//                    drawView.invalidate();
+//                    isMainViewActive = true;
+//                }
+//            }
+//        });
 
         setContentView(drawView);
 
     }
+
 
 }
 

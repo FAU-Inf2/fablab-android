@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,7 @@ import de.fau.cs.mad.fablab.android.cart.AddToCartDialog;
 import de.fau.cs.mad.fablab.android.cart.RecyclerItemClickListener;
 import de.fau.cs.mad.fablab.android.cart.RecyclerViewAdapter;
 import de.fau.cs.mad.fablab.android.productMap.LocationParser;
+import de.fau.cs.mad.fablab.android.productMap.ProductLocation;
 import de.fau.cs.mad.fablab.android.productMap.ProductMapActivity;
 import de.fau.cs.mad.fablab.android.ui.UiUtils;
 import de.fau.cs.mad.fablab.rest.ProductApiClient;
@@ -230,21 +232,25 @@ public class ProductSearchActivity extends BaseActivity
     @Override
     public void onShowLocationClick() {
         //TODO get location of the selected product
-        String location = "tatsaechliche Lagerorte / FAU FabLab / Elektrowerkstatt / " +
-                "Regal / Plexiglas";
+        String location;
+        location = selectedProduct.getLocation();
+        //location = "tatsaechliche Lagerorte / FAU FabLab / Elektrowerkstatt / " +
+        //        "Regal / Plexiglass";
 
-        //check if location is valid
-        if(LocationParser.getLocation(location) != null) {
-            //show location
-            Intent intent = new Intent(this, ProductMapActivity.class);
-            intent.putExtra(KEY_LOCATION, location);
-            startActivity(intent);
-        } else {
-            //show error dialog
-            productDialog.dismiss();
-            errorDialog = ErrorDialog.newInstance(getResources().getString(R.string.invalid_location));
-            errorDialog.show(getFragmentManager(), "error_dialog");
-        }
+            if (LocationParser.getLocation(location) != null)
+            {
+                //show location
+                Intent intent = new Intent(this, ProductMapActivity.class);
+                intent.putExtra(KEY_LOCATION, location);
+                startActivity(intent);
+            } else
+            {
+                //show error dialog
+                productDialog.dismiss();
+                errorDialog = ErrorDialog.newInstance(getResources().getString(R.string.invalid_location));
+                errorDialog.show(getFragmentManager(), "error_dialog");
+            }
+
     }
 
     @Override

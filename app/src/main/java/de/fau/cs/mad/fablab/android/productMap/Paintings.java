@@ -21,7 +21,7 @@ public enum Paintings
     SHELF_PAINTING(Color.argb(255,139,69,19), Paint.Style.FILL_AND_STROKE, 10),
     TEXT_PAINTING_LARGE(Color.BLACK, Paint.Style.STROKE, 50),
     TEXT_PAINTING_SMALL(Color.BLACK, Paint.Style.STROKE, 30),
-    TEXT_PAINTING_ERROR(Color.RED, Paint.Style.STROKE, 50);
+    TEXT_PAINTING_LOCATION(Color.RED, Paint.Style.STROKE, 30);
 
     private int color;
     private Paint.Style style;

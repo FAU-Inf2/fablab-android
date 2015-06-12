@@ -216,26 +216,6 @@ public class DrawingActivity extends View
 
     }
 
-    protected  void drawErrorScreen(Canvas canvas)
-    {
-        int offset = padding*5;
-        Paint paint = Paintings.TEXT_PAINTING_ERROR.getPaint();
-        String text = "Keinen\nLagerort\ngefunden";
-        String largestWordInText = "Lagerort";
-        Rect areaRect = new Rect(offset, offset, canvas.getWidth() - offset, canvas.getHeight() - offset);
-
-        RectF bounds = new RectF(areaRect);
-        // measure text width
-        bounds.right = paint.measureText(largestWordInText, 0, largestWordInText.length());
-        // measure text height
-        bounds.bottom = paint.descent() - paint.ascent();
-
-        bounds.left += (areaRect.width() - bounds.right) / 2.0f;
-        bounds.top += (areaRect.height() - bounds.bottom) / 2.0f;
-
-        canvas.drawText(text, bounds.left, bounds.top - paint.ascent(), paint);
-
-    }
 
     protected  void drawAcrylicShelf(Canvas canvas)
     {
@@ -337,21 +317,28 @@ public class DrawingActivity extends View
     {
         int locationX;
         int locationY;
+        int circleRadius = 20;
         if(!isHorizontal)
         {
             locationX = (int) (canvas.getWidth() * positionX);
             locationY = (int) (canvas.getHeight() * positionY);
-            canvas.drawCircle(locationX, locationY, 20, Paintings.LOCATION_PAINTING.getPaint());
-            canvas.drawText(locationName,  locationX, locationY, Paintings.TEXT_PAINTING_SMALL.getPaint());
+            canvas.drawCircle(locationX, locationY, circleRadius, Paintings.LOCATION_PAINTING.getPaint());
+            if(positionX > 0.5)
+            {
+                float textLength = Paintings.TEXT_PAINTING_LOCATION.getPaint().measureText(locationName);
+                canvas.drawText(locationName, locationX - (textLength+circleRadius), locationY, Paintings.TEXT_PAINTING_LOCATION.getPaint());
+            }
+            else
+                canvas.drawText(locationName,  locationX, locationY, Paintings.TEXT_PAINTING_LOCATION.getPaint());
         }
         else
         {
             locationY = (int) (canvas.getHeight() * positionX);
             locationX = (int) (canvas.getWidth() - canvas.getWidth() * positionY);
-            canvas.drawCircle(locationX, locationY, 20, Paintings.LOCATION_PAINTING.getPaint());
+            canvas.drawCircle(locationX, locationY, circleRadius, Paintings.LOCATION_PAINTING.getPaint());
             canvas.save();
             canvas.rotate(90, locationX, locationY);
-            canvas.drawText(locationName,  locationX, locationY, Paintings.TEXT_PAINTING_SMALL.getPaint());
+            canvas.drawText(locationName,  locationX, locationY, Paintings.TEXT_PAINTING_LOCATION.getPaint());
             canvas.restore();
         }
 
