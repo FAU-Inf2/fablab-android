@@ -4,7 +4,6 @@ package de.fau.cs.mad.fablab.android.cart;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,7 +97,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }else{
             productViewHolder.ll.setVisibility(View.GONE);
         }
-        Log.i("app", products.get(i).getProduct().getName());
+
         String[] name = products.get(i).getProduct().getName().split(" ");
 
         String product_name = "";
@@ -162,9 +161,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 if (Integer.parseInt((String) parent.getSelectedItem()) != (int) products.get(i).getAmount()) {
                     double amount_new = Double.parseDouble(((String) parent.getSelectedItem()).replaceAll("\\s+", ""));
                     products.get(i).setAmount(amount_new);
-                    CartSingleton.MYCART.refresh();
                     CartSingleton.MYCART.updateVisibility();
                     CartSingleton.MYCART.updateProducts(i);
+                    CartSingleton.MYCART.refresh();
                 }
             }
 
