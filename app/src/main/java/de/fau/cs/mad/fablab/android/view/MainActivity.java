@@ -7,9 +7,12 @@ import android.view.MenuItem;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
+import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
 
 public class MainActivity extends ActionBarActivity {
+
+    FloatingFablabButton fablabButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         StorageFragment.initializeStorage(this);
+        fablabButton = new FloatingFablabButton(this, findViewById(android.R.id.content));
+
     }
 
     @Override

@@ -12,4 +12,41 @@
         android:id="@+id/fragment_container">
     </FrameLayout>
 
+    <com.github.clans.fab.FloatingActionMenu
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/shopping_cart_FAM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/fab_padding"
+        android:layout_marginBottom="@dimen/fab_padding"
+        fab:menu_colorNormal="@android:color/black"
+        fab:menu_colorPressed="@android:color/black"
+        fab:menu_icon="@drawable/ic_add_shopping_cart_white_24dp"
+        >
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/scan_FAB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_size="mini"
+            fab:fab_colorNormal="@android:color/black"
+            fab:fab_colorPressed="@android:color/black"
+            android:src="@drawable/ic_camera_alt_white_24dp"
+            />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/search_FAB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_size="mini"
+            fab:fab_colorNormal="@android:color/black"
+            fab:fab_colorPressed="@android:color/black"
+            android:src="@drawable/ic_search_white_24dp"
+            />
+
+    </com.github.clans.fab.FloatingActionMenu>
+
 </RelativeLayout>
