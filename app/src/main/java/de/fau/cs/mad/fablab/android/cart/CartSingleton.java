@@ -139,7 +139,7 @@ public enum CartSingleton {
                                         ll.setClickable(true);
                                         RemoveCartEntryTimerTask myTask = new RemoveCartEntryTimerTask(card, position);
                                         Timer myTimer = new Timer();
-                                        myTimer.schedule(myTask, 0, 100);
+                                        myTimer.schedule(myTask, 0, 70);
                                     }
                                 }
                                 refresh();
@@ -168,7 +168,7 @@ public enum CartSingleton {
                                         ll.setClickable(true);
                                         RemoveCartEntryTimerTask myTask = new RemoveCartEntryTimerTask(card, position);
                                         Timer myTimer = new Timer();
-                                        myTimer.schedule(myTask, 0, 100);
+                                        myTimer.schedule(myTask, 0, 70);
                                     }
 
                                 }
@@ -437,12 +437,10 @@ public enum CartSingleton {
         }
         public void run(){
             view.setAlpha(view.getAlpha()-0.02f);
-            if(view.getAlpha() == 0){
+            if(view.getAlpha() <= 0){
                 isProductRemoved.remove(pos);
                 guiProducts.remove(pos);
                 adapter.notifyItemRemoved(pos);
-                refresh();
-                updateVisibility();
                 this.cancel();
             }
         }
