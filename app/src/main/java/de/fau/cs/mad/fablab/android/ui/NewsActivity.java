@@ -30,9 +30,11 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.cart.CartSingleton;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.android.productsearch.AutoCompleteHelper;
+import de.fau.cs.mad.fablab.rest.ICalApiClient;
 import de.fau.cs.mad.fablab.rest.NewsApiClient;
 import de.fau.cs.mad.fablab.rest.core.ICal;
 import de.fau.cs.mad.fablab.rest.core.News;
+import de.fau.cs.mad.fablab.rest.myapi.ICalApi;
 import de.fau.cs.mad.fablab.rest.myapi.NewsApi;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -55,6 +57,9 @@ public class NewsActivity extends RoboActionBarActivity {
     private List<News> newsList;
     private NewsApi newsApi;
 
+    private List<ICal> iCalList;
+    private ICalApi iCalApi;
+
     private AppbarDrawerInclude appbarDrawer;
 
     static final String IMAGE = "IMAGE";
@@ -65,7 +70,7 @@ public class NewsActivity extends RoboActionBarActivity {
     static final String ICAL2 = "ICAL2";
 
 
-    //This callback is used for product Search.
+    //This callback is used for news retrieval.
     private Callback<List<News>> newsCallback = new Callback<List<News>>() {
         @Override
         public void success(List<News> news, Response response) {
@@ -86,6 +91,29 @@ public class NewsActivity extends RoboActionBarActivity {
             Toast.makeText(getBaseContext(), R.string.retrofit_callback_failure, Toast.LENGTH_LONG).show();
             newsAdapter = new NewsAdapter(newsList);
             news_rv.setAdapter(newsAdapter);
+        }
+    };
+
+    //This callback is used for product Search.
+    private Callback<List<ICal>> iCalCallback = new Callback<List<ICal>>() {
+        @Override
+        public void success(List<ICal> iCals, Response response) {
+            if (iCals.isEmpty()) {
+                Toast.makeText(getBaseContext(), R.string.product_not_found, Toast.LENGTH_LONG).show();
+            }
+            newsList.clear();
+            for (ICal iCal : iCals) {
+                iCalList.add(iCal);
+            }
+            datesSlidePagerAdapter = new DatesSlidePagerAdapter(getSupportFragmentManager(), iCalList);
+            datesViewPager.setAdapter(datesSlidePagerAdapter);
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            Toast.makeText(getBaseContext(), R.string.retrofit_callback_failure, Toast.LENGTH_LONG).show();
+            datesSlidePagerAdapter = new DatesSlidePagerAdapter(getSupportFragmentManager(), iCalList);
+            datesViewPager.setAdapter(datesSlidePagerAdapter);
         }
     };
 
@@ -117,7 +145,11 @@ public class NewsActivity extends RoboActionBarActivity {
         newsApi = new NewsApiClient(this).get();
         newsApi.findAll(newsCallback);
 
+        iCalList = new ArrayList<>();
+        iCalApi = new ICalApiClient(this).get();
+        iCalApi.findAll(iCalCallback);
 
+        /*
         List<ICal> listDates = new ArrayList<>();
         ICal date1 = new ICal(); date1.setLocation("Fablab"); date1.setSummery("OpenLab");
         listDates.add(date1);
@@ -134,6 +166,7 @@ public class NewsActivity extends RoboActionBarActivity {
 
         datesSlidePagerAdapter = new DatesSlidePagerAdapter(getSupportFragmentManager(), listDates);
         datesViewPager.setAdapter(datesSlidePagerAdapter);
+        */
 
         //Load Autocompleteionwords
         AutoCompleteHelper.getInstance().loadProductNames(this);

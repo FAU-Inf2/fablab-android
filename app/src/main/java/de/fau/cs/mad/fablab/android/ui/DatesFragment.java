@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.rest.core.ICal;
 
@@ -58,8 +60,10 @@ public class DatesFragment extends Fragment {
         if(iCal1 != null)
         {
             titleLeft.setText(iCal1.getSummery());
-            dateLeft.setText("29.05.2015");
-            timeLeft.setText("10.00");
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(iCal1.getDtstartAsDate());
+            dateLeft.setText(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)) + "." + Integer.toString(cal.get(Calendar.MONTH)) + "." + Integer.toString(cal.get(Calendar.YEAR)));
+            timeLeft.setText(Integer.toString(cal.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(cal.get(Calendar.MINUTE) + 100).substring(1));
             locationLeft.setText(iCal1.getLocation());
 
             cardLeft.setOnClickListener(new View.OnClickListener() {
@@ -91,8 +95,10 @@ public class DatesFragment extends Fragment {
         if(iCal2 != null)
         {
             titleRight.setText(iCal2.getSummery());
-            dateRight.setText("29.05.2015");
-            timeRight.setText("10.00");
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(iCal2.getDtstartAsDate());
+            dateRight.setText(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)) + "." + Integer.toString(cal.get(Calendar.MONTH)) + "." + Integer.toString(cal.get(Calendar.YEAR)));
+            timeRight.setText(Integer.toString(cal.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(cal.get(Calendar.MINUTE) + 100).substring(1));
             locationRight.setText(iCal2.getLocation());
 
             cardRight.setOnClickListener(new View.OnClickListener() {
