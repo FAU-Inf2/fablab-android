@@ -3,9 +3,11 @@ package de.fau.cs.mad.fablab.android.cart;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +27,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.db.DatabaseHelper;
@@ -133,6 +137,9 @@ public enum CartSingleton {
                                         CartSingleton.MYCART.removeEntry(guiProducts.get(position));
                                         ll_before.setClickable(false);
                                         ll.setClickable(true);
+                                        RemoveCartEntryTimerTask myTask = new RemoveCartEntryTimerTask(card, position);
+                                        Timer myTimer = new Timer();
+                                        myTimer.schedule(myTask, 0, 100);
                                     }
                                 }
                                 refresh();
@@ -159,6 +166,9 @@ public enum CartSingleton {
                                         CartSingleton.MYCART.removeEntry(guiProducts.get(position));
                                         ll_before.setClickable(false);
                                         ll.setClickable(true);
+                                        RemoveCartEntryTimerTask myTask = new RemoveCartEntryTimerTask(card, position);
+                                        Timer myTimer = new Timer();
+                                        myTimer.schedule(myTask, 0, 100);
                                     }
 
                                 }
@@ -386,7 +396,7 @@ public enum CartSingleton {
     public void addProduct(Product product, double amount){
         // update existing cart entry
         for(CartEntry temp : guiProducts){
-            if (temp.getProduct().getProductId() == product.getProductId()){
+            if (temp.getProduct().getProductId().equals(product.getProductId())){
                 temp.setAmount(temp.getAmount() + amount);
                 int pos = products.indexOf(temp);
                 products.get(pos).setAmount(temp.getAmount());
@@ -414,4 +424,27 @@ public enum CartSingleton {
                 view.getResources().getString(R.string.currency);
     }
 
+    // Timer Task to show a removed entry 5 sec before removing it permanently
+    class RemoveCartEntryTimerTask extends TimerTask{
+        private View view;
+        private int pos;
+
+        // Parameter view represents the card
+        // Parameter pos represents position in RecyclerView
+        RemoveCartEntryTimerTask(View view, int pos){
+            this.view = view;
+            this.pos = pos;
+        }
+        public void run(){
+            view.setAlpha(view.getAlpha()-0.02f);
+            if(view.getAlpha() == 0){
+                isProductRemoved.remove(pos);
+                guiProducts.remove(pos);
+                adapter.notifyItemRemoved(pos);
+                refresh();
+                updateVisibility();
+                this.cancel();
+            }
+        }
+    }
 }
