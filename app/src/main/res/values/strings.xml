@@ -51,4 +51,8 @@
     <string name="colon">:</string>
     <string name="betterment_tax">inkl. MwSt.</string>
     <string name="title_activity_push">PushActivity</string>
+
+    <string name="navdrawer_login_hint_username">Username</string>
+    <string name="navdrawer_login_hint_password">Password</string>
+    <string name="navdrawer_button_login">Login</string>
 </resources>

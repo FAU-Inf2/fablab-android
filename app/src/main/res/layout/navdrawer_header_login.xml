@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/navdrawer_header_login"
     android:layout_width="match_parent"
-    android:layout_height="178dp"
-    android:background="#333333"
+    android:layout_height="@dimen/navdrawer_height"
+    android:background="@color/AppBarColorPrimaryDark"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -13,30 +13,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="14dp">
+        android:layout_marginTop="@dimen/navdrawer_margin_top">
 
         <EditText
             android:id="@+id/drupal_login_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="@dimen/navdrawer_edittext_margin_lr"
+            android:layout_marginRight="@dimen/navdrawer_edittext_margin_lr"
+            android:layout_marginTop="@dimen/navdrawer_edittext_margin_tb"
+            android:layout_marginBottom="@dimen/navdrawer_edittext_margin_tb"
             android:inputType="text"
-            android:hint="Username"
+            android:hint="@string/navdrawer_login_hint_username"
+            android:textColorHint="@color/navdrawer_hint"
             android:singleLine="true"
             android:imeOptions="actionNext"
             android:textColor="@android:color/white" />
 
         <EditText
             android:id="@+id/drupal_login_password"
-            android:hint="Password"
+            android:hint="@string/navdrawer_login_hint_password"
+            android:textColorHint="@color/navdrawer_hint"
             android:layout_width="match_parent"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="@dimen/navdrawer_edittext_margin_lr"
+            android:layout_marginRight="@dimen/navdrawer_edittext_margin_lr"
+            android:layout_marginTop="@dimen/navdrawer_edittext_margin_tb"
+            android:layout_marginBottom="@dimen/navdrawer_edittext_margin_tb"
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:inputType="textPassword"
@@ -47,11 +49,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="100dp"
-            android:layout_marginRight="100dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="Login"
+            android:layout_marginLeft="@dimen/navdrawer_button_margin_lr"
+            android:layout_marginRight="@dimen/navdrawer_button_margin_lr"
+            android:layout_marginTop="@dimen/navdrawer_edittext_margin_tb"
+            android:layout_marginBottom="@dimen/navdrawer_edittext_margin_tb"
+            android:text="@string/navdrawer_button_login"
             />
 
     </LinearLayout>

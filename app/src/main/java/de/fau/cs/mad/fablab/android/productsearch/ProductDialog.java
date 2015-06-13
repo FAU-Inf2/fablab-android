@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.rest.core.Product;
@@ -51,9 +51,9 @@ public class ProductDialog extends DialogFragment {
         //get gui elements
         View view = inflater.inflate(R.layout.product_dialog, container, false);
         TextView title = (TextView) view.findViewById(R.id.product_dialog_title);
-        final TextView location = (TextView) view.findViewById(R.id.product_dialog_location);
-        final TextView cart = (TextView) view.findViewById(R.id.product_dialog_cart);
-        final TextView report = (TextView) view.findViewById(R.id.product_dialog_report);
+        final Button location = (Button) view.findViewById(R.id.product_dialog_location);
+        final Button cart = (Button) view.findViewById(R.id.product_dialog_cart);
+        final Button report = (Button) view.findViewById(R.id.product_dialog_report);
 
         //set product name as title
         title.setText(product.getName());

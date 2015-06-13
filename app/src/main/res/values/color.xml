@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="AppBarColorPrimary">#464646</color>
-    <color name="AppBarColorPrimaryDark">#1B1B1B</color>
+    <color name="AppBarColorPrimaryDark">#333333</color>
     <color name="AppBarTextColor">#FFFFFF</color>
     <color name="windowBackground">#E0E0E0</color>
     <color name="cardOpenlab">#8888FF</color>
@@ -20,4 +20,6 @@
     <color name="slidingUpPanel_product_removed">#696969</color>
 
     <color name="spinner_background">#ffcecece</color>
+
+    <color name="navdrawer_hint">#AAAAAA</color>
 </resources>
