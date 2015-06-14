@@ -14,8 +14,8 @@ def generatedSourcesDir = file('src/main/java-gen')
 def mainSourcesDir = file('src/main/java')
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_7
