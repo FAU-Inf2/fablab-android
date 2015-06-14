@@ -3,6 +3,10 @@ android:
   components:
   - android-22
   - build-tools-22.0.1
+  - extra-google-google_play_services
+  - extra-android-support
+  - extra-android-m2repository
+  - extra-google-m2repository
 env:
   global:
   - secure: KuCVpSmLqbTDgKz9ZHTQOjTjcBPNXGVLw4+LNShhd88tWwPYnhJ97F7CV8mILOSc6iAUUiix3ZpPLqUNciWaqhVtC4WyQEQxPz+ypb4CuuwtcgE6mo+KD1Q0L/vLLUJjhVB2VsolXK07YRTwbmI912Cg7HuOB1U/vn5/4mc824U=
