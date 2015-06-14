@@ -1,8 +1,8 @@
 language: android
 android:
   components:
-  - android-21
-  - build-tools-21.1.2
+  - android-22
+  - build-tools-22.0.1
 env:
   global:
   - secure: KuCVpSmLqbTDgKz9ZHTQOjTjcBPNXGVLw4+LNShhd88tWwPYnhJ97F7CV8mILOSc6iAUUiix3ZpPLqUNciWaqhVtC4WyQEQxPz+ypb4CuuwtcgE6mo+KD1Q0L/vLLUJjhVB2VsolXK07YRTwbmI912Cg7HuOB1U/vn5/4mc824U=
