@@ -51,20 +51,19 @@ public class PushActivity extends ActionBarActivity {
         mContext = getApplicationContext();
 
         // Check device for Play Services APK.
-        if (checkPlayServices()) {
-            if (checkPlayServices()) {
-                gcm = GoogleCloudMessaging.getInstance(this);
-                regid = getRegistrationId(mContext);
-                mRegistrationIdEditText.setText(regid);
-                sendRegistrationIdToBackend(regid);
-                if (regid.isEmpty()) {
-                    registerInBackground();
-                }
-            } else {
-                Log.i(TAG, "No valid Google Play Services APK found.");
-            }
 
+        if (checkPlayServices()) {
+            gcm = GoogleCloudMessaging.getInstance(this);
+            regid = getRegistrationId(mContext);
+            mRegistrationIdEditText.setText(regid);
+            sendRegistrationIdToBackend(regid);
+            if (regid.isEmpty()) {
+                registerInBackground();
+            }
+        } else {
+            Log.i(TAG, "No valid Google Play Services APK found.");
         }
+
     }
 
     private void registerInBackground() {
@@ -175,8 +174,8 @@ public class PushActivity extends ActionBarActivity {
         }
     }
 
-    private SharedPreferences getGCMPreferences(Context context) {
-        return getSharedPreferences(PushActivity.class.getSimpleName(),
+    private SharedPreferences getGCMPreferences(Context aContext) {
+        return aContext.getSharedPreferences(PushActivity.class.getSimpleName(),
                 Context.MODE_PRIVATE);
     }
 
