@@ -13,6 +13,7 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.greenrobot.event.EventBus;
 
 
 public class PushIntentService extends IntentService {
@@ -84,5 +85,8 @@ public class PushIntentService extends IntentService {
                         .setContentText(msg);
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        EventBus.getDefault().post(new PushSpaceAPIEvent("SpaceAPI"));
+        EventBus.getDefault().post(new PushWarenkorpEvent("Warenkorp"));
+
     }
 }

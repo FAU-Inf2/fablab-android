@@ -21,6 +21,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.rest.PushApiClient;
 import de.fau.cs.mad.fablab.rest.core.RegistrationId;
 import de.fau.cs.mad.fablab.rest.myapi.PushApi;
+import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -41,11 +42,22 @@ public class PushActivity extends ActionBarActivity {
     AtomicInteger msgId = new AtomicInteger();
     private String regid;
 
+
+    public void onEvent(PushWarenkorpEvent event){
+        Log.i(TAG,"PushWartenkorp");
+    }
+
+    public void onEvent(PushSpaceAPIEvent event){
+        Log.i(TAG,"PushSpaceAPI");
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_push);
         Log.i(TAG,"Invoke PushActivity");
+        EventBus.getDefault().register(this);
 
         mRegistrationIdEditText = (EditText) findViewById(R.id.pushactivity_edit_regid);
         mContext = getApplicationContext();
@@ -76,26 +88,12 @@ public class PushActivity extends ActionBarActivity {
                         gcm = GoogleCloudMessaging.getInstance(mContext);
                     }
                     regid = gcm.register(SENDER_ID);
-
                     msg = "Device registered, registration ID=" + regid;
                     Log.i(TAG,msg);
-                    // You should send the registration ID to your server over HTTP,
-                    // so it can use GCM/HTTP or CCS to send messages to your app.
-                    // The request to your server should be authenticated if your app
-                    // is using accounts.
                     sendRegistrationIdToBackend(regid);
-
-                    // For this demo: we don't need to send it because the device
-                    // will send upstream messages to a server that echo back the
-                    // message using the 'from' address in the message.
-
-                    // Persist the registration ID - no need to register again.
                     storeRegistrationId(mContext, regid);
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();
-                    // If there is an error, don't just keep trying to register.
-                    // Require the user to click a button again, or perform
-                    // exponential back-off.
                 }
                 return msg;
             }
@@ -124,7 +122,7 @@ public class PushActivity extends ActionBarActivity {
         api.addRegistrationId(new RegistrationId(aRegId), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
-                Log.i(TAG,"Success " + response.getStatus());
+                Log.i(TAG,"Success " + response.getStatus() + " " + response.getHeaders());
             }
 
             @Override
