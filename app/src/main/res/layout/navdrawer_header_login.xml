@@ -2,10 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/navdrawer_header_login"
     android:layout_width="match_parent"
-    android:layout_height="178dp"
+    android:layout_height="210dp"
     android:background="#333333"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:paddingTop="25dp">
 
 
     <LinearLayout
@@ -13,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="14dp">
+        android:layout_marginTop="14dp"
+        android:paddingTop="5dp">
 
         <EditText
             android:id="@+id/drupal_login_username"

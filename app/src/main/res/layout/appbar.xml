@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/abc_action_bar_default_height_material"
     android:background="@color/AppBarColorPrimary"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:elevation="4dp"
-    >
+    android:minHeight="?attr/actionBarSize"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
         android:layout_width="wrap_content"
@@ -46,8 +45,4 @@
             android:id="@+id/appbar_time" />
 
     </LinearLayout>
-
-
-
-
 </android.support.v7.widget.Toolbar>

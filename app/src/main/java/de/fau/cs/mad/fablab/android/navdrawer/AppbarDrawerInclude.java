@@ -1,11 +1,10 @@
 package de.fau.cs.mad.fablab.android.navdrawer;
 
 
-import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,8 +19,8 @@ import android.widget.TextView;
 import net.spaceapi.HackerSpace;
 import net.spaceapi.State;
 
-import de.fau.cs.mad.fablab.android.barcodescanner.BarcodeScannerActivity;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.barcodescanner.BarcodeScannerActivity;
 import de.fau.cs.mad.fablab.android.cart.CartActivity;
 import de.fau.cs.mad.fablab.android.eventbus.DoorEvent;
 import de.fau.cs.mad.fablab.android.productsearch.ProductSearchActivity;
@@ -37,7 +36,7 @@ public class AppbarDrawerInclude  {
 
     private NavigationDrawer navdrawer;
     private DrawerLayout mDrawerLayout;
-    private ActionBarActivity mainActivity;
+    private AppCompatActivity mainActivity;
     private RecyclerView mRecyclerView;
     private NavigationDrawerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -61,7 +60,7 @@ public class AppbarDrawerInclude  {
 
     final long REFRESH_MILLIS = 60 * 1000; // 1 minute
 
-    static public synchronized AppbarDrawerInclude getInstance(ActionBarActivity mainActivity) {
+    static public synchronized AppbarDrawerInclude getInstance(AppCompatActivity mainActivity) {
         if(instance == null) {
             instance = new AppbarDrawerInclude(mainActivity);
         } else {
@@ -70,7 +69,7 @@ public class AppbarDrawerInclude  {
         return instance;
     }
 
-    public AppbarDrawerInclude(ActionBarActivity mainActivity) {
+    public AppbarDrawerInclude(AppCompatActivity mainActivity) {
         this.mainActivity = mainActivity;
 
         // Navigation Drawer
@@ -102,7 +101,7 @@ public class AppbarDrawerInclude  {
             }
         });
 
-        mRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+        /*mRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
                 View child = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
@@ -126,7 +125,7 @@ public class AppbarDrawerInclude  {
             @Override
             public void onTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
             }
-        });
+        });*/
 
         mLayoutManager = new LinearLayoutManager(mainActivity);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -179,7 +178,7 @@ public class AppbarDrawerInclude  {
         timeView.setText(getTime(time));
     }
 
-    public void setActivity(ActionBarActivity activity) {
+    public void setActivity(AppCompatActivity activity) {
         this.mainActivity = activity;
     }
 

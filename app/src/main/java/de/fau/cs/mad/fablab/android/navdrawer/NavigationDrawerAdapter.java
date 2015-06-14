@@ -1,7 +1,7 @@
 package de.fau.cs.mad.fablab.android.navdrawer;
 
 import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,9 +23,9 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     private boolean loggedIn = false;
 
     private NavigationDrawer navdrawer;
-    private ActionBarActivity mainActivity;
+    private AppCompatActivity mainActivity;
 
-    public void setMainActivity(ActionBarActivity mainActivity) {
+    public void setMainActivity(AppCompatActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
 

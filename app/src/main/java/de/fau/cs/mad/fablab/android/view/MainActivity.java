@@ -1,7 +1,12 @@
 package de.fau.cs.mad.fablab.android.view;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.os.Handler;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -10,22 +15,62 @@ import de.fau.cs.mad.fablab.android.model.StorageFragment;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener {
 
-    FloatingFablabButton fablabButton;
+    private FloatingFablabButton fablabButton;
+
+    private static final long DRAWER_CLOSE_DELAY_MS = 250;
+    private static final String NAV_ITEM_ID = "navItemId";
+
+    private final Handler mDrawerActionHandler = new Handler();
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private int mNavItemId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(savedInstanceState == null)
-        {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.appbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new NewsFragment()).commit();
             //initialize our storage
             StorageFragment.initializeStorage(this);
+
+            // load saved navigation state if present
+            mNavItemId = R.id.drawer_item_1;
+        } else {
+            mNavItemId = savedInstanceState.getInt(NAV_ITEM_ID);
         }
+
+
+
+        // listen for navigation events
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        // select the correct nav menu item
+        navigationView.getMenu().findItem(mNavItemId).setChecked(true);
+
+        // set up the hamburger icon to open and close the drawer
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name,
+                R.string.app_name);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
+
+        navigate(mNavItemId);
     }
+
+    private void navigate(final int itemId) {
+        // perform the actual navigation logic, updating the main content fragment etc
+    }
+
 
     @Override
     protected void onPause() {
@@ -43,7 +88,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_1, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -60,5 +105,10 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        return false;
     }
 }

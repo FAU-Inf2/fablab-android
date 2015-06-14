@@ -51,6 +51,7 @@ android {
                 srcDir mainSourcesDir
                 srcDir generatedSourcesDir
             }
+            res.srcDirs = ['src/main/res', 'src/main/res/values-v19']
         }
     }
 }
@@ -61,7 +62,11 @@ dependencies {
     compile files('../../fablab-common/build/libs/fablab-common-1.0.jar')
     // jackson annotations are required for POJOs
     compile 'com.fasterxml.jackson.core:jackson-databind:2.1.4'
-    compile 'com.android.support:appcompat-v7:21.0.0'
+    compile("com.android.support:support-v4:22.2.0")
+    compile("com.android.support:appcompat-v7:22.2.0")
+    compile("com.android.support:support-annotations:22.2.0")
+    compile("com.android.support:recyclerview-v7:22.2.0")
+    compile("com.android.support:design:22.2.0")
 
     // Libraries for the REST Client (Retrofit)
     compile 'com.squareup.retrofit:retrofit:1.6.1'
@@ -77,12 +82,11 @@ dependencies {
     compile 'com.sothree.slidinguppanel:library:3.0.0'
 
     // CartSingleton CardView and RecyclerView and Sqipe-To-Remove lib
-    compile 'com.android.support:cardview-v7:21.0.+'
-    compile 'com.android.support:recyclerview-v7:21.0.0'
+    compile 'com.android.support:cardview-v7:22.0.+'
     compile 'com.github.brnunes:swipeablerecyclerview:1.0.1'
 
     // Navigation Drawer Design
-    compile 'com.android.support:support-v4'
+
     compile 'de.hdodenhof:circleimageview:1.2.1'
     compile 'com.github.clans:fab:1.5.0'
     compile 'de.greenrobot:eventbus:2.4.0'

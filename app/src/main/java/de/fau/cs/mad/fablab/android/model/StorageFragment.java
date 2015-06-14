@@ -3,8 +3,7 @@ package de.fau.cs.mad.fablab.android.model;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 /***
  * The main storage fragment which initializes all other storage parts
@@ -26,7 +25,7 @@ public class StorageFragment extends Fragment {
         super.onPause();
     }
 
-    public static void initializeStorage(ActionBarActivity context){
+    public static void initializeStorage(AppCompatActivity context){
         newsStorage = new NewsStorage();
         applicationContext = context.getApplication();
     }
