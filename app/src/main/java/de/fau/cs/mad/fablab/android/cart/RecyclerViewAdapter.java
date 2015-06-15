@@ -2,9 +2,13 @@ package de.fau.cs.mad.fablab.android.cart;
 
 
 import android.content.Context;
+import android.graphics.Rect;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -32,12 +36,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private Button cart_product_undo;
         private TextView cart_product_removed;
         private LinearLayout ll;
+        private ImageView cart_product_undo_img;
 
 
 
         ProductViewHolder(View itemView) {
             super(itemView);
-
 
             this.ll = (LinearLayout) itemView.findViewById(R.id.cart_entry_undo);
             this.cart_product_removed = (TextView) itemView.findViewById(R.id.cart_product_removed);
@@ -47,6 +51,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             this.cart_product_name = (TextView) itemView.findViewById(R.id.cart_product_name);
             this.cart_product_photo = (ImageView) itemView.findViewById(R.id.cart_product_photo);
             this.cart_product_price = (TextView) itemView.findViewById(R.id.cart_product_price);
+            this.cart_product_undo_img = (ImageView) itemView.findViewById(R.id.cart_product_undo_img);
         }
     }
 
@@ -57,24 +62,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewAdapter(Context context ,List<CartEntry> products) {
         this.context = context;
         this.products = products;
-    }
-
-
-    public void addProduct(CartEntry product) {
-        for(int i = 0; i< products.size(); i++){
-            if(products.get(i).getProduct().getProductId() == product.getProduct().getProductId()){
-                products.get(i).setAmount(products.get(i).getAmount() + 1);
-                notifyItemChanged(i);
-                return;
-            }
-        }
-        products.add(product);
-        notifyItemInserted(getItemCount()-1);
-    }
-
-    public void clear() {
-        products.clear();
-        notifyDataSetChanged();
     }
 
     @Override
@@ -181,6 +168,78 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 CartSingleton.MYCART.getIsProductRemoved().set(i, false);
                 productViewHolder.ll.setVisibility(View.GONE);
                 productViewHolder.ll.setClickable(false);
+            }
+        });
+
+        // Set up undo img click listener (same behavior as undo button)
+        productViewHolder.cart_product_undo_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                productViewHolder.cart_product_undo.performClick();
+            }
+        });
+
+        // Set up click listener
+        CardView cv = (CardView) productViewHolder.itemView;
+        cv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+
+            // recognize long press to differentiate between swipe/long press and click
+            final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.OnGestureListener() {
+                @Override
+                public boolean onDown(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onShowPress(MotionEvent e) {
+
+                }
+
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    int x = (int) e.getRawX();
+                    int y = (int) e.getRawY();
+
+                    // show / hide full product title
+                    if(!inViewInBounds(productViewHolder.cart_product_quantity_spinner, x, y) &&
+                            productViewHolder.ll.getVisibility() == View.GONE){
+                        if(productViewHolder.cart_product_name.getLineCount() == 1){
+                            productViewHolder.cart_product_name.setSingleLine(false);
+                        }else{
+                            productViewHolder.cart_product_name.setSingleLine(true);
+                        }
+                    }
+                    return true;
+                }
+
+                @Override
+                public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                    return false;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+
+                }
+
+                @Override
+                public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                    return false;
+                }
+            });
+
+            // Check whether pos(x,y) is in View
+            public boolean inViewInBounds(View view, int x, int y){
+                Rect outRect = new Rect();
+                int[] location = new int[2];
+                view.getDrawingRect(outRect);
+                view.getLocationOnScreen(location);
+                outRect.offset(location[0], location[1]);
+                return outRect.contains(x, y);
             }
         });
     }

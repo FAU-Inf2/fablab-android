@@ -2,18 +2,13 @@ package de.fau.cs.mad.fablab.android.cart;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
-import android.os.AsyncTask;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -102,6 +97,7 @@ public enum CartSingleton {
         this.context = c;
         this.view = v;
         this.slidingUp = slidingUp;
+
         // Set Layout and Recyclerview
         RecyclerView cart_rv = (RecyclerView) v.findViewById(R.id.cart_recycler_view);
         LinearLayoutManager llm = new LinearLayoutManager(context);
@@ -181,53 +177,6 @@ public enum CartSingleton {
 
         cart_rv.addOnItemTouchListener(swipeTouchListener);
 
-
-        // Set up listener to show more than just one line of the product name
-        cart_rv.addOnItemTouchListener(new RecyclerItemClickListener(context, cart_rv, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, final int position, MotionEvent e) {
-                TextView product_title = (TextView) view.findViewById(R.id.cart_product_name);
-
-                Spinner cart_product_quantity_spinner = (Spinner) view.findViewById(R.id.cart_product_quantity_spinner);
-                Button undo = (Button) view.findViewById(R.id.cart_product_undo);
-                ImageView undo_img = (ImageView) view.findViewById(R.id.cart_product_undo_img);
-                LinearLayout ll = (LinearLayout) view.findViewById(R.id.cart_entry_undo);
-
-                int x = (int)e.getRawX();
-                int y = (int)e.getRawY();
-
-                // show / hide full text title
-                if(!inViewInBounds(cart_product_quantity_spinner, x, y) &&
-                        ll.getVisibility() == View.GONE){
-                    if(product_title.getLineCount() == 1){
-                        product_title.setSingleLine(false);
-                    }else{
-                        product_title.setSingleLine(true);
-                    }
-                }else if(inViewInBounds(undo_img, x, y) && ll.getVisibility() == View.VISIBLE){
-                    // recognize undo click
-                    undo.performClick();
-                }
-
-            }
-
-            // check the touch position for quantity change / card click
-            @Override
-            public boolean inViewInBounds(View view, int x, int y){
-                Rect outRect = new Rect();
-                int[] location = new int[2];
-                view.getDrawingRect(outRect);
-                view.getLocationOnScreen(location);
-                outRect.offset(location[0], location[1]);
-                return outRect.contains(x, y);
-            }
-
-            @Override
-            public void onItemLongClick(View view, final int position){
-
-            }
-        }));
-
         // checkout button
         Button checkoutButton = (Button) v.findViewById(R.id.cart_button_checkout);
         checkoutButton.setOnClickListener(new View.OnClickListener() {
@@ -254,6 +203,20 @@ public enum CartSingleton {
         // Set up Sliding up Panel
         if(slidingUp) {
             mLayout = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
+
+            // Adapt Panel height when user rotates device
+            if(mLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED){
+                TextView total_price_top = (TextView) view.findViewById(R.id.cart_total_price_preview);
+                total_price_top.setAlpha(0);
+
+                LinearLayout drag = (LinearLayout) view.findViewById(R.id.dragPart);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        (int) (view.getResources().getDimension(R.dimen.slidinguppanel_panel_height_opened)));
+
+                layoutParams.setMargins((int) view.getResources().getDimension(R.dimen.slidinguppanel_drag_bg_stroke_margin),0,(int) view.getResources().getDimension(R.dimen.slidinguppanel_drag_bg_stroke_margin),0);
+                drag.setLayoutParams(layoutParams);
+            }
 
             // only the top should be draggable
             mLayout.setDragView(view.findViewById(R.id.dragPart));
@@ -424,7 +387,7 @@ public enum CartSingleton {
                 view.getResources().getString(R.string.currency);
     }
 
-    // Timer Task to show a removed entry 5 sec before removing it permanently
+    // Timer Task to show a removed entry for a short period before removing it permanently
     class RemoveCartEntryTimerTask extends TimerTask{
         private View view;
         private int pos;
@@ -436,6 +399,10 @@ public enum CartSingleton {
             this.pos = pos;
         }
         public void run(){
+            if(isProductRemoved.get(pos) == false){
+                view.setAlpha(1.0f);
+                this.cancel();
+            }
             view.setAlpha(view.getAlpha()-0.02f);
             if(view.getAlpha() <= 0){
                 isProductRemoved.remove(pos);

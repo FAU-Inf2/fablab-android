@@ -6,14 +6,15 @@
     android:clickable="true"
     android:focusable="false"
     android:elevation="@dimen/slidinguppanel_elevation"
-    android:background="@drawable/slidinguppanel_bg">
+    android:background="@color/slidingUpPanel_bg">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/card_vertical_margin">
+        android:layout_marginTop="@dimen/card_vertical_margin"
+        android:layout_marginBottom="@dimen/card_vertical_margin">
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -10,7 +10,8 @@
         android:layout_marginLeft="@dimen/product_card_margin"
         android:layout_marginTop="@dimen/product_card_margin"
         android:layout_marginBottom="@dimen/product_card_margin"
-        card_view:cardCornerRadius="@dimen/zero">
+        card_view:cardCornerRadius="@dimen/zero"
+        android:background="@color/slidingUpPanel_bg_cart_entry">
 
         <LinearLayout
             android:layout_width="match_parent"

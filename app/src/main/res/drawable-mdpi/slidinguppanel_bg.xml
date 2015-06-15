@@ -5,7 +5,7 @@
         android:width="@dimen/slidinguppanel_stroke_width"
         android:color="@color/slidingUpPanelStroke" />
     <corners
-        android:radius="@dimen/one"
+        android:radius="@dimen/zero"
         android:topLeftRadius="@dimen/slidinguppanel_corner_radius_top"
         android:topRightRadius="@dimen/slidinguppanel_corner_radius_top"
         android:bottomLeftRadius="@dimen/zero"
