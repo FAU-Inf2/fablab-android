@@ -34,7 +34,7 @@ public class PushActivity extends ActionBarActivity {
     public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
     private static final String PROPERTY_APP_VERSION = "appVersion";
-    private String SENDER_ID = "12124638422";
+    private String SENDER_ID = "605066933";
 
     private EditText mRegistrationIdEditText;
     private Context mContext;
