@@ -188,7 +188,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
 
             // recognize long press to differentiate between swipe/long press and click
-            final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.OnGestureListener() {
+            final GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.OnGestureListener() {
                 @Override
                 public boolean onDown(MotionEvent e) {
                     return true;
