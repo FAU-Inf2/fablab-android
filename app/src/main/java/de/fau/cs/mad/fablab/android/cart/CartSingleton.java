@@ -50,17 +50,16 @@ public enum CartSingleton {
     private List<CartEntry> products;
 
 
-    CartSingleton(){
+    CartSingleton() {
     }
 
-    public Cart getCart()
-    {
+    public Cart getCart() {
         return cart;
     }
 
     // initialization of the db - getting all products that are in the cart
     // call this method on startup activity
-    public void init(Context context){
+    public void init(Context context) {
         cartDao = DatabaseHelper.getHelper(context).getCartDao();
         cartEntryDao = DatabaseHelper.getHelper(context).getCartEntryDao();
         productDao = DatabaseHelper.getHelper(context).getProductDao();
@@ -72,28 +71,26 @@ public enum CartSingleton {
             e.printStackTrace();
         }
 
-        if(cart == null)
-        {
+        if (cart == null) {
             cart = new Cart();
             cart.setCartCode(Long.toString(new Random().nextLong()));
             cartDao.create(cart);
             products = new ArrayList<>();
-        }else{
+        } else {
             products = cartEntryDao.queryForEq("cart_id", cart.getCartCode());
         }
 
         isProductRemoved = new ArrayList<>();
         guiProducts = new ArrayList<>();
 
-        for(int i=0;i<products.size();i++){
+        for (int i = 0; i < products.size(); i++) {
             isProductRemoved.add(false);
             guiProducts.add(products.get(i));
         }
-
     }
 
     // Setting up the view for every context c including the sliding up panel
-    public void setSlidingUpPanel(Context c, View v, boolean slidingUp){
+    public void setSlidingUpPanel(Context c, View v, boolean slidingUp) {
         this.context = c;
         this.view = v;
         this.slidingUp = slidingUp;
@@ -122,18 +119,18 @@ public enum CartSingleton {
                                     View card = recyclerView.getChildAt(position);
                                     LinearLayout ll = (LinearLayout) card.findViewById(R.id.cart_entry_undo);
                                     LinearLayout ll_before = (LinearLayout) card.findViewById(R.id.product_view);
-                                    if(isProductRemoved.get(position) == true){
+                                    if (isProductRemoved.get(position) == true) {
                                         ll_before.setClickable(true);
                                         ll.setClickable(false);
                                         isProductRemoved.remove(position);
                                         guiProducts.remove(position);
                                         adapter.notifyItemRemoved(position);
-                                    }else{
+                                    } else {
                                         isProductRemoved.set(position, true);
                                         CartSingleton.MYCART.removeEntry(guiProducts.get(position));
                                         ll_before.setClickable(false);
                                         ll.setClickable(true);
-                                        RemoveCartEntryTimerTask myTask = new RemoveCartEntryTimerTask(card, position);
+                                        RemoveCartEntryTimerTask myTask = new RemoveCartEntryTimerTask(card,  guiProducts.get(position));
                                         Timer myTimer = new Timer();
                                         myTimer.schedule(myTask, 0, 70);
                                     }
@@ -151,18 +148,18 @@ public enum CartSingleton {
                                     LinearLayout ll = (LinearLayout) card.findViewById(R.id.cart_entry_undo);
                                     LinearLayout ll_before = (LinearLayout) card.findViewById(R.id.product_view);
 
-                                    if(ll.getVisibility() == View.VISIBLE){
+                                    if (ll.getVisibility() == View.VISIBLE) {
                                         ll_before.setClickable(true);
                                         ll.setClickable(false);
                                         guiProducts.remove(position);
                                         isProductRemoved.remove(position);
                                         adapter.notifyItemRemoved(position);
-                                    }else{
+                                    } else {
                                         isProductRemoved.set(position, true);
                                         CartSingleton.MYCART.removeEntry(guiProducts.get(position));
                                         ll_before.setClickable(false);
                                         ll.setClickable(true);
-                                        RemoveCartEntryTimerTask myTask = new RemoveCartEntryTimerTask(card, position);
+                                        RemoveCartEntryTimerTask myTask = new RemoveCartEntryTimerTask(card, guiProducts.get(position));
                                         Timer myTimer = new Timer();
                                         myTimer.schedule(myTask, 0, 70);
                                     }
@@ -196,16 +193,16 @@ public enum CartSingleton {
         refresh();
 
         // Basket empty? -> show msg if slidinguppanel is not used
-        if(guiProducts.size() == 0 && !slidingUp){
-            Toast.makeText(context,  R.string.cart_empty, Toast.LENGTH_LONG).show();
+        if (guiProducts.size() == 0 && !slidingUp) {
+            Toast.makeText(context, R.string.cart_empty, Toast.LENGTH_LONG).show();
         }
 
         // Set up Sliding up Panel
-        if(slidingUp) {
+        if (slidingUp) {
             mLayout = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
 
             // Adapt Panel height when user rotates device
-            if(mLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED){
+            if (mLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
                 TextView total_price_top = (TextView) view.findViewById(R.id.cart_total_price_preview);
                 total_price_top.setAlpha(0);
 
@@ -214,7 +211,7 @@ public enum CartSingleton {
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         (int) (view.getResources().getDimension(R.dimen.slidinguppanel_panel_height_opened)));
 
-                layoutParams.setMargins((int) view.getResources().getDimension(R.dimen.slidinguppanel_drag_bg_stroke_margin),0,(int) view.getResources().getDimension(R.dimen.slidinguppanel_drag_bg_stroke_margin),0);
+                layoutParams.setMargins((int) view.getResources().getDimension(R.dimen.slidinguppanel_drag_bg_stroke_margin), 0, (int) view.getResources().getDimension(R.dimen.slidinguppanel_drag_bg_stroke_margin), 0);
                 drag.setLayoutParams(layoutParams);
             }
 
@@ -233,9 +230,9 @@ public enum CartSingleton {
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             (int) (view.getResources().getDimension(R.dimen.slidinguppanel_panel_height) -
-                                     (diff*slideOffset)));
+                                    (diff * slideOffset)));
 
-                    layoutParams.setMargins((int) view.getResources().getDimension(R.dimen.slidinguppanel_drag_bg_stroke_margin),0,(int) view.getResources().getDimension(R.dimen.slidinguppanel_drag_bg_stroke_margin),0);
+                    layoutParams.setMargins((int) view.getResources().getDimension(R.dimen.slidinguppanel_drag_bg_stroke_margin), 0, (int) view.getResources().getDimension(R.dimen.slidinguppanel_drag_bg_stroke_margin), 0);
                     drag.setLayoutParams(layoutParams);
                 }
 
@@ -267,8 +264,8 @@ public enum CartSingleton {
 
     // remove product from deleted list
     // re-add product to cart, to the db tables, respectively
-    public void addRemovedProduct(int position){
-        if(guiProducts.size() != 0) {
+    public void addRemovedProduct(int position) {
+        if (guiProducts.size() != 0) {
             cartEntryDao.create(guiProducts.get(position));
             adapter.notifyDataSetChanged();
             refresh();
@@ -277,12 +274,12 @@ public enum CartSingleton {
 
 
     // Getter for RecyclerViewAdapter class to check whether a product has an active removed view or not
-    public List<Boolean> getIsProductRemoved(){
+    public List<Boolean> getIsProductRemoved() {
         return isProductRemoved;
     }
 
     // refresh TextView of the total price and #items in cart
-    public void refresh(){
+    public void refresh() {
         TextView total_price = (TextView) view.findViewById(R.id.cart_total_price);
         total_price.setText(CartSingleton.MYCART.totalPrice());
         String base = view.getResources().getString(R.string.bold_start) + guiProducts.size() +
@@ -295,8 +292,8 @@ public enum CartSingleton {
     }
 
     // panel only visible if cart is not empty
-    public void updateVisibility(){
-        if(this.slidingUp) {
+    public void updateVisibility() {
+        if (this.slidingUp) {
             if (guiProducts.size() == 0) {
                 mLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
                 mLayout.setPanelHeight((int) (view.getResources().getDimension(R.dimen.zero) / view.getResources().getDisplayMetrics().density));
@@ -308,25 +305,25 @@ public enum CartSingleton {
 
     // returns all existing products of the cart
     // <-> don't necessarily need to be the same as guiProducts
-    public List<CartEntry> getProducts(){
+    public List<CartEntry> getProducts() {
         return products;
     }
 
     // update CartEntry in db table
-    public void updateProducts(int position){
+    public void updateProducts(int position) {
         int pos = products.indexOf(guiProducts.get(position));
         products.get(pos).setAmount(guiProducts.get(position).getAmount());
         cartEntryDao.update(products.get(pos));
     }
 
     // remove CartEntry from db table
-    public void removeEntry(CartEntry entry){
+    public void removeEntry(CartEntry entry) {
         products.remove(entry);
         DeleteBuilder db_entry = cartEntryDao.deleteBuilder();
         try {
             db_entry.where().eq("id", entry.getId());
             cartEntryDao.delete(db_entry.prepare());
-        }catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -339,14 +336,14 @@ public enum CartSingleton {
         try {
             db_entries.where().eq("cart_id", cart.getCartCode());
             cartEntryDao.delete(db_entries.prepare());
-        }catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         try {
             db_cart.where().eq("cart_id", cart.getCartCode());
             cartDao.delete(db_cart.prepare());
-        }catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -356,10 +353,10 @@ public enum CartSingleton {
     }
 
     // add product to cart
-    public void addProduct(Product product, double amount){
+    public void addProduct(Product product, double amount) {
         // update existing cart entry
-        for(CartEntry temp : guiProducts){
-            if (temp.getProduct().getProductId().equals(product.getProductId())){
+        for (CartEntry temp : guiProducts) {
+            if (temp.getProduct().getProductId().equals(product.getProductId())) {
                 temp.setAmount(temp.getAmount() + amount);
                 int pos = products.indexOf(temp);
                 products.get(pos).setAmount(temp.getAmount());
@@ -380,35 +377,45 @@ public enum CartSingleton {
     }
 
     // return total price
-    public String totalPrice(){
+    public String totalPrice() {
 
         double total = cart.getTotal();
-        return String.format( "%.2f", total ) + Html.fromHtml(view.getResources().getString(R.string.non_breaking_space)) +
+        return String.format("%.2f", total) + Html.fromHtml(view.getResources().getString(R.string.non_breaking_space)) +
                 view.getResources().getString(R.string.currency);
     }
 
     // Timer Task to show a removed entry for a short period before removing it permanently
-    class RemoveCartEntryTimerTask extends TimerTask{
+    class RemoveCartEntryTimerTask extends TimerTask {
         private View view;
         private int pos;
+        private  CartEntry entry;
 
         // Parameter view represents the card
-        // Parameter pos represents position in RecyclerView
-        RemoveCartEntryTimerTask(View view, int pos){
+        // Parameter entry represents removed cart entry
+        RemoveCartEntryTimerTask(View view, CartEntry entry) {
             this.view = view;
-            this.pos = pos;
+            this.entry = entry;
         }
-        public void run(){
-            if(isProductRemoved.get(pos) == false){
+
+        public void run() {
+            // handle special cases
+            if(!guiProducts.contains(entry)){
+                this.cancel();
+            }else if(isProductRemoved.size() == 0){
+                this.cancel();
+            }else if(guiProducts.indexOf(entry) == -1){
+                this.cancel();
+            }else if (isProductRemoved.get(guiProducts.indexOf(entry)) == false) {
                 view.setAlpha(1.0f);
                 this.cancel();
-            }
-            view.setAlpha(view.getAlpha()-0.02f);
-            if(view.getAlpha() <= 0){
-                isProductRemoved.remove(pos);
-                guiProducts.remove(pos);
-                adapter.notifyItemRemoved(pos);
-                this.cancel();
+            }else {
+                view.setAlpha(view.getAlpha() - 0.02f);
+                if (view.getAlpha() < -0.2) {
+                    isProductRemoved.remove(guiProducts.indexOf(entry));
+                    guiProducts.remove(entry);
+                    adapter.notifyItemRemoved(pos);
+                    this.cancel();
+                }
             }
         }
     }
