@@ -15,9 +15,9 @@ public class NewsFragmentViewModel extends BaseAdapterViewModel<News>{
     private NewsModel model;
     private Listener listener;
 
-    private Command commandGetNews = new Command() {
+    private Command<Void> commandGetNews = new Command<Void>() {
         @Override
-        public void execute(Object parameter) {
+        public void execute(Void parameter) {
             model.fetchNextNews();
         }
     };
@@ -38,7 +38,7 @@ public class NewsFragmentViewModel extends BaseAdapterViewModel<News>{
 
     }
 
-    public Command getNewsCommand(){
+    public Command<Void> getNewsCommand(){
         return commandGetNews;
     }
 

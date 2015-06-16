@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 
 public class NewsDetailsDialogFragment extends BaseDialogFragment implements NewsDetailsDialogViewModel.Listener{
@@ -49,8 +50,8 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment implements New
         View v = inflater.inflate(R.layout.fragment_news_dialog, container, false);
         ButterKnife.inject(this, v);
 
-        bindViewToCommand(iv_image, viewModel.getImageClickCommand());
-        bindViewToCommand(dimissButton, viewModel.getDismissCommand());
+        new ViewCommandBinding().bind(iv_image, viewModel.getImageClickCommand());
+        new ViewCommandBinding().bind(dimissButton, viewModel.getDismissCommand());
 
         tv_content.setLinksClickable(true);
         tv_content.setMovementMethod(LinkMovementMethod.getInstance());

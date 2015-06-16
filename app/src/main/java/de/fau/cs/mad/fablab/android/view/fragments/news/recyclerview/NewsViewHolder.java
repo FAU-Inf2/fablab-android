@@ -9,8 +9,8 @@ import com.squareup.picasso.Picasso;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.recyclerview.BaseViewHolder;
-import de.fau.cs.mad.fablab.rest.core.News;
 
 public class NewsViewHolder extends BaseViewHolder<NewsViewHolderViewModel> {
 
@@ -34,7 +34,7 @@ public class NewsViewHolder extends BaseViewHolder<NewsViewHolderViewModel> {
     @Override
     public void setViewModel(NewsViewHolderViewModel viewModel) {
         this.viewModel = viewModel;
-        bindViewToCommand(view, viewModel.getShowDialogCommand());
+        new ViewCommandBinding().bind(view, viewModel.getShowDialogCommand());
 
         titleView.setText(viewModel.getTitle());
         subTitleView.setText(viewModel.getDescriptionShort());

@@ -12,6 +12,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import dagger.ObjectGraph;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.news.recyclerview.NewsAdapter;
 import de.fau.cs.mad.fablab.android.viewmodel.dependencyinjection.ViewModelModule;
@@ -50,7 +51,7 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
         news_recycler_view.setAdapter(new NewsAdapter(viewModel));
 
         //bind the getNewsCommand to the recyclerView
-        bindRecyclerView(news_recycler_view, viewModel.getNewsCommand());
+        new RecyclerViewCommandBinding().bind(news_recycler_view, viewModel.getNewsCommand());
 
         return rootView;
     }

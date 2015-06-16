@@ -18,9 +18,9 @@ public class NewsDetailsDialogViewModel extends BaseViewModel {
 
     private NewsViewLauncher viewLauncher;
 
-    private Command imageClickCommand = new Command() {
+    private Command<Void> imageClickCommand = new Command<Void>() {
         @Override
-        public void execute(Object parameter) {
+        public void execute(Void parameter) {
             if(listener != null){
                 setImageZoom(!isImageZoom());
                 listener.onImageLayoutChanged();
@@ -28,9 +28,9 @@ public class NewsDetailsDialogViewModel extends BaseViewModel {
         }
     };
 
-    private Command dismissCommand = new Command() {
+    private Command<Void> dismissCommand = new Command<Void>() {
         @Override
-        public void execute(Object parameter) {
+        public void execute(Void parameter) {
             viewLauncher.dismissNewsDialogFragmend();
         }
     };
@@ -74,11 +74,11 @@ public class NewsDetailsDialogViewModel extends BaseViewModel {
         this.imageLink = imageLink;
     }
 
-    public Command getImageClickCommand() {
+    public Command<Void> getImageClickCommand() {
         return imageClickCommand;
     }
 
-    public Command getDismissCommand() {
+    public Command<Void> getDismissCommand() {
         return dismissCommand;
     }
 

@@ -10,15 +10,15 @@ public class FloatingFablabButtonViewModel extends BaseViewModel {
     Listener listener;
     FloatingFablabButtonViewLauncher viewLauncher;
 
-    private Command startProductSearchCommand = new Command() {
+    private Command<Void> startProductSearchCommand = new Command<Void>() {
         @Override
-        public void execute(Object parameter) {
+        public void execute(Void parameter) {
             viewLauncher.switchToProductSearch();
         }
     };
-    private Command startBarcodeScannerCommand = new Command() {
+    private Command<Void> startBarcodeScannerCommand = new Command<Void>() {
         @Override
-        public void execute(Object parameter) {
+        public void execute(Void parameter) {
             viewLauncher.switchToBarcodeScanner();
         }
     };
@@ -37,11 +37,11 @@ public class FloatingFablabButtonViewModel extends BaseViewModel {
 
     }
 
-    public Command getStartProductSearchCommand() {
+    public Command<Void> getStartProductSearchCommand() {
         return startProductSearchCommand;
     }
 
-    public Command getStartBarcodeScannerCommand() {
+    public Command<Void> getStartBarcodeScannerCommand() {
         return startBarcodeScannerCommand;
     }
 

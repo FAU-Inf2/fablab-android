@@ -12,9 +12,9 @@ public class NewsViewHolderViewModel extends BaseViewModel<News>{
     News news;
     NewsDetailsDialogViewModel detailsDialogViewModel;
 
-    private Command showDialogCommand = new Command() {
+    private Command<Void> showDialogCommand = new Command<Void>() {
         @Override
-        public void execute(Object parameter) {
+        public void execute(Void parameter) {
             detailsDialogViewModel.show();
         }
     };
@@ -29,7 +29,7 @@ public class NewsViewHolderViewModel extends BaseViewModel<News>{
         this.detailsDialogViewModel.setData(news.getTitle(), news.getDescription(), news.getLinkToPreviewImage());
     }
 
-    public Command getShowDialogCommand(){
+    public Command<Void> getShowDialogCommand(){
         return showDialogCommand;
     }
 
