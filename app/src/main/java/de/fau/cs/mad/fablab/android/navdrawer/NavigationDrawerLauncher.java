@@ -1,20 +1,16 @@
 package de.fau.cs.mad.fablab.android.navdrawer;
 
-import android.os.Handler;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 
-import de.fau.cs.mad.fablab.android.view.common.ViewLauncher;
-
-public class NavigationDrawerLauncher extends ViewLauncher {
+public class NavigationDrawerLauncher  {
     //NavigationView navigationView;
     private AppCompatActivity activity;
-    private final Handler mDrawerActionHandler = new Handler();
-    private static final long DRAWER_CLOSE_DELAY_MS = 250;
+    //private final Handler mDrawerActionHandler = new Handler();
+    //private static final long DRAWER_CLOSE_DELAY_MS = 250;
 
     public NavigationDrawerLauncher(AppCompatActivity activity) {
-        super(activity);
         this.activity = activity;
     }
 
