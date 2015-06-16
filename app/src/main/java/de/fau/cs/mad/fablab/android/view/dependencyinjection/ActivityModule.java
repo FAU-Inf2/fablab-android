@@ -9,10 +9,17 @@ import dagger.Module;
 import dagger.Provides;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
+import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.news.NewsDetailsDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.news.recyclerview.NewsViewHolder;
 
 @SuppressWarnings("unused")
-@Module(includes = ModelModule.class, injects = {FloatingFablabButton.class, NewsViewHolder.class})
+@Module(
+        includes = ModelModule.class,
+        injects = {
+                AddToCartDialogFragment.class, FloatingFablabButton.class,
+                NewsDetailsDialogFragment.class, NewsViewHolder.class
+        })
 public class ActivityModule {
     private final FragmentActivity mActivity;
 

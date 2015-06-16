@@ -1,14 +1,14 @@
 package de.fau.cs.mad.fablab.android.view.fragments.news;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 
 import javax.inject.Inject;
 
 public class NewsViewLauncher {
 
     @Inject
-    Activity activity;
+    FragmentManager fragmentManager;
     private NewsDetailsDialogFragment dialog;
 
     public void showNewsDialogFragment(NewsDetailsDialogViewModel viewModel, String title, String content, String imageLink){
@@ -19,7 +19,7 @@ public class NewsViewLauncher {
         dialog = new NewsDetailsDialogFragment();
         dialog.setViewModel(viewModel);
         dialog.setArguments(args);
-        dialog.show(activity.getFragmentManager(), "NewsDialog");
+        dialog.show(fragmentManager, "NewsDialog");
     }
 
     public void dismissNewsDialogFragmend(){

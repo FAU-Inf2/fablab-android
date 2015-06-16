@@ -15,7 +15,7 @@ public class MenuItemCommandBinding implements Binding<MenuItem, Void>, CommandL
         mCommand = command;
         mMenuItem = menuItem;
 
-        menuItem.setOnMenuItemClickListener(this);
+        mMenuItem.setOnMenuItemClickListener(this);
     }
 
     @Override

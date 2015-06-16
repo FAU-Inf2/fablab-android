@@ -51,7 +51,7 @@ public class AddToCartDialog extends DialogFragment implements NumberPicker.OnVa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_add_to_cart, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_to_cart, container, false);
 
         ((TextView) view.findViewById(R.id.add_to_cart_name)).setText(mProduct.getName());
         ((TextView) view.findViewById(R.id.add_to_cart_price)).setText(mProduct.getPrice()

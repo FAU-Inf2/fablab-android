@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import de.fau.cs.mad.fablab.android.R;
@@ -47,8 +46,12 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment implements New
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_news_dialog, container, false);
-        ButterKnife.inject(this, v);
+        return inflater.inflate(R.layout.fragment_news_dialog, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         new ViewCommandBinding().bind(iv_image, viewModel.getImageClickCommand());
         new ViewCommandBinding().bind(dimissButton, viewModel.getDismissCommand());
@@ -61,8 +64,6 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment implements New
         Picasso.with(iv_image.getContext()).load(viewModel.getImageLink()).into(iv_image);
 
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-
-        return v;
     }
 
     @Override
