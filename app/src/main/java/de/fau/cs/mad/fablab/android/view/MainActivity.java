@@ -1,10 +1,8 @@
 package de.fau.cs.mad.fablab.android.view;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -12,24 +10,24 @@ import android.view.MenuItem;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import dagger.ObjectGraph;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.eventbus.NavigationEvent;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
+import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
 import de.fau.cs.mad.fablab.android.navdrawer.NavigationDrawer;
 import de.fau.cs.mad.fablab.android.navdrawer.NavigationDrawerLauncher;
 import de.fau.cs.mad.fablab.android.navdrawer.NavigationDrawerViewModel;
+import de.fau.cs.mad.fablab.android.view.dependencyinjection.ActivityModule;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
 import de.greenrobot.event.EventBus;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ObjectGraph mObjectGraph;
+
     private FloatingFablabButton fablabButton;
-
-    private static final String NAV_ITEM_ID = "navItemId";
-
-    private final Handler mDrawerActionHandler = new Handler();
-    private static final long DRAWER_CLOSE_DELAY_MS = 250;
 
     @InjectView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -40,10 +38,11 @@ public class MainActivity extends AppCompatActivity {
     @InjectView(R.id.navigation)
     NavigationView navigationView;
 
-    private ActionBarDrawerToggle mDrawerToggle;
-    private int mNavItemId;
-
     EventBus eventbus = EventBus.getDefault();
+
+    public void inject(Object object) {
+        mObjectGraph.inject(object);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,20 +50,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
+        StorageFragment storageFragment = (StorageFragment) getSupportFragmentManager()
+                .findFragmentByTag("storage");
+        if (storageFragment == null) {
+            storageFragment = new StorageFragment();
+            getSupportFragmentManager().beginTransaction().add(storageFragment, "storage").commit();
+        }
+
+        mObjectGraph = ObjectGraph.create(new ActivityModule(this), new ModelModule(storageFragment));
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
-
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new NewsFragment()).commit();
-            //initialize our storage
-            StorageFragment.initializeStorage(this);
-
-            // load saved navigation state if present
-            mNavItemId = R.id.drawer_item_news;
-        } else {
-            mNavItemId = savedInstanceState.getInt(NAV_ITEM_ID);
         }
 
         NavigationDrawer navigationDrawer = new NavigationDrawer(mDrawerLayout, navigationView);
@@ -72,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
         navigationDrawer.createView();
 
         eventbus.register(this);
-
-        navigate(mNavItemId);
     }
 
     private void navigate(int itemId) {
@@ -98,9 +95,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        StorageFragment.initializeStorage(this);
         fablabButton = new FloatingFablabButton(this, findViewById(android.R.id.content));
-
     }
 
     @Override
