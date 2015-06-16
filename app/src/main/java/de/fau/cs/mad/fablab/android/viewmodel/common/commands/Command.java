@@ -6,25 +6,20 @@ public abstract class Command<T> {
     private boolean isAvailable = true;
     private boolean isExecutable = true;
 
-    public void setListener(CommandListener commandListener)
-    {
+    public void setListener(CommandListener commandListener) {
         this.commandListener = commandListener;
     }
 
-    public boolean isAvailable()
-    {
+    public boolean isAvailable() {
         return isAvailable;
     }
 
-    public boolean isExecutable()
-    {
+    public boolean isExecutable() {
         return isExecutable && isAvailable();
     }
 
-    public void setAvailable(boolean isAvailable)
-    {
-        if(isAvailable != this.isAvailable)
-        {
+    public void setIsAvailable(boolean isAvailable) {
+        if (isAvailable != this.isAvailable) {
             this.isAvailable = isAvailable;
             commandListener.onIsAvailableChanged(isAvailable);
         }
@@ -32,8 +27,7 @@ public abstract class Command<T> {
     }
 
     public void setIsExecutable(boolean isExecutable) {
-        if(isExecutable != this.isExecutable)
-        {
+        if (isExecutable != this.isExecutable) {
             this.isExecutable = isExecutable;
             commandListener.onIsExecutableChanged(isExecutable);
         }

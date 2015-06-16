@@ -8,12 +8,15 @@ import dagger.Module;
 import dagger.Provides;
 import de.fau.cs.mad.fablab.android.model.NewsStorage;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
 import de.fau.cs.mad.fablab.rest.NewsApiClient;
+import de.fau.cs.mad.fablab.rest.ProductApiClient;
 import de.fau.cs.mad.fablab.rest.myapi.NewsApi;
+import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
 
 @SuppressWarnings("unused")
-@Module(complete = false, injects = {NewsFragment.class})
+@Module(complete = false, injects = {BarcodeScannerFragment.class, NewsFragment.class})
 public class ModelModule {
     private final StorageFragment mStorageFragment;
 
@@ -24,6 +27,11 @@ public class ModelModule {
     @Provides @Singleton
     NewsApi provideNewsApi(Application application) {
         return new NewsApiClient(application).get();
+    }
+
+    @Provides @Singleton
+    ProductApi provideProductApi(Application application) {
+        return new ProductApiClient(application).get();
     }
 
     @Provides

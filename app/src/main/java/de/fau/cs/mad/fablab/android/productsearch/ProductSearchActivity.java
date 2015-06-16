@@ -5,14 +5,11 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -26,14 +23,10 @@ import java.util.List;
 
 import de.fau.cs.mad.fablab.android.BaseActivity;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.cart.AddToCartDialog;
-import de.fau.cs.mad.fablab.android.cart.RecyclerItemClickListener;
-import de.fau.cs.mad.fablab.android.cart.RecyclerViewAdapter;
 import de.fau.cs.mad.fablab.android.productMap.LocationParser;
 import de.fau.cs.mad.fablab.android.productMap.ProductMapActivity;
 import de.fau.cs.mad.fablab.android.ui.UiUtils;
 import de.fau.cs.mad.fablab.rest.ProductApiClient;
-import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.fau.cs.mad.fablab.rest.core.Product;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
 import retrofit.Callback;
@@ -67,7 +60,7 @@ public class ProductSearchActivity extends BaseActivity
         @Override
         public void success(List<Product> products, Response response) {
             if (products.isEmpty()) {
-                Toast.makeText(getBaseContext(), R.string.product_not_found, Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), R.string.barcode_scanner_product_not_found, Toast.LENGTH_LONG).show();
             }
 
             ArrayList<Product> results = new ArrayList<Product>();

@@ -2,6 +2,8 @@ package de.fau.cs.mad.fablab.android.view.dependencyinjection;
 
 import android.app.Activity;
 import android.app.Application;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 
 import dagger.Module;
 import dagger.Provides;
@@ -12,9 +14,9 @@ import de.fau.cs.mad.fablab.android.view.fragments.news.recyclerview.NewsViewHol
 @SuppressWarnings("unused")
 @Module(includes = ModelModule.class, injects = {FloatingFablabButton.class, NewsViewHolder.class})
 public class ActivityModule {
-    private final Activity mActivity;
+    private final FragmentActivity mActivity;
 
-    public ActivityModule(Activity activity) {
+    public ActivityModule(FragmentActivity activity) {
         mActivity = activity;
     }
 
@@ -26,5 +28,10 @@ public class ActivityModule {
     @Provides
     Application provideApplication() {
         return mActivity.getApplication();
+    }
+
+    @Provides
+    FragmentManager provideFragmentManager() {
+        return mActivity.getSupportFragmentManager();
     }
 }

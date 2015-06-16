@@ -66,7 +66,7 @@ public class BarcodeScannerActivity extends ActionBarActivity
                 @Override
                 public void failure(RetrofitError error) {
                     Log.e(TAG, error.getMessage());
-                    Toast.makeText(getApplicationContext(), R.string.product_not_found,
+                    Toast.makeText(getApplicationContext(), R.string.barcode_scanner_product_not_found,
                             Toast.LENGTH_LONG).show();
                     mScannerFragment.startCamera();
                 }
