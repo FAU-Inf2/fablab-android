@@ -7,7 +7,6 @@ import android.view.View;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
-import de.fau.cs.mad.fablab.android.barcodescanner.BarcodeScannerActivity;
 import de.fau.cs.mad.fablab.android.productsearch.ProductSearchActivity;
 
 public enum FabButton {
@@ -39,8 +38,7 @@ public enum FabButton {
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, BarcodeScannerActivity.class);
-                context.startActivity(intent);
+
             }
         });
     }
