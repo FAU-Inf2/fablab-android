@@ -13,6 +13,7 @@ public class StorageFragment extends Fragment {
     private static Context applicationContext;
 
     private static NewsStorage newsStorage;
+    private static NavigationDrawerStorage navigationDrawerStorage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class StorageFragment extends Fragment {
 
     public static void initializeStorage(AppCompatActivity context){
         newsStorage = new NewsStorage();
+        navigationDrawerStorage = new NavigationDrawerStorage();
         applicationContext = context.getApplication();
     }
 
@@ -36,6 +38,10 @@ public class StorageFragment extends Fragment {
 
     public static NewsStorage getNewsStorage(){
         return newsStorage;
+    }
+
+    public static NavigationDrawerStorage getNavigationDrawerStorage() {
+        return navigationDrawerStorage;
     }
 
 }

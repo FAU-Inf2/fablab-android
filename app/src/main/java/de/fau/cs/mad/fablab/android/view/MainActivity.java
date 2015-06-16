@@ -10,33 +10,51 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.eventbus.NavigationEvent;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
+import de.fau.cs.mad.fablab.android.navdrawer.NavigationDrawer;
+import de.fau.cs.mad.fablab.android.navdrawer.NavigationDrawerLauncher;
+import de.fau.cs.mad.fablab.android.navdrawer.NavigationDrawerViewModel;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
+import de.greenrobot.event.EventBus;
 
-public class MainActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
     private FloatingFablabButton fablabButton;
 
-    private static final long DRAWER_CLOSE_DELAY_MS = 250;
     private static final String NAV_ITEM_ID = "navItemId";
 
     private final Handler mDrawerActionHandler = new Handler();
-    private DrawerLayout mDrawerLayout;
+    private static final long DRAWER_CLOSE_DELAY_MS = 250;
+
+    @InjectView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+
+    @InjectView(R.id.appbar)
+    Toolbar toolbar;
+
+    @InjectView(R.id.navigation)
+    NavigationView navigationView;
+
     private ActionBarDrawerToggle mDrawerToggle;
     private int mNavItemId;
+
+    EventBus eventbus = EventBus.getDefault();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.inject(this);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new NewsFragment()).commit();
@@ -44,31 +62,31 @@ public class MainActivity extends AppCompatActivity implements
             StorageFragment.initializeStorage(this);
 
             // load saved navigation state if present
-            mNavItemId = R.id.drawer_item_1;
+            mNavItemId = R.id.drawer_item_news;
         } else {
             mNavItemId = savedInstanceState.getInt(NAV_ITEM_ID);
         }
 
+        NavigationDrawer navigationDrawer = new NavigationDrawer(mDrawerLayout, navigationView);
+        navigationDrawer.setViewModel(new NavigationDrawerViewModel(new NavigationDrawerLauncher(this)));
+        navigationDrawer.createView();
 
-
-        // listen for navigation events
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        // select the correct nav menu item
-        navigationView.getMenu().findItem(mNavItemId).setChecked(true);
-
-        // set up the hamburger icon to open and close the drawer
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name,
-                R.string.app_name);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();
+        eventbus.register(this);
 
         navigate(mNavItemId);
     }
 
-    private void navigate(final int itemId) {
-        // perform the actual navigation logic, updating the main content fragment etc
+    private void navigate(int itemId) {
+        NewsFragment newsfragment = new NewsFragment();
+        switch(itemId) {
+            case R.id.drawer_item_news:
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, newsfragment).commit();
+                break;
+            case R.id.drawer_item_productsearch:
+                // Test ... einfach Fragment mal loeschen
+                getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.fragment_container)).commit();
+                break;
+        }
     }
 
 
@@ -94,21 +112,10 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onNavigationItemSelected(MenuItem menuItem) {
-        return false;
+    public void onEvent(NavigationEvent event) {
+        navigate(event.getitemId());
     }
 }
