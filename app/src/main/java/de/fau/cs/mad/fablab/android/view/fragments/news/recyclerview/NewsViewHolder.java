@@ -6,13 +6,16 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.recyclerview.BaseViewHolder;
 import de.fau.cs.mad.fablab.rest.core.News;
 
-public class NewsViewHolder extends BaseViewHolder<NewsViewHolderViewModel> {
+public class NewsViewHolder extends BaseViewHolder<News> {
 
     View view;
 
@@ -23,6 +26,7 @@ public class NewsViewHolder extends BaseViewHolder<NewsViewHolderViewModel> {
     @InjectView(R.id.icon_news_entry)
     ImageView iconView;
 
+    @Inject
     NewsViewHolderViewModel viewModel;
 
     public NewsViewHolder(View view) {
@@ -32,9 +36,10 @@ public class NewsViewHolder extends BaseViewHolder<NewsViewHolderViewModel> {
     }
 
     @Override
-    public void setViewModel(NewsViewHolderViewModel viewModel) {
-        this.viewModel = viewModel;
-        bindViewToCommand(view, viewModel.getShowDialogCommand());
+    public void setViewModelData(News news) {
+        viewModel.setData(news);
+
+        new ViewCommandBinding().bind(view, viewModel.getShowDialogCommand());
 
         titleView.setText(viewModel.getTitle());
         subTitleView.setText(viewModel.getDescriptionShort());

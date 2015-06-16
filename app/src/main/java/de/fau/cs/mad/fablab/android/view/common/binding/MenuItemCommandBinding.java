@@ -1,37 +1,38 @@
 package de.fau.cs.mad.fablab.android.view.common.binding;
 
-import android.view.View;
+import android.view.MenuItem;
 
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.CommandListener;
 
-public class ViewCommandBinding implements Binding<View, Void>, CommandListener,
-        View.OnClickListener {
+public class MenuItemCommandBinding implements Binding<MenuItem, Void>, CommandListener,
+        MenuItem.OnMenuItemClickListener {
     private Command<Void> mCommand;
-    private View mView;
+    private MenuItem mMenuItem;
 
     @Override
-    public void bind(View view, Command<Void> command) {
+    public void bind(MenuItem menuItem, Command<Void> command) {
         mCommand = command;
-        mView = view;
+        mMenuItem = menuItem;
 
-        view.setOnClickListener(this);
+        menuItem.setOnMenuItemClickListener(this);
     }
 
     @Override
     public void onIsAvailableChanged(boolean newValue) {
-        mView.setVisibility(newValue ? View.VISIBLE : View.GONE);
+        mMenuItem.setVisible(newValue);
     }
 
     @Override
     public void onIsExecutableChanged(boolean newValue) {
-        mView.setEnabled(newValue);
+        mMenuItem.setEnabled(newValue);
     }
 
     @Override
-    public void onClick(View v) {
+    public boolean onMenuItemClick(MenuItem item) {
         if (mCommand.isExecutable()) {
             mCommand.execute(null);
         }
+        return true;
     }
 }

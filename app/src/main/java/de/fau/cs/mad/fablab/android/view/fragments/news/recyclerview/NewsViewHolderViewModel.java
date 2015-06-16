@@ -10,26 +10,22 @@ import de.fau.cs.mad.fablab.rest.core.News;
 public class NewsViewHolderViewModel extends BaseViewModel<News>{
 
     News news;
+    @Inject
     NewsDetailsDialogViewModel detailsDialogViewModel;
 
-    private Command showDialogCommand = new Command() {
+    private Command<Void> showDialogCommand = new Command<Void>() {
         @Override
-        public void execute(Object parameter) {
+        public void execute(Void parameter) {
             detailsDialogViewModel.show();
         }
     };
-
-    @Inject
-    public NewsViewHolderViewModel(NewsDetailsDialogViewModel detailsDialogViewModel){
-        this.detailsDialogViewModel = detailsDialogViewModel;
-    }
 
     public void setData(News news){
         this.news = news;
         this.detailsDialogViewModel.setData(news.getTitle(), news.getDescription(), news.getLinkToPreviewImage());
     }
 
-    public Command getShowDialogCommand(){
+    public Command<Void> getShowDialogCommand(){
         return showDialogCommand;
     }
 

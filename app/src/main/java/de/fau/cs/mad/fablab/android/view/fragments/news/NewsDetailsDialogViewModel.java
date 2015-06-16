@@ -16,11 +16,12 @@ public class NewsDetailsDialogViewModel extends BaseViewModel {
 
     private boolean imageZoom = false;
 
-    private NewsViewLauncher viewLauncher;
+    @Inject
+    NewsViewLauncher viewLauncher;
 
-    private Command imageClickCommand = new Command() {
+    private Command<Void> imageClickCommand = new Command<Void>() {
         @Override
-        public void execute(Object parameter) {
+        public void execute(Void parameter) {
             if(listener != null){
                 setImageZoom(!isImageZoom());
                 listener.onImageLayoutChanged();
@@ -28,17 +29,12 @@ public class NewsDetailsDialogViewModel extends BaseViewModel {
         }
     };
 
-    private Command dismissCommand = new Command() {
+    private Command<Void> dismissCommand = new Command<Void>() {
         @Override
-        public void execute(Object parameter) {
+        public void execute(Void parameter) {
             viewLauncher.dismissNewsDialogFragmend();
         }
     };
-
-    @Inject
-    public NewsDetailsDialogViewModel(NewsViewLauncher viewLauncher){
-        this.viewLauncher = viewLauncher;
-    }
 
     public void setListener(Listener listener){
         this.listener = listener;
@@ -74,11 +70,11 @@ public class NewsDetailsDialogViewModel extends BaseViewModel {
         this.imageLink = imageLink;
     }
 
-    public Command getImageClickCommand() {
+    public Command<Void> getImageClickCommand() {
         return imageClickCommand;
     }
 
-    public Command getDismissCommand() {
+    public Command<Void> getDismissCommand() {
         return dismissCommand;
     }
 

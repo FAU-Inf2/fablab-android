@@ -8,13 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import butterknife.ButterKnife;
+import javax.inject.Inject;
+
 import butterknife.InjectView;
-import dagger.ObjectGraph;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.MainActivity;
+import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.news.recyclerview.NewsAdapter;
-import de.fau.cs.mad.fablab.android.viewmodel.dependencyinjection.ViewModelModule;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +25,7 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
     @InjectView(R.id.news_recycler_view)
     RecyclerView news_recycler_view;
 
+    @Inject
     NewsFragmentViewModel viewModel;
 
     public NewsFragment() {
@@ -33,13 +35,13 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_news, container, false);
-        ButterKnife.inject(this, rootView);
+        return inflater.inflate(R.layout.fragment_news, container, false);
+    }
 
-        ObjectGraph objectGraph = ObjectGraph.create(new ViewModelModule(getActivity()));
-        viewModel = objectGraph.get(NewsFragmentViewModel.class);
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         viewModel.setListener(this);
 
@@ -47,12 +49,10 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         news_recycler_view.setLayoutManager(layoutManager);
-        news_recycler_view.setAdapter(new NewsAdapter(viewModel));
+        news_recycler_view.setAdapter(new NewsAdapter(viewModel, (MainActivity) getActivity()));
 
         //bind the getNewsCommand to the recyclerView
-        bindRecyclerView(news_recycler_view, viewModel.getNewsCommand());
-
-        return rootView;
+        new RecyclerViewCommandBinding().bind(news_recycler_view, viewModel.getNewsCommand());
     }
 
     @Override
