@@ -21,7 +21,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 
-public class NewsDetailsDialogFragment extends BaseDialogFragment implements NewsDetailsDialogViewModel.Listener{
+public class NewsDetailsDialogFragment extends BaseDialogFragment implements NewsDetailsDialogViewModel.Listener {
 
     @InjectView(R.id.title_news_dialog)
     TextView tv_title;
@@ -39,7 +39,7 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment implements New
         super.onCreate(savedInstanceState);
     }
 
-    public void setViewModel(NewsDetailsDialogViewModel viewModel){
+    public void setViewModel(NewsDetailsDialogViewModel viewModel) {
         this.viewModel = viewModel;
         this.viewModel.setListener(this);
     }
@@ -67,11 +67,10 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment implements New
 
     @Override
     public void onImageLayoutChanged() {
-        if(!viewModel.isImageZoom()){
+        if (viewModel.isImageZoom()) {
             iv_image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        }
-        else{
-            iv_image.setLayoutParams(new LinearLayout.LayoutParams((int)getResources().getDimension(R.dimen.news_dialog_icon_size), (int)getResources().getDimension(R.dimen.news_dialog_icon_size)));
+        } else {
+            iv_image.setLayoutParams(new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.news_dialog_icon_size), (int) getResources().getDimension(R.dimen.news_dialog_icon_size)));
         }
     }
 }
