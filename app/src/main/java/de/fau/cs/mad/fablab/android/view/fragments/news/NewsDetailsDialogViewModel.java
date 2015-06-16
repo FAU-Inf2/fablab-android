@@ -16,7 +16,8 @@ public class NewsDetailsDialogViewModel extends BaseViewModel {
 
     private boolean imageZoom = false;
 
-    private NewsViewLauncher viewLauncher;
+    @Inject
+    NewsViewLauncher viewLauncher;
 
     private Command<Void> imageClickCommand = new Command<Void>() {
         @Override
@@ -34,11 +35,6 @@ public class NewsDetailsDialogViewModel extends BaseViewModel {
             viewLauncher.dismissNewsDialogFragmend();
         }
     };
-
-    @Inject
-    public NewsDetailsDialogViewModel(NewsViewLauncher viewLauncher){
-        this.viewLauncher = viewLauncher;
-    }
 
     public void setListener(Listener listener){
         this.listener = listener;

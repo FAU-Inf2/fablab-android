@@ -5,9 +5,9 @@ import android.view.View;
 
 /***
  * Base class for ViewHolders. Extends RecyclerView ViewHolder
- * @param <ViewModelType>
+ * @param <ViewModelDataType>
  */
-public abstract class BaseViewHolder<ViewModelType> extends RecyclerView.ViewHolder {
+public abstract class BaseViewHolder<ViewModelDataType> extends RecyclerView.ViewHolder {
 
     /***
      * Protected constructor since we only want derived classes
@@ -21,5 +21,5 @@ public abstract class BaseViewHolder<ViewModelType> extends RecyclerView.ViewHol
      * Sets the data for a ViewHolder
      * @param data
      */
-    public abstract void setViewModel(ViewModelType data);
+    public abstract void setViewModelData(ViewModelDataType data);
 }

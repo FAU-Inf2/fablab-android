@@ -3,15 +3,13 @@ package de.fau.cs.mad.fablab.android.view.fragments.news;
 import android.app.Activity;
 import android.os.Bundle;
 
-import de.fau.cs.mad.fablab.android.view.common.ViewLauncher;
+import javax.inject.Inject;
 
-public class NewsViewLauncher extends ViewLauncher {
+public class NewsViewLauncher {
 
+    @Inject
+    Activity activity;
     private NewsDetailsDialogFragment dialog;
-
-    public NewsViewLauncher(Activity activity) {
-        super(activity);
-    }
 
     public void showNewsDialogFragment(NewsDetailsDialogViewModel viewModel, String title, String content, String imageLink){
         Bundle args = new Bundle();

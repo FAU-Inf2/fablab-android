@@ -10,13 +10,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import dagger.ObjectGraph;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
+import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
+import de.fau.cs.mad.fablab.android.view.dependencyinjection.ActivityModule;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
+
+    private ObjectGraph mObjectGraph;
 
     private FloatingFablabButton fablabButton;
 
@@ -28,10 +33,23 @@ public class MainActivity extends AppCompatActivity implements
     private ActionBarDrawerToggle mDrawerToggle;
     private int mNavItemId;
 
+    public void inject(Object object) {
+        mObjectGraph.inject(object);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        StorageFragment storageFragment = (StorageFragment) getSupportFragmentManager()
+                .findFragmentByTag("storage");
+        if (storageFragment == null) {
+            storageFragment = new StorageFragment();
+            getSupportFragmentManager().beginTransaction().add(storageFragment, "storage").commit();
+        }
+
+        mObjectGraph = ObjectGraph.create(new ActivityModule(this), new ModelModule(storageFragment));
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.appbar);
@@ -40,8 +58,6 @@ public class MainActivity extends AppCompatActivity implements
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new NewsFragment()).commit();
-            //initialize our storage
-            StorageFragment.initializeStorage(this);
 
             // load saved navigation state if present
             mNavItemId = R.id.drawer_item_1;
@@ -80,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        StorageFragment.initializeStorage(this);
         fablabButton = new FloatingFablabButton(this, findViewById(android.R.id.content));
 
     }

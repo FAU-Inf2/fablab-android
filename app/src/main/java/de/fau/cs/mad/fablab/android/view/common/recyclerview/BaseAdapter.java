@@ -14,7 +14,6 @@ public abstract class BaseAdapter<ContentType, ViewHolderType extends BaseViewHo
 
     //holds the data displayed by this adapter
     protected final BaseAdapterViewModel<ContentType> viewModel;
-    protected ViewModelType viewHolderViewModel;
 
     /***
      * We only want derived classes
@@ -28,8 +27,7 @@ public abstract class BaseAdapter<ContentType, ViewHolderType extends BaseViewHo
 
     @Override
     public final void onBindViewHolder(ViewHolderType holder, int position) {
-        viewHolderViewModel.setData(viewModel.getData().get(position));
-        holder.setViewModel(viewHolderViewModel);
+        holder.setViewModelData(viewModel.getData().get(position));
     }
 
     @Override

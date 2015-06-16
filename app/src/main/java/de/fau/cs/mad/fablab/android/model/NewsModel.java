@@ -1,13 +1,14 @@
 package de.fau.cs.mad.fablab.android.model;
 
-import android.content.Context;
+import android.app.Activity;
 import android.widget.Toast;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
-import de.fau.cs.mad.fablab.rest.NewsApiClient;
 import de.fau.cs.mad.fablab.rest.core.News;
 import de.fau.cs.mad.fablab.rest.myapi.NewsApi;
 import retrofit.Callback;
@@ -22,13 +23,16 @@ public class NewsModel {
 
     private NewsApi newsApi;
     private NewsStorage storage;
+    private Activity activity;
     private int currentOffset = 0;
 
     private static final int ELEMENT_COUNT = 10;
 
-    public NewsModel(){
-        this.newsApi = new NewsApiClient(StorageFragment.getApplicationContext()).get();
-        this.storage = StorageFragment.getNewsStorage();
+    @Inject
+    public NewsModel(NewsApi newsApi, NewsStorage newsStorage, Activity activity){
+        this.newsApi = newsApi;
+        this.storage = newsStorage;
+        this.activity = activity;
         fetchNextNews();
     }
 
@@ -47,7 +51,7 @@ public class NewsModel {
 
         @Override
         public void failure(RetrofitError error) {
-            Toast.makeText(StorageFragment.getApplicationContext(), R.string.retrofit_callback_failure, Toast.LENGTH_LONG).show();
+            Toast.makeText(activity, R.string.retrofit_callback_failure, Toast.LENGTH_LONG).show();
         }
     };
 

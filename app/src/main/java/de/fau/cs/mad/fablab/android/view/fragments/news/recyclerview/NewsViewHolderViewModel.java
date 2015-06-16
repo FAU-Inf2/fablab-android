@@ -10,6 +10,7 @@ import de.fau.cs.mad.fablab.rest.core.News;
 public class NewsViewHolderViewModel extends BaseViewModel<News>{
 
     News news;
+    @Inject
     NewsDetailsDialogViewModel detailsDialogViewModel;
 
     private Command<Void> showDialogCommand = new Command<Void>() {
@@ -18,11 +19,6 @@ public class NewsViewHolderViewModel extends BaseViewModel<News>{
             detailsDialogViewModel.show();
         }
     };
-
-    @Inject
-    public NewsViewHolderViewModel(NewsDetailsDialogViewModel detailsDialogViewModel){
-        this.detailsDialogViewModel = detailsDialogViewModel;
-    }
 
     public void setData(News news){
         this.news = news;

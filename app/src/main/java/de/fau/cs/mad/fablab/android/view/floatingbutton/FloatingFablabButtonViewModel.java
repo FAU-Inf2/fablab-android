@@ -8,6 +8,7 @@ import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 public class FloatingFablabButtonViewModel extends BaseViewModel {
 
     Listener listener;
+    @Inject
     FloatingFablabButtonViewLauncher viewLauncher;
 
     private Command<Void> startProductSearchCommand = new Command<Void>() {
@@ -22,11 +23,6 @@ public class FloatingFablabButtonViewModel extends BaseViewModel {
             viewLauncher.switchToBarcodeScanner();
         }
     };
-
-    @Inject
-    public FloatingFablabButtonViewModel(FloatingFablabButtonViewLauncher viewLauncher){
-        this.viewLauncher = viewLauncher;
-    }
 
     public void setListener(Listener listener){
         this.listener = listener;

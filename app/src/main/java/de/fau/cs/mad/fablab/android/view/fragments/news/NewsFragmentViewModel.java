@@ -28,8 +28,8 @@ public class NewsFragmentViewModel extends BaseAdapterViewModel<News>{
     }
 
     @Inject
-    public NewsFragmentViewModel(){
-        this.model = new NewsModel();
+    public NewsFragmentViewModel(NewsModel model){
+        this.model = model;
         model.getNewsList().setListener(this);
     }
 

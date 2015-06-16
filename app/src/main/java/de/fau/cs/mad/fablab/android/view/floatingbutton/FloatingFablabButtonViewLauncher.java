@@ -3,13 +3,11 @@ package de.fau.cs.mad.fablab.android.view.floatingbutton;
 import android.app.Activity;
 import android.widget.Toast;
 
+import javax.inject.Inject;
+
 public class FloatingFablabButtonViewLauncher {
-
+    @Inject
     Activity activity;
-
-    public FloatingFablabButtonViewLauncher(Activity activity){
-        this.activity = activity;
-    }
 
     public void switchToProductSearch() {
         //TODO add view switching logic
