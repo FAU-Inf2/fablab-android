@@ -2,24 +2,18 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/AppBarColorPrimary</item>
-        <item name="colorPrimaryDark">@color/AppBarColorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorTextPrimary</item>
+        <item name="android:textColorSecondary">@color/colorTextSecondary</item>
         <item name="android:windowBackground">@color/windowBackground</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-        <!-- Customize your theme here. -->
-    </style>
-
-    <style name="AppTheme.PlainActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/AppBarColorPrimary</item>
-        <item name="colorPrimaryDark">@color/AppBarColorPrimaryDark</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowBackground">@color/windowBackground</item>
-        <item name="windowActionBarOverlay">true</item>
     </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
-        <item name="color">#FFFFFF</item>
+        <item name="color">@android:color/white</item>
     </style>
-
+    -->
 </resources>
