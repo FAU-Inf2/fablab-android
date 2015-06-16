@@ -1,60 +1,40 @@
 package de.fau.cs.mad.fablab.android.navdrawer;
 
-import java.util.ArrayList;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.view.MenuItem;
 
-public class NavigationDrawer {
-    private String name;
-    private String email;
-    private int icon;
-    private ArrayList<NavigationDrawerItem> items = new ArrayList<NavigationDrawerItem>();
+import de.fau.cs.mad.fablab.android.eventbus.NavigationEvent;
+import de.greenrobot.event.EventBus;
 
-    public NavigationDrawer(String name, String email, int icon) {
-        this.name = name;
-        this.email = email;
-        this.icon = icon;
+public class NavigationDrawer implements NavigationDrawerViewModel.Listener, NavigationView.OnNavigationItemSelectedListener {
+    NavigationDrawerViewModel viewModel;
+    EventBus eventbus = EventBus.getDefault();
+
+    DrawerLayout mDrawerLayout;
+    NavigationView navigationView;
+
+    public NavigationDrawer(DrawerLayout mDrawerLayout, NavigationView navigationView) {
+        this.mDrawerLayout = mDrawerLayout;
+        this.navigationView = navigationView;
     }
 
-    public NavigationDrawer(String name, String email) {
-        this.name = name;
-        this.email = email;
-        this.icon = -1;
+    public void createView() {
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().findItem(viewModel.getItemId()).setChecked(true);
     }
 
-    public NavigationDrawer() {
-        this.name = new String("");
-        this.email = new String("");
+    public void setViewModel(NavigationDrawerViewModel viewModel){
+        this.viewModel = viewModel;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        menuItem.setChecked(true);
+        viewModel.setData(menuItem.getItemId());
+        viewModel.getLauncher().closeDrawer(mDrawerLayout);
 
-    public void setEmail(String email) {
-        this.email = email;
+        eventbus.post(new NavigationEvent(menuItem.getItemId()));
+        return true;
     }
-
-    public void setIcon(int icon) {
-        this.icon = icon;
-    }
-
-    public int getIcon() {
-        return icon;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void addItem(NavigationDrawerItem i) {
-        items.add(i);
-    }
-
-    public ArrayList<NavigationDrawerItem> getItems() {
-        return this.items;
-    }
-
 }
