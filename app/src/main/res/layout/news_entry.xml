@@ -13,15 +13,14 @@
     <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="1dp"
-        >
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/icon_news_entry"
             android:layout_width="@dimen/card_icon_size"
             android:layout_height="@dimen/card_icon_size"
             android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
             android:src="@drawable/fablab_icon_black"
             />
 

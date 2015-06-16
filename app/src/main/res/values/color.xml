@@ -23,4 +23,6 @@
     <color name="slidingUpPanel_product_removed">#696969</color>
 
     <color name="spinner_background">#ffcecece</color>
+
+    <color name="navdrawer_hint">#AAAAAA</color>
 </resources>

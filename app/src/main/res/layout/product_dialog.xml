@@ -1,46 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingRight="@dimen/product_dialog_margin"
     android:paddingLeft="@dimen/product_dialog_margin"
     android:paddingTop="@dimen/product_dialog_margin"
-    android:paddingBottom="@dimen/product_dialog_margin">
+    android:paddingBottom="@dimen/product_dialog_margin"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/product_dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/abc_text_size_title_material"
-        android:textStyle="bold" />
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginBottom="@dimen/product_dialog_text_margin_bottom" />
 
-    <TextView
+    <Button
         android:id="@+id/product_dialog_location"
-        android:layout_below="@+id/product_dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/product_dialog_margin"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/product_dialog_margin_lr"
+        android:layout_marginRight="@dimen/product_dialog_margin_lr"
+        android:layout_marginTop="@dimen/product_dialog_margin_tb"
+        android:layout_marginBottom="@dimen/product_dialog_margin_tb"
         android:text="@string/product_dialog_location"
-        android:textSize="@dimen/abc_text_size_medium_material"
-        android:nestedScrollingEnabled="false" />
+        />
 
-    <TextView
+    <Button
         android:id="@+id/product_dialog_cart"
-        android:layout_below="@+id/product_dialog_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/product_dialog_margin"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/product_dialog_margin_lr"
+        android:layout_marginRight="@dimen/product_dialog_margin_lr"
+        android:layout_marginTop="@dimen/product_dialog_margin_tb"
+        android:layout_marginBottom="@dimen/product_dialog_margin_tb"
         android:text="@string/product_dialog_cart"
-        android:textSize="@dimen/abc_text_size_medium_material" />
+        />
 
-    <TextView
+    <Button
         android:id="@+id/product_dialog_report"
-        android:layout_below="@+id/product_dialog_cart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/product_dialog_margin"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/product_dialog_margin_lr"
+        android:layout_marginRight="@dimen/product_dialog_margin_lr"
+        android:layout_marginTop="@dimen/product_dialog_margin_tb"
+        android:layout_marginBottom="@dimen/product_dialog_margin_tb"
         android:text="@string/product_dialog_report"
-        android:textSize="@dimen/abc_text_size_medium_material"/>
+        />
 
-
-</RelativeLayout>
+</LinearLayout>
