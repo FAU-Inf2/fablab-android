@@ -245,9 +245,6 @@ public class ProductSearchActivity extends BaseActivity
         //dismiss product dialog
         productDialog.dismiss();
         //show add to cart dialog
-        Intent intent = new Intent(this, AddToCartActivity.class);
-        intent.putExtra("product", selectedProduct);
-        startActivity(intent);
     }
 
     @Override
