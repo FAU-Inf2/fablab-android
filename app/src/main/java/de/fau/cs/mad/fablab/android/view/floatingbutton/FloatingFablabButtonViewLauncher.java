@@ -10,6 +10,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
 
 public class FloatingFablabButtonViewLauncher {
+
     @Inject
     Activity mActivity;
     @Inject
