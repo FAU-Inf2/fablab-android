@@ -5,6 +5,7 @@
     android:background="@color/colorPrimary"
     android:minHeight="?attr/actionBarSize"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:layout_margin="0dp"
     android:elevation="4dp">
 
     <TextView
