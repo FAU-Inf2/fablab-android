@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         NewsFragment newsfragment = new NewsFragment();
         switch(itemId) {
             case R.id.drawer_item_news:
-                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, newsfragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, newsfragment).commit();
                 break;
             case R.id.drawer_item_productsearch:
                 // Test ... einfach Fragment mal loeschen
