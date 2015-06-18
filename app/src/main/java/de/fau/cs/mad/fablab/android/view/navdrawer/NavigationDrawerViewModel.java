@@ -13,10 +13,26 @@ public class NavigationDrawerViewModel extends BaseViewModel {
     NavigationDrawerModel model;
     EventBus mEventBus;
 
-    Command navigationDrawerItemSelectedCommand = new Command<Integer>() {
+    Command navigateToNewsCommand = new Command() {
         @Override
-        public void execute(Integer menuItemId) {
-            mEventBus.post(new NavigationEvent(menuItemId));
+        public void execute(Object parameter) {
+            mEventBus.post(NavigationEvent.News);
+            listener.onNavigationDrawerItemSelected();
+        }
+    };
+
+    Command navigateToBarcodeScannerCommand = new Command() {
+        @Override
+        public void execute(Object parameter) {
+            mEventBus.post(NavigationEvent.BarcodeScanner);
+            listener.onNavigationDrawerItemSelected();
+        }
+    };
+
+    Command navigateToProductSearchCommand = new Command() {
+        @Override
+        public void execute(Object parameter) {
+            mEventBus.post(NavigationEvent.ProductSearch);
             listener.onNavigationDrawerItemSelected();
         }
     };
@@ -38,8 +54,16 @@ public class NavigationDrawerViewModel extends BaseViewModel {
     public void setData(Object data) {
     }
 
-    public Command<Integer> getNavigationItemSelectedCommand() {
-        return navigationDrawerItemSelectedCommand;
+    public Command getNavigateToBarcodeScannerCommand() {
+        return navigateToBarcodeScannerCommand;
+    }
+
+    public Command getNavigateToNewsCommand() {
+        return navigateToNewsCommand;
+    }
+
+    public Command getNavigateToProductSearchCommand() {
+        return navigateToProductSearchCommand;
     }
 
     public interface Listener extends BaseViewModel.Listener{

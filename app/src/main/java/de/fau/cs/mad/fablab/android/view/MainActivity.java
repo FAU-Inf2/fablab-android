@@ -13,6 +13,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.eventbus.NavigationEvent;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
+import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 import de.fau.cs.mad.fablab.android.view.dependencyinjection.ActivityModule;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     EventBus eventbus = EventBus.getDefault();
+
+    NewsFragment newsfragment = new NewsFragment();
+    BarcodeScannerFragment barcodeScannerFragment = new BarcodeScannerFragment();
 
     public void inject(Object object) {
         mObjectGraph.inject(object);
@@ -60,15 +64,18 @@ public class MainActivity extends AppCompatActivity {
         eventbus.register(this);
     }
 
-    private void navigate(int itemId) {
-        NewsFragment newsfragment = new NewsFragment();
-        switch(itemId) {
-            case R.id.drawer_item_news:
+    private void navigate(NavigationEvent destination) {
+        switch(destination) {
+            case News:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, newsfragment).commit();
                 break;
-            case R.id.drawer_item_productsearch:
-                // Test ... einfach Fragment mal loeschen
-                getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.fragment_container)).commit();
+
+            case BarcodeScanner:
+
+                break;
+
+            case ProductSearch:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, barcodeScannerFragment).commit();
                 break;
         }
     }
@@ -98,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onEvent(NavigationEvent event) {
-        navigate(event.getitemId());
+    public void onEvent(NavigationEvent destination) {
+        navigate(destination);
     }
 }
