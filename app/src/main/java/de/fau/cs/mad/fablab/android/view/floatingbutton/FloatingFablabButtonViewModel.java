@@ -21,12 +21,14 @@ public class FloatingFablabButtonViewModel extends BaseViewModel {
         @Override
         public void execute(Void parameter) {
             mEventBus.post(NavigationEvent.ProductSearch);
+            mListener.onFloatingButtonClicked();
         }
     };
     private Command<Void> startBarcodeScannerCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
             mEventBus.post(NavigationEvent.BarcodeScanner);
+            mListener.onFloatingButtonClicked();
         }
     };
 
@@ -43,6 +45,6 @@ public class FloatingFablabButtonViewModel extends BaseViewModel {
     }
 
     public interface Listener extends BaseViewModel.Listener{
-
+        void onFloatingButtonClicked();
     }
 }
