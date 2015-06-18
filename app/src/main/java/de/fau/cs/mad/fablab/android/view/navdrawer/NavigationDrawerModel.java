@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.navdrawer;
+package de.fau.cs.mad.fablab.android.view.navdrawer;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.NavigationDrawerStorage;

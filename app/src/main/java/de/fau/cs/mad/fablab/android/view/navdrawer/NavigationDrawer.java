@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.navdrawer;
+package de.fau.cs.mad.fablab.android.view.navdrawer;
 
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;

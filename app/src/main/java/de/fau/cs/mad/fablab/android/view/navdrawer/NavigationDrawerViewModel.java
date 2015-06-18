@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.navdrawer;
+package de.fau.cs.mad.fablab.android.view.navdrawer;
 
 import javax.inject.Inject;
 

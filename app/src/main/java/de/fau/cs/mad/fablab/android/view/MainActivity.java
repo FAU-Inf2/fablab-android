@@ -13,7 +13,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.eventbus.NavigationEvent;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
-import de.fau.cs.mad.fablab.android.navdrawer.NavigationDrawer;
+import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 import de.fau.cs.mad.fablab.android.view.dependencyinjection.ActivityModule;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
