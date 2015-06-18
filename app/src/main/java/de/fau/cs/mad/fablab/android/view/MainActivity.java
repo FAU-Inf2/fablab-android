@@ -1,6 +1,7 @@
 package de.fau.cs.mad.fablab.android.view;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -22,6 +23,10 @@ import de.greenrobot.event.EventBus;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final static String TAG_NEWS_FRAGMENT = "tag_news_fragment";
+    private final static String TAG_BARCODE_FRAGMENT = "tag_barcode_fragment";
+    private final static String TAG_PRODUCTSEARCH_FRAGEMENT = "tag_productsearch_fragment";
+
     private ObjectGraph mObjectGraph;
 
     FloatingFablabButton fablabButton;
@@ -31,9 +36,6 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     EventBus eventbus = EventBus.getDefault();
-
-    NewsFragment newsfragment = new NewsFragment();
-    BarcodeScannerFragment barcodeScannerFragment = new BarcodeScannerFragment();
 
     public void inject(Object object) {
         mObjectGraph.inject(object);
@@ -58,24 +60,29 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         if(savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new NewsFragment()).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new NewsFragment(), TAG_NEWS_FRAGMENT).commit();
         }
 
         eventbus.register(this);
     }
 
     private void navigate(NavigationEvent destination) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
         switch(destination) {
             case News:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, newsfragment).commit();
+                NewsFragment newsFragment = (NewsFragment) getSupportFragmentManager().findFragmentByTag(TAG_NEWS_FRAGMENT);
+                if(newsFragment == null) newsFragment = new NewsFragment();
+                fragmentTransaction.replace(R.id.fragment_container, newsFragment, TAG_NEWS_FRAGMENT).commit();
                 break;
 
             case BarcodeScanner:
-
+                BarcodeScannerFragment barcodeScannerFragment = (BarcodeScannerFragment) getSupportFragmentManager().findFragmentByTag(TAG_BARCODE_FRAGMENT);
+                if(barcodeScannerFragment == null) barcodeScannerFragment = new BarcodeScannerFragment();
+                fragmentTransaction.replace(R.id.fragment_container, barcodeScannerFragment, TAG_BARCODE_FRAGMENT).commit();
                 break;
 
             case ProductSearch:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, barcodeScannerFragment).commit();
                 break;
         }
     }
