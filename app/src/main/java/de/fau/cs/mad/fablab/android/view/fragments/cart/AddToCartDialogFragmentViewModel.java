@@ -16,6 +16,7 @@ public class AddToCartDialogFragmentViewModel {
     private double mAmount;
 
     private Listener mListener;
+
     @Inject
     FragmentManager mFragmentManager;
 
