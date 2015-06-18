@@ -34,11 +34,6 @@ public class FloatingFablabButtonViewModel extends BaseViewModel {
         this.mListener = listener;
     }
 
-    @Override
-    public void setData(Object data) {
-
-    }
-
     public Command<Void> getStartProductSearchCommand() {
         return startProductSearchCommand;
     }

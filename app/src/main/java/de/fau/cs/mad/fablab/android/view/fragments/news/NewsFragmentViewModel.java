@@ -33,11 +33,6 @@ public class NewsFragmentViewModel extends BaseAdapterViewModel<News>{
         model.getNewsList().setListener(this);
     }
 
-    @Override
-    public void setData(Object data) {
-
-    }
-
     public Command<Void> getNewsCommand(){
         return commandGetNews;
     }

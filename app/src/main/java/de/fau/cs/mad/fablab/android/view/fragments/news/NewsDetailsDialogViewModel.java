@@ -78,11 +78,6 @@ public class NewsDetailsDialogViewModel extends BaseViewModel {
         return dismissCommand;
     }
 
-    @Override
-    public void setData(Object data) {
-
-    }
-
     public interface Listener extends BaseViewModel.Listener{
         void onImageLayoutChanged();
     }

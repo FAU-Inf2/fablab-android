@@ -9,15 +9,15 @@ import de.greenrobot.event.EventBus;
 
 public class NavigationDrawerViewModel extends BaseViewModel {
 
-    Listener listener;
-    NavigationDrawerModel model;
+    Listener mListener;
+    NavigationDrawerModel mModel;
     EventBus mEventBus;
 
     Command navigateToNewsCommand = new Command() {
         @Override
         public void execute(Object parameter) {
             mEventBus.post(NavigationEvent.News);
-            listener.onNavigationDrawerItemSelected();
+            mListener.onNavigationDrawerItemSelected();
         }
     };
 
@@ -25,7 +25,7 @@ public class NavigationDrawerViewModel extends BaseViewModel {
         @Override
         public void execute(Object parameter) {
             mEventBus.post(NavigationEvent.BarcodeScanner);
-            listener.onNavigationDrawerItemSelected();
+            mListener.onNavigationDrawerItemSelected();
         }
     };
 
@@ -33,25 +33,22 @@ public class NavigationDrawerViewModel extends BaseViewModel {
         @Override
         public void execute(Object parameter) {
             mEventBus.post(NavigationEvent.ProductSearch);
-            listener.onNavigationDrawerItemSelected();
+            mListener.onNavigationDrawerItemSelected();
         }
     };
 
     @Inject
     public NavigationDrawerViewModel() {
-        this.model = new NavigationDrawerModel();
+        this.mModel = new NavigationDrawerModel();
         this.mEventBus = EventBus.getDefault();
     }
 
-    public void setListener(Listener listener){
-        this.listener = listener;
-    }
-    public void setData(int itemId) {
-        model.setItemId(itemId);
+    public void setListener(Listener listener) {
+        this.mListener = listener;
     }
 
-    @Override
-    public void setData(Object data) {
+    public void setData(int itemId) {
+        mModel.setItemId(itemId);
     }
 
     public Command getNavigateToBarcodeScannerCommand() {
@@ -66,7 +63,7 @@ public class NavigationDrawerViewModel extends BaseViewModel {
         return navigateToProductSearchCommand;
     }
 
-    public interface Listener extends BaseViewModel.Listener{
+    public interface Listener extends BaseViewModel.Listener {
         void onNavigationDrawerItemSelected();
     }
 }
