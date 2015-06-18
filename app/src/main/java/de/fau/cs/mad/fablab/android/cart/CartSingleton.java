@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
@@ -76,6 +77,7 @@ public enum CartSingleton {
             cart.setCartCode(Long.toString(new Random().nextLong()));
             cartDao.create(cart);
             products = new ArrayList<>();
+            cartDao.refresh(cart);
         } else {
             products = cartEntryDao.queryForEq("cart_id", cart.getCartCode());
         }
@@ -259,7 +261,6 @@ public enum CartSingleton {
             });
             updateVisibility();
         }
-
     }
 
     // remove product from deleted list
