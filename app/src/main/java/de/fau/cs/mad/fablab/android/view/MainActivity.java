@@ -2,14 +2,13 @@ package de.fau.cs.mad.fablab.android.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import dagger.ObjectGraph;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.actionbar.ActionBar;
 import de.fau.cs.mad.fablab.android.eventbus.NavigationEvent;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
@@ -25,9 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     FloatingFablabButton fablabButton;
     NavigationDrawer navigationDrawer;
-
-    @InjectView(R.id.appbar)
-    Toolbar toolbar;
+    ActionBar actionBar;
 
     EventBus eventbus = EventBus.getDefault();
 
@@ -49,9 +46,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mObjectGraph = ObjectGraph.create(new ActivityModule(this), new ModelModule(storageFragment));
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new NewsFragment()).commit();
@@ -82,8 +76,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        actionBar = new ActionBar(this, findViewById(android.R.id.content));
         fablabButton = new FloatingFablabButton(this, findViewById(android.R.id.content));
         navigationDrawer = new NavigationDrawer(this, findViewById(android.R.id.content));
+
     }
 
     @Override
