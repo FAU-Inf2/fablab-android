@@ -38,7 +38,9 @@ public class CheckoutActivity2 extends ActionBarActivity {
         //save cart in database
         cartDao = DatabaseHelper.getHelper(getApplicationContext()).getCartDao();
         cartDao.create(cart);
-
+        
+        //TODO adapt to updated common classes here
+/*
         CartApiClient cartApiClient = new CartApiClient((this));
         cartApiClient.get().create(cart, new Callback<Response>() {
             @Override
@@ -51,7 +53,7 @@ public class CheckoutActivity2 extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), "Retrofit error", Toast.LENGTH_SHORT).show();
             }
         });
-
+*/
 
     }
 
