@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.rest.core.ICal;
@@ -60,10 +61,8 @@ public class DatesFragment extends Fragment {
         if(iCal1 != null)
         {
             titleLeft.setText(iCal1.getSummery());
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(iCal1.getDtstartAsDate());
-            dateLeft.setText(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)) + "." + Integer.toString(cal.get(Calendar.MONTH)) + "." + Integer.toString(cal.get(Calendar.YEAR)));
-            timeLeft.setText(Integer.toString(cal.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(cal.get(Calendar.MINUTE) + 100).substring(1));
+            dateLeft.setText(getDate(iCal1.getDtstartAsDate()));
+            timeLeft.setText(getTime(iCal1.getDtstartAsDate()));
             locationLeft.setText(iCal1.getLocation());
 
             cardLeft.setOnClickListener(new View.OnClickListener() {
@@ -95,10 +94,8 @@ public class DatesFragment extends Fragment {
         if(iCal2 != null)
         {
             titleRight.setText(iCal2.getSummery());
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(iCal2.getDtstartAsDate());
-            dateRight.setText(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)) + "." + Integer.toString(cal.get(Calendar.MONTH)) + "." + Integer.toString(cal.get(Calendar.YEAR)));
-            timeRight.setText(Integer.toString(cal.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(cal.get(Calendar.MINUTE) + 100).substring(1));
+            dateRight.setText(getDate(iCal2.getDtstartAsDate()));
+            timeRight.setText(getTime(iCal2.getDtstartAsDate()));
             locationRight.setText(iCal2.getLocation());
 
             cardRight.setOnClickListener(new View.OnClickListener() {
@@ -127,4 +124,20 @@ public class DatesFragment extends Fragment {
 
         return v;
     }
+
+    private String getDate(Date date)
+    {
+        //month+1, because Calendar is zero-based (eg january = 0 and not 1)
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return Integer.toString(cal.get(Calendar.DAY_OF_MONTH)) + "." + Integer.toString(cal.get(Calendar.MONTH)+1) + "." + Integer.toString(cal.get(Calendar.YEAR));
+    }
+
+    private String getTime(Date date)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return Integer.toString(cal.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(cal.get(Calendar.MINUTE) + 100).substring(1);
+    }
+
 }
