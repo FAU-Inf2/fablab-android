@@ -9,7 +9,7 @@ import dagger.Module;
 import dagger.Provides;
 import de.fau.cs.mad.fablab.android.actionbar.ActionBar;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
-import de.fau.cs.mad.fablab.android.navdrawer.NavigationDrawer;
+import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
 import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsDetailsDialogFragment;

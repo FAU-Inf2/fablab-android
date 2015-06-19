@@ -7,7 +7,7 @@ import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.rest.core.News;
 
-public class NewsViewHolderViewModel extends BaseViewModel<News>{
+public class NewsViewHolderViewModel extends BaseViewModel{
 
     News news;
     @Inject
@@ -20,7 +20,7 @@ public class NewsViewHolderViewModel extends BaseViewModel<News>{
         }
     };
 
-    public void setData(News news){
+    public void setNews(News news){
         this.news = news;
         this.detailsDialogViewModel.setData(news.getTitle(), news.getDescription(), news.getLinkToPreviewImage());
     }

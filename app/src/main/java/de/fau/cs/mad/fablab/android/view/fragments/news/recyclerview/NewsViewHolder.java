@@ -37,7 +37,7 @@ public class NewsViewHolder extends BaseViewHolder<News> {
 
     @Override
     public void setViewModelData(News news) {
-        viewModel.setData(news);
+        viewModel.setNews(news);
 
         new ViewCommandBinding().bind(view, viewModel.getShowDialogCommand());
 

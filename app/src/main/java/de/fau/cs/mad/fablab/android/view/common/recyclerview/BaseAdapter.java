@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import de.fau.cs.mad.fablab.android.viewmodel.common.BaseAdapterViewModel;
-import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 
 /***
  * This class represents the base class for all our RecyclerView Adapters

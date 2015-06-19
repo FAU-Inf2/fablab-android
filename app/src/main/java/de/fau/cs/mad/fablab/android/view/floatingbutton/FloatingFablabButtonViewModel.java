@@ -2,35 +2,38 @@ package de.fau.cs.mad.fablab.android.view.floatingbutton;
 
 import javax.inject.Inject;
 
+import de.fau.cs.mad.fablab.android.eventbus.NavigationEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
+import de.greenrobot.event.EventBus;
 
 public class FloatingFablabButtonViewModel extends BaseViewModel {
 
-    Listener listener;
+    Listener mListener;
+    EventBus mEventBus;
+
     @Inject
-    FloatingFablabButtonViewLauncher viewLauncher;
+    public FloatingFablabButtonViewModel(){
+        mEventBus = EventBus.getDefault();
+    }
 
     private Command<Void> startProductSearchCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            viewLauncher.switchToProductSearch();
+            mEventBus.post(NavigationEvent.ProductSearch);
+            mListener.onFloatingButtonClicked();
         }
     };
     private Command<Void> startBarcodeScannerCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            viewLauncher.switchToBarcodeScanner();
+            mEventBus.post(NavigationEvent.BarcodeScanner);
+            mListener.onFloatingButtonClicked();
         }
     };
 
     public void setListener(Listener listener){
-        this.listener = listener;
-    }
-
-    @Override
-    public void setData(Object data) {
-
+        this.mListener = listener;
     }
 
     public Command<Void> getStartProductSearchCommand() {
@@ -42,6 +45,6 @@ public class FloatingFablabButtonViewModel extends BaseViewModel {
     }
 
     public interface Listener extends BaseViewModel.Listener{
-
+        void onFloatingButtonClicked();
     }
 }
