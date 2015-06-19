@@ -4,6 +4,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import javax.inject.Inject;
@@ -35,6 +36,11 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_news), mViewModel.getNavigateToNewsCommand());
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_productsearch), mViewModel.getNavigateToProductSearchCommand());
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_scanner), mViewModel.getNavigateToBarcodeScannerCommand());
+    }
+
+    public void setItemChecked(int itemId) {
+        MenuItem item = navigationView.getMenu().findItem(itemId);
+        if(item != null) item.setChecked(true);
     }
 
     @Override
