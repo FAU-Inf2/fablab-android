@@ -59,7 +59,7 @@ public class CheckoutActivity2 extends ActionBarActivity {
 
         //save cart in database
         cartDao = DatabaseHelper.getHelper(getApplicationContext()).getCartDao();
-        cartDao.create(cart);
+        //cartDao.create(cart);
 
         //send cartServer to server
         CartApiClient cartApiClient = new CartApiClient((this));
