@@ -20,9 +20,9 @@ public class AddToCartDialogFragmentViewModel {
     @Inject
     FragmentManager mFragmentManager;
 
-    private final Command<Void> mAddToCartCommand = new Command<Void>() {
+    private final Command<Integer> mAddToCartCommand = new Command<Integer>() {
         @Override
-        public void execute(Void parameter) {
+        public void execute(Integer parameter) {
             // TODO add product to cart
             mFragmentManager.popBackStack();
         }
@@ -42,7 +42,7 @@ public class AddToCartDialogFragmentViewModel {
         mListener = listener;
     }
 
-    public Command<Void> getAddToCartCommand() {
+    public Command<Integer> getAddToCartCommand() {
         return mAddToCartCommand;
     }
 

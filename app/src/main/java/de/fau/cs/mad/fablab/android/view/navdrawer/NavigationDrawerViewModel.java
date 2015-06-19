@@ -13,27 +13,27 @@ public class NavigationDrawerViewModel extends BaseViewModel {
     NavigationDrawerModel mModel;
     EventBus mEventBus;
 
-    Command navigateToNewsCommand = new Command() {
+    Command navigateToNewsCommand = new Command<Integer>() {
         @Override
-        public void execute(Object parameter) {
+        public void execute(Integer itemid) {
             mEventBus.post(NavigationEvent.News);
-            mListener.onNavigationDrawerItemSelected();
+            mListener.onNavigationDrawerItemSelected(itemid);
         }
     };
 
-    Command navigateToBarcodeScannerCommand = new Command() {
+    Command navigateToBarcodeScannerCommand = new Command<Integer>() {
         @Override
-        public void execute(Object parameter) {
+        public void execute(Integer itemid) {
             mEventBus.post(NavigationEvent.BarcodeScanner);
-            mListener.onNavigationDrawerItemSelected();
+            mListener.onNavigationDrawerItemSelected(itemid);
         }
     };
 
-    Command navigateToProductSearchCommand = new Command() {
+    Command navigateToProductSearchCommand = new Command<Integer>() {
         @Override
-        public void execute(Object parameter) {
+        public void execute(Integer itemid) {
             mEventBus.post(NavigationEvent.ProductSearch);
-            mListener.onNavigationDrawerItemSelected();
+            mListener.onNavigationDrawerItemSelected(itemid);
         }
     };
 
@@ -51,19 +51,19 @@ public class NavigationDrawerViewModel extends BaseViewModel {
         mModel.setItemId(itemId);
     }
 
-    public Command getNavigateToBarcodeScannerCommand() {
+    public Command<Integer> getNavigateToBarcodeScannerCommand() {
         return navigateToBarcodeScannerCommand;
     }
 
-    public Command getNavigateToNewsCommand() {
+    public Command<Integer> getNavigateToNewsCommand() {
         return navigateToNewsCommand;
     }
 
-    public Command getNavigateToProductSearchCommand() {
+    public Command<Integer> getNavigateToProductSearchCommand() {
         return navigateToProductSearchCommand;
     }
 
     public interface Listener extends BaseViewModel.Listener {
-        void onNavigationDrawerItemSelected();
+        void onNavigationDrawerItemSelected(int itemId);
     }
 }

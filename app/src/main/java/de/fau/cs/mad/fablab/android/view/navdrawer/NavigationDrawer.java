@@ -38,13 +38,10 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_scanner), mViewModel.getNavigateToBarcodeScannerCommand());
     }
 
-    public void setItemChecked(int itemId) {
+    @Override
+    public void onNavigationDrawerItemSelected(int itemId) {
         MenuItem item = navigationView.getMenu().findItem(itemId);
         if(item != null) item.setChecked(true);
-    }
-
-    @Override
-    public void onNavigationDrawerItemSelected() {
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
 

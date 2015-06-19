@@ -68,14 +68,12 @@ public class MainActivity extends AppCompatActivity {
                 NewsFragment newsFragment = (NewsFragment) getSupportFragmentManager().findFragmentByTag(TAG_NEWS_FRAGMENT);
                 if(newsFragment == null) newsFragment = new NewsFragment();
                 fragmentTransaction.replace(R.id.fragment_container, newsFragment, TAG_NEWS_FRAGMENT).commit();
-                navigationDrawer.setItemChecked(R.id.drawer_item_news);
                 break;
 
             case BarcodeScanner:
                 BarcodeScannerFragment barcodeScannerFragment = (BarcodeScannerFragment) getSupportFragmentManager().findFragmentByTag(TAG_BARCODE_FRAGMENT);
                 if(barcodeScannerFragment == null) barcodeScannerFragment = new BarcodeScannerFragment();
                 fragmentTransaction.replace(R.id.fragment_container, barcodeScannerFragment, TAG_BARCODE_FRAGMENT).commit();
-                navigationDrawer.setItemChecked(R.id.drawer_item_scanner);
                 break;
 
             case ProductSearch:
