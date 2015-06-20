@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.MainActivity;
+import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 
 public class ActionBar implements ActionBarViewModel.Listener {
 
@@ -34,10 +35,6 @@ public class ActionBar implements ActionBarViewModel.Listener {
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        /* DOESNT WORK because menu is not inflated yet, happens in MainActivity.onCreateOptionsMenu, which is called AFTER onResume
-        Menu menu = toolbar.getMenu();
-        new MenuItemCommandBinding().bind(menu.findItem(R.id.action_opened), mViewModel.getRefreshOpenedStateCommand()); */
-
         mDrawerToggle = new ActionBarDrawerToggle(activity, drawer, toolbar, R.string.app_name, R.string.app_name) {
 
             @Override
@@ -52,6 +49,11 @@ public class ActionBar implements ActionBarViewModel.Listener {
         };
         drawer.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
+    }
+
+    public void bindMenuItems() {
+        new MenuItemCommandBinding().bind(toolbar.getMenu().findItem(R.id.action_opened),
+                mViewModel.getRefreshOpenedStateCommand());
     }
 
     /*@Override

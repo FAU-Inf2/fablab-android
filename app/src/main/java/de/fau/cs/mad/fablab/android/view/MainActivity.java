@@ -58,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         eventbus.register(this);
+
+        actionBar = new ActionBar(this, findViewById(android.R.id.content));
+        fablabButton = new FloatingFablabButton(this, findViewById(android.R.id.content));
+        navigationDrawer = new NavigationDrawer(this, findViewById(android.R.id.content));
     }
 
     private void navigate(NavigationEvent destination) {
@@ -90,15 +94,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        actionBar = new ActionBar(this, findViewById(android.R.id.content));
-        fablabButton = new FloatingFablabButton(this, findViewById(android.R.id.content));
-        navigationDrawer = new NavigationDrawer(this, findViewById(android.R.id.content));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        actionBar.bindMenuItems();
         return true;
     }
 

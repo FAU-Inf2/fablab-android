@@ -16,9 +16,9 @@ public class ActionBarViewModel extends BaseViewModel {
     private boolean opened;
     private ActionBarTime time;
 
-    Command refreshOpenedStateCommand = new Command<Void>() {
+    Command<Integer> refreshOpenedStateCommand = new Command<Integer>() {
         @Override
-        public void execute(Void parameter) {
+        public void execute(Integer parameter) {
             mEventBus.post(DoorEvent.GET);
             //listener.onActionBarItemSelected();
         }
@@ -34,7 +34,7 @@ public class ActionBarViewModel extends BaseViewModel {
         this.listener = listener;
     }
 
-    public Command<Void> getRefreshOpenedStateCommand () {
+    public Command<Integer> getRefreshOpenedStateCommand () {
         return refreshOpenedStateCommand;
     }
 
