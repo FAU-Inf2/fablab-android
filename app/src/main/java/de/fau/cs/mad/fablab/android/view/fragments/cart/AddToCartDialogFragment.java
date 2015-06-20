@@ -42,11 +42,32 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mViewModel.restoreState(getArguments(), savedInstanceState);
+
+        mNameTextView.setText(mViewModel.getName());
+        mPriceTextView.setText(getFormattedPrice(mViewModel.getPrice())
+                + getString(R.string.currency) + " "
+                + getString(R.string.add_to_cart_price_per_unit) + " " + mViewModel.getUnit());
+
+        mNumberPicker.setMinValue(1);
+        mNumberPicker.setMaxValue(100);
+        mNumberPicker.setValue((int) mViewModel.getAmount());
+        mNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+        new NumberPickerCommandBinding().bind(mNumberPicker, mViewModel.getChangeAmountCommand());
+
+        mPriceTotalTextView.setText(getFormattedPrice(mViewModel.getPriceTotal())
+                + getString(R.string.currency));
+
+        mViewModel.setListener(this);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
-        mViewModel.restoreState(getArguments(), savedInstanceState);
     }
 
     @Override
@@ -67,27 +88,6 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mViewModel.saveState(outState);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mNameTextView.setText(mViewModel.getName());
-        mPriceTextView.setText(getFormattedPrice(mViewModel.getPrice())
-                + getString(R.string.currency) + " "
-                + getString(R.string.add_to_cart_price_per_unit) + " " + mViewModel.getUnit());
-
-        mNumberPicker.setMinValue(1);
-        mNumberPicker.setMaxValue(100);
-        mNumberPicker.setValue((int) mViewModel.getAmount());
-        mNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-        new NumberPickerCommandBinding().bind(mNumberPicker, mViewModel.getChangeAmountCommand());
-
-        mPriceTotalTextView.setText(getFormattedPrice(mViewModel.getPrice())
-                + getString(R.string.currency));
-
-        mViewModel.setListener(this);
     }
 
     @Override

@@ -31,10 +31,10 @@ public class AddToCartDialogFragmentViewModel {
     private final Command<Integer> mChangeAmountCommand = new Command<Integer>() {
         @Override
         public void execute(Integer parameter) {
-            if (mListener != null) {
-                mListener.onUpdatePriceTotal(parameter * getPrice());
-            }
             mAmount = parameter;
+            if (mListener != null) {
+                mListener.onUpdatePriceTotal(getPriceTotal());
+            }
         }
     };
 
@@ -64,6 +64,10 @@ public class AddToCartDialogFragmentViewModel {
 
     public double getAmount() {
         return mAmount;
+    }
+
+    public double getPriceTotal() {
+        return mAmount * getPrice();
     }
 
     public void saveState(Bundle outState) {

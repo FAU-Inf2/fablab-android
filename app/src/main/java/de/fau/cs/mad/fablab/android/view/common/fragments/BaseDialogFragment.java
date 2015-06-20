@@ -1,6 +1,5 @@
 package de.fau.cs.mad.fablab.android.view.common.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
@@ -10,9 +9,9 @@ import de.fau.cs.mad.fablab.android.view.MainActivity;
 
 public abstract class BaseDialogFragment extends DialogFragment {
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((MainActivity) activity).inject(this);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ((MainActivity) getActivity()).inject(this);
     }
 
     @Override

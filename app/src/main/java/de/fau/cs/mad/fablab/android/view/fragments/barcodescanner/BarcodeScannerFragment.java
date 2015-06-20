@@ -23,18 +23,18 @@ public class BarcodeScannerFragment extends BaseFragment
     BarcodeScannerFragmentViewModel mViewModel;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_barcode_scanner, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         mViewModel.setListener(this);
 
         new ScannerViewCommandBinding().bind(mScannerView, mViewModel.getProcessBarcodeCommand());
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_barcode_scanner, container, false);
     }
 
     @Override

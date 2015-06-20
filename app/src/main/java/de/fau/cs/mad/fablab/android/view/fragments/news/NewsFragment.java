@@ -33,15 +33,8 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_news, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         viewModel.setListener(this);
 
@@ -53,6 +46,13 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
 
         //bind the getNewsCommand to the recyclerView
         new RecyclerViewCommandBinding().bind(news_recycler_view, viewModel.getNewsCommand());
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_news, container, false);
     }
 
     @Override
