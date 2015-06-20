@@ -57,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new NewsFragment(), TAG_NEWS_FRAGMENT).commit();
         }
 
-        eventbus.register(this);
-
         actionBar = new ActionBar(this, findViewById(android.R.id.content));
         fablabButton = new FloatingFablabButton(this, findViewById(android.R.id.content));
         navigationDrawer = new NavigationDrawer(this, findViewById(android.R.id.content));
@@ -89,11 +87,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        eventbus.unregister(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        eventbus.register(this);
     }
 
     @Override
