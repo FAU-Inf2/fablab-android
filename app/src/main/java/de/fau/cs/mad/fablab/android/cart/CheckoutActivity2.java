@@ -30,36 +30,45 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
     private String cartID;
     private RuntimeExceptionDao<Cart, String> cartDao;
     private ScannerFragment mScannerFragment;
+    //Maybe we can/should set this if Emulator is used?
+    private boolean iHaveNoAndroidDeviceUseNumberInsteadOfBarcodeScanner = true;
+    private String idIfScannerIsNotUsed = "256";
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.fragment_container);
-
-        if (savedInstanceState == null) {
-            mScannerFragment = ScannerFragment.newInstance(getResources().getString(
-                    R.string.title_scan_qr_code));
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
-                    mScannerFragment, "scanner").commit();
-        } else {
-            mScannerFragment = (ScannerFragment) getSupportFragmentManager().findFragmentByTag(
-                    "scanner");
+        if(!iHaveNoAndroidDeviceUseNumberInsteadOfBarcodeScanner) {
+            setContentView(R.layout.fragment_container);
+            if (savedInstanceState == null) {
+                mScannerFragment = ScannerFragment.newInstance(getResources().getString(
+                        R.string.title_scan_qr_code));
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
+                        mScannerFragment, "scanner").commit();
+            } else {
+                mScannerFragment = (ScannerFragment) getSupportFragmentManager().findFragmentByTag(
+                        "scanner");
+            }
+        }else{
+            handleResult(null);
         }
+
     }
 
     @Override
     public void handleResult(Result result) {
-        String qrCodeText = result.getText();
 
-        getSupportFragmentManager().beginTransaction().remove(mScannerFragment).commit();
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if(!iHaveNoAndroidDeviceUseNumberInsteadOfBarcodeScanner) {
+            String qrCodeText = result.getText();
 
-        //create random ID
-        //Random random = new Random();
-        //long cartIDLong = random.nextLong();
-        //cartID = Long.toString(cartIDLong);
-        cartID = qrCodeText;
+            getSupportFragmentManager().beginTransaction().remove(mScannerFragment).commit();
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            cartID = qrCodeText;
+        }else {
+            cartID = idIfScannerIsNotUsed;
+        }
+
+
 
         //get cart and cartEntries from CartSingleton
         Cart cart = CartSingleton.MYCART.getCart();
@@ -88,10 +97,12 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
 
         //send cartServer to server
         CartApiClient cartApiClient = new CartApiClient((this));
+        System.out.println("SENDING CHART WITH ID: " + cartServer.getCartCode());
+
         cartApiClient.get().create(cartServer, new Callback<Response>() {
             @Override
             public void success(Response response1, Response response2) {
-                Toast.makeText(getApplicationContext(), "bezahlen!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Bitte am Kassenterinal bezahlen, oder Bezahlvorgang abbrechen.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
