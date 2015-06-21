@@ -14,6 +14,7 @@ import de.fau.cs.mad.fablab.android.eventbus.NavigationEvent;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
 import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.icals.ICalViewPagerFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 import de.fau.cs.mad.fablab.android.view.dependencyinjection.ActivityModule;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
@@ -54,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
         mObjectGraph = ObjectGraph.create(new ActivityModule(this), new ModelModule(storageFragment));
 
         if(savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new NewsFragment(), TAG_NEWS_FRAGMENT).commit();
+            //getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new NewsFragment(), TAG_NEWS_FRAGMENT).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ICalViewPagerFragment(), TAG_NEWS_FRAGMENT).commit();
         }
 
         actionBar = new ActionBar(this, findViewById(android.R.id.content));

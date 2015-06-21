@@ -18,6 +18,7 @@
         android:layout_marginBottom="@dimen/card_vertical_margin"
         android:layout_weight="1"
         android:id="@+id/dates_card_left"
+        android:visibility="invisible"
         card_view:cardBackgroundColor="@color/cardSelflab"
         >
 
@@ -134,6 +135,7 @@
         android:layout_marginBottom="@dimen/card_vertical_margin"
         android:layout_weight="1"
         android:id="@+id/dates_card_right"
+        android:visibility="invisible"
         card_view:cardBackgroundColor="@color/cardOpenlab"
         >
 
