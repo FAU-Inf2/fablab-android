@@ -85,6 +85,7 @@ dependencies {
     provided 'org.roboguice:roboblender:3.0.1'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile "com.google.android.gms:play-services:3.1.+"
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
 
 allprojects {

@@ -1,9 +1,6 @@
 package de.fau.cs.mad.fablab.android.ui;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,7 +8,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.InputStream;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -254,8 +251,8 @@ public class NewsActivity extends RoboActionBarActivity {
                 this.titleView.setText(news.getTitle());
                 this.subTitleView.setText(news.getDescriptionShort());
                 if(news.getLinkToPreviewImage() != null) {
-                    new DownloadImageTask(iconView)
-                            .execute(news.getLinkToPreviewImage());
+                    //new DownloadImageTask(iconView).execute(news.getLinkToPreviewImage());
+                    Picasso.with(iconView.getContext()).load(news.getLinkToPreviewImage()).into(iconView);
                 }
                 description = news.getDescription();
 
@@ -312,30 +309,4 @@ public class NewsActivity extends RoboActionBarActivity {
             return (dates.size()+1)/2;
         }
     }
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
-
 }
