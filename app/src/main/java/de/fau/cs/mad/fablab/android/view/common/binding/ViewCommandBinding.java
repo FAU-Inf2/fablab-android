@@ -15,6 +15,7 @@ public class ViewCommandBinding implements Binding<View, Void>, CommandListener,
         mCommand = command;
         mView = view;
 
+        mCommand.setListener(this);
         mView.setOnClickListener(this);
     }
 

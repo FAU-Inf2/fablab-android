@@ -13,12 +13,12 @@ public class ScannerViewCommandBinding implements Binding<ZXingScannerView, Resu
 
     @Override
     public void bind(ZXingScannerView view, Command<Result> command) {
-        mScannerView = view;
         mCommand = command;
+        mScannerView = view;
 
+        mCommand.setListener(this);
         mScannerView.setResultHandler(this);
         mScannerView.startCamera();
-        mCommand.setListener(this);
     }
 
     @Override

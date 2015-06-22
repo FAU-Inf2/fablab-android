@@ -15,6 +15,7 @@ public class MenuItemCommandBinding implements Binding<MenuItem, Integer>, Comma
         mCommand = command;
         mMenuItem = menuItem;
 
+        mCommand.setListener(this);
         mMenuItem.setOnMenuItemClickListener(this);
     }
 

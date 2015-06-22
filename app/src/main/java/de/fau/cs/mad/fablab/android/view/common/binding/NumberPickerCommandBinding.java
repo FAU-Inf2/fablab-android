@@ -16,6 +16,7 @@ public class NumberPickerCommandBinding implements Binding<NumberPicker, Integer
         mCommand = command;
         mNumberPicker = numberPicker;
 
+        mCommand.setListener(this);
         mNumberPicker.setOnValueChangedListener(this);
     }
 
