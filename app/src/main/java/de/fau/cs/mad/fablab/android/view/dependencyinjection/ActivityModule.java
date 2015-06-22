@@ -39,11 +39,6 @@ public class ActivityModule {
     }
 
     @Provides
-    Application provideApplication() {
-        return mActivity.getApplication();
-    }
-
-    @Provides
     FragmentManager provideFragmentManager() {
         return mActivity.getSupportFragmentManager();
     }

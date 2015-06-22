@@ -9,7 +9,6 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 import java.util.Random;
 
 import de.fau.cs.mad.fablab.android.db.DatabaseHelper;
-import de.fau.cs.mad.fablab.rest.CartApiClient;
 import de.fau.cs.mad.fablab.rest.core.Cart;
 import de.fau.cs.mad.fablab.rest.core.CartStatusEnum;
 import retrofit.Callback;

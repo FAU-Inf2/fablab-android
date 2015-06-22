@@ -26,7 +26,6 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.productMap.LocationParser;
 import de.fau.cs.mad.fablab.android.productMap.ProductMapActivity;
 import de.fau.cs.mad.fablab.android.ui.UiUtils;
-import de.fau.cs.mad.fablab.rest.ProductApiClient;
 import de.fau.cs.mad.fablab.rest.core.Product;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
 import retrofit.Callback;
@@ -93,7 +92,7 @@ public class ProductSearchActivity extends BaseActivity
     protected void baseOnCreate(Bundle savedInstanceState) {
         AutoCompleteHelper.getInstance().loadProductNames(this);
 
-        mProductApi = new ProductApiClient(this).get();
+        //mProductApi = new ProductApiClient(this).get();
 
         spinnerContainerView = (View) findViewById(R.id.spinner);
         spinnerImageView = (ImageView) findViewById(R.id.spinner_image);

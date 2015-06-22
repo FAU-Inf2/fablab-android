@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.rest.PushApiClient;
 import de.fau.cs.mad.fablab.rest.core.RegistrationId;
 import de.fau.cs.mad.fablab.rest.myapi.PushApi;
 import retrofit.Callback;
@@ -117,6 +116,7 @@ public class PushActivity extends ActionBarActivity {
 
         Log.i(TAG,"SendRegistrationIdToBackend");
 
+        /*
         PushApiClient client;
         client = new PushApiClient(getApplicationContext());
 
@@ -133,7 +133,7 @@ public class PushActivity extends ActionBarActivity {
                 Log.i(TAG,"Success" + error.getMessage());
             }
         });
-
+        */
 
     }
 

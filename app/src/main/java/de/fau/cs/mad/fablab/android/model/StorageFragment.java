@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
  * The main storage fragment which initializes all other storage parts
  */
 public class StorageFragment extends Fragment {
+    private RestClient mRestClient;
     private NavigationDrawerStorage navigationDrawerStorage;
     private NewsStorage newsStorage;
     private ICalStorage iCalStorage;
@@ -15,9 +16,14 @@ public class StorageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        mRestClient = new RestClient(getActivity().getApplicationContext());
         newsStorage = new NewsStorage();
         iCalStorage = new ICalStorage();
         navigationDrawerStorage = new NavigationDrawerStorage();
+    }
+
+    public RestClient getRestClient() {
+        return mRestClient;
     }
 
     public NewsStorage getNewsStorage(){

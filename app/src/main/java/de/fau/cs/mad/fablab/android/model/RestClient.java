@@ -1,5 +1,4 @@
-package de.fau.cs.mad.fablab.rest;
-
+package de.fau.cs.mad.fablab.android.model;
 
 import android.content.Context;
 import android.util.Log;
@@ -18,26 +17,25 @@ import javax.net.ssl.TrustManagerFactory;
 import de.fau.cs.mad.fablab.android.BuildConfig;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.rest.core.Format;
+import de.fau.cs.mad.fablab.rest.myapi.CartApi;
+import de.fau.cs.mad.fablab.rest.myapi.ICalApi;
+import de.fau.cs.mad.fablab.rest.myapi.NewsApi;
+import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
+import de.fau.cs.mad.fablab.rest.myapi.PushApi;
+import de.fau.cs.mad.fablab.rest.myapi.SpaceApi;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
 
-/** Super class for the individual clients
- * that implements common methods and features.
- * - API_URL
- * - General RestAdapter that later implements the REST Interface
- */
-public abstract class AbstractRestClient{
+public class RestClient {
+    private static final String LOG_TAG = "RestClient";
 
-    protected final String LOG_TAG = "AbstractRestClient";
+    private RestAdapter mRestAdapter;
+    private Context mContext;
 
-    protected RestAdapter restAdapter;
-    protected Context mContext;
-
-    protected AbstractRestClient(Context context){
-
+    public RestClient(Context context) {
         mContext = context;
-        final String API_URL = mContext.getResources().getString(R.string.API_URL);
+        final String API_URL = mContext.getString(R.string.api_url);
 
         OkHttpClient httpClient = new OkHttpClient();
         httpClient.setSslSocketFactory(getPinnedCertSslSocketFactory());
@@ -50,23 +48,25 @@ public abstract class AbstractRestClient{
                 .setEndpoint(API_URL)
                 .setClient(new OkClient(httpClient))
                 .setConverter(new GsonConverter(gson))
-                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE);
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL
+                        : RestAdapter.LogLevel.NONE);
 
-        restAdapter = builder.build();
+        mRestAdapter = builder.build();
     }
 
-    /***
+    /**
      * Creates and returns a SSLSocketFactory which will trust our selfsigned certificates in
      * fablab_dev_truststore. The truststore only contains the public certs.
      *
      * @return a SSLSocketFactory trusting our selfsigned certs.
      */
-    protected SSLSocketFactory getPinnedCertSslSocketFactory() {
+    private SSLSocketFactory getPinnedCertSslSocketFactory() {
         try {
             //Default type is BKS on android
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             //our truststore containing the public certs
-            InputStream inputStream = mContext.getResources().openRawResource(R.raw.fablab_dev_truststore);
+            InputStream inputStream = mContext.getResources().openRawResource(
+                    R.raw.fablab_dev_truststore);
 
             //the password used here is just a dummy as it is needed by the keystore.load method
             String trustStorePass = mContext.getString(R.string.development_truststore_pass);
@@ -83,5 +83,29 @@ public abstract class AbstractRestClient{
             Log.e(LOG_TAG, e.getMessage());
         }
         return null;
+    }
+
+    public CartApi getCartApi() {
+        return mRestAdapter.create(CartApi.class);
+    }
+
+    public ICalApi getICalApi() {
+        return mRestAdapter.create(ICalApi.class);
+    }
+
+    public NewsApi getNewsApi() {
+        return mRestAdapter.create(NewsApi.class);
+    }
+
+    public ProductApi getProductApi() {
+        return mRestAdapter.create(ProductApi.class);
+    }
+
+    public PushApi getPushApi() {
+        return mRestAdapter.create(PushApi.class);
+    }
+
+    public SpaceApi getSpaceApi() {
+        return mRestAdapter.create(SpaceApi.class);
     }
 }
