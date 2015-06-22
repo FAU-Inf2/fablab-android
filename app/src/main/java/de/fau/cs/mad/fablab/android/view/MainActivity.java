@@ -13,19 +13,19 @@ import de.fau.cs.mad.fablab.android.actionbar.ActionBar;
 import de.fau.cs.mad.fablab.android.eventbus.NavigationEvent;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
+import de.fau.cs.mad.fablab.android.view.fragments.ICalAndNewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.icals.ICalViewPagerFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 import de.fau.cs.mad.fablab.android.view.dependencyinjection.ActivityModule;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
-import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
 import de.greenrobot.event.EventBus;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final static String TAG_ICAL_AND_NEWS_FRAGMENT = "tag_ical_and_news_fragment";
     private final static String TAG_NEWS_FRAGMENT = "tag_news_fragment";
     private final static String TAG_BARCODE_FRAGMENT = "tag_barcode_fragment";
-    private final static String TAG_PRODUCTSEARCH_FRAGEMENT = "tag_productsearch_fragment";
+    private final static String TAG_PRODUCTSEARCH_FRAGMENT = "tag_productsearch_fragment";
 
     private ObjectGraph mObjectGraph;
 
@@ -55,8 +55,7 @@ public class MainActivity extends AppCompatActivity {
         mObjectGraph = ObjectGraph.create(new ActivityModule(this), new ModelModule(storageFragment));
 
         if(savedInstanceState == null) {
-            //getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new NewsFragment(), TAG_NEWS_FRAGMENT).commit();
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ICalViewPagerFragment(), TAG_NEWS_FRAGMENT).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ICalAndNewsFragment(), TAG_ICAL_AND_NEWS_FRAGMENT).commit();
         }
 
         actionBar = new ActionBar(this, findViewById(android.R.id.content));
@@ -69,9 +68,9 @@ public class MainActivity extends AppCompatActivity {
 
         switch(destination) {
             case News:
-                NewsFragment newsFragment = (NewsFragment) getSupportFragmentManager().findFragmentByTag(TAG_NEWS_FRAGMENT);
-                if(newsFragment == null) newsFragment = new NewsFragment();
-                fragmentTransaction.replace(R.id.fragment_container, newsFragment, TAG_NEWS_FRAGMENT).commit();
+                ICalAndNewsFragment iCalAndNewsFragment = (ICalAndNewsFragment) getSupportFragmentManager().findFragmentByTag(TAG_ICAL_AND_NEWS_FRAGMENT);
+                if(iCalAndNewsFragment == null) iCalAndNewsFragment = new ICalAndNewsFragment();
+                fragmentTransaction.replace(R.id.fragment_container, iCalAndNewsFragment, TAG_ICAL_AND_NEWS_FRAGMENT).commit();
                 break;
 
             case BarcodeScanner:

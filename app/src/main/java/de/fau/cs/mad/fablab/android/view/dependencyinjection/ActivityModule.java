@@ -10,6 +10,7 @@ import dagger.Provides;
 import de.fau.cs.mad.fablab.android.actionbar.ActionBar;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
+import de.fau.cs.mad.fablab.android.view.fragments.ICalAndNewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.icals.viewpager.ICalDetailFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.icals.viewpager.ICalFragment;
@@ -21,9 +22,9 @@ import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 @Module(
         includes = ModelModule.class,
         injects = {
-                AddToCartDialogFragment.class, FloatingFablabButton.class,
-                NewsDetailsDialogFragment.class, NewsViewHolder.class,
-                NavigationDrawer.class, ActionBar.class, ICalFragment.class, ICalDetailFragment.class
+                ActionBar.class, AddToCartDialogFragment.class, FloatingFablabButton.class,
+                ICalAndNewsFragment.class, ICalFragment.class, ICalDetailFragment.class,
+                NavigationDrawer.class, NewsDetailsDialogFragment.class, NewsViewHolder.class
         })
 public class ActivityModule {
     private final FragmentActivity mActivity;
