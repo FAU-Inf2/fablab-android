@@ -1,48 +1,59 @@
 package de.fau.cs.mad.fablab.android.view.fragments.news;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.NewsModel;
-import de.fau.cs.mad.fablab.android.viewmodel.common.BaseAdapterViewModel;
+import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.News;
 
-public class NewsFragmentViewModel extends BaseAdapterViewModel<News>{
+public class NewsFragmentViewModel implements ObservableArrayList.Listener<News> {
+    private NewsModel mModel;
+    private Listener mListener;
 
-    private NewsModel model;
-    private Listener listener;
-
-    private Command<Void> commandGetNews = new Command<Void>() {
+    private Command<Void> mCommandGetNews = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            model.fetchNextNews();
+            mModel.fetchNextNews();
         }
     };
 
-    public void setListener(Listener listener){
-        super.setListener(listener);
-        this.listener = listener;
-    }
-
     @Inject
-    public NewsFragmentViewModel(NewsModel model){
-        this.model = model;
+    public NewsFragmentViewModel(NewsModel model) {
+        mModel = model;
         model.getNewsList().setListener(this);
     }
 
-    public Command<Void> getNewsCommand(){
-        return commandGetNews;
+    public void setListener(Listener listener) {
+        mListener = listener;
+
+        List<NewsViewModel> viewModels = new ArrayList<>();
+        for (News news : mModel.getNewsList()) {
+            viewModels.add(new NewsViewModel(news));
+        }
+        mListener.onDataPrepared(viewModels);
+    }
+
+    public Command<Void> getGetNewsCommand() {
+        return mCommandGetNews;
     }
 
     @Override
-    public List<News> getData() {
-        return model.getNewsList();
+    public void onItemAdded(News newItem) {
+        mListener.onItemAdded(new NewsViewModel(newItem));
     }
 
-    public interface Listener extends BaseAdapterViewModel.Listener{
+    @Override
+    public void onItemRemoved(News removedItem) {
 
+    }
+
+    public interface Listener {
+        void onItemAdded(NewsViewModel viewModel);
+
+        void onDataPrepared(List<NewsViewModel> viewModels);
     }
 }

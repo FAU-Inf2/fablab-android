@@ -14,14 +14,16 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import javax.inject.Inject;
+
 import butterknife.InjectView;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 
-public class NewsDetailsDialogFragment extends BaseDialogFragment implements NewsDetailsDialogViewModel.Listener {
-
+public class NewsDetailsDialogFragment extends BaseDialogFragment
+        implements NewsDetailsDialogViewModel.Listener {
     @InjectView(R.id.title_news_dialog)
     TextView tv_title;
     @InjectView(R.id.news_text_news_dialog)
@@ -29,49 +31,57 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment implements New
     @InjectView(R.id.image_news_dialog)
     ImageView iv_image;
     @InjectView(R.id.ok_button_news_dialog)
-    Button dimissButton;
+    Button dismissButton;
 
-    NewsDetailsDialogViewModel viewModel;
+    @Inject
+    NewsDetailsDialogViewModel mViewModel;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-    public void setViewModel(NewsDetailsDialogViewModel viewModel) {
-        this.viewModel = viewModel;
-        this.viewModel.setListener(this);
+        mViewModel.setListener(this);
+        mViewModel.restoreState(getArguments(), savedInstanceState);
+
+        new ViewCommandBinding().bind(iv_image, mViewModel.getImageClickCommand());
+        new ViewCommandBinding().bind(dismissButton, mViewModel.getDismissCommand());
+
+        tv_content.setLinksClickable(true);
+        tv_content.setMovementMethod(LinkMovementMethod.getInstance());
+        tv_content.setText(Html.fromHtml(mViewModel.getText()));
+        tv_title.setText(mViewModel.getTitle());
+        Picasso.with(iv_image.getContext()).load(mViewModel.getImageLink()).into(iv_image);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
         return inflater.inflate(R.layout.fragment_news_dialog, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
-        new ViewCommandBinding().bind(iv_image, viewModel.getImageClickCommand());
-        new ViewCommandBinding().bind(dimissButton, viewModel.getDismissCommand());
-
-        tv_content.setLinksClickable(true);
-        tv_content.setMovementMethod(LinkMovementMethod.getInstance());
-        tv_content.setText(Html.fromHtml(viewModel.getText()));
-        tv_title.setText(viewModel.getTitle());
-
-        Picasso.with(iv_image.getContext()).load(viewModel.getImageLink()).into(iv_image);
-
-        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        mViewModel.saveState(outState);
     }
 
     @Override
     public void onImageLayoutChanged() {
-        if (viewModel.isImageZoom()) {
-            iv_image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+        if (mViewModel.isImageZoom()) {
+            iv_image.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         } else {
-            iv_image.setLayoutParams(new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.news_dialog_icon_size), (int) getResources().getDimension(R.dimen.news_dialog_icon_size)));
+            iv_image.setLayoutParams(new LinearLayout.LayoutParams(
+                    (int) getResources().getDimension(R.dimen.news_dialog_icon_size),
+                    (int) getResources().getDimension(R.dimen.news_dialog_icon_size)));
         }
+    }
+
+    @Override
+    public void onDismiss() {
+        dismiss();
     }
 }

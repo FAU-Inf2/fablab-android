@@ -1,84 +1,101 @@
 package de.fau.cs.mad.fablab.android.view.fragments.news;
 
+import android.os.Bundle;
 
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 
-public class NewsDetailsDialogViewModel extends BaseViewModel {
+public class NewsDetailsDialogViewModel {
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_TEXT = "text";
+    public static final String KEY_IMAGE_LINK = "image_link";
+    private static final String KEY_IMAGE_ZOOM = "image_zoom";
 
-    Listener listener;
+    Listener mListener;
 
-    private String imageLink;
-    private String title;
-    private String text;
+    private String mTitle;
+    private String mText;
+    private String mImageLink;
 
-    private boolean imageZoom = false;
-
-    @Inject
-    NewsViewLauncher viewLauncher;
-
-    private Command<Void> imageClickCommand = new Command<Void>() {
+    private boolean mImageZoom = false;
+    private Command<Void> mImageClickCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            if(listener != null){
+            if (mListener != null) {
                 setImageZoom(!isImageZoom());
-                listener.onImageLayoutChanged();
+                mListener.onImageLayoutChanged();
+            }
+        }
+    };
+    private Command<Void> mDismissCommand = new Command<Void>() {
+        @Override
+        public void execute(Void parameter) {
+            if (mListener != null) {
+                mListener.onDismiss();
             }
         }
     };
 
-    private Command<Void> dismissCommand = new Command<Void>() {
-        @Override
-        public void execute(Void parameter) {
-            viewLauncher.dismissNewsDialogFragmend();
-        }
-    };
+    @Inject
+    public NewsDetailsDialogViewModel() {
 
-    public void setListener(Listener listener){
-        this.listener = listener;
     }
 
-    public void show(){
-        this.viewLauncher.showNewsDialogFragment(this, getTitle(), getText(), getImageLink());
-    }
-
-    public String getImageLink() {
-        return imageLink;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public boolean isImageZoom() {
-        return imageZoom;
-    }
-
-    public void setImageZoom(boolean imageZoom) {
-        this.imageZoom = imageZoom;
-    }
-
-    public void setData(String title, String content, String imageLink) {
-        this.title = title;
-        this.text = content;
-        this.imageLink = imageLink;
+    public void setListener(Listener listener) {
+        mListener = listener;
     }
 
     public Command<Void> getImageClickCommand() {
-        return imageClickCommand;
+        return mImageClickCommand;
     }
 
     public Command<Void> getDismissCommand() {
-        return dismissCommand;
+        return mDismissCommand;
     }
 
-    public interface Listener extends BaseViewModel.Listener{
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public String getText() {
+        return mText;
+    }
+
+    public String getImageLink() {
+        return mImageLink;
+    }
+
+    public boolean isImageZoom() {
+        return mImageZoom;
+    }
+
+    public void setImageZoom(boolean imageZoom) {
+        mImageZoom = imageZoom;
+        if (mListener != null) {
+            mListener.onImageLayoutChanged();
+        }
+    }
+
+    public void restoreState(Bundle arguments, Bundle savedInstanceState) {
+        mTitle = arguments.getString(KEY_TITLE);
+        mText = arguments.getString(KEY_TEXT);
+        mImageLink = arguments.getString(KEY_IMAGE_LINK);
+
+        if (savedInstanceState != null && savedInstanceState.getBoolean(KEY_IMAGE_ZOOM)) {
+            setImageZoom(true);
+        }
+    }
+
+
+    public void saveState(Bundle outState) {
+        outState.putBoolean(KEY_IMAGE_ZOOM, mImageZoom);
+    }
+
+    public interface Listener extends BaseViewModel.Listener {
         void onImageLayoutChanged();
+
+        void onDismiss();
     }
 }

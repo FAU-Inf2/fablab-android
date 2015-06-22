@@ -15,7 +15,6 @@ import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.icals.viewpager.ICalDetailFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.icals.viewpager.ICalFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsDetailsDialogFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.news.recyclerview.NewsViewHolder;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 
 @SuppressWarnings("unused")
@@ -24,7 +23,7 @@ import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
         injects = {
                 ActionBar.class, AddToCartDialogFragment.class, FloatingFablabButton.class,
                 ICalAndNewsFragment.class, ICalFragment.class, ICalDetailFragment.class,
-                NavigationDrawer.class, NewsDetailsDialogFragment.class, NewsViewHolder.class
+                NavigationDrawer.class, NewsDetailsDialogFragment.class
         })
 public class ActivityModule {
     private final FragmentActivity mActivity;
