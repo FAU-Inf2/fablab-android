@@ -1,6 +1,7 @@
 package de.fau.cs.mad.fablab.android.cart;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.Toast;
 
@@ -33,6 +34,9 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
     //Maybe we can/should set this if Emulator is used?
     private boolean iHaveNoAndroidDeviceUseNumberInsteadOfBarcodeScanner = false;
     private String idIfScannerIsNotUsed = "256";
+    private Handler cartStatusHandler = new Handler();
+    private Runnable cartStatusRunner;
+    final long REFRESH_MILLIS = 30 * 1000;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -68,8 +72,6 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
             cartID = idIfScannerIsNotUsed;
         }
 
-
-
         //get cart and cartEntries from CartSingleton
         Cart cart = CartSingleton.MYCART.getCart();
         ForeignCollection<CartEntry> products = cart.getProducts();
@@ -96,15 +98,14 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
         //cartDao.create(cart);
 
         //send cartServer to server
-        CartApiClient cartApiClient = new CartApiClient((this));
+        final CartApiClient cartApiClient = new CartApiClient((this));
         System.out.println("SENDING CHART WITH ID: " + cartServer.getCartCode());
 
         cartApiClient.get().create(cartServer, new Callback<Response>() {
             @Override
             public void success(Response response1, Response response2) {
                 Toast.makeText(getApplicationContext(), "Bitte am Kassenterinal bezahlen, oder Bezahlvorgang abbrechen.", Toast.LENGTH_SHORT).show();
-                //TODO Pullen ob sich status geändert hat
-
+                startTimer(cartID);
             }
 
             @Override
@@ -112,5 +113,54 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
                 Toast.makeText(getApplicationContext(), "Retrofit error", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    class CartStatusRunner implements Runnable
+    {
+        final CartApiClient cartApiClient;
+        String id;
+
+        public CartStatusRunner(String id) {
+            this.cartApiClient =new CartApiClient(getApplication());
+            this.id = id;
+        }
+
+        @Override
+        public void run() {
+            cartApiClient.get().getStatus(id, new Callback<CartStatusEnum>() {
+                @Override
+                public void success(CartStatusEnum cartStatusEnum, Response response) {
+                    if(cartStatusEnum.equals(CartStatusEnum.PAID))
+                    {
+                        Toast.makeText(getApplicationContext(), "bezahlt", Toast.LENGTH_SHORT).show();
+                        stopTimer();
+                    }
+                    else if(cartStatusEnum.equals(CartStatusEnum.CANCELLED))
+                    {
+                        Toast.makeText(getApplicationContext(), "abgebrochen!", Toast.LENGTH_SHORT).show();
+                        stopTimer();
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "else", Toast.LENGTH_SHORT).show();
+                        cartStatusHandler.postDelayed(cartStatusRunner, REFRESH_MILLIS);
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Toast.makeText(getApplicationContext(), "Retrofit Error Status", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    public void startTimer(String id) {
+        cartStatusRunner = new CartStatusRunner(id);
+        cartStatusHandler.post(cartStatusRunner);
+    }
+
+    public void stopTimer() {
+        cartStatusHandler.removeCallbacks(cartStatusRunner);
     }
 }
