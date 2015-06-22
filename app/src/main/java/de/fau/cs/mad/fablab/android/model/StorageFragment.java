@@ -9,7 +9,7 @@ import android.support.v4.app.Fragment;
 public class StorageFragment extends Fragment {
     private RestClient mRestClient;
     private NavigationDrawerStorage navigationDrawerStorage;
-    private NewsStorage newsStorage;
+    private NewsModel mNewsModel;
     private ICalStorage iCalStorage;
 
     @Override
@@ -17,7 +17,7 @@ public class StorageFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         mRestClient = new RestClient(getActivity().getApplicationContext());
-        newsStorage = new NewsStorage();
+        mNewsModel = new NewsModel(mRestClient.getNewsApi());
         iCalStorage = new ICalStorage();
         navigationDrawerStorage = new NavigationDrawerStorage();
     }
@@ -26,8 +26,8 @@ public class StorageFragment extends Fragment {
         return mRestClient;
     }
 
-    public NewsStorage getNewsStorage(){
-        return newsStorage;
+    public NewsModel getNewsModel(){
+        return mNewsModel;
     }
 
     public ICalStorage getICalStorage()

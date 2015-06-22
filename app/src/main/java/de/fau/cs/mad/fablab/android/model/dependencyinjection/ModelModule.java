@@ -5,13 +5,12 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import de.fau.cs.mad.fablab.android.model.ICalStorage;
-import de.fau.cs.mad.fablab.android.model.NewsStorage;
+import de.fau.cs.mad.fablab.android.model.NewsModel;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.icals.ICalViewPagerFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
 import de.fau.cs.mad.fablab.rest.myapi.ICalApi;
-import de.fau.cs.mad.fablab.rest.myapi.NewsApi;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
 
 @SuppressWarnings("unused")
@@ -21,11 +20,6 @@ public class ModelModule {
 
     public ModelModule(StorageFragment storageFragment) {
         mStorageFragment = storageFragment;
-    }
-
-    @Provides @Singleton
-    NewsApi provideNewsApi() {
-        return mStorageFragment.getRestClient().getNewsApi();
     }
 
     @Provides @Singleton
@@ -39,8 +33,8 @@ public class ModelModule {
     }
 
     @Provides
-    NewsStorage provideNewsStorage() {
-        return mStorageFragment.getNewsStorage();
+    NewsModel provideNewsModel() {
+        return mStorageFragment.getNewsModel();
     }
 
     @Provides

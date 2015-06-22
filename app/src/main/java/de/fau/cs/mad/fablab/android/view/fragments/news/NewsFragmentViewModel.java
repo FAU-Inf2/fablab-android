@@ -24,14 +24,14 @@ public class NewsFragmentViewModel implements ObservableArrayList.Listener<News>
     @Inject
     public NewsFragmentViewModel(NewsModel model) {
         mModel = model;
-        model.getNewsList().setListener(this);
+        model.getNews().setListener(this);
     }
 
     public void setListener(Listener listener) {
         mListener = listener;
 
         List<NewsViewModel> viewModels = new ArrayList<>();
-        for (News news : mModel.getNewsList()) {
+        for (News news : mModel.getNews()) {
             viewModels.add(new NewsViewModel(news));
         }
         mListener.onDataPrepared(viewModels);
