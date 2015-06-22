@@ -2,39 +2,39 @@ package de.fau.cs.mad.fablab.android.viewmodel.common.commands;
 
 public abstract class Command<T> {
 
-    private CommandListener commandListener;
-    private boolean isAvailable = true;
-    private boolean isExecutable = true;
+    private CommandListener mCommandListener;
+    private boolean mIsAvailable = true;
+    private boolean mIsExecutable = true;
 
     public void setListener(CommandListener commandListener) {
-        this.commandListener = commandListener;
+        mCommandListener = commandListener;
     }
 
     public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public boolean isExecutable() {
-        return isExecutable && isAvailable();
+        return mIsAvailable;
     }
 
     public void setIsAvailable(boolean isAvailable) {
-        if (isAvailable != this.isAvailable) {
-            this.isAvailable = isAvailable;
-            commandListener.onIsAvailableChanged(isAvailable);
+        if (isAvailable != mIsAvailable) {
+            mIsAvailable = isAvailable;
+            if (mCommandListener != null) {
+                mCommandListener.onIsAvailableChanged(isAvailable);
+            }
         }
+    }
 
+    public boolean isExecutable() {
+        return mIsExecutable && isAvailable();
     }
 
     public void setIsExecutable(boolean isExecutable) {
-        if (isExecutable != this.isExecutable) {
-            this.isExecutable = isExecutable;
-            commandListener.onIsExecutableChanged(isExecutable);
+        if (isExecutable != mIsExecutable) {
+            mIsExecutable = isExecutable;
+            if (mCommandListener != null) {
+                mCommandListener.onIsExecutableChanged(isExecutable);
+            }
         }
     }
 
     public abstract void execute(T parameter);
 }
-
-
-
