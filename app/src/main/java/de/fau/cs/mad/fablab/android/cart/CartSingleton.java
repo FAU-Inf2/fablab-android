@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.cart;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
@@ -387,12 +388,14 @@ public enum CartSingleton {
     class RemoveCartEntryTimerTask extends TimerTask {
         private View view;
         private  CartEntry entry;
+        private final RemoveCartEntryTimerTask temp;
 
         // Parameter view represents the card
         // Parameter entry represents removed cart entry
         RemoveCartEntryTimerTask(View view, CartEntry entry) {
             this.view = view;
             this.entry = entry;
+            temp = this;
         }
 
         public void run() {
@@ -407,14 +410,20 @@ public enum CartSingleton {
                 view.setAlpha(1.0f);
                 this.cancel();
             }else {
-                view.setAlpha(view.getAlpha() - 0.02f);
-                if (view.getAlpha() < -0.2f) {
-                    int pos = guiProducts.indexOf(entry);
-                    isProductRemoved.remove(guiProducts.indexOf(entry));
-                    guiProducts.remove(entry);
-                    adapter.notifyItemRemoved(pos);
-                    this.cancel();
-                }
+                Activity act = (Activity) context;
+                act.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.setAlpha(view.getAlpha() - 0.02f);
+                        if (view.getAlpha() < -0.2f) {
+                            int pos = guiProducts.indexOf(entry);
+                            isProductRemoved.remove(guiProducts.indexOf(entry));
+                            guiProducts.remove(entry);
+                            adapter.notifyItemRemoved(pos);
+                            temp.cancel();
+                        }
+                    }
+                });
             }
         }
     }
