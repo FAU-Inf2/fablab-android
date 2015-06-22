@@ -31,7 +31,7 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
     private RuntimeExceptionDao<Cart, String> cartDao;
     private ScannerFragment mScannerFragment;
     //Maybe we can/should set this if Emulator is used?
-    private boolean iHaveNoAndroidDeviceUseNumberInsteadOfBarcodeScanner = true;
+    private boolean iHaveNoAndroidDeviceUseNumberInsteadOfBarcodeScanner = false;
     private String idIfScannerIsNotUsed = "256";
 
     @Override
@@ -89,7 +89,7 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
         cartServer.setItems(productsServer);
         cartServer.setStatus(CartStatusEnum.PENDING);
         cartServer.setCartCode(cartID);
-        cartServer.setPushId("");
+        cartServer.setPushId("000");
 
         //save cart in database
         cartDao = DatabaseHelper.getHelper(getApplicationContext()).getCartDao();
@@ -103,6 +103,8 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
             @Override
             public void success(Response response1, Response response2) {
                 Toast.makeText(getApplicationContext(), "Bitte am Kassenterinal bezahlen, oder Bezahlvorgang abbrechen.", Toast.LENGTH_SHORT).show();
+                //TODO Pullen ob sich status geändert hat
+
             }
 
             @Override
