@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.brnunes.swipeablerecyclerview.SwipeableRecyclerViewTouchListener;
-import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
@@ -388,7 +386,6 @@ public enum CartSingleton {
     // Timer Task to show a removed entry for a short period before removing it permanently
     class RemoveCartEntryTimerTask extends TimerTask {
         private View view;
-        private int pos;
         private  CartEntry entry;
 
         // Parameter view represents the card
@@ -411,7 +408,8 @@ public enum CartSingleton {
                 this.cancel();
             }else {
                 view.setAlpha(view.getAlpha() - 0.02f);
-                if (view.getAlpha() < -0.2) {
+                if (view.getAlpha() < -0.2f) {
+                    int pos = guiProducts.indexOf(entry);
                     isProductRemoved.remove(guiProducts.indexOf(entry));
                     guiProducts.remove(entry);
                     adapter.notifyItemRemoved(pos);
