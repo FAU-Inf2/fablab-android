@@ -28,4 +28,6 @@ public abstract class BaseViewPagerAdapter<ContentType> extends FragmentStatePag
 
     @Override
     public abstract int getCount();
+
+
 }

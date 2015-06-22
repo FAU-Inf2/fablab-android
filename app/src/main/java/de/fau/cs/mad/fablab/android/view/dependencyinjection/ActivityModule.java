@@ -23,7 +23,7 @@ import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
         injects = {
                 AddToCartDialogFragment.class, FloatingFablabButton.class,
                 NewsDetailsDialogFragment.class, NewsViewHolder.class,
-                NavigationDrawer.class, ActionBar.class, ICalDetailFragment.class, ICalFragment.class
+                NavigationDrawer.class, ActionBar.class, ICalFragment.class, ICalDetailFragment.class
         })
 public class ActivityModule {
     private final FragmentActivity mActivity;

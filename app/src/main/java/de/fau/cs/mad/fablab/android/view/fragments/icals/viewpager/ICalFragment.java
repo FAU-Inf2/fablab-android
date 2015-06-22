@@ -53,6 +53,11 @@ public class ICalFragment extends BaseFragment{
         this.viewModel = viewModel;
     }
 
+    public ICalFragmentViewModel getViewModel()
+    {
+        return this.viewModel;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -62,7 +67,6 @@ public class ICalFragment extends BaseFragment{
 
         if(viewModel.getLeftItem() != null) {
             new ViewCommandBinding().bind(cardLeft, viewModel.getShowDetailsDialogLeftCommand());
-            //bindViewToCommand(cardLeft, viewModel.getShowDetailsDialogLeftCommand());
             cardLeft.setVisibility(View.VISIBLE);
             titleLeft.setText(viewModel.getLeftItem().getSummery());
             Calendar cal = Calendar.getInstance();
@@ -76,7 +80,6 @@ public class ICalFragment extends BaseFragment{
         if(viewModel.getRightItem() != null)
         {
             new ViewCommandBinding().bind(cardRight, viewModel.getShowDetailsDialogRightCommand());
-            //(cardRight, viewModel.getShowDetailsDialogRightCommand());
             cardRight.setVisibility(View.VISIBLE);
             titleRight.setText(viewModel.getRightItem().getSummery());
             Calendar cal = Calendar.getInstance();
@@ -88,4 +91,5 @@ public class ICalFragment extends BaseFragment{
 
         return rootView;
     }
+
 }

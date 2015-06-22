@@ -10,10 +10,12 @@ import javax.inject.Inject;
 
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.eventbus.ICalReadyEvent;
+import de.fau.cs.mad.fablab.android.view.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewPagerCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.icals.viewpager.ICalFragmentViewModel;
 import de.fau.cs.mad.fablab.android.view.fragments.icals.viewpager.ICalViewPagerAdapter;
+import de.greenrobot.event.EventBus;
 
 public class ICalViewPagerFragment extends BaseFragment implements ICalViewPagerFragmentViewModel.Listener{
 
@@ -22,11 +24,10 @@ public class ICalViewPagerFragment extends BaseFragment implements ICalViewPager
 
     @Inject
     ICalViewPagerFragmentViewModel viewModel;
-    @Inject
-    ICalFragmentViewModel viewModelFragment;
 
     public ICalViewPagerFragment() {
         // Required empty public constructor
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -34,8 +35,10 @@ public class ICalViewPagerFragment extends BaseFragment implements ICalViewPager
         super.onActivityCreated(savedInstanceState);
 
         viewModel.setListener(this);
+    }
 
-        datesViewPager.setAdapter(new ICalViewPagerAdapter(getFragmentManager(), viewModel, viewModelFragment));
+    public void onEvent(ICalReadyEvent e){
+        datesViewPager.setAdapter(new ICalViewPagerAdapter((MainActivity)getActivity(), getFragmentManager(), viewModel));
         new ViewPagerCommandBinding().bind(datesViewPager, viewModel.getGetICalCommand());
     }
 
@@ -53,6 +56,8 @@ public class ICalViewPagerFragment extends BaseFragment implements ICalViewPager
 
     @Override
     public void onListDataChanged() {
-        datesViewPager.getAdapter().notifyDataSetChanged();
+        if(datesViewPager.getAdapter() != null) {
+            datesViewPager.getAdapter().notifyDataSetChanged();
+        }
     }
 }

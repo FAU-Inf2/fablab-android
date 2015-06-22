@@ -15,6 +15,7 @@ public class ICalFragmentViewModel extends BaseViewModel {
     ICalDetailFragmentViewModel detailFragmentViewModel;
     @Inject
     ICalViewLauncher viewLauncher;
+
     private ICal iCalLeft;
     private ICal iCalRight;
 
@@ -31,12 +32,6 @@ public class ICalFragmentViewModel extends BaseViewModel {
             showDialog(false);
         }
     };
-
-    @Inject
-    public ICalFragmentViewModel(ICalViewLauncher viewLauncher)
-    {
-        this.viewLauncher = viewLauncher;
-    }
 
     private void showDialog(boolean left)
     {
@@ -68,21 +63,6 @@ public class ICalFragmentViewModel extends BaseViewModel {
     public Command getDismissDialogCommand()
     {
         return dismissDialogCommand;
-    }
-
-    public int getEntryCount()
-    {
-        int count = 0;
-        if(iCalLeft != null)
-        {
-            count++;
-        }
-        if(iCalRight != null)
-        {
-            count++;
-        }
-
-        return count;
     }
 
     public void setItems(ICal iCalLeft, ICal iCalRight) {

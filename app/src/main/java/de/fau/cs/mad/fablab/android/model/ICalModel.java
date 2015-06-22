@@ -8,9 +8,11 @@ import java.util.List;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.eventbus.ICalReadyEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.rest.core.ICal;
 import de.fau.cs.mad.fablab.rest.myapi.ICalApi;
+import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -25,6 +27,7 @@ public class ICalModel {
     private ICalStorage storage;
     private Activity activity;
     private int currentOffset = 0;
+    EventBus mEventBus;
 
     private static final int ELEMENT_COUNT = 10;
 
@@ -34,6 +37,7 @@ public class ICalModel {
         this.storage = storage;
         this.activity = activity;
         fetchNextICals();
+        mEventBus = EventBus.getDefault();
     }
 
 /*
@@ -54,6 +58,7 @@ public class ICalModel {
                 storage.addICal(i);
             }
             currentOffset += iCals.size();
+            mEventBus.post(new ICalReadyEvent());
         }
 
         @Override
