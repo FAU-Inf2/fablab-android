@@ -20,12 +20,10 @@ import android.widget.TextView;
 import net.spaceapi.HackerSpace;
 import net.spaceapi.State;
 
-import de.fau.cs.mad.fablab.android.barcodescanner.BarcodeScannerActivity;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.cart.CartActivity;
+import de.fau.cs.mad.fablab.android.barcodescanner.BarcodeScannerActivity;
 import de.fau.cs.mad.fablab.android.eventbus.DoorEvent;
 import de.fau.cs.mad.fablab.android.productsearch.ProductSearchActivity;
-import de.fau.cs.mad.fablab.android.pushservice.PushActivity;
 import de.fau.cs.mad.fablab.android.ui.NewsActivity;
 import de.fau.cs.mad.fablab.rest.SpaceApiClient;
 import retrofit.Callback;
@@ -59,7 +57,6 @@ public class AppbarDrawerInclude  {
     private MenuItem item;
     private long time;
 
-
     final long REFRESH_MILLIS = 60 * 1000; // 1 minute
 
     static public synchronized AppbarDrawerInclude getInstance(ActionBarActivity mainActivity) {
@@ -75,13 +72,13 @@ public class AppbarDrawerInclude  {
         this.mainActivity = mainActivity;
 
         // Navigation Drawer
-        navdrawer = new NavigationDrawer("Fablab User", "usermail@user.mail", R.drawable.avatar);
+        navdrawer = new NavigationDrawer("FAU Fablab", "fablab.fau.de", R.drawable.launcher_icon);
         navdrawer.addItem(new NavigationDrawerItem("News", NewsActivity.class, R.drawable.news));
         navdrawer.addItem(new NavigationDrawerItem("Produkt scannen", BarcodeScannerActivity.class, R.drawable.barcode));
-        navdrawer.addItem(new NavigationDrawerItem("Produktsuche", ProductSearchActivity.class, R.drawable.produktsuche));
-        navdrawer.addItem(new NavigationDrawerItem("Warenkorb", CartActivity.class, R.drawable.warenkorb));
-        navdrawer.addItem(new NavigationDrawerItem("Push", PushActivity.class, R.drawable.news));
-        mAdapter = new NavigationDrawerAdapter(navdrawer, false);
+        navdrawer.addItem(new NavigationDrawerItem("Produkt suchen", ProductSearchActivity.class, R.drawable.produktsuche));
+        // navdrawer.addItem(new NavigationDrawerItem("Warenkorb", CartActivity.class, R.drawable.warenkorb));
+        // navdrawer.addItem(new NavigationDrawerItem("Push", PushActivity.class, R.drawable.news));
+        mAdapter = new NavigationDrawerAdapter(navdrawer, true);
 
         time = -1;
     }

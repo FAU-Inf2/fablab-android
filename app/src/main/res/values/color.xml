@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="AppBarColorPrimary">#464646</color>
-    <color name="AppBarColorPrimaryDark">#333333</color>
+    <color name="colorPrimary">#384F54</color>
+    <color name="colorPrimaryDark">#2D3F43</color>
+    <color name="colorAccent">#889FA4</color>
+    <color name="colorTextPrimary">#000000</color>
+    <color name="colorTextSecondary">#384F54</color>
     <color name="AppBarTextColor">#FFFFFF</color>
     <color name="windowBackground">#E0E0E0</color>
     <color name="cardOpenlab">#8888FF</color>
@@ -23,4 +26,5 @@
     <color name="spinner_background">#ffcecece</color>
 
     <color name="navdrawer_hint">#AAAAAA</color>
+    <color name="navdrawer_item_checked">#889FA4</color>
 </resources>

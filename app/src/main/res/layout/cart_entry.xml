@@ -10,8 +10,9 @@
         android:layout_marginLeft="@dimen/product_card_margin"
         android:layout_marginTop="@dimen/product_card_margin"
         android:layout_marginBottom="@dimen/product_card_margin"
-        card_view:cardCornerRadius="@dimen/zero"
-        android:background="@color/slidingUpPanel_bg_cart_entry">
+        card_view:cardBackgroundColor="@color/slidingUpPanel_bg_cart_entry"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -119,7 +120,7 @@
                 android:layout_height="65dp"
                 android:id="@+id/cart_product_removed_vertical_bar"
                 android:layout_weight="0.05"
-                android:background="@color/slidingUpPanel_bg"
+
                 android:layout_marginRight="@dimen/slidinguppanel_product_removed_margin"/>
 
             <ImageView

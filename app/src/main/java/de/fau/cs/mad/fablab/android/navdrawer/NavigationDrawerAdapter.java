@@ -20,7 +20,7 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
-    private boolean loggedIn = false;
+    private boolean loggedIn = true;
 
     private NavigationDrawer navdrawer;
     private ActionBarActivity mainActivity;

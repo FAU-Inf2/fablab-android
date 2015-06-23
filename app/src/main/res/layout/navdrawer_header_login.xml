@@ -3,10 +3,9 @@
     android:id="@+id/navdrawer_header_login"
     android:layout_width="match_parent"
     android:layout_height="@dimen/navdrawer_height"
-    android:background="@color/AppBarColorPrimaryDark"
+    android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
     android:weightSum="1">
-
 
     <LinearLayout
         android:id="@+id/lin1"

@@ -19,6 +19,8 @@
         android:layout_weight="1"
         android:id="@+id/dates_card_left"
         card_view:cardBackgroundColor="@color/cardSelflab"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         >
 
         <LinearLayout
@@ -135,6 +137,8 @@
         android:layout_weight="1"
         android:id="@+id/dates_card_right"
         card_view:cardBackgroundColor="@color/cardOpenlab"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         >
 
         <LinearLayout

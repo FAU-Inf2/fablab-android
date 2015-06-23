@@ -8,6 +8,7 @@
     android:layout_marginTop="@dimen/card_vertical_margin"
     android:layout_marginBottom="@dimen/card_vertical_margin"
     android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     >
 
     <RelativeLayout

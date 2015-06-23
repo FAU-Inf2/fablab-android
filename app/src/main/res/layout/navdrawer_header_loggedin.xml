@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:textColor="#ffffff"
-            android:text="Test"
+            android:text="@string/app_name"
             android:textSize="14sp"
             android:textStyle="bold"
 
@@ -34,7 +34,7 @@
             android:textColor="#ffffff"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="5dp"
-            android:text="blalbal"
+            android:text="@string/app_website"
             android:textSize="14sp"
             android:textStyle="normal"
 
@@ -44,7 +44,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:src="@drawable/avatar"
+        android:src="@drawable/launcher_icon"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="38dp"
         android:id="@+id/navdrawer_circleView" />
