@@ -75,19 +75,15 @@ public class NewsActivity extends RoboActionBarActivity {
                 Toast.makeText(getBaseContext(), R.string.product_not_found, Toast.LENGTH_LONG).show();
             }
             newsList.clear();
-            for (News singleNews : news) {
-                newsList.add(singleNews);
-            }
-
-            newsAdapter = new NewsAdapter(newsList);
-            news_rv.setAdapter(newsAdapter);
+            newsList.addAll(news);
+            newsAdapter.notifyDataSetChanged();
         }
 
         @Override
         public void failure(RetrofitError error) {
             Toast.makeText(getBaseContext(), R.string.retrofit_callback_failure, Toast.LENGTH_LONG).show();
-            newsAdapter = new NewsAdapter(newsList);
-            news_rv.setAdapter(newsAdapter);
+            newsList.clear();
+            newsAdapter.notifyDataSetChanged();
         }
     };
 
@@ -99,18 +95,15 @@ public class NewsActivity extends RoboActionBarActivity {
                 Toast.makeText(getBaseContext(), R.string.product_not_found, Toast.LENGTH_LONG).show();
             }
             iCalList.clear();
-            for (ICal iCal : iCals) {
-                iCalList.add(iCal);
-            }
-            datesSlidePagerAdapter = new DatesSlidePagerAdapter(getSupportFragmentManager(), iCalList);
-            datesViewPager.setAdapter(datesSlidePagerAdapter);
+            iCalList.addAll(iCals);
+            datesSlidePagerAdapter.notifyDataSetChanged();
         }
 
         @Override
         public void failure(RetrofitError error) {
             Toast.makeText(getBaseContext(), R.string.retrofit_callback_failure, Toast.LENGTH_LONG).show();
-            datesSlidePagerAdapter = new DatesSlidePagerAdapter(getSupportFragmentManager(), iCalList);
-            datesViewPager.setAdapter(datesSlidePagerAdapter);
+            iCalList.clear();
+            datesSlidePagerAdapter.notifyDataSetChanged();
         }
     };
 
@@ -140,9 +133,13 @@ public class NewsActivity extends RoboActionBarActivity {
         news_rv.setLayoutManager(newsLayoutManager);
         newsList = new ArrayList<>();
         newsApi = new NewsApiClient(this).get();
+        newsAdapter = new NewsAdapter(newsList);
+        news_rv.setAdapter(newsAdapter);
         newsApi.findAll(newsCallback);
 
         iCalList = new ArrayList<>();
+        datesSlidePagerAdapter = new DatesSlidePagerAdapter(getSupportFragmentManager(), iCalList);
+        datesViewPager.setAdapter(datesSlidePagerAdapter);
         iCalApi = new ICalApiClient(this).get();
         iCalApi.findAll(iCalCallback);
 
