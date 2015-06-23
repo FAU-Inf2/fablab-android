@@ -98,7 +98,7 @@ public class NewsActivity extends RoboActionBarActivity {
             if (iCals.isEmpty()) {
                 Toast.makeText(getBaseContext(), R.string.product_not_found, Toast.LENGTH_LONG).show();
             }
-            newsList.clear();
+            iCalList.clear();
             for (ICal iCal : iCals) {
                 iCalList.add(iCal);
             }
