@@ -25,6 +25,7 @@ import java.util.List;
 import de.fau.cs.mad.fablab.android.FabButton;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.cart.CartSingleton;
+import de.fau.cs.mad.fablab.android.eventbus.DoorEvent;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.android.productsearch.AutoCompleteHelper;
 import de.fau.cs.mad.fablab.rest.ICalApiClient;
@@ -305,5 +306,9 @@ public class NewsActivity extends RoboActionBarActivity {
         public int getCount() {
             return (dates.size()+1)/2;
         }
+    }
+
+    public void onEvent(DoorEvent event) {
+        appbarDrawer.updateOpenStateEvent(event);
     }
 }
