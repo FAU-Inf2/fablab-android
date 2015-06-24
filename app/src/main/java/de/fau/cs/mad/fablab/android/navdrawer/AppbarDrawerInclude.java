@@ -77,7 +77,7 @@ public class AppbarDrawerInclude  {
         navdrawer.addItem(new NavigationDrawerItem("Produkt scannen", BarcodeScannerActivity.class, R.drawable.barcode));
         navdrawer.addItem(new NavigationDrawerItem("Produkt suchen", ProductSearchActivity.class, R.drawable.produktsuche));
         // navdrawer.addItem(new NavigationDrawerItem("Warenkorb", CartActivity.class, R.drawable.warenkorb));
-        // navdrawer.addItem(new NavigationDrawerItem("Push", PushActivity.class, R.drawable.news));
+
         mAdapter = new NavigationDrawerAdapter(navdrawer, true);
 
         time = -1;
