@@ -9,6 +9,8 @@ import android.widget.Toast;
 import de.fau.cs.mad.fablab.android.cart.CartSingleton;
 import de.fau.cs.mad.fablab.android.eventbus.DoorEvent;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
+import de.fau.cs.mad.fablab.android.pushservice.PushException;
+import de.fau.cs.mad.fablab.android.pushservice.PushService;
 import de.greenrobot.event.EventBus;
 
 public abstract class BaseActivity extends ActionBarActivity {
@@ -33,6 +35,8 @@ public abstract class BaseActivity extends ActionBarActivity {
         appbarDrawer.create();
 
         eventBus.register(this);
+
+        registerToPushService();
 
         if (savedInstanceState != null) {
             cartDisplayOptions = savedInstanceState.getInt("display_cart");
@@ -113,5 +117,16 @@ public abstract class BaseActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void registerToPushService(){
+        PushService pushService = new PushService(this);
+        if(!pushService.alreadyRegistToGCM()){
+            try {
+                pushService.registerDeviceToGCM();
+            }catch (PushException pushEx){
+                pushEx.printStackTrace();
+            }
+        }
     }
 }
