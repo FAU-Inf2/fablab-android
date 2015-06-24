@@ -60,6 +60,14 @@ public class DatesFragment extends Fragment {
 
         if(iCal1 != null)
         {
+            if(iCal1.getSummery().trim().toLowerCase().equals("openlab")) {
+                cardLeft.setCardBackgroundColor(getResources().getColor(R.color.cardOpenlab));
+            } else if(iCal1.getSummery().trim().toLowerCase().equals("selflab")) {
+                cardLeft.setCardBackgroundColor(getResources().getColor(R.color.cardSelflab));
+            } else {
+                cardLeft.setCardBackgroundColor(getResources().getColor(R.color.cardDefault));
+            }
+
             titleLeft.setText(iCal1.getSummery());
             dateLeft.setText(getDate(iCal1.getDtstartAsDate()));
             timeLeft.setText(getTime(iCal1.getDtstartAsDate()));
@@ -93,6 +101,14 @@ public class DatesFragment extends Fragment {
 
         if(iCal2 != null)
         {
+            if(iCal2.getSummery().trim().toLowerCase().equals("openlab")) {
+                cardRight.setCardBackgroundColor(getResources().getColor(R.color.cardOpenlab));
+            } else if(iCal2.getSummery().trim().toLowerCase().equals("selflab")) {
+                cardRight.setCardBackgroundColor(getResources().getColor(R.color.cardSelflab));
+            } else {
+                cardRight.setCardBackgroundColor(getResources().getColor(R.color.cardDefault));
+            }
+
             titleRight.setText(iCal2.getSummery());
             dateRight.setText(getDate(iCal2.getDtstartAsDate()));
             timeRight.setText(getTime(iCal2.getDtstartAsDate()));
