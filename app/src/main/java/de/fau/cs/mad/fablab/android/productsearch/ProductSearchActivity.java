@@ -157,10 +157,6 @@ public class ProductSearchActivity extends BaseActivity
             productAdapter.addAll((ArrayList<Product>) savedInstanceState
                     .getSerializable(KEY_SEARCHED_PRODUCTS));
             selectedProduct = (Product) savedInstanceState.getSerializable(KEY_SELECTED_PRODUCT);
-            if(selectedProduct != null && savedInstanceState.getBoolean(KEY_PRODUCT_DIALOG)) {
-                productDialog = ProductDialog.newInstance(selectedProduct);
-                productDialog.show(getFragmentManager(),"product_dialog");
-            }
         }
 
         //handle intent
@@ -246,15 +242,6 @@ public class ProductSearchActivity extends BaseActivity
         outState.putSerializable(KEY_SEARCHED_PRODUCTS, productAdapter.getAllItems());
         //save selected product
         outState.putSerializable(KEY_SELECTED_PRODUCT, selectedProduct);
-        //save product dialog
-        boolean productDialogIsShowing = false;
-        if(productDialog != null) {
-            Dialog dialog = productDialog.getDialog();
-            if(dialog != null && dialog.isShowing()) {
-                productDialogIsShowing = true;
-            }
-        }
-        outState.putBoolean(KEY_PRODUCT_DIALOG, productDialogIsShowing);
 
     }
 
