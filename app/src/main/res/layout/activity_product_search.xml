@@ -30,17 +30,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <AutoCompleteTextView
-                android:id="@+id/product_search_view"
-                android:hint="@string/search_all_hint"
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
-                android:textStyle="bold"
-                android:imeOptions="actionSend"
-                android:singleLine="true"
-                android:width="250dip" />
+                android:orientation="horizontal"
+                android:paddingTop="2dp">
+                <AutoCompleteTextView
+                    android:id="@+id/product_search_view"
+                    android:hint="@string/search_all_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:textStyle="bold"
+                    android:imeOptions="actionSend"
+                    android:singleLine="true"
+                    android:layout_weight="1"
+                    />
+                <Button
+                    android:id="@+id/product_search_button"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="OK" />
+            </LinearLayout>
 
             <de.fau.cs.mad.fablab.android.productsearch.IndexableListView
                 android:id="@+id/product_indexable_list_view"
