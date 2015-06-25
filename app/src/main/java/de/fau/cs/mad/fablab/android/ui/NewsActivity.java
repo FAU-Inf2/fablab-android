@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +29,8 @@ import de.fau.cs.mad.fablab.android.cart.CartSingleton;
 import de.fau.cs.mad.fablab.android.eventbus.DoorEvent;
 import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.fau.cs.mad.fablab.android.productsearch.AutoCompleteHelper;
+import de.fau.cs.mad.fablab.android.pushservice.PushException;
+import de.fau.cs.mad.fablab.android.pushservice.PushService;
 import de.fau.cs.mad.fablab.rest.ICalApiClient;
 import de.fau.cs.mad.fablab.rest.NewsApiClient;
 import de.fau.cs.mad.fablab.rest.core.ICal;
@@ -114,7 +117,7 @@ public class NewsActivity extends RoboActionBarActivity {
         super.onCreate(savedInstanceState);
 
         uiUtils = new UiUtils();
-
+        registerToPushService();
         appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
 
@@ -310,5 +313,15 @@ public class NewsActivity extends RoboActionBarActivity {
 
     public void onEvent(DoorEvent event) {
         appbarDrawer.updateOpenStateEvent(event);
+    }
+
+    private void registerToPushService(){
+        PushService pushService = new PushService(this);
+        try {
+            pushService.registerDeviceToGCM();
+        }catch (PushException pushEx){
+            pushEx.printStackTrace();
+        }
+
     }
 }

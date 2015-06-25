@@ -1,7 +1,9 @@
 package de.fau.cs.mad.fablab.android;
 
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import de.fau.cs.mad.fablab.android.pushservice.PushService;
 import de.greenrobot.event.EventBus;
 
 public abstract class BaseActivity extends ActionBarActivity {
+    private static final String TAG = "BaseAcitivty";
     private static final int DISPLAY_CART_NONE = 0;
     private static final int DISPLAY_CART_SLIDING_UP = 1;
     private static final int DISPLAY_CART_FULL = 2;
@@ -30,13 +33,10 @@ public abstract class BaseActivity extends ActionBarActivity {
     @Override
     final public void onCreate(Bundle savedInstanceState) {
         baseSetContentView();
-
         appbarDrawer = AppbarDrawerInclude.getInstance(this);
         appbarDrawer.create();
-
         eventBus.register(this);
 
-        registerToPushService();
 
         if (savedInstanceState != null) {
             cartDisplayOptions = savedInstanceState.getInt("display_cart");
@@ -119,14 +119,5 @@ public abstract class BaseActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void registerToPushService(){
-        PushService pushService = new PushService(this);
-        if(!pushService.alreadyRegistToGCM()){
-            try {
-                pushService.registerDeviceToGCM();
-            }catch (PushException pushEx){
-                pushEx.printStackTrace();
-            }
-        }
-    }
+
 }
