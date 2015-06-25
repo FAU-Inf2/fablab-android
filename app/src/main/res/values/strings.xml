@@ -56,4 +56,8 @@
     <string name="navdrawer_login_hint_password">Password</string>
     <string name="navdrawer_button_login">Login</string>
     <string name="app_website">fablab.fau.de</string>
+    <string name="appbar_orderedby_name">Sortiert nach Name</string>
+    <string name="appbar_orderedby_price">Sortiert nach Preis</string>
+    <string name="appbar_orderby_name">Alphabetisch sortieren</string>
+    <string name="appbar_orderby_price">Nach Preis sortieren</string>
 </resources>

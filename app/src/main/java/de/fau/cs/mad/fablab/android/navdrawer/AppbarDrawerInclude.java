@@ -268,4 +268,25 @@ public class AppbarDrawerInclude  {
 
         openedMessage = event.getMessage();
     }
+
+    public void showOrderByIcon() {
+        menu.getItem(1).setVisible(true);
+    }
+
+    public void orderByName() {
+        if(menu.getItem(1) != null && menu.getItem(1).isVisible()) {
+            menu.getItem(1).setIcon(R.drawable.news);
+            menu.getItem(1).setTitle(R.string.appbar_orderedby_name);
+
+            // TODO
+            /* Icons will still be changed to right ones, when I'm at home again */
+        }
+    }
+
+    public void orderByPrice() {
+        if(menu.getItem(1) != null && menu.getItem(1).isVisible()) {
+            menu.getItem(1).setIcon(R.drawable.warenkorb);
+            menu.getItem(1).setTitle(R.string.appbar_orderedby_price);
+        }
+    }
 }

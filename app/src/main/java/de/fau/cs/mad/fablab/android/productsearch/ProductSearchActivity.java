@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -55,6 +57,8 @@ public class ProductSearchActivity extends BaseActivity
     private View spinnerContainerView;
     private ImageView spinnerImageView;
 
+    ArrayList<Product> results = new ArrayList<Product>();
+
     //This callback is used for product Search.
     private Callback<List<Product>> mSearchCallback = new Callback<List<Product>>() {
         @Override
@@ -63,10 +67,8 @@ public class ProductSearchActivity extends BaseActivity
                 Toast.makeText(getBaseContext(), R.string.product_not_found, Toast.LENGTH_LONG).show();
             }
 
-            ArrayList<Product> results = new ArrayList<Product>();
-            for (Product product : products) {
-                results.add(product);
-            }
+            results.addAll(products);
+
             Collections.sort(results, new ProductSort());
             productAdapter.addAll(results);
             productAdapter.notifyDataSetChanged();
@@ -286,5 +288,47 @@ public class ProductSearchActivity extends BaseActivity
         }
         outState.putBoolean(KEY_ERROR_DIALOG, errorDialogIsShowing);
 
+    }
+
+    @Override
+    protected boolean baseOnCreateOptionsMenu(Menu menu) {
+        appbarDrawer.showOrderByIcon();
+
+        MenuItem orderby_name = menu.getItem(1).getSubMenu().getItem(0);
+        orderby_name.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                appbarDrawer.orderByName();
+
+                // TODO
+                /* Enter here behaviour to change order, best with:
+                    Collection sort on arraylist, then
+                    productAdapter.notifyDataSetChanged();
+                 */
+
+                /* Toast is just for test, can be deleted afterwards */
+                Toast.makeText(getBaseContext(), "Name", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        MenuItem orderby_price = menu.getItem(1).getSubMenu().getItem(1);
+        orderby_price.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                appbarDrawer.orderByPrice();
+
+                // TODO
+                /* Enter here behaviour to change order, best with:
+                    Collection sort on arraylist, then
+                    productAdapter.notifyDataSetChanged();
+                 */
+
+                /* Toast is just for test, can be deleted afterwards */
+                Toast.makeText(getBaseContext(), "Price", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        return true;
     }
 }
