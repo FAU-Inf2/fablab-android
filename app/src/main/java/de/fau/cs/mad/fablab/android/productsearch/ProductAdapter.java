@@ -12,15 +12,20 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class ProductAdapter extends ArrayAdapter<Product> implements SectionIndexer {
 
     private final String SECTIONS = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private IndexableListView indexableListView;
 
-    public ProductAdapter(Context context, int resource) {
+    public ProductAdapter(Context context, int resource, IndexableListView indexableListView) {
         super(context, resource);
+        this.indexableListView = indexableListView;
     }
 
     @Override
@@ -125,8 +130,51 @@ public class ProductAdapter extends ArrayAdapter<Product> implements SectionInde
         return 0;
     }
 
+    public void orderByName() {
+        ArrayList<Product> allItems = getAllItems();
+        Collections.sort(allItems, new ProductOrderByName());
+        clear();
+        addAll(allItems);
+        indexableListView.setFastScrollEnabled(true);
+        //manually call method onSizeChanged so that object RectF is created
+        indexableListView.onSizeChanged(indexableListView.getWidth(), indexableListView.getHeight(),
+                indexableListView.getWidth(), indexableListView.getHeight());
+        notifyDataSetChanged();
+    }
+
+    public void orderByPrice() {
+        ArrayList<Product> allItems = getAllItems();
+        Collections.sort(allItems, new ProductOrderByPrice());
+        clear();
+        addAll(allItems);
+        indexableListView.setFastScrollEnabled(false);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getSectionForPosition(int position) {
         return 0;
+    }
+
+    public class ProductOrderByName implements Comparator<Product> {
+
+        @Override
+        public int compare(Product p1, Product p2) {
+            return p1.getName().compareTo(p2.getName());
+        }
+    }
+
+    public class ProductOrderByPrice implements Comparator<Product> {
+
+        @Override
+        public int compare(Product p1, Product p2) {
+            if(p1.getPrice() > p2.getPrice()) {
+                return 1;
+            } else if(p1.getPrice() < p2.getPrice()) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
     }
 }

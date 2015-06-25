@@ -41,7 +41,8 @@ public class ProductSearchActivity extends BaseActivity
     public static final String  KEY_LOCATION            = "location";
     private final String        KEY_SEARCHED_PRODUCTS   = "searched_products";
     private final String        KEY_SELECTED_PRODUCT    = "selected_product";
-    private final String        KEY_PRODUCT_DIALOG      = "product_dialog";
+    private final String        KEY_ORDER_OPTION        = "order_option";
+    private boolean             isOrderedByName         = true;
 
     private RecyclerView.LayoutManager layoutManager;
     private ProductAdapter productAdapter;
@@ -63,13 +64,12 @@ public class ProductSearchActivity extends BaseActivity
             if (products.isEmpty()) {
                 Toast.makeText(getBaseContext(), R.string.product_not_found, Toast.LENGTH_LONG).show();
             }
-
-            results.addAll(products);
-
-            Collections.sort(results, new ProductSort());
-            productAdapter.addAll(results);
-            productAdapter.notifyDataSetChanged();
-
+            productAdapter.addAll(products);
+            if(isOrderedByName) {
+                productAdapter.orderByName();
+            } else {
+                productAdapter.orderByPrice();
+            }
             UiUtils.hideSpinner(spinnerContainerView, spinnerImageView);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
@@ -134,7 +134,7 @@ public class ProductSearchActivity extends BaseActivity
         //get indexable list view and set adapter
         IndexableListView indexableListView = (IndexableListView)
                 findViewById(R.id.product_indexable_list_view);
-        productAdapter = new ProductAdapter(getApplicationContext(), R.layout.product_entry);
+        productAdapter = new ProductAdapter(getApplicationContext(), R.layout.product_entry, indexableListView);
         indexableListView.setAdapter(productAdapter);
         indexableListView.setFastScrollEnabled(true);
 
@@ -157,6 +157,7 @@ public class ProductSearchActivity extends BaseActivity
             productAdapter.addAll((ArrayList<Product>) savedInstanceState
                     .getSerializable(KEY_SEARCHED_PRODUCTS));
             selectedProduct = (Product) savedInstanceState.getSerializable(KEY_SELECTED_PRODUCT);
+            isOrderedByName = savedInstanceState.getBoolean(KEY_ORDER_OPTION);
         }
 
         //handle intent
@@ -242,6 +243,8 @@ public class ProductSearchActivity extends BaseActivity
         outState.putSerializable(KEY_SEARCHED_PRODUCTS, productAdapter.getAllItems());
         //save selected product
         outState.putSerializable(KEY_SELECTED_PRODUCT, selectedProduct);
+        //save order option
+        outState.putBoolean(KEY_ORDER_OPTION, isOrderedByName);
 
     }
 
@@ -254,15 +257,8 @@ public class ProductSearchActivity extends BaseActivity
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 appbarDrawer.orderByName();
-
-                // TODO
-                /* Enter here behaviour to change order, best with:
-                    Collection sort on arraylist, then
-                    productAdapter.notifyDataSetChanged();
-                 */
-
-                /* Toast is just for test, can be deleted afterwards */
-                Toast.makeText(getBaseContext(), "Name", Toast.LENGTH_SHORT).show();
+                productAdapter.orderByName();
+                isOrderedByName = true;
                 return true;
             }
         });
@@ -272,15 +268,8 @@ public class ProductSearchActivity extends BaseActivity
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 appbarDrawer.orderByPrice();
-
-                // TODO
-                /* Enter here behaviour to change order, best with:
-                    Collection sort on arraylist, then
-                    productAdapter.notifyDataSetChanged();
-                 */
-
-                /* Toast is just for test, can be deleted afterwards */
-                Toast.makeText(getBaseContext(), "Price", Toast.LENGTH_SHORT).show();
+                productAdapter.orderByPrice();
+                isOrderedByName = false;
                 return true;
             }
         });
