@@ -42,7 +42,6 @@ public class ProductSearchActivity extends BaseActivity
     private final String        KEY_SEARCHED_PRODUCTS   = "searched_products";
     private final String        KEY_SELECTED_PRODUCT    = "selected_product";
     private final String        KEY_PRODUCT_DIALOG      = "product_dialog";
-    private final String        KEY_ERROR_DIALOG        = "error_dialog";
 
     private RecyclerView.LayoutManager layoutManager;
     private ProductAdapter productAdapter;
@@ -51,8 +50,6 @@ public class ProductSearchActivity extends BaseActivity
 
     private ProductDialog productDialog;
     private Product selectedProduct;
-
-    private ErrorDialog errorDialog;
 
     private View spinnerContainerView;
     private ImageView spinnerImageView;
@@ -164,11 +161,6 @@ public class ProductSearchActivity extends BaseActivity
                 productDialog = ProductDialog.newInstance(selectedProduct);
                 productDialog.show(getFragmentManager(),"product_dialog");
             }
-            if(savedInstanceState.getBoolean(KEY_ERROR_DIALOG)) {
-                errorDialog = ErrorDialog.newInstance(getResources().getString(
-                        R.string.invalid_location));
-                errorDialog.show(getFragmentManager(),"error_dialog");
-            }
         }
 
         //handle intent
@@ -224,25 +216,10 @@ public class ProductSearchActivity extends BaseActivity
 
     @Override
     public void onShowLocationClick() {
-        //TODO get location of the selected product
-        String location;
-        location = selectedProduct.getLocation();
-        //location = "tatsaechliche Lagerorte / FAU FabLab / Elektrowerkstatt / " +
-        //        "Regal / Plexiglass";
-
-            if (LocationParser.getLocation(location) != null)
-            {
-                //show location
-                Intent intent = new Intent(this, ProductMapActivity.class);
-                intent.putExtra(KEY_LOCATION, location);
-                startActivity(intent);
-            } else
-            {
-                //show error dialog
-                productDialog.dismiss();
-                errorDialog = ErrorDialog.newInstance(getResources().getString(R.string.invalid_location));
-                errorDialog.show(getFragmentManager(), "error_dialog");
-            }
+        //show location
+        Intent intent = new Intent(this, ProductMapActivity.class);
+        intent.putExtra(KEY_LOCATION, selectedProduct.getLocation());
+        startActivity(intent);
 
     }
 
@@ -278,15 +255,6 @@ public class ProductSearchActivity extends BaseActivity
             }
         }
         outState.putBoolean(KEY_PRODUCT_DIALOG, productDialogIsShowing);
-        //save error dialog
-        boolean errorDialogIsShowing = false;
-        if(errorDialog != null) {
-            Dialog dialog = errorDialog.getDialog();
-            if(dialog != null && dialog.isShowing()) {
-                errorDialogIsShowing = true;
-            }
-        }
-        outState.putBoolean(KEY_ERROR_DIALOG, errorDialogIsShowing);
 
     }
 
