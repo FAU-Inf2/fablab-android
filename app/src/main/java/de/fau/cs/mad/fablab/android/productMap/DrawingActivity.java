@@ -142,21 +142,21 @@ public class DrawingActivity extends View
         // workbench
         int workbenchBottomPoint = bottomTopPoint + roomHeight/8;
         Rect workbench = new Rect(millingMachineRightPoint, bottomTopPoint, doorLeftPoint, workbenchBottomPoint );
-        canvas.drawRect(workbench, Paintings.SHELF_FILL_LIGHT_PAINTING.getPaint());
+        canvas.drawRect(workbench, Paintings.SHELF_PAINTING_FILL.getPaint());
         canvas.drawText("Werkbank", workbench.left + padding, workbench.centerY(), Paintings.TEXT_PAINTING_SMALL.getPaint());
 
         Rect workbench2 = new Rect(doorLeftPoint - roomWidth/5, workbenchBottomPoint, doorLeftPoint, bottomTopPoint + roomHeight/8*2);
-        canvas.drawRect(workbench2, Paintings.SHELF_FILL_LIGHT_PAINTING.getPaint());
+        canvas.drawRect(workbench2, Paintings.SHELF_PAINTING_FILL.getPaint());
 
         // chemistry bench
         int chemistryBenchRightPoint = outerWall.left + Paintings.ROOM_PAINTING.getStrokeWith()/2 + roomWidth/5;
         Rect chemistryBench = new Rect(leftPoint, entryDoorBottomPoint, chemistryBenchRightPoint, bottomPoint);
-        canvas.drawRect(chemistryBench, Paintings.SHELF_FILL_LIGHT_PAINTING.getPaint());
+        canvas.drawRect(chemistryBench, Paintings.SHELF_PAINTING_FILL.getPaint());
 
         int chemistryBench2RightPoint = leftPoint + roomWidth/5*2;
         int chemistryBench2TopPoint = bottomPoint - roomHeight/8;
         Rect chemistryBench2 = new Rect(chemistryBenchRightPoint, chemistryBench2TopPoint, chemistryBench2RightPoint, bottomPoint);
-        canvas.drawRect(chemistryBench2, Paintings.SHELF_FILL_LIGHT_PAINTING.getPaint());
+        canvas.drawRect(chemistryBench2, Paintings.SHELF_PAINTING_FILL.getPaint());
         canvas.drawText("Chemietisch", chemistryBench.left + padding, chemistryBench.bottom - padding, Paintings.TEXT_PAINTING_SMALL.getPaint());
 
 
@@ -173,16 +173,16 @@ public class DrawingActivity extends View
         // top room
         // acrylic shelf
         Rect acrylicShelf = new Rect(leftPoint,topBottomPoint - roomHeight/6, doorLeftPoint, topBottomPoint );
-        canvas.drawRect(acrylicShelf, Paintings.SHELF_FILL_LIGHT_PAINTING.getPaint());
+        canvas.drawRect(acrylicShelf, Paintings.SHELF_PAINTING_FILL.getPaint());
         canvas.drawText("Plexiglasregal", acrylicShelf.left + padding, acrylicShelf.bottom - padding, Paintings.TEXT_PAINTING_SMALL.getPaint());
 
         // screw shelf
         Rect screwShelf = new Rect(rightPoint - roomWidth/8, topPoint + windowWith*2, rightPoint, topPoint + windowWith*4);
-        canvas.drawRect(screwShelf, Paintings.SHELF_FILL_LIGHT_PAINTING.getPaint());
+        canvas.drawRect(screwShelf, Paintings.SHELF_PAINTING_FILL.getPaint());
 
         // other shelf
         Rect otherShelf = new Rect(rightPoint - roomWidth/4, topPoint, rightPoint, topPoint + roomHeight/9);
-        canvas.drawRect(otherShelf, Paintings.SHELF_FILL_LIGHT_PAINTING.getPaint());
+        canvas.drawRect(otherShelf, Paintings.SHELF_PAINTING_FILL.getPaint());
 
         // tables
         Rect tablesTopRoom = new Rect(leftPoint, topPoint + roomHeight/5, leftPoint + roomWidth/3*2, topPoint + roomHeight/5*3);
@@ -196,7 +196,7 @@ public class DrawingActivity extends View
     protected void drawElectricWorkshop(Canvas canvas)
     {
 
-        Paint electricWorkshopPaint = Paintings.SHELF_STROKE_DARK_PAINTING.getPaint();
+        Paint electricWorkshopPaint = Paintings.SHELF_PAINTING_STROKE.getPaint();
         Rect electricWorkshopOutline = drawLocalViewBaseLayout(canvas, electricWorkshopPaint, "Elektrowerkstatt");
 
         //shelves
@@ -232,7 +232,7 @@ public class DrawingActivity extends View
 
     protected  void drawAcrylicShelfVerticalView(Canvas canvas)
     {
-        Paint acrylicShelfPaint = Paintings.SHELF_STROKE_LIGHT_PAINTING.getPaint();
+        Paint acrylicShelfPaint = Paintings.SHELF_PAINTING_STROKE.getPaint();
 
         int rightPoint = canvas.getWidth() - canvas.getWidth()/8;
         int leftPoint = canvas.getWidth()/8;
