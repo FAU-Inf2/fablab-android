@@ -373,8 +373,8 @@ public enum CartSingleton {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                rl.setVisibility(View.GONE);
                 updateVisibility();
+                rl.setVisibility(View.GONE);
             }
         });
 
