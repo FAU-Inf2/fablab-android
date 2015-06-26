@@ -1,18 +1,20 @@
 package de.fau.cs.mad.fablab.android.productsearch;
 
-import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +25,6 @@ import java.util.List;
 
 import de.fau.cs.mad.fablab.android.BaseActivity;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.productMap.LocationParser;
 import de.fau.cs.mad.fablab.android.productMap.ProductMapActivity;
 import de.fau.cs.mad.fablab.android.ui.UiUtils;
 import de.fau.cs.mad.fablab.rest.ProductApiClient;
@@ -39,8 +40,8 @@ public class ProductSearchActivity extends BaseActivity
     public static final String  KEY_LOCATION            = "location";
     private final String        KEY_SEARCHED_PRODUCTS   = "searched_products";
     private final String        KEY_SELECTED_PRODUCT    = "selected_product";
-    private final String        KEY_PRODUCT_DIALOG      = "product_dialog";
-    private final String        KEY_ERROR_DIALOG        = "error_dialog";
+    private final String        KEY_ORDER_OPTION        = "order_option";
+    private boolean             isOrderedByName         = true;
 
     private RecyclerView.LayoutManager layoutManager;
     private ProductAdapter productAdapter;
@@ -50,10 +51,10 @@ public class ProductSearchActivity extends BaseActivity
     private ProductDialog productDialog;
     private Product selectedProduct;
 
-    private ErrorDialog errorDialog;
-
     private View spinnerContainerView;
     private ImageView spinnerImageView;
+
+    ArrayList<Product> results = new ArrayList<Product>();
 
     //This callback is used for product Search.
     private Callback<List<Product>> mSearchCallback = new Callback<List<Product>>() {
@@ -62,15 +63,12 @@ public class ProductSearchActivity extends BaseActivity
             if (products.isEmpty()) {
                 Toast.makeText(getBaseContext(), R.string.product_not_found, Toast.LENGTH_LONG).show();
             }
-
-            ArrayList<Product> results = new ArrayList<Product>();
-            for (Product product : products) {
-                results.add(product);
+            productAdapter.addAll(products);
+            if(isOrderedByName) {
+                productAdapter.orderByName();
+            } else {
+                productAdapter.orderByPrice();
             }
-            Collections.sort(results, new ProductSort());
-            productAdapter.addAll(results);
-            productAdapter.notifyDataSetChanged();
-
             UiUtils.hideSpinner(spinnerContainerView, spinnerImageView);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
@@ -108,6 +106,14 @@ public class ProductSearchActivity extends BaseActivity
         final AutoCompleteTextView searchView = (AutoCompleteTextView) findViewById(R.id.product_search_view);
         searchView.setThreshold(2); //min 2 chars before autocomplete
 
+        Button productSearchButton = (Button) findViewById(R.id.product_search_button);
+        productSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search(searchView.getText().toString());
+            }
+        });
+
         //Set adapter to AutoCompleteTextView
         ArrayAdapter<String>adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, AutoCompleteHelper.getInstance().getPossibleAutoCompleteWords());
         searchView.setAdapter(adapter);
@@ -135,7 +141,7 @@ public class ProductSearchActivity extends BaseActivity
         //get indexable list view and set adapter
         IndexableListView indexableListView = (IndexableListView)
                 findViewById(R.id.product_indexable_list_view);
-        productAdapter = new ProductAdapter(getApplicationContext(), R.layout.product_entry);
+        productAdapter = new ProductAdapter(getApplicationContext(), R.layout.product_entry, indexableListView);
         indexableListView.setAdapter(productAdapter);
         indexableListView.setFastScrollEnabled(true);
 
@@ -158,15 +164,7 @@ public class ProductSearchActivity extends BaseActivity
             productAdapter.addAll((ArrayList<Product>) savedInstanceState
                     .getSerializable(KEY_SEARCHED_PRODUCTS));
             selectedProduct = (Product) savedInstanceState.getSerializable(KEY_SELECTED_PRODUCT);
-            if(selectedProduct != null && savedInstanceState.getBoolean(KEY_PRODUCT_DIALOG)) {
-                productDialog = ProductDialog.newInstance(selectedProduct);
-                productDialog.show(getFragmentManager(),"product_dialog");
-            }
-            if(savedInstanceState.getBoolean(KEY_ERROR_DIALOG)) {
-                errorDialog = ErrorDialog.newInstance(getResources().getString(
-                        R.string.invalid_location));
-                errorDialog.show(getFragmentManager(),"error_dialog");
-            }
+            isOrderedByName = savedInstanceState.getBoolean(KEY_ORDER_OPTION);
         }
 
         //handle intent
@@ -222,25 +220,10 @@ public class ProductSearchActivity extends BaseActivity
 
     @Override
     public void onShowLocationClick() {
-        //TODO get location of the selected product
-        String location;
-        location = selectedProduct.getLocation();
-        //location = "tatsaechliche Lagerorte / FAU FabLab / Elektrowerkstatt / " +
-        //        "Regal / Plexiglass";
-
-            if (LocationParser.getLocation(location) != null)
-            {
-                //show location
-                Intent intent = new Intent(this, ProductMapActivity.class);
-                intent.putExtra(KEY_LOCATION, location);
-                startActivity(intent);
-            } else
-            {
-                //show error dialog
-                productDialog.dismiss();
-                errorDialog = ErrorDialog.newInstance(getResources().getString(R.string.invalid_location));
-                errorDialog.show(getFragmentManager(), "error_dialog");
-            }
+        //show location
+        Intent intent = new Intent(this, ProductMapActivity.class);
+        intent.putExtra(KEY_LOCATION, selectedProduct.getLocation());
+        startActivity(intent);
 
     }
 
@@ -267,24 +250,36 @@ public class ProductSearchActivity extends BaseActivity
         outState.putSerializable(KEY_SEARCHED_PRODUCTS, productAdapter.getAllItems());
         //save selected product
         outState.putSerializable(KEY_SELECTED_PRODUCT, selectedProduct);
-        //save product dialog
-        boolean productDialogIsShowing = false;
-        if(productDialog != null) {
-            Dialog dialog = productDialog.getDialog();
-            if(dialog != null && dialog.isShowing()) {
-                productDialogIsShowing = true;
-            }
-        }
-        outState.putBoolean(KEY_PRODUCT_DIALOG, productDialogIsShowing);
-        //save error dialog
-        boolean errorDialogIsShowing = false;
-        if(errorDialog != null) {
-            Dialog dialog = errorDialog.getDialog();
-            if(dialog != null && dialog.isShowing()) {
-                errorDialogIsShowing = true;
-            }
-        }
-        outState.putBoolean(KEY_ERROR_DIALOG, errorDialogIsShowing);
+        //save order option
+        outState.putBoolean(KEY_ORDER_OPTION, isOrderedByName);
 
+    }
+
+    @Override
+    protected boolean baseOnCreateOptionsMenu(Menu menu) {
+        appbarDrawer.showOrderByIcon();
+
+        MenuItem orderby_name = menu.getItem(1).getSubMenu().getItem(0);
+        orderby_name.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                appbarDrawer.orderByName();
+                productAdapter.orderByName();
+                isOrderedByName = true;
+                return true;
+            }
+        });
+
+        MenuItem orderby_price = menu.getItem(1).getSubMenu().getItem(1);
+        orderby_price.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                appbarDrawer.orderByPrice();
+                productAdapter.orderByPrice();
+                isOrderedByName = false;
+                return true;
+            }
+        });
+        return true;
     }
 }

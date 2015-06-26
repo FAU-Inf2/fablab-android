@@ -39,13 +39,17 @@ public class PushService {
 
     public void registerDeviceToGCM() throws PushException{
         RegistrationId registrationId = new RegistrationId();
+
         if(!checkPlayServices()){
             throw new PushException("Service is not available");
         }
         if(alreadyRegistToGCM()){
+            Log.i(TAG,"alreadyRegistToGCM");
+            Log.i(TAG,"RegistrationID = " + getRegistrationIdAsString());
             registrationId.setRegistrationid(getRegistrationIdAsString());
         }
         else{
+            Log.i(TAG,"Not alreadyRegistToGCM");
             registerInBackground();
         }
     }

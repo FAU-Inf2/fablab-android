@@ -5,6 +5,23 @@
         android:orderInCategory="100"
         android:title="@string/appbar_closed"
         android:icon="@drawable/closed"
-        app:showAsAction="always"
-        ></item>
+        app:showAsAction="always" />
+    <item android:id="@+id/action_orderby"
+        android:orderInCategory="101"
+        android:title="@string/appbar_orderedby_name"
+        android:icon="@drawable/news"
+        android:visible="false"
+        app:showAsAction="always">
+        <menu>
+            <item android:id="@+id/action_orderby_name"
+                android:title="@string/appbar_orderby_name"
+                app:showAsAction="always" />
+            <item android:id="@+id/action_orderby_price"
+                android:title="@string/appbar_orderby_price"
+                app:showAsAction="always" />
+
+        </menu>
+
+    </item>
+
 </menu>

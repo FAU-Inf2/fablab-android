@@ -7,8 +7,9 @@
     <color name="colorTextSecondary">#384F54</color>
     <color name="AppBarTextColor">#FFFFFF</color>
     <color name="windowBackground">#E0E0E0</color>
-    <color name="cardOpenlab">#8888FF</color>
-    <color name="cardSelflab">#FF8888</color>
+    <color name="cardOpenlab">#788F94</color>
+    <color name="cardSelflab">#789487</color>
+    <color name="cardDefault">#9C5151</color>
     <color name="cardImportant">#FF0000</color>
     <color name="AppbarColorClosed">#FF0000</color>
     <color name="AppbarColorOpened">#62DF25</color>

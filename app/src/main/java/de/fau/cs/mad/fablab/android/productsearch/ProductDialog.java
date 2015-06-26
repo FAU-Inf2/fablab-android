@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.productMap.LocationParser;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class ProductDialog extends DialogFragment {
@@ -58,36 +59,37 @@ public class ProductDialog extends DialogFragment {
         //set product name as title
         title.setText(product.getName());
 
-        //handling for zero-priced products
-        if(product.getPrice() == 0) {
-            cart.setTextColor(getActivity().getResources().getColor(R.color
-                    .primary_text_disabled_material_light));
-            report.setTextColor(getActivity().getResources().getColor(R.color
-                    .primary_text_disabled_material_light));
-        }
-
-        //set listeners for click events for all products
+        //set listeners for click events
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 productDialogListener.onShowLocationClick();
             }
         });
-        //set listeners for click events for not zero-priced products
-        if(product.getPrice() != 0) {
-            cart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    productDialogListener.onAddToCartClick();
-                }
-            });
-            report.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    productDialogListener.onReportClick();
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                productDialogListener.onAddToCartClick();
+            }
+        });
+        report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                productDialogListener.onReportClick();
+            }
+        });
 
-                }
-            });
+        //disable location button if no location is available
+        if(LocationParser.getLocation(product.getLocation()) == null) {
+            location.setEnabled(false);
+            location.setClickable(false);
+        }
+        //disable cart and report button for zero-priced products
+        if(product.getPrice() == 0) {
+            cart.setEnabled(false);
+            cart.setClickable(false);
+            report.setEnabled(false);
+            report.setEnabled(false);
         }
 
         return view;

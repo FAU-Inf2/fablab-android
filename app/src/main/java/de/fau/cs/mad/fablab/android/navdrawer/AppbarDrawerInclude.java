@@ -77,7 +77,7 @@ public class AppbarDrawerInclude  {
         navdrawer.addItem(new NavigationDrawerItem("Produkt scannen", BarcodeScannerActivity.class, R.drawable.barcode));
         navdrawer.addItem(new NavigationDrawerItem("Produkt suchen", ProductSearchActivity.class, R.drawable.produktsuche));
         // navdrawer.addItem(new NavigationDrawerItem("Warenkorb", CartActivity.class, R.drawable.warenkorb));
-        // navdrawer.addItem(new NavigationDrawerItem("Push", PushActivity.class, R.drawable.news));
+
         mAdapter = new NavigationDrawerAdapter(navdrawer, true);
 
         time = -1;
@@ -267,5 +267,26 @@ public class AppbarDrawerInclude  {
         updateAppbar();
 
         openedMessage = event.getMessage();
+    }
+
+    public void showOrderByIcon() {
+        menu.getItem(1).setVisible(true);
+    }
+
+    public void orderByName() {
+        if(menu.getItem(1) != null && menu.getItem(1).isVisible()) {
+            menu.getItem(1).setIcon(R.drawable.news);
+            menu.getItem(1).setTitle(R.string.appbar_orderedby_name);
+
+            // TODO
+            /* Icons will still be changed to right ones, when I'm at home again */
+        }
+    }
+
+    public void orderByPrice() {
+        if(menu.getItem(1) != null && menu.getItem(1).isVisible()) {
+            menu.getItem(1).setIcon(R.drawable.warenkorb);
+            menu.getItem(1).setTitle(R.string.appbar_orderedby_price);
+        }
     }
 }
