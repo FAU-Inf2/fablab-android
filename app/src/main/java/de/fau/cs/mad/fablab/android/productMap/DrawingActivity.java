@@ -103,18 +103,19 @@ public class DrawingActivity extends View
         canvas.drawLine(outerWall.left, outerWall.centerY(), outerWall.right, outerWall.centerY(), Paintings.ROOM_PAINTING.getPaint());
 
         // doors
+        int openDoorOffset = 20;
         // entry door
         int entryDoorBottomPoint = outerWall.centerY() + roomHeight/3*2;
         int entryDoorTopPoint = outerWall.centerY() + roomHeight/3;
-        canvas.drawLine(outerWall.left, entryDoorTopPoint, outerWall.left, entryDoorBottomPoint, Paintings.DOOR_PAINTING.getPaint());
+        canvas.drawLine(outerWall.left + openDoorOffset, entryDoorTopPoint + openDoorOffset, outerWall.left, entryDoorBottomPoint, Paintings.DOOR_PAINTING.getPaint());
 
         // room door top
         int doorLeftPoint = outerWall.right - outerWall.width()/5 - padding*2;
         int doorRightPoint = outerWall.right - padding*2;
-        canvas.drawLine(doorLeftPoint, outerWall.centerY(), doorRightPoint, outerWall.centerY(), Paintings.DOOR_PAINTING.getPaint());
+        canvas.drawLine(doorLeftPoint, outerWall.centerY(), doorRightPoint - openDoorOffset, outerWall.centerY() - openDoorOffset, Paintings.DOOR_PAINTING.getPaint());
 
         // room door bottom
-        canvas.drawLine(doorLeftPoint, outerWall.bottom, doorRightPoint, outerWall.bottom, Paintings.DOOR_PAINTING.getPaint());
+        canvas.drawLine(doorLeftPoint, outerWall.bottom, doorRightPoint - openDoorOffset, outerWall.bottom - openDoorOffset, Paintings.DOOR_PAINTING.getPaint());
 
         // windows
         int windowWith = roomHeight/6;
@@ -135,7 +136,7 @@ public class DrawingActivity extends View
         // milling machine
         int millingMachineRightPoint = offsetLeftWall + roomWidth/4;
         Rect millingMachine = new Rect(leftPoint, bottomTopPoint, millingMachineRightPoint, entryDoorTopPoint);
-        canvas.drawRect(millingMachine, Paintings.GRAY_PAINTING.getPaint());
+        canvas.drawRect(millingMachine, Paintings.MACHINE_PAINTING.getPaint());
         canvas.drawText("Fr\u00e4se", leftPoint + padding, millingMachine.centerY(), Paintings.TEXT_PAINTING_SMALL.getPaint());
 
         // workbench
@@ -161,12 +162,12 @@ public class DrawingActivity extends View
 
         // engine lathe
         Rect engineLathe = new Rect(chemistryBench2RightPoint, chemistryBench2TopPoint, doorLeftPoint, bottomPoint );
-        canvas.drawRect(engineLathe, Paintings.GRAY_PAINTING.getPaint());
+        canvas.drawRect(engineLathe, Paintings.MACHINE_PAINTING.getPaint());
         canvas.drawText("Drehbank", engineLathe.left + padding, engineLathe.bottom - padding, Paintings.TEXT_PAINTING_SMALL.getPaint());
 
         //tables
         Rect tablesBottomRoom = new Rect(leftPoint + roomWidth/2, bottomTopPoint + roomHeight/7*3, rightPoint, bottomTopPoint + roomHeight/7*5);
-        canvas.drawRect(tablesBottomRoom, Paintings.SHELF_FILL_DARK_PAINTING.getPaint());
+        canvas.drawRect(tablesBottomRoom, Paintings.TABLE_PAINTING.getPaint());
         canvas.drawText("Labortisch", tablesBottomRoom.left + padding, tablesBottomRoom.centerY(), Paintings.TEXT_PAINTING_SMALL.getPaint());
 
         // top room
@@ -185,7 +186,7 @@ public class DrawingActivity extends View
 
         // tables
         Rect tablesTopRoom = new Rect(leftPoint, topPoint + roomHeight/5, leftPoint + roomWidth/3*2, topPoint + roomHeight/5*3);
-        canvas.drawRect(tablesTopRoom, Paintings.SHELF_FILL_DARK_PAINTING.getPaint());
+        canvas.drawRect(tablesTopRoom, Paintings.TABLE_PAINTING.getPaint());
         canvas.drawText("Labortisch", tablesTopRoom.left + padding, tablesTopRoom.centerY(), Paintings.TEXT_PAINTING_SMALL.getPaint());
 
 
@@ -317,7 +318,7 @@ public class DrawingActivity extends View
     {
         int locationX;
         int locationY;
-        int circleRadius = 20;
+        int circleRadius = Paintings.LOCATION_PAINTING.getStrokeWith();
         if(!isHorizontal)
         {
             locationX = (int) (canvas.getWidth() * positionX);
