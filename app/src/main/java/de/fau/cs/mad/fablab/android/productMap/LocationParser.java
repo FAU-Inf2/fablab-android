@@ -3,14 +3,17 @@ package de.fau.cs.mad.fablab.android.productMap;
 
 import android.location.Location;
 
+import com.fasterxml.jackson.databind.deser.DataFormatReaders;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class LocationParser
 {
-    //String teststring = "tats\u00e4chliche Lagerorte / FAU FabLab / Elektrowerkstatt / Regal / Kiste Spaxschrauben";
+    protected static String testString = "tats\u00e4chliche Lagerorte / FAU FabLab / Elektrowerkstatt / Regal / Kiste Spaxschrauben (W10)";
 
     private LocationParser(){   }
+
 
     public static ProductLocation getLocation(String locationString)
     {
@@ -18,63 +21,62 @@ public final class LocationParser
 
         if(locationString != null)
         {
-            String splitedString[] = splitLocationString(deleteWhitespaces(locationString));
+            String cleanedString = deleteWhitespaces(testString);
+            String splittedString[] = splitLocationString(cleanedString);
+            String lastPartOfLocationString = splittedString[splittedString.length-1];
 
-            String identificationCode = extractIdentificationCode(splitedString[splitedString.length - 1]);
-
-            if (identificationCode.equals(""))
+            if(hasIdentificationCode(lastPartOfLocationString))
             {
-                for (ProductLocation loc : ProductLocation.values())
-                {
-                    if (splitedString[splitedString.length - 1].equals(loc.getLocationName()))
-                    {
-                        productLocation = loc;
-                    }
-                }
-                // maybe the second last location name is known
-                if (productLocation == null && splitedString.length > 2)
-                    for (ProductLocation loc : ProductLocation.values())
-                    {
-                        if (splitedString[splitedString.length - 2].equals(loc.getLocationName()))
-                        {
-                            productLocation = loc;
-                        }
-                    }
+                String identificationCode = extractIdentificationCode(lastPartOfLocationString);
+                productLocation = convertIdenticationCodeToProductLocation(identificationCode);
             }
-
+            else
+            {
+                productLocation = convertLocationStringToLocation(splittedString);
+            }
 
         }
 
         return productLocation;
     }
 
+    // first filter
     private static String deleteWhitespaces(String locationString)
     {
         String result = locationString.replaceAll(" / ", "/");
         return result;
     }
 
+    // second filter
     private static String[] splitLocationString(String locationString)
     {
         String[] parts = locationString.split("/");
         return parts;
     }
 
-    private static String extractIdentificationCode(String lastSplitString)
+    protected static String identificationCodeRegex = "\\s\\([A-Z]\\d*(\\.\\d)?\\)";  // ...Regal (K) oder ...Halter (E6.1) oder .. (D1) oder ... (W10)
+    protected static Pattern identificationCodePattern = Pattern.compile(identificationCodeRegex);
+
+    private static boolean hasIdentificationCode(String lastPartOfString)
+    {
+        Matcher identificationCodeMatcher = identificationCodePattern.matcher(lastPartOfString);
+        return identificationCodeMatcher.find();
+    }
+
+    // third filter
+    private static String extractIdentificationCode(String lastPartOfString)
     {
         String result = "";
-        String regex = "\\s\\([A-Z]\\d*(\\.\\d)?\\)"; // ...Regal (K) oder ...Halter (E6.1) oder .. (D1) oder ... (W10)
-
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(lastSplitString);
-
-        if(m.find())
-            result = m.group();
-
+        Matcher identificationCodeMatcher = identificationCodePattern.matcher(lastPartOfString);
+        if (identificationCodeMatcher.find())
+        {
+            result = identificationCodeMatcher.group();
+        }
         return result;
     }
 
-    private static ProductLocation convertIdentificationCodeToLocation(String identificationCode)
+    // forth filter
+    private static ProductLocation convertIdenticationCodeToProductLocation(String identificationCode)
     {
         ProductLocation productLocation = null;
         for (ProductLocation loc : ProductLocation.values())
@@ -84,6 +86,45 @@ public final class LocationParser
                 productLocation = loc;
             }
         }
+        try
+        {
+            if (productLocation == null)
+                throw new IllegalArgumentException(identificationCode + " is not available in Product locations.");
+        }
+        catch ( IllegalArgumentException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+        finally
+        {
+            return productLocation;
+        }
+
+    }
+
+
+    private static ProductLocation convertLocationStringToLocation(String[] splittedLocationString)
+    {
+        ProductLocation productLocation = null;
+
+        for (ProductLocation loc : ProductLocation.values())
+        {
+            if (splittedLocationString[splittedLocationString.length - 1].equals(loc.getLocationName()))
+            {
+                productLocation = loc;
+            }
+        }
+
+        // maybe the second last location name is known
+        if (productLocation == null && splittedLocationString.length > 2)
+            for (ProductLocation loc : ProductLocation.values())
+            {
+                if (splittedLocationString[splittedLocationString.length - 2].equals(loc.getLocationName()))
+                {
+                    productLocation = loc;
+                }
+            }
+
         return productLocation;
     }
 
