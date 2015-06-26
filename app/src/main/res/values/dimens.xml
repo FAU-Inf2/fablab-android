@@ -56,6 +56,7 @@
     <dimen name="slidinguppanel_btn_checkout_textsize">16sp</dimen>
     <dimen name="slidinguppanel_total_price_margin">23dp</dimen>
     <dimen name="slidinguppanel_spinner_width">70dp</dimen>
+    <dimen name="slidinguppanel_quantity_width">140dp</dimen>
     <dimen name="slidinguppanel_spinner_margin">10dp</dimen>
     <dimen name="slidinguppanel_spinner_textsize">16dip</dimen>
     <dimen name="slidinguppanel_spinner_dropdown_padding">5dp</dimen>
@@ -63,7 +64,13 @@
     <dimen name="slidinguppanel_product_removed_padding">17dp</dimen>
     <dimen name="slidinguppanel_product_removed_margin">5dp</dimen>
     <dimen name="slidinguppanel_product_removed_textsize">18dp</dimen>
-    <dimen name="slidinguppanel_product_undo_button">14dp</dimen>
+    <dimen name="slidinguppanel_product_undo_button">12dp</dimen>
+    <dimen name="slidinguppanel_undo_bar_margin_left">15dp</dimen>
+    <dimen name="slidinguppanel_undo_bar_margin_right">90dp</dimen>
+    <dimen name="slidinguppanel_undo_bar_margin_top">33dp</dimen>
+    <dimen name="slidinguppanel_undo_bar_padding">10dp</dimen>
+    <dimen name="slidinguppanel_undo_bar_vertical_bar_height">20dp</dimen>
+    <dimen name="slidinguppanel_undo_bar_img_height">50dp</dimen>
     <dimen name="product_card_height">100dp</dimen>
     <dimen name="product_card_margin">3dp</dimen>
     <dimen name="product_price_padding">6dp</dimen>

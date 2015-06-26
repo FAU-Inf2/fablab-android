@@ -18,8 +18,8 @@
     <string name="cart_article_label"><![CDATA[&nbsp;Artikel]]></string>
     <string name="cart_preview_delimiter"><![CDATA[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]]></string>
     <string name="cart_product_quantity">Menge in</string>
-    <string name="cart_product_removed">Artikel entfernt</string>
-    <string name="cart_product_undo">Rückgängig</string>
+    <string name="cart_product_removed">entfernt</string>
+    <string name="cart_product_undo">rückgängig</string>
     <string name="search_hint">Suche Produkt</string>
     <string name="title_scan_product">Produkt scannen</string>
     <string name="action_add_to_cart">In den Warenkorb</string>
