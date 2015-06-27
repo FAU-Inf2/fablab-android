@@ -275,7 +275,7 @@ public class AppbarDrawerInclude  {
 
     public void orderByName() {
         if(menu.getItem(1) != null && menu.getItem(1).isVisible()) {
-            menu.getItem(1).setIcon(R.drawable.news);
+            menu.getItem(1).setIcon(R.drawable.sort_alpha);
             menu.getItem(1).setTitle(R.string.appbar_orderedby_name);
 
             // TODO
@@ -285,7 +285,7 @@ public class AppbarDrawerInclude  {
 
     public void orderByPrice() {
         if(menu.getItem(1) != null && menu.getItem(1).isVisible()) {
-            menu.getItem(1).setIcon(R.drawable.warenkorb);
+            menu.getItem(1).setIcon(R.drawable.sort_euro);
             menu.getItem(1).setTitle(R.string.appbar_orderedby_price);
         }
     }

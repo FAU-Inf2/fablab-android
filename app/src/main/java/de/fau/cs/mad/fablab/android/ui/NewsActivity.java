@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -251,9 +250,11 @@ public class NewsActivity extends RoboActionBarActivity {
             {
                 this.titleView.setText(news.getTitle());
                 this.subTitleView.setText(news.getDescriptionShort());
-                if(news.getLinkToPreviewImage() != null) {
+                if(news.getLinkToPreviewImage() != null && !news.getLinkToPreviewImage().contains("fablab_logo.png")) {
                     //new DownloadImageTask(iconView).execute(news.getLinkToPreviewImage());
                     Picasso.with(iconView.getContext()).load(news.getLinkToPreviewImage()).into(iconView);
+                } else {
+                    Picasso.with(iconView.getContext()).load(R.drawable.news_nopicture).into(iconView);
                 }
                 description = news.getDescription();
 

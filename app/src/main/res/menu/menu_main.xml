@@ -9,7 +9,7 @@
     <item android:id="@+id/action_orderby"
         android:orderInCategory="101"
         android:title="@string/appbar_orderedby_name"
-        android:icon="@drawable/news"
+        android:icon="@drawable/sort_alpha"
         android:visible="false"
         app:showAsAction="always">
         <menu>
