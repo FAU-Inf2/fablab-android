@@ -2,6 +2,7 @@ package de.fau.cs.mad.fablab.android.cart;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 
 import com.google.zxing.Result;
@@ -38,27 +39,29 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
     final long REFRESH_MILLIS = 1 * 1000;
     private Cart cart;
 
+    private static FragmentManager mFragmentManager;
+
     private final static String CART = "CART";
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mFragmentManager = getSupportFragmentManager();
 
         if(!iHaveNoAndroidDeviceUseNumberInsteadOfBarcodeScanner) {
             setContentView(R.layout.fragment_container);
             if (savedInstanceState == null) {
                 mScannerFragment = ScannerFragment.newInstance(getResources().getString(
                         R.string.title_scan_qr_code));
-                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
+                mFragmentManager.beginTransaction().add(R.id.fragment_container,
                         mScannerFragment, "scanner").commit();
             } else {
-                mScannerFragment = (ScannerFragment) getSupportFragmentManager().findFragmentByTag(
+                mScannerFragment = (ScannerFragment) mFragmentManager.findFragmentByTag(
                         "scanner");
             }
         }else{
             handleResult(null);
         }
-
     }
 
     @Override
@@ -67,7 +70,7 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
         if(!iHaveNoAndroidDeviceUseNumberInsteadOfBarcodeScanner) {
             String qrCodeText = result.getText();
 
-            getSupportFragmentManager().beginTransaction().remove(mScannerFragment).commit();
+            mFragmentManager.beginTransaction().remove(mScannerFragment).commit();
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             cartID = qrCodeText;
         }else {
@@ -112,7 +115,7 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
             @Override
             public void success(Response response1, Response response2) {
                 BarCodeScannedDialogFragment fragment = new BarCodeScannedDialogFragment();
-                fragment.show(getSupportFragmentManager(), "barcode scanned");
+                fragment.show(mFragmentManager, "barcode scanned");
                 startTimer(cartID);
             }
 
@@ -143,7 +146,7 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
                         Bundle args = new Bundle();
                         args.putSerializable(CART, cart);
                         fragment.setArguments(args);
-                        fragment.show(getSupportFragmentManager(), "fragment paid");
+                        fragment.show(mFragmentManager, "fragment paid");
                         stopTimer();
                     }
                     else if(cartStatusEnum.equals(CartStatusEnum.CANCELLED))
@@ -152,7 +155,7 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
                         Bundle args = new Bundle();
                         args.putSerializable(CART, cart);
                         fragment.setArguments(args);
-                        fragment.show(getSupportFragmentManager(), "fragment canceled");
+                        fragment.show(mFragmentManager, "fragment canceled");
                         stopTimer();
                     }
                     else
