@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public final class LocationParser
 {
-    protected static String testString = "Elektrowerkstatt / Regal / Kiste IC 1/2 (E1.3)";
+    protected static String testString = "Elektrowerkstatt / Schublade Moosgummi";
 
     private LocationParser(){   }
 
@@ -99,7 +99,7 @@ public final class LocationParser
         }
         finally
         {
-            return productLocation;
+            return null;
         }
 
     }
@@ -141,7 +141,7 @@ public final class LocationParser
         }
         finally
         {
-            return  productLocation;
+            return  null;
         }
     }
 
