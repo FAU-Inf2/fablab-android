@@ -3,7 +3,6 @@ package de.fau.cs.mad.fablab.android.cart;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
-import android.widget.Toast;
 
 import com.google.zxing.Result;
 import com.j256.ormlite.dao.ForeignCollection;
@@ -36,7 +35,10 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
     private String idIfScannerIsNotUsed = "256";
     private Handler cartStatusHandler = new Handler();
     private Runnable cartStatusRunner;
-    final long REFRESH_MILLIS = 30 * 1000;
+    final long REFRESH_MILLIS = 1 * 1000;
+    private Cart cart;
+
+    private final static String CART = "CART";
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -73,10 +75,13 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
         }
 
         //get cart and cartEntries from CartSingleton
-        Cart cart = CartSingleton.MYCART.getCart();
+        cartDao = DatabaseHelper.getHelper(getApplication()).getCartDao();
+        RuntimeExceptionDao<CartEntry, Long> productDao = DatabaseHelper.getHelper(getApplication()).getCartEntryDao();
+        cart = CartSingleton.MYCART.getCart();
         ForeignCollection<CartEntry> products = cart.getProducts();
-        //cart.setStatus(CartStatusEnum.PENDING);
-        //cart.setCartCode(cartID);
+        cart.setStatus(CartStatusEnum.PENDING);
+        cart.setCartCode(cartID);
+        cartDao.update(cart);
 
         //create from cart and cartEntries and cartServer and cartEntriesServer
         CartServer cartServer = new CartServer();
@@ -84,6 +89,8 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
         for(CartEntry e : products)
         {
             CartEntryServer es = new CartEntryServer();
+            e.setId(Long.parseLong(cartID));
+            productDao.update(e);
             es.setProductId(e.getProduct().getProductId());
             es.setAmount(e.getAmount());
             productsServer.add(es);
@@ -93,9 +100,7 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
         cartServer.setCartCode(cartID);
         cartServer.setPushId("000");
 
-        //save cart in database
-        cartDao = DatabaseHelper.getHelper(getApplicationContext()).getCartDao();
-        //cartDao.create(cart);
+
 
         //send cartServer to server
         final CartApiClient cartApiClient = new CartApiClient((this));
@@ -104,13 +109,13 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
         cartApiClient.get().create(cartServer, new Callback<Response>() {
             @Override
             public void success(Response response1, Response response2) {
-                Toast.makeText(getApplicationContext(), "Bitte am Kassenterinal bezahlen, oder Bezahlvorgang abbrechen.", Toast.LENGTH_SHORT).show();
+                BarCodeScannedDialogFragment fragment = new BarCodeScannedDialogFragment();
+                fragment.show(getSupportFragmentManager(), "barcode scanned");
                 startTimer(cartID);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Toast.makeText(getApplicationContext(), "Retrofit error", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -132,24 +137,30 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
                 public void success(CartStatusEnum cartStatusEnum, Response response) {
                     if(cartStatusEnum.equals(CartStatusEnum.PAID))
                     {
-                        Toast.makeText(getApplicationContext(), "bezahlt", Toast.LENGTH_SHORT).show();
+                        PaidDialogFragment fragment = new PaidDialogFragment();
+                        Bundle args = new Bundle();
+                        args.putSerializable(CART, cart);
+                        fragment.setArguments(args);
+                        fragment.show(getSupportFragmentManager(), "fragment paid");
                         stopTimer();
                     }
                     else if(cartStatusEnum.equals(CartStatusEnum.CANCELLED))
                     {
-                        Toast.makeText(getApplicationContext(), "abgebrochen!", Toast.LENGTH_SHORT).show();
+                        CanceledDialogFragment fragment = new CanceledDialogFragment();
+                        Bundle args = new Bundle();
+                        args.putSerializable(CART, cart);
+                        fragment.setArguments(args);
+                        fragment.show(getSupportFragmentManager(), "fragment canceled");
                         stopTimer();
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(), "else", Toast.LENGTH_SHORT).show();
                         cartStatusHandler.postDelayed(cartStatusRunner, REFRESH_MILLIS);
                     }
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Toast.makeText(getApplicationContext(), "Retrofit Error Status", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -164,3 +175,4 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
         cartStatusHandler.removeCallbacks(cartStatusRunner);
     }
 }
+
