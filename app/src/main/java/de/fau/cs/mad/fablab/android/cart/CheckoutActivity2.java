@@ -78,10 +78,11 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
         cartDao = DatabaseHelper.getHelper(getApplication()).getCartDao();
         RuntimeExceptionDao<CartEntry, Long> productDao = DatabaseHelper.getHelper(getApplication()).getCartEntryDao();
         cart = CartSingleton.MYCART.getCart();
+        cartDao.delete(cart);
         ForeignCollection<CartEntry> products = cart.getProducts();
         cart.setStatus(CartStatusEnum.PENDING);
         cart.setCartCode(cartID);
-        cartDao.update(cart);
+        cartDao.create(cart);
 
         //create from cart and cartEntries and cartServer and cartEntriesServer
         CartServer cartServer = new CartServer();
@@ -89,8 +90,9 @@ public class CheckoutActivity2 extends ActionBarActivity implements ZXingScanner
         for(CartEntry e : products)
         {
             CartEntryServer es = new CartEntryServer();
-            e.setId(Long.parseLong(cartID));
-            productDao.update(e);
+            productDao.delete(e);
+            e.setCart(cart);
+            productDao.create(e);
             es.setProductId(e.getProduct().getProductId());
             es.setAmount(e.getAmount());
             productsServer.add(es);
