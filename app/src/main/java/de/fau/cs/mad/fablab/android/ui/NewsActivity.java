@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.fau.cs.mad.fablab.android.FabButton;
@@ -90,7 +91,7 @@ public class NewsActivity extends RoboActionBarActivity {
         }
     };
 
-    //This callback is used for product Search.
+    //This callback is used for ical retrieval.
     private Callback<List<ICal>> iCalCallback = new Callback<List<ICal>>() {
         @Override
         public void success(List<ICal> iCals, Response response) {
@@ -98,7 +99,11 @@ public class NewsActivity extends RoboActionBarActivity {
                 Toast.makeText(getBaseContext(), R.string.product_not_found, Toast.LENGTH_LONG).show();
             }
             iCalList.clear();
-            iCalList.addAll(iCals);
+            // only add events that are not terminated yet
+            Date now = new Date();
+            for (ICal event : iCals) {
+                if (event.getEndAsDate().after(now)) iCalList.add(event);
+            }
             datesSlidePagerAdapter.notifyDataSetChanged();
         }
 
