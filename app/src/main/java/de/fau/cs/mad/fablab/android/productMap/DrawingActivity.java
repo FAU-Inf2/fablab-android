@@ -324,13 +324,16 @@ public class DrawingActivity extends View
             locationX = (int) (canvas.getWidth() * positionX);
             locationY = (int) (canvas.getHeight() * positionY);
             canvas.drawCircle(locationX, locationY, circleRadius, Paintings.LOCATION_PAINTING.getPaint());
+
+            float textLength = Paintings.TEXT_PAINTING_LOCATION.getPaint().measureText(locationName);
             if(positionX > 0.5)
             {
-                float textLength = Paintings.TEXT_PAINTING_LOCATION.getPaint().measureText(locationName);
-                canvas.drawText(locationName, locationX - (textLength+circleRadius), locationY, Paintings.TEXT_PAINTING_LOCATION.getPaint());
+                canvas.drawText(locationName, locationX - (textLength+circleRadius), locationY + circleRadius, Paintings.TEXT_PAINTING_LOCATION.getPaint());
             }
             else
-                canvas.drawText(locationName,  locationX, locationY, Paintings.TEXT_PAINTING_LOCATION.getPaint());
+            {
+                canvas.drawText(locationName, locationX + circleRadius, locationY + circleRadius, Paintings.TEXT_PAINTING_LOCATION.getPaint());
+            }
         }
         else
         {

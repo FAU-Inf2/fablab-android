@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public final class LocationParser
 {
-    protected static String testString = "tats\u00e4chliche Lagerorte / FAU FabLab / Elektrowerkstatt / Regal / Kiste Spaxschrauben (W10)";
+    protected static String testString = "Elektrowerkstatt / Regal / Kiste IC 1/2 (E1.3)";
 
     private LocationParser(){   }
 
@@ -19,7 +19,7 @@ public final class LocationParser
     {
         ProductLocation productLocation = null;
 
-        if(locationString != null)
+        if(testString != null)
         {
             String cleanedString = deleteWhitespaces(testString);
             String splittedString[] = splitLocationString(cleanedString);
@@ -54,7 +54,7 @@ public final class LocationParser
         return parts;
     }
 
-    protected static String identificationCodeRegex = "\\s\\([A-Z]\\d*(\\.\\d)?\\)";  // ...Regal (K) oder ...Halter (E6.1) oder .. (D1) oder ... (W10)
+    protected static String identificationCodeRegex = "\\([A-Z]\\d*(\\.\\d)?\\)";  // ...Regal (K) oder ...Halter (E6.1) oder .. (D1) oder ... (W10)
     protected static Pattern identificationCodePattern = Pattern.compile(identificationCodeRegex);
 
     private static boolean hasIdentificationCode(String lastPartOfString)
@@ -89,7 +89,9 @@ public final class LocationParser
         try
         {
             if (productLocation == null)
-                throw new IllegalArgumentException(identificationCode + " is not available in Product locations.");
+                throw new IllegalArgumentException("Identification code: " + identificationCode + " is not available in ProductLocation.");
+            else if(productLocation.getMainPositionX() == 0 && productLocation.getMainPositionY() == 0)
+                throw new IllegalArgumentException("Identification code: " + identificationCode + " has no available position");
         }
         catch ( IllegalArgumentException ex)
         {
@@ -117,6 +119,7 @@ public final class LocationParser
 
         // maybe the second last location name is known
         if (productLocation == null && splittedLocationString.length > 2)
+        {
             for (ProductLocation loc : ProductLocation.values())
             {
                 if (splittedLocationString[splittedLocationString.length - 2].equals(loc.getLocationName()))
@@ -124,8 +127,22 @@ public final class LocationParser
                     productLocation = loc;
                 }
             }
-
-        return productLocation;
+        }
+        try
+        {
+            if (productLocation == null)
+                throw new IllegalArgumentException("location path " + splittedLocationString.toString() + " is not available in ProductLocation");
+            else if(productLocation.getMainPositionX() == 0 && productLocation.getMainPositionY() == 0)
+                throw new IllegalArgumentException("location path: " + splittedLocationString.toString() + " has no available position");
+        }
+        catch ( IllegalArgumentException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+        finally
+        {
+            return  productLocation;
+        }
     }
 
 }
