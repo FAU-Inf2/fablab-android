@@ -1,16 +1,15 @@
 package de.fau.cs.mad.fablab.android.productsearch;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -35,29 +34,29 @@ public class ProductAdapter extends ArrayAdapter<Product> implements SectionInde
 
         //get gui elements
         CardView productCardView = (CardView) view.findViewById(R.id.product_card_view);
-        ImageView productPhoto = (ImageView) view.findViewById(R.id.product_photo);
+        // ImageView productPhoto = (ImageView) view.findViewById(R.id.product_photo);
         TextView productName = (TextView) view.findViewById(R.id.product_name);
+        TextView productDetail = (TextView) view.findViewById(R.id.product_detail);
         TextView productPrice = (TextView) view.findViewById(R.id.product_price);
         TextView productUnit = (TextView) view.findViewById(R.id.product_unit);
 
         //set product photo
-        productPhoto.setImageResource(R.drawable.no_image_avl);
+        // productPhoto.setImageResource(R.drawable.no_image_avl);
 
         //format and set product name
         String[] splitProductName = getItem(position).getName().split(" ");
         String formattedProductName = "";
+        String formattedProductDetail = "";
         for (int i = 0; i < splitProductName.length; i++) {
             if (i == 0) {
-                formattedProductName += view.getResources().getString(R.string.bold_start)
-                        + splitProductName[i]
-                        + view.getResources().getString(R.string.bold_end)
-                        + view.getResources().getString(R.string.non_breaking_space);
+                formattedProductName = splitProductName[i];
             } else {
-                formattedProductName += splitProductName[i]
-                        + view.getResources().getString(R.string.non_breaking_space);
+                formattedProductDetail += splitProductName[i]
+                        + " ";
             }
         }
-        productName.setText(Html.fromHtml(formattedProductName));
+        productName.setText(formattedProductName);
+        productDetail.setText(formattedProductDetail);
 
         //format and set product price
         String formattedProductPrice = String.format("%.2f", getItem(position).getPrice())
@@ -72,8 +71,10 @@ public class ProductAdapter extends ArrayAdapter<Product> implements SectionInde
         if(getItem(position).getPrice() == 0) {
             productCardView.setCardBackgroundColor(getContext().getResources()
                     .getColor(R.color.spinner_background));
-            productPhoto.setAlpha(0.5f);
+            // productPhoto.setAlpha(0.5f);
             productName.setTextColor(getContext().getResources().getColor(R.color
+                    .primary_text_disabled_material_light));
+            productDetail.setTextColor(getContext().getResources().getColor(R.color
                     .primary_text_disabled_material_light));
             productPrice.setTextColor(getContext().getResources().getColor(R.color
                     .primary_text_disabled_material_light));
