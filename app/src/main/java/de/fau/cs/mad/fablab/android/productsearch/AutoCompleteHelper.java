@@ -6,11 +6,7 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import java.util.ArrayList;
 import java.util.List;
-import de.fau.cs.mad.fablab.android.db.DatabaseHelper;
-import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import de.fau.cs.mad.fablab.android.model.DatabaseHelper;
 
 public class AutoCompleteHelper{
 

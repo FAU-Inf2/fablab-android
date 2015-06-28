@@ -43,21 +43,19 @@ public class ProductAdapter extends ArrayAdapter<Product> implements SectionInde
         String formattedProductName = "";
         for (int i = 0; i < splitProductName.length; i++) {
             if (i == 0) {
-                formattedProductName += view.getResources().getString(R.string.bold_start)
+                formattedProductName += "<b>"
                         + splitProductName[i]
-                        + view.getResources().getString(R.string.bold_end)
-                        + view.getResources().getString(R.string.non_breaking_space);
+                        + "</b>&nbsp;";
             } else {
                 formattedProductName += splitProductName[i]
-                        + view.getResources().getString(R.string.non_breaking_space);
+                        + "&nbsp;";
             }
         }
         productName.setText(Html.fromHtml(formattedProductName));
 
         //format and set product price
         String formattedProductPrice = String.format("%.2f", getItem(position).getPrice())
-                + view.getResources().getString(R.string.non_breaking_space)
-                + view.getResources().getString(R.string.currency);
+                + "&nbsp;€";
         productPrice.setText(Html.fromHtml(formattedProductPrice));
 
         //set product unit

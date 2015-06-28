@@ -2,23 +2,13 @@ package de.fau.cs.mad.fablab.android.cart;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.widget.Toast;
-
-import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import java.util.Random;
-
-import de.fau.cs.mad.fablab.android.db.DatabaseHelper;
-import de.fau.cs.mad.fablab.rest.core.Cart;
-import de.fau.cs.mad.fablab.rest.core.CartStatusEnum;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class CheckoutActivity2 extends ActionBarActivity {
 
     private String cartID;
-    private RuntimeExceptionDao<Cart, String> cartDao;
+    //private RuntimeExceptionDao<Cart, String> cartDao;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -30,13 +20,13 @@ public class CheckoutActivity2 extends ActionBarActivity {
         cartID = Long.toString(cartIDLong);
 
         //create cart
-        Cart cart = CartSingleton.MYCART.getCart();
-        cart.setStatus(CartStatusEnum.PENDING);
+        /*Cart cart = CartSingleton.MYCART.getCart();
+        cart.setStatus(CartStatus.PENDING);
         cart.setCartCode(cartID);
 
         //save cart in database
         cartDao = DatabaseHelper.getHelper(getApplicationContext()).getCartDao();
-        cartDao.create(cart);
+        cartDao.create(cart);*/
         
         //TODO adapt to updated common classes here
 /*
