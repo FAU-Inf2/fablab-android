@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.db;
+package de.fau.cs.mad.fablab.android.model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,27 +11,23 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 
-import javax.persistence.Table;
-
-import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.productsearch.AutoCompleteWords;
 import de.fau.cs.mad.fablab.rest.core.Cart;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
-    private static final String DATABASE_NAME = "fablab.db";
-    private static final int DATABASE_VERSION = 24;
     private static final String TAG = DatabaseHelper.class.getSimpleName();
+    private static final String DATABASE_NAME = "fablab.db";
+    private static final int DATABASE_VERSION = 25;
 
     private static DatabaseHelper instance;
-    private RuntimeExceptionDao<CartEntry, Long> cartEntryDao;
-    private RuntimeExceptionDao<AutoCompleteWords, Long> autoCompleteWordsDao;
-    private RuntimeExceptionDao<Cart, String> cartDao;
-    private RuntimeExceptionDao<Product, String> productDao;
+    private RuntimeExceptionDao<Cart, Long> mCartDao;
+    private RuntimeExceptionDao<Product, String> mProductDao;
+    private RuntimeExceptionDao<AutoCompleteWords, Long> mAutoCompleteWordsDao;
 
     private DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     public static synchronized DatabaseHelper getHelper(Context context) {
@@ -44,10 +40,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, CartEntry.class);
-            TableUtils.createTable(connectionSource, AutoCompleteWords.class);
             TableUtils.createTable(connectionSource, Cart.class);
+            TableUtils.createTable(connectionSource, CartEntry.class);
             TableUtils.createTable(connectionSource, Product.class);
+            TableUtils.createTable(connectionSource, AutoCompleteWords.class);
         } catch (SQLException e) {
             Log.e(TAG, "Can't create database", e);
             throw new RuntimeException(e);
@@ -58,10 +54,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVersion,
                           int newVersion) {
         try {
-            TableUtils.dropTable(connectionSource, CartEntry.class, true);
-            TableUtils.dropTable(connectionSource, AutoCompleteWords.class, true);
             TableUtils.dropTable(connectionSource, Cart.class, true);
+            TableUtils.dropTable(connectionSource, CartEntry.class, true);
             TableUtils.dropTable(connectionSource, Product.class, true);
+            TableUtils.dropTable(connectionSource, AutoCompleteWords.class, true);
             onCreate(db, connectionSource);
         } catch (SQLException e) {
             Log.e(TAG, "Can't drop database", e);
@@ -69,39 +65,32 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    public RuntimeExceptionDao<CartEntry, Long> getCartEntryDao() {
-        if (cartEntryDao == null) {
-            cartEntryDao = getRuntimeExceptionDao(CartEntry.class);
+    public RuntimeExceptionDao<Cart, Long> getCartDao() {
+        if (mCartDao == null) {
+            mCartDao = getRuntimeExceptionDao(Cart.class);
         }
-        return cartEntryDao;
-    }
-
-    public RuntimeExceptionDao<AutoCompleteWords, Long> getAutoCompleteWordsDao() {
-        if (autoCompleteWordsDao == null) {
-            autoCompleteWordsDao = getRuntimeExceptionDao(AutoCompleteWords.class);
-        }
-        return autoCompleteWordsDao;
-    }
-
-    public RuntimeExceptionDao<Cart, String> getCartDao() {
-        if (cartDao == null) {
-            cartDao = getRuntimeExceptionDao(Cart.class);
-        }
-        return cartDao;
+        return mCartDao;
     }
 
     public RuntimeExceptionDao<Product, String> getProductDao() {
-        if (productDao == null) {
-            productDao = getRuntimeExceptionDao(Product.class);
+        if (mProductDao == null) {
+            mProductDao = getRuntimeExceptionDao(Product.class);
         }
-        return productDao;
+        return mProductDao;
+    }
+
+    public RuntimeExceptionDao<AutoCompleteWords, Long> getAutoCompleteWordsDao() {
+        if (mAutoCompleteWordsDao == null) {
+            mAutoCompleteWordsDao = getRuntimeExceptionDao(AutoCompleteWords.class);
+        }
+        return mAutoCompleteWordsDao;
     }
 
     @Override
     public void close() {
         super.close();
-        cartEntryDao = null;
-        autoCompleteWordsDao = null;
-        cartDao = null;
+        mAutoCompleteWordsDao = null;
+        mCartDao = null;
+        mProductDao = null;
     }
 }
