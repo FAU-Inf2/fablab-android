@@ -37,7 +37,7 @@ public class ProductMapActivity extends ActionBarActivity
     protected void createView(Context context)
     {
 
-        drawView = new DrawingActivity(context, FablabView.MAIN_ROOM, productLocation.getMainPositionX(), productLocation.getMainPositionY(), productLocation.getLocationName());
+        drawView = new DrawingActivity(context, FablabView.MAIN_ROOM, productLocation.getMainPositionX(), productLocation.getMainPositionY(), productLocation.getLocationName(), productLocation.getIdentificationCode());
 
         // later when details are clear
 //        drawView.setOnClickListener(new View.OnClickListener()

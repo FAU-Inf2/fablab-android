@@ -60,7 +60,7 @@ public enum ProductLocation
     BOX_STRAND_SUPPLIES         (FablabView.ELECTRIC_WORKSHOP, SHELF, 0, 0, SHELF.getMainPositionX(), SHELF.getMainPositionY(), "Kiste Nachschub Litze", "(E16.1)"),
     BOX_PERIPHERY_1             (FablabView.ELECTRIC_WORKSHOP, SHELF, 0, 0, SHELF.getMainPositionX(), SHELF.getMainPositionY(), "Kiste Peripherie 1/2", "(E1.2)"),
     BOX_PERIPHERY_2             (FablabView.ELECTRIC_WORKSHOP, SHELF, 0, 0, SHELF.getMainPositionX(), SHELF.getMainPositionY(), "Kiste Peripherie 2/2", "(E2.2)"),
-    BOX_INDUCTORS               (FablabView.ELECTRIC_WORKSHOP, SHELF, 0, 0, SHELF.getMainPositionX(), SHELF.getMainPositionY(), "Kiste Spulen, Quarz", "(E3.2"),
+    BOX_INDUCTORS               (FablabView.ELECTRIC_WORKSHOP, SHELF, 0, 0, SHELF.getMainPositionX(), SHELF.getMainPositionY(), "Kiste Spulen, Quarz", "(E3.2)"),
     SMD_RESISTORS               (FablabView.ELECTRIC_WORKSHOP, SHELF, 0, 0, SHELF.getMainPositionX(), SHELF.getMainPositionY(), "SMD-Widerstand Sortiment 0805", "(E4.2)"),
     BOX_CASING                  (FablabView.ELECTRIC_WORKSHOP, SHELF, 0, 0, SHELF.getMainPositionX(), SHELF.getMainPositionY(), "Kiste Geh\u00E4usebau", "(E14.2"),
     BOX_COOLER_1                (FablabView.ELECTRIC_WORKSHOP, SHELF, 0, 0, SHELF.getMainPositionX(), SHELF.getMainPositionY(), "Kiste K\u00FChler, L\u00FCfter Teil 1/2", "(E15.2)"),

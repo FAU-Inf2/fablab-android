@@ -15,16 +15,18 @@ public class DrawingActivity extends View
     private double positionY;
     private Canvas canvas;
     private String locationName;
+    private String identificationCode;
 
 
 
-    public DrawingActivity(Context context, FablabView fablabView, double positionX, double positionY, String locationName)
+    public DrawingActivity(Context context, FablabView fablabView, double positionX, double positionY, String locationName, String identificationCode)
     {
         super(context);
         this.positionX = positionX;
         this.positionY = positionY;
         this.fablabView = fablabView;
         this.locationName = locationName;
+        this.identificationCode = identificationCode;
     }
 
     public void setDrawingParameter(FablabView fablabView, double positionX, double positionY)
@@ -399,14 +401,16 @@ public class DrawingActivity extends View
             locationY = (int) (canvas.getHeight() * positionY);
             canvas.drawCircle(locationX, locationY, circleRadius, Paintings.LOCATION_PAINTING.getPaint());
 
-            float textLength = Paintings.TEXT_PAINTING_LOCATION.getPaint().measureText(locationName);
+            String displayedText = locationName + " " + identificationCode;
+
+            float textLength = Paintings.TEXT_PAINTING_LOCATION.getPaint().measureText(displayedText);
             if(positionX > 0.5)
             {
-                canvas.drawText(locationName, locationX - (textLength+circleRadius), locationY + Paintings.TEXT_PAINTING_LOCATION.getPaint().getTextSize()/2, Paintings.TEXT_PAINTING_LOCATION.getPaint());
+                canvas.drawText(displayedText, locationX - (textLength+circleRadius), locationY + Paintings.TEXT_PAINTING_LOCATION.getPaint().getTextSize()/2, Paintings.TEXT_PAINTING_LOCATION.getPaint());
             }
             else
             {
-                canvas.drawText(locationName, locationX + circleRadius, locationY + Paintings.TEXT_PAINTING_LOCATION.getPaint().getTextSize()/2, Paintings.TEXT_PAINTING_LOCATION.getPaint());
+                canvas.drawText(displayedText, locationX + circleRadius, locationY + Paintings.TEXT_PAINTING_LOCATION.getPaint().getTextSize()/2, Paintings.TEXT_PAINTING_LOCATION.getPaint());
             }
         }
         else
