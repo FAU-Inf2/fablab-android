@@ -89,7 +89,7 @@ public enum ProductLocation
     RIVETS                  (null, SHELF_MASCHINERY, 0, 0, 0, 0, "Nietensortiment", ""),
 
     //Level 1
-    ENGINE_LATHE        (null, FABLAB, 0, 0, 0, 0, "Drehbanktisch", ""),
+    ENGINE_LATHE        (null, FABLAB, 0, 0, 0.6, 0.95, "Drehbanktisch", ""),
 
     //Level 2
     ENGINE_LATHE_DRAWER     (null, ENGINE_LATHE, 0, 0, ENGINE_LATHE.getMainPositionX(), ENGINE_LATHE.getMainPositionY(), "Drehbankschublade", "(D1)"),

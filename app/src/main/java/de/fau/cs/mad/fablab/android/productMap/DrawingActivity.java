@@ -402,11 +402,11 @@ public class DrawingActivity extends View
             float textLength = Paintings.TEXT_PAINTING_LOCATION.getPaint().measureText(locationName);
             if(positionX > 0.5)
             {
-                canvas.drawText(locationName, locationX - (textLength+circleRadius), locationY + circleRadius, Paintings.TEXT_PAINTING_LOCATION.getPaint());
+                canvas.drawText(locationName, locationX - (textLength+circleRadius), locationY + Paintings.TEXT_PAINTING_LOCATION.getPaint().getTextSize()/2, Paintings.TEXT_PAINTING_LOCATION.getPaint());
             }
             else
             {
-                canvas.drawText(locationName, locationX + circleRadius, locationY + circleRadius, Paintings.TEXT_PAINTING_LOCATION.getPaint());
+                canvas.drawText(locationName, locationX + circleRadius, locationY + Paintings.TEXT_PAINTING_LOCATION.getPaint().getTextSize()/2, Paintings.TEXT_PAINTING_LOCATION.getPaint());
             }
         }
         else

@@ -19,9 +19,9 @@ public final class LocationParser
     {
         ProductLocation productLocation = null;
 
-        if(testString != null)
+        if(locationString != null)
         {
-            String cleanedString = deleteWhitespaces(testString);
+            String cleanedString = deleteWhitespaces(locationString);
             String splittedString[] = splitLocationString(cleanedString);
             String lastPartOfLocationString = splittedString[splittedString.length-1];
 
