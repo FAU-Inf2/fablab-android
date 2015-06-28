@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.view.fragments.barcodescanner;
+package de.fau.cs.mad.fablab.android.view.fragments.checkout;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,24 +12,18 @@ import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ScannerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
+import de.greenrobot.event.EventBus;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class BarcodeScannerFragment extends BaseFragment
-        implements BarcodeScannerFragmentViewModel.Listener {
+public class QrCodeScannerFragment extends BaseFragment
+        implements QrCodeScannerFragmentViewModel.Listener {
     @InjectView(R.id.scanner)
     ZXingScannerView mScannerView;
 
     @Inject
-    BarcodeScannerFragmentViewModel mViewModel;
+    QrCodeScannerFragmentViewModel mViewModel;
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mViewModel.setListener(this);
-
-        new ScannerViewCommandBinding().bind(mScannerView, mViewModel.getProcessBarcodeCommand());
-    }
+    EventBus mEventBus = EventBus.getDefault();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,26 +32,37 @@ public class BarcodeScannerFragment extends BaseFragment
     }
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mViewModel.setListener(this);
+
+        new ScannerViewCommandBinding().bind(mScannerView, mViewModel.getProcessQrCodeCommand());
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
+        mEventBus.unregister(this);
         mViewModel.pause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        mEventBus.register(this);
         mViewModel.resume();
     }
 
     @Override
-    public void onShowProductNotFoundMessage() {
-        Toast.makeText(getActivity(), R.string.barcode_scanner_product_not_found, Toast.LENGTH_LONG)
+    public void onShowInvalidQrCodeMessage() {
+        Toast.makeText(getActivity(), R.string.qr_code_scanner_invalid_qr_code, Toast.LENGTH_LONG)
                 .show();
     }
 
-    @Override
-    public void onShowInvalidBarcodeMessage() {
-        Toast.makeText(getActivity(), R.string.barcode_scanner_invalid_barcode, Toast.LENGTH_LONG)
-                .show();
+    @SuppressWarnings("unused")
+    public void onEvent(QrCodeScannedEvent event) {
+        String qrCodeText = event.getQrCodeText();
+        // TODO start checkout
     }
 }

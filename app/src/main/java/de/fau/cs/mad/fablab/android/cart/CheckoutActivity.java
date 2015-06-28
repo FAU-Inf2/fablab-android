@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -69,7 +68,7 @@ public class CheckoutActivity extends ActionBarActivity implements ZXingScannerV
             });
             */
         } else {
-            Toast.makeText(this, R.string.checkout_invalid_qr_code, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.qr_code_scanner_invalid_qr_code, Toast.LENGTH_LONG).show();
             mScannerFragment.startCamera();
         }
     }
