@@ -91,6 +91,11 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     }
 
     @Override
+    public void onDismiss() {
+        dismiss();
+    }
+
+    @Override
     public void onUpdatePriceTotal(double priceTotal) {
         mPriceTotalTextView.setText(getFormattedPrice(priceTotal) + getString(R.string.currency));
     }
