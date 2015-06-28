@@ -31,7 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/title_dates_dialog"
-            android:text="Title"
             android:textColor="@android:color/black"
             android:textSize="@dimen/abc_text_size_title_material"
             android:layout_gravity="center"
@@ -55,7 +54,6 @@
             android:paddingBottom="@dimen/news_dialog_vertical_margin"
             android:textColor="@android:color/black"
             android:id="@+id/date_dates_dialog"
-            android:text="Date"
             />
 
         <TextView
@@ -64,7 +62,6 @@
             android:paddingBottom="@dimen/news_dialog_vertical_margin"
             android:textColor="@android:color/black"
             android:id="@+id/time_dates_dialog"
-            android:text="Time"
             />
 
         <TextView
@@ -73,7 +70,6 @@
             android:paddingBottom="@dimen/news_dialog_vertical_margin"
             android:textColor="@android:color/black"
             android:id="@+id/location_dates_dialog"
-            android:text="Location"
             />
     </LinearLayout>
 

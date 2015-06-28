@@ -63,7 +63,9 @@ public class DatesDialog extends DialogFragment{
         title_TV.setText(title);
         date_TV.setText("Datum: " + date);
         time_TV.setText("Uhrzeit: " + time);
-        location_TV.setText("Ort: " + location);
+        if(!location.isEmpty()) {
+            location_TV.setText("Ort: " + location);
+        }
         image_IV.setImageBitmap(image);
         description_TV.setText(description);
 
