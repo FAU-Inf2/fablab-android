@@ -77,13 +77,38 @@
             />
     </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ok"
-        android:id="@+id/ok_button_news_dialog"
-        android:layout_below="@+id/linearLayout2"
-        android:layout_alignRight="@+id/linearLayout2"
-        android:layout_alignEnd="@+id/linearLayout2" />
+        android:orientation="vertical"
+        android:layout_below="@+id/linearLayout2">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/linearLayout"
+            android:layout_above="@+id/ok_button_news_dialog"
+            android:layout_marginBottom="@dimen/news_entry_scrollview_margin"
+            android:id="@+id/scrollView">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:id="@+id/date_description_dates_dialog"
+                android:text="real news entry"
+                />
+        </ScrollView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ok"
+            android:id="@+id/ok_button_dates_dialog"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/news_entry_button_margin"/>
+    </LinearLayout>
 
 </RelativeLayout>

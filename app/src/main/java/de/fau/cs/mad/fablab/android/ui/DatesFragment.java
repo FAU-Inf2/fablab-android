@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.rest.core.ICal;
@@ -26,6 +25,7 @@ public class DatesFragment extends Fragment {
     static final String DATE = "DATE";
     static final String TIME = "TIME";
     static final String LOCATION = "LOCATION";
+    static final String DESCRIPTION = "DESCRIPTION";
 
     private ICal iCal1;
     private ICal iCal2;
@@ -69,8 +69,8 @@ public class DatesFragment extends Fragment {
             }
 
             titleLeft.setText(iCal1.getSummery());
-            dateLeft.setText(getDate(iCal1.getDtstartAsDate()));
-            timeLeft.setText(getTime(iCal1.getDtstartAsDate()));
+            dateLeft.setText(getDate(iCal1));
+            timeLeft.setText(getTime(iCal1));
             locationLeft.setText(iCal1.getLocation());
 
             cardLeft.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +88,7 @@ public class DatesFragment extends Fragment {
                     args.putString(TIME, time.getText().toString());
                     args.putString(LOCATION, location.getText().toString());
                     args.putParcelable(IMAGE, ((BitmapDrawable) image.getDrawable()).getBitmap());
+                    args.putString(DESCRIPTION, iCal1.getDescription());
                     DatesDialog dialog = new DatesDialog();
                     dialog.setArguments(args);
                     dialog.show(getFragmentManager(), "dates dialog");
@@ -110,8 +111,8 @@ public class DatesFragment extends Fragment {
             }
 
             titleRight.setText(iCal2.getSummery());
-            dateRight.setText(getDate(iCal2.getDtstartAsDate()));
-            timeRight.setText(getTime(iCal2.getDtstartAsDate()));
+            dateRight.setText(getDate(iCal2));
+            timeRight.setText(getTime(iCal2));
             locationRight.setText(iCal2.getLocation());
 
             cardRight.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +130,7 @@ public class DatesFragment extends Fragment {
                     args.putString(TIME, time.getText().toString());
                     args.putString(LOCATION, location.getText().toString());
                     args.putParcelable(IMAGE, ((BitmapDrawable) image.getDrawable()).getBitmap());
+                    args.putString(DESCRIPTION, iCal2.getDescription());
                     DatesDialog dialog = new DatesDialog();
                     dialog.setArguments(args);
                     dialog.show(getFragmentManager(), "dates dialog");
@@ -141,19 +143,25 @@ public class DatesFragment extends Fragment {
         return v;
     }
 
-    private String getDate(Date date)
+    private String getDate(ICal ical)
     {
         //month+1, because Calendar is zero-based (eg january = 0 and not 1)
         Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
+        cal.setTime(ical.getDtstartAsDate());
         return Integer.toString(cal.get(Calendar.DAY_OF_MONTH)) + "." + Integer.toString(cal.get(Calendar.MONTH)+1) + "." + Integer.toString(cal.get(Calendar.YEAR));
     }
 
-    private String getTime(Date date)
-    {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        return Integer.toString(cal.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(cal.get(Calendar.MINUTE) + 100).substring(1);
-    }
+    private String getTime(ICal ical) {
+        if (ical.isAllday()) {
+            return "ganztägig";
+        } else {
+            Calendar calStart = Calendar.getInstance();
+            calStart.setTime(ical.getDtstartAsDate());
+            Calendar calEnd = Calendar.getInstance();
+            calEnd.setTime(ical.getEndAsDate());
+            return Integer.toString(calStart.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(calStart.get(Calendar.MINUTE) + 100).substring(1)
+                    + " - " + Integer.toString(calEnd.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(calEnd.get(Calendar.MINUTE) + 100).substring(1);
 
+        }
+    }
 }
