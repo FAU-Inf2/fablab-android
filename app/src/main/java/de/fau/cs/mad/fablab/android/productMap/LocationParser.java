@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public final class LocationParser
 {
-    protected static String testString = "Elektrowerkstatt / Schublade Moosgummi";
+    protected static String testString = "FAU FabLab / Elektrowerkstatt / Regal / Kiste Dioden";
 
     private LocationParser(){   }
 
@@ -96,10 +96,11 @@ public final class LocationParser
         catch ( IllegalArgumentException ex)
         {
             System.out.println(ex.getMessage());
+            productLocation = null;
         }
         finally
         {
-            return null;
+            return productLocation;
         }
 
     }
@@ -138,10 +139,11 @@ public final class LocationParser
         catch ( IllegalArgumentException ex)
         {
             System.out.println(ex.getMessage());
+            productLocation = null;
         }
         finally
         {
-            return  null;
+            return  productLocation;
         }
     }
 

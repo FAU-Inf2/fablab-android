@@ -2,10 +2,8 @@ package de.fau.cs.mad.fablab.android.productMap;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.view.View;
 
 
@@ -17,8 +15,6 @@ public class DrawingActivity extends View
     private double positionY;
     private Canvas canvas;
     private String locationName;
-
-    protected int padding = 10;
 
 
 
@@ -69,63 +65,84 @@ public class DrawingActivity extends View
 
     }
 
+    protected int padding = 10;
+
     protected void drawFablabLayout(Canvas canvas)
     {
-        int padding = 10;
+
+        int startLeftPoint = 0;
+        int startRightPoint = 0;
+        int startTopPoint = 0;
+        int startBottomPoint = 0;
+        int width = 0;
+        int height = 0;
+
 
         //contours
 
-        // fablab contour
-        Rect outerWall = new Rect();
-        outerWall.set(padding, padding, canvas.getWidth() - padding, canvas.getHeight() - padding);
-        canvas.drawRect(outerWall, Paintings.ROOM_PAINTING.getPaint());
-        canvas.drawText("FabLab", outerWall.left + padding, outerWall.top + Paintings.TEXT_PAINTING_LARGE.getPaint().getTextSize() + padding, Paintings.TEXT_PAINTING_LARGE.getPaint());
+        // draw fablab contour
+        //startLeftPoint = padding;
+        //startTopPoint = padding;
+        //startRightPoint = canvas.getWidth() - padding;
+        //startBottomPoint = canvas.getHeight() - padding;
+        //drawRectFromLeftPointToRightPoint( canvas, startLeftPoint, startTopPoint, startRightPoint, startBottomPoint, Paintings.ROOM_PAINTING, "" );
 
-        int wallOffset = Paintings.ROOM_PAINTING.getStrokeWith()/2;
-        int roomHeight = (outerWall.centerY() - outerWall.top);
-        int roomWidth = (outerWall.right - outerWall.left) - Paintings.ROOM_PAINTING.getStrokeWith();
-
-
-
-        // new version
+        // important points for drawing
         int halfWallOffset = Paintings.ROOM_PAINTING.getStrokeWith()/2;
 
-        int leftPoint = padding + halfWallOffset;
-        int rightPoint = outerWall.right - halfWallOffset;
+        int leftPointOfFablab = padding + halfWallOffset;
+        int rightPointOfFablab = canvas.getWidth() - padding - halfWallOffset;
+        int topPointOfFablab = padding + halfWallOffset;
+        int bottomPointOfFablab = canvas.getHeight() - padding - halfWallOffset;
 
-        int topPoint = outerWall.top + halfWallOffset;
-        int topBottomPoint = outerWall.centerY() - halfWallOffset;
+        int topPointOfLowerFablabRoom = canvas.getHeight()/2 + halfWallOffset;
+        int bottomPointOfUpperFablabRoom = canvas.getHeight()/2 - halfWallOffset;
 
-        int bottomTopPoint = outerWall.centerY() + halfWallOffset;
-        int bottomPoint = outerWall.bottom - halfWallOffset;
+        int wallOffset = Paintings.ROOM_PAINTING.getStrokeWith()/2;
+        int heightOfOneFablabRoom = bottomPointOfFablab - topPointOfLowerFablabRoom;
+        int widthOfOneFablabRoom = rightPointOfFablab - leftPointOfFablab;
 
-        // wall between the two fablab rooms
-        canvas.drawLine(outerWall.left, outerWall.centerY(), outerWall.right, outerWall.centerY(), Paintings.ROOM_PAINTING.getPaint());
+        int entryDoorBottomPoint = canvas.getHeight()/2 + heightOfOneFablabRoom /3*2;
+        int entryDoorTopPoint = canvas.getHeight()/2 + heightOfOneFablabRoom /3;
+        int doorLeftPoint = rightPointOfFablab - widthOfOneFablabRoom/5;
+        int doorRightPoint = rightPointOfFablab - padding;
 
-        // doors
+
+        // fablab with lines
+        canvas.drawLine(padding/2, padding, canvas.getWidth() - padding/2, padding, Paintings.ROOM_PAINTING.getPaint()); // top wall
+        canvas.drawLine(padding/2, canvas.getHeight() - padding, doorLeftPoint, canvas.getHeight() - padding, Paintings.ROOM_PAINTING.getPaint()); // bottom wall part 1
+        canvas.drawLine(doorRightPoint, canvas.getHeight() - padding, canvas.getWidth() - padding/2, canvas.getHeight() - padding, Paintings.ROOM_PAINTING.getPaint()); // bottom wall part 1
+        canvas.drawLine(canvas.getWidth() - padding, padding, canvas.getWidth() - padding, canvas.getHeight() - padding, Paintings.ROOM_PAINTING.getPaint()); // right wall
+        canvas.drawLine(padding, padding, padding, entryDoorTopPoint, Paintings.ROOM_PAINTING.getPaint()); // left wall part 1
+        canvas.drawLine(padding, entryDoorBottomPoint, padding, canvas.getHeight() - padding, Paintings.ROOM_PAINTING.getPaint()); // left wall part 2
+        canvas.drawLine(leftPointOfFablab, canvas.getHeight() / 2, doorLeftPoint, canvas.getHeight() / 2, Paintings.ROOM_PAINTING.getPaint()); // wall between the two fablab rooms part 1
+        canvas.drawLine(doorRightPoint, canvas.getHeight() / 2, rightPointOfFablab, canvas.getHeight() / 2, Paintings.ROOM_PAINTING.getPaint()); // wall between the two fablab rooms part 2
+
+        // draw text "fablab" seperate because it should be in the top left corner
+        canvas.drawText("FabLab", leftPointOfFablab + padding, topPointOfFablab + Paintings.TEXT_PAINTING_LARGE.getPaint().getTextSize() + padding, Paintings.TEXT_PAINTING_LARGE.getPaint());
+
+
+        // draw doors
         int openDoorOffset = 20;
+
         // entry door
-        int entryDoorBottomPoint = outerWall.centerY() + roomHeight/3*2;
-        int entryDoorTopPoint = outerWall.centerY() + roomHeight/3;
-        canvas.drawLine(outerWall.left + openDoorOffset, entryDoorTopPoint + openDoorOffset, outerWall.left, entryDoorBottomPoint, Paintings.DOOR_PAINTING.getPaint());
+        canvas.drawLine(padding + openDoorOffset, entryDoorTopPoint + openDoorOffset, padding, entryDoorBottomPoint, Paintings.DOOR_PAINTING.getPaint());
 
-        // room door top
-        int doorLeftPoint = outerWall.right - outerWall.width()/5 - padding*2;
-        int doorRightPoint = outerWall.right - padding*2;
-        canvas.drawLine(doorLeftPoint, outerWall.centerY(), doorRightPoint - openDoorOffset, outerWall.centerY() - openDoorOffset, Paintings.DOOR_PAINTING.getPaint());
+        // inner doors
 
+        // door between fablab rooms
+        canvas.drawLine(doorLeftPoint, canvas.getHeight()/2, doorRightPoint - openDoorOffset, canvas.getHeight()/2 - openDoorOffset, Paintings.DOOR_PAINTING.getPaint());
         // room door bottom
-        canvas.drawLine(doorLeftPoint, outerWall.bottom, doorRightPoint - openDoorOffset, outerWall.bottom - openDoorOffset, Paintings.DOOR_PAINTING.getPaint());
+        canvas.drawLine(doorLeftPoint, canvas.getHeight() - padding, doorRightPoint - openDoorOffset, canvas.getHeight() - padding - openDoorOffset, Paintings.DOOR_PAINTING.getPaint());
 
         // windows
-        int windowWith = roomHeight/6;
+        int windowWith = heightOfOneFablabRoom /6;
 
-        canvas.drawLine(outerWall.right, topPoint + windowWith, outerWall.right, topPoint + windowWith*2, Paintings.WINDOW_PAINTING.getPaint());
-        canvas.drawLine(outerWall.right, topPoint + windowWith*4, outerWall.right, topPoint + windowWith*5, Paintings.WINDOW_PAINTING.getPaint());
+        canvas.drawLine(canvas.getWidth() - padding, topPointOfFablab + windowWith, canvas.getWidth() - padding, topPointOfFablab + windowWith*2, Paintings.WINDOW_PAINTING.getPaint());
+        canvas.drawLine(canvas.getWidth() - padding, topPointOfFablab + windowWith*4, canvas.getWidth() - padding, topPointOfFablab + windowWith*5, Paintings.WINDOW_PAINTING.getPaint());
 
-        canvas.drawLine(outerWall.right, bottomTopPoint + windowWith*(5/2), outerWall.right, bottomTopPoint + windowWith*(7/2), Paintings.WINDOW_PAINTING.getPaint());
-        canvas.drawLine(outerWall.right, bottomTopPoint + windowWith*4, outerWall.right, bottomTopPoint + windowWith*5, Paintings.WINDOW_PAINTING.getPaint());
-
+        canvas.drawLine(canvas.getWidth() - padding, bottomPointOfUpperFablabRoom + windowWith*(5/2), canvas.getWidth() - padding, bottomPointOfUpperFablabRoom + windowWith*(7/2), Paintings.WINDOW_PAINTING.getPaint());
+        canvas.drawLine(canvas.getWidth() - padding, bottomPointOfUpperFablabRoom + windowWith*4, canvas.getWidth() - padding, bottomPointOfUpperFablabRoom + windowWith*5, Paintings.WINDOW_PAINTING.getPaint());
 
         int offsetLeftWall = wallOffset + padding;
 
@@ -134,64 +151,121 @@ public class DrawingActivity extends View
         // bottom room
 
         // milling machine
-        int millingMachineRightPoint = offsetLeftWall + roomWidth/4;
-        Rect millingMachine = new Rect(leftPoint, bottomTopPoint, millingMachineRightPoint, entryDoorTopPoint);
-        canvas.drawRect(millingMachine, Paintings.MACHINE_PAINTING.getPaint());
-        canvas.drawText("Fr\u00e4se", leftPoint + padding, millingMachine.centerY(), Paintings.TEXT_PAINTING_SMALL.getPaint());
+        int millingMachineRightPoint = leftPointOfFablab + widthOfOneFablabRoom /4;
+
+        startLeftPoint = leftPointOfFablab;
+        startTopPoint = topPointOfLowerFablabRoom;
+        startRightPoint = millingMachineRightPoint;
+        startBottomPoint = entryDoorTopPoint;
+        drawRectFromLeftPointToRightPoint(canvas, startLeftPoint, startTopPoint, startRightPoint, startBottomPoint, Paintings.MACHINE_PAINTING, "Fr\u00e4se");
 
         // workbench
-        int workbenchBottomPoint = bottomTopPoint + roomHeight/8;
-        Rect workbench = new Rect(millingMachineRightPoint, bottomTopPoint, doorLeftPoint, workbenchBottomPoint );
-        canvas.drawRect(workbench, Paintings.SHELF_PAINTING_FILL.getPaint());
-        canvas.drawText("Werkbank", workbench.left + padding, workbench.centerY(), Paintings.TEXT_PAINTING_SMALL.getPaint());
-
-        Rect workbench2 = new Rect(doorLeftPoint - roomWidth/5, workbenchBottomPoint, doorLeftPoint, bottomTopPoint + roomHeight/8*2);
-        canvas.drawRect(workbench2, Paintings.SHELF_PAINTING_FILL.getPaint());
+        // part 1, main part, upper part
+        startLeftPoint = millingMachineRightPoint;
+        startTopPoint = topPointOfLowerFablabRoom;
+        startRightPoint = doorLeftPoint;
+        startBottomPoint = topPointOfLowerFablabRoom + heightOfOneFablabRoom /8;
+        drawRectFromLeftPointToRightPoint(canvas, startLeftPoint, startTopPoint, startRightPoint, startBottomPoint, Paintings.SHELF_PAINTING_FILL, "Werkbank");
+        // part 2, small right part below main part
+        startLeftPoint = doorLeftPoint - widthOfOneFablabRoom / 5;
+        startTopPoint = topPointOfLowerFablabRoom + heightOfOneFablabRoom/8;
+        startRightPoint = doorLeftPoint;
+        startBottomPoint = topPointOfLowerFablabRoom + heightOfOneFablabRoom /8*2;
+        drawRectFromLeftPointToRightPoint(canvas, startLeftPoint, startTopPoint, startRightPoint, startBottomPoint, Paintings.SHELF_PAINTING_FILL, "");
 
         // chemistry bench
-        int chemistryBenchRightPoint = outerWall.left + Paintings.ROOM_PAINTING.getStrokeWith()/2 + roomWidth/5;
-        Rect chemistryBench = new Rect(leftPoint, entryDoorBottomPoint, chemistryBenchRightPoint, bottomPoint);
-        canvas.drawRect(chemistryBench, Paintings.SHELF_PAINTING_FILL.getPaint());
 
-        int chemistryBench2RightPoint = leftPoint + roomWidth/5*2;
-        int chemistryBench2TopPoint = bottomPoint - roomHeight/8;
-        Rect chemistryBench2 = new Rect(chemistryBenchRightPoint, chemistryBench2TopPoint, chemistryBench2RightPoint, bottomPoint);
-        canvas.drawRect(chemistryBench2, Paintings.SHELF_PAINTING_FILL.getPaint());
-        canvas.drawText("Chemietisch", chemistryBench.left + padding, chemistryBench.bottom - padding, Paintings.TEXT_PAINTING_SMALL.getPaint());
-
+        // part 1, main part, bottom part
+        startLeftPoint = leftPointOfFablab;
+        startTopPoint = bottomPointOfFablab - heightOfOneFablabRoom / 8;
+        startRightPoint = leftPointOfFablab + widthOfOneFablabRoom /5*2;
+        startBottomPoint = bottomPointOfFablab;
+        drawRectFromLeftPointToRightPoint(canvas, startLeftPoint, startTopPoint, startRightPoint, startBottomPoint, Paintings.SHELF_PAINTING_FILL, "Chemietisch");
+        // part 2, left square part
+        startLeftPoint = leftPointOfFablab;
+        startTopPoint = entryDoorBottomPoint;
+        startRightPoint = leftPointOfFablab + widthOfOneFablabRoom /5;
+        startBottomPoint = bottomPointOfFablab - heightOfOneFablabRoom / 8;
+        drawRectFromLeftPointToRightPoint(canvas, startLeftPoint, startTopPoint, startRightPoint, startBottomPoint, Paintings.SHELF_PAINTING_FILL, "");
 
         // engine lathe
-        Rect engineLathe = new Rect(chemistryBench2RightPoint, chemistryBench2TopPoint, doorLeftPoint, bottomPoint );
-        canvas.drawRect(engineLathe, Paintings.MACHINE_PAINTING.getPaint());
-        canvas.drawText("Drehbank", engineLathe.left + padding, engineLathe.bottom - padding, Paintings.TEXT_PAINTING_SMALL.getPaint());
+        startLeftPoint = leftPointOfFablab + widthOfOneFablabRoom /5*2;
+        startTopPoint = bottomPointOfFablab - heightOfOneFablabRoom / 8;
+        startRightPoint = doorLeftPoint;
+        startBottomPoint = bottomPointOfFablab;
+        drawRectFromLeftPointToRightPoint(canvas, startLeftPoint, startTopPoint, startRightPoint, startBottomPoint, Paintings.MACHINE_PAINTING, "Drehbank");
 
-        //tables
-        Rect tablesBottomRoom = new Rect(leftPoint + roomWidth/2, bottomTopPoint + roomHeight/7*3, rightPoint, bottomTopPoint + roomHeight/7*5);
-        canvas.drawRect(tablesBottomRoom, Paintings.TABLE_PAINTING.getPaint());
-        canvas.drawText("Labortisch", tablesBottomRoom.left + padding, tablesBottomRoom.centerY(), Paintings.TEXT_PAINTING_SMALL.getPaint());
+
+        //tables in the room below
+        startRightPoint = rightPointOfFablab;
+        startTopPoint = bottomPointOfUpperFablabRoom + heightOfOneFablabRoom /7*3;
+        width = widthOfOneFablabRoom /2;
+        height = heightOfOneFablabRoom /7*2;
+        drawRectFromRightPointToLeftSide(canvas, startRightPoint, startTopPoint, width, height, Paintings.TABLE_PAINTING, "Labortisch");
 
         // top room
         // acrylic shelf
-        Rect acrylicShelf = new Rect(leftPoint,topBottomPoint - roomHeight/6, doorLeftPoint, topBottomPoint );
-        canvas.drawRect(acrylicShelf, Paintings.SHELF_PAINTING_FILL.getPaint());
-        canvas.drawText("Plexiglasregal", acrylicShelf.left + padding, acrylicShelf.bottom - padding, Paintings.TEXT_PAINTING_SMALL.getPaint());
+        startLeftPoint = leftPointOfFablab;
+        startTopPoint = bottomPointOfUpperFablabRoom - heightOfOneFablabRoom/6;
+        startRightPoint = doorLeftPoint;
+        startBottomPoint = bottomPointOfUpperFablabRoom;
+        drawRectFromLeftPointToRightPoint(canvas, startLeftPoint, startTopPoint, startRightPoint, startBottomPoint, Paintings.SHELF_PAINTING_FILL, "Plexiglasregal");
 
         // screw shelf
-        Rect screwShelf = new Rect(rightPoint - roomWidth/8, topPoint + windowWith*2, rightPoint, topPoint + windowWith*4);
-        canvas.drawRect(screwShelf, Paintings.SHELF_PAINTING_FILL.getPaint());
+        startLeftPoint = rightPointOfFablab - widthOfOneFablabRoom /8;
+        startTopPoint = topPointOfFablab + windowWith * 2;
+        width = widthOfOneFablabRoom /8;
+        height = windowWith*2;
+        drawRectFromLeftToRightSide(canvas, startLeftPoint, startTopPoint, width, height, Paintings.SHELF_PAINTING_FILL, "");
 
-        // other shelf
-        Rect otherShelf = new Rect(rightPoint - roomWidth/4, topPoint, rightPoint, topPoint + roomHeight/9);
-        canvas.drawRect(otherShelf, Paintings.SHELF_PAINTING_FILL.getPaint());
+        // other shelf on the top
+        startLeftPoint = rightPointOfFablab - widthOfOneFablabRoom /4;
+        startTopPoint = topPointOfFablab;
+        width = widthOfOneFablabRoom /4;
+        height = heightOfOneFablabRoom /9;
+        drawRectFromLeftToRightSide(canvas, startLeftPoint, startTopPoint, width, height, Paintings.SHELF_PAINTING_FILL, "");
 
         // tables
-        Rect tablesTopRoom = new Rect(leftPoint, topPoint + roomHeight/5, leftPoint + roomWidth/3*2, topPoint + roomHeight/5*3);
-        canvas.drawRect(tablesTopRoom, Paintings.TABLE_PAINTING.getPaint());
-        canvas.drawText("Labortisch", tablesTopRoom.left + padding, tablesTopRoom.centerY(), Paintings.TEXT_PAINTING_SMALL.getPaint());
-
-
+        startLeftPoint = leftPointOfFablab;
+        startTopPoint = topPointOfFablab + heightOfOneFablabRoom /5;
+        width = widthOfOneFablabRoom /3*2;
+        height = heightOfOneFablabRoom /5*2;
+        drawRectFromLeftToRightSide(canvas, startLeftPoint, startTopPoint, width, height, Paintings.TABLE_PAINTING, "Labortisch");
 
     }
+
+
+    private void drawRectFromLeftToRightSide(Canvas canvas, int startPointLeft, int startPointTop, int width, int height, Paintings rectPainting, String rectDescription)
+    {
+        Rect myNewRect = new Rect(startPointLeft, startPointTop, startPointLeft + width, startPointTop + height);
+        canvas.drawRect(myNewRect, rectPainting.getPaint());
+
+        drawDescriptonInRect(canvas, myNewRect, rectPainting, rectDescription);
+    }
+
+    private void drawRectFromRightPointToLeftSide(Canvas canvas, int startPointRight, int startPointTop, int width, int height, Paintings rectPainting, String rectDescription)
+    {
+        Rect myNewRect = new Rect(startPointRight - width, startPointTop, startPointRight, startPointTop + height);
+        canvas.drawRect(myNewRect, rectPainting.getPaint());
+
+        drawDescriptonInRect(canvas, myNewRect, rectPainting, rectDescription);
+    }
+
+    private void drawRectFromLeftPointToRightPoint(Canvas canvas, int leftPoint, int topPoint, int rightPoint, int bottomPoint, Paintings rectPainting, String rectDescription)
+    {
+        Rect myNewRect = new Rect(leftPoint, topPoint, rightPoint, bottomPoint);
+        canvas.drawRect(myNewRect, rectPainting.getPaint());
+
+        drawDescriptonInRect(canvas, myNewRect, rectPainting, rectDescription);
+    }
+
+    private void drawDescriptonInRect(Canvas canvas, Rect rect, Paintings rectPainting, String rectDescription)
+    {
+        float descriptionLength = Paintings.TEXT_PAINTING_SMALL.getPaint().measureText(rectDescription);
+        float descriptionHeight = Paintings.TEXT_PAINTING_SMALL.getPaint().getTextSize();
+        canvas.drawText(rectDescription, rect.centerX() - descriptionLength/2, rect.centerY() + (descriptionHeight/2), Paintings.TEXT_PAINTING_SMALL.getPaint() );
+    }
+
 
     protected void drawElectricWorkshop(Canvas canvas)
     {

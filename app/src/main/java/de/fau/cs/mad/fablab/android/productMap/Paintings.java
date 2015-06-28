@@ -23,6 +23,7 @@ public enum Paintings
     TEXT_PAINTING_SMALL(Color.BLACK, Paint.Style.STROKE, 30),
     TEXT_PAINTING_LOCATION(Color.argb(255, 0xCC, 00, 00), Paint.Style.STROKE, 35);
 
+
     private static int opacity = 200;
 
 
