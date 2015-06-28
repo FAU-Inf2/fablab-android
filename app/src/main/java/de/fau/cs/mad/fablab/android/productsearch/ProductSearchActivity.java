@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
@@ -16,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import java.util.List;
 
 import de.fau.cs.mad.fablab.android.BaseActivity;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.cart.CartSingleton;
 import de.fau.cs.mad.fablab.android.productMap.ProductMapActivity;
 import de.fau.cs.mad.fablab.android.ui.UiUtils;
 import de.fau.cs.mad.fablab.rest.ProductApiClient;
@@ -42,6 +45,9 @@ public class ProductSearchActivity extends BaseActivity
     private final String        KEY_SELECTED_PRODUCT    = "selected_product";
     private final String        KEY_ORDER_OPTION        = "order_option";
     private boolean             isOrderedByName         = true;
+
+    private IndexableListView   indexableListView;
+    private int                 listViewHeight;
 
     private RecyclerView.LayoutManager layoutManager;
     private ProductAdapter productAdapter;
@@ -138,12 +144,52 @@ public class ProductSearchActivity extends BaseActivity
         //do not iconify search view
         //searchView.setIconified(false);
 
-        //get indexable list view and set adapter
-        IndexableListView indexableListView = (IndexableListView)
-                findViewById(R.id.product_indexable_list_view);
-        productAdapter = new ProductAdapter(getApplicationContext(), R.layout.product_entry, indexableListView);
+        //get list view and set adapter
+        indexableListView = (IndexableListView) findViewById(R.id.product_indexable_list_view);
+        productAdapter = new ProductAdapter(getApplicationContext(), R.layout.product_entry,
+                indexableListView);
         indexableListView.setAdapter(productAdapter);
         indexableListView.setFastScrollEnabled(true);
+
+        //manage height of the list view
+        indexableListView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver
+                .OnGlobalLayoutListener() {
+
+            @Override
+            public void onGlobalLayout() {
+
+                //get initial height of the list view (not available until drawing)
+                listViewHeight = indexableListView.getHeight();
+                indexableListView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
+                //initially adapt height of the list view depending on the height of the panel
+                indexableListView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout
+                        .LayoutParams.MATCH_PARENT, listViewHeight - CartSingleton
+                        .MYCART.getPanelHeight()));
+
+                //set panel state listener to dynamically adapt height of the list view
+                CartSingleton.MYCART.setPanelStateListener(new CartSingleton.PanelStateListener() {
+
+                    @Override
+                    public void onPanelHidden() {
+                        //set height of the list view to initial height
+                        indexableListView.setLayoutParams(new RelativeLayout.LayoutParams(
+                                RelativeLayout.LayoutParams.MATCH_PARENT, listViewHeight));
+                    }
+
+                    @Override
+                    public void onPanelExpanded() {
+                        //set height of the list view to initial height minus height of the panel
+                        indexableListView.setLayoutParams(new RelativeLayout.LayoutParams(
+                                RelativeLayout.LayoutParams.MATCH_PARENT, listViewHeight -
+                                CartSingleton.MYCART.getPanelHeight()));
+                    }
+
+                });
+            }
+
+        });
+
 
         //add listener to handle click events
         indexableListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

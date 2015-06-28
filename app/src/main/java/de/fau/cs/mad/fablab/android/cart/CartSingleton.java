@@ -36,6 +36,13 @@ import de.fau.cs.mad.fablab.rest.core.Product;
 public enum CartSingleton {
     MYCART;
 
+    public interface PanelStateListener {
+        void onPanelHidden();
+        void onPanelExpanded();
+    }
+
+    private PanelStateListener panelStateListener;
+
     private RuntimeExceptionDao<CartEntry, Long> cartEntryDao;
     private RuntimeExceptionDao<Cart, String> cartDao;
     private RuntimeExceptionDao<Product, String> productDao;
@@ -225,8 +232,14 @@ public enum CartSingleton {
             if (products.size() == 0) {
                 mLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
                 mLayout.setPanelHeight((int) (view.getResources().getDimension(R.dimen.zero) / view.getResources().getDisplayMetrics().density));
+                if(panelStateListener != null) {
+                    panelStateListener.onPanelHidden();
+                }
             } else {
                 mLayout.setPanelHeight((int) view.getResources().getDimension(R.dimen.slidinguppanel_panel_height));
+                if(panelStateListener != null) {
+                    panelStateListener.onPanelExpanded();
+                }
             }
         }
     }
@@ -379,5 +392,13 @@ public enum CartSingleton {
         });
 
         rl.startAnimation(anim);
+    }
+
+    public void setPanelStateListener(PanelStateListener panelStateListener) {
+        this.panelStateListener = panelStateListener;
+    }
+
+    public int getPanelHeight() {
+        return mLayout.getPanelHeight();
     }
 }
