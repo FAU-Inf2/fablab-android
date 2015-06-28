@@ -23,21 +23,21 @@ public class QrCodeScannerFragment extends BaseFragment
     @Inject
     QrCodeScannerFragmentViewModel mViewModel;
 
-    EventBus mEventBus = EventBus.getDefault();
+    private EventBus mEventBus = EventBus.getDefault();
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mViewModel.setListener(this);
+
+        new ScannerViewCommandBinding().bind(mScannerView, mViewModel.getProcessQrCodeCommand());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_scanner, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mViewModel.setListener(this);
-
-        new ScannerViewCommandBinding().bind(mScannerView, mViewModel.getProcessQrCodeCommand());
     }
 
     @Override
