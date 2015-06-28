@@ -12,6 +12,8 @@ import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ScannerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
+import de.greenrobot.event.EventBus;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class BarcodeScannerFragment extends BaseFragment
@@ -21,6 +23,8 @@ public class BarcodeScannerFragment extends BaseFragment
 
     @Inject
     BarcodeScannerFragmentViewModel mViewModel;
+
+    private EventBus mEventBus = EventBus.getDefault();
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -40,12 +44,14 @@ public class BarcodeScannerFragment extends BaseFragment
     @Override
     public void onPause() {
         super.onPause();
+        mEventBus.unregister(this);
         mViewModel.pause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        mEventBus.register(this);
         mViewModel.resume();
     }
 
@@ -59,5 +65,12 @@ public class BarcodeScannerFragment extends BaseFragment
     public void onShowInvalidBarcodeMessage() {
         Toast.makeText(getActivity(), R.string.barcode_scanner_invalid_barcode, Toast.LENGTH_LONG)
                 .show();
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(ProductFoundEvent event) {
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                AddToCartDialogFragment.newInstance(event.getProduct())).addToBackStack(null)
+                .commit();
     }
 }

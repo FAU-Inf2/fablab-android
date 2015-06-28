@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Product;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
+import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -17,10 +18,10 @@ import retrofit.client.Response;
 public class BarcodeScannerFragmentViewModel {
     @Inject
     ProductApi mProductApi;
-    @Inject
-    BarcodeScannerViewLauncher mViewLauncher;
 
     private Listener mListener;
+
+    private EventBus mEventBus;
 
     private final Pattern mBarcodePattern = Pattern.compile("200(00000)?\\d{5}");
     private final Command<Result> mProcessBarcodeCommand = new Command<Result>() {
@@ -44,7 +45,7 @@ public class BarcodeScannerFragmentViewModel {
                     @Override
                     public void success(Product product, Response response) {
                         mProcessBarcodeCommand.setIsExecutable(true);
-                        mViewLauncher.showAddToCartDialogFragment(product);
+                        mEventBus.post(new ProductFoundEvent(product));
                     }
 
                     @Override
@@ -63,6 +64,11 @@ public class BarcodeScannerFragmentViewModel {
             }
         }
     };
+
+    @Inject
+    public BarcodeScannerFragmentViewModel() {
+        mEventBus = EventBus.getDefault();
+    }
 
     public void setListener(Listener listener) {
         mListener = listener;
