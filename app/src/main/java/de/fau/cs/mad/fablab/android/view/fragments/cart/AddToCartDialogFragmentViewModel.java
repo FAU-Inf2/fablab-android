@@ -4,12 +4,16 @@ import android.os.Bundle;
 
 import javax.inject.Inject;
 
+import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class AddToCartDialogFragmentViewModel {
     public static final String KEY_PRODUCT = "product";
     private static final String KEY_AMOUNT = "amount";
+
+    @Inject
+    CartModel mCartModel;
 
     private Product mProduct;
     private double mAmount;
@@ -19,7 +23,7 @@ public class AddToCartDialogFragmentViewModel {
     private final Command<Integer> mAddToCartCommand = new Command<Integer>() {
         @Override
         public void execute(Integer parameter) {
-            // TODO add product to cart
+            mCartModel.addEntry(mProduct, mAmount);
             if (mListener != null) {
                 mListener.onDismiss();
             }
@@ -35,11 +39,6 @@ public class AddToCartDialogFragmentViewModel {
             }
         }
     };
-
-    @Inject
-    public AddToCartDialogFragmentViewModel() {
-
-    }
 
     public void setListener(Listener listener) {
         mListener = listener;

@@ -11,6 +11,8 @@ public class StorageFragment extends Fragment {
     private NavigationDrawerStorage navigationDrawerStorage;
     private NewsModel mNewsModel;
     private ICalStorage iCalStorage;
+    private CartModel mCartModel;
+    private ProductModel mProductModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,9 @@ public class StorageFragment extends Fragment {
         mNewsModel = new NewsModel(mRestClient.getNewsApi());
         iCalStorage = new ICalStorage();
         navigationDrawerStorage = new NavigationDrawerStorage();
+        mCartModel = new CartModel(DatabaseHelper.getHelper(getActivity()).getCartDao());
+        mProductModel = new ProductModel(DatabaseHelper.getHelper(getActivity()).getProductDao(),
+                mRestClient.getProductApi());
     }
 
     public RestClient getRestClient() {
@@ -39,4 +44,11 @@ public class StorageFragment extends Fragment {
         return navigationDrawerStorage;
     }
 
+    public CartModel getCartModel() {
+        return mCartModel;
+    }
+
+    public ProductModel getProductModel() {
+        return mProductModel;
+    }
 }

@@ -6,14 +6,15 @@
     android:clickable="true"
     android:focusable="false"
     android:elevation="@dimen/slidinguppanel_elevation"
-    android:background="@drawable/slidinguppanel_bg">
+    android:background="@color/slidingUpPanel_bg">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/card_vertical_margin">
+        android:layout_marginTop="@dimen/card_vertical_margin"
+        android:layout_marginBottom="@dimen/card_vertical_margin">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,74 +54,80 @@
             android:layout_weight=".70"
             android:scrollbars="vertical"/>
 
-<!-- Footer-->
-        <LinearLayout
+        <!-- Footer-->
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="vertical"
-            android:background="@color/slidingUpPanel_footer_bg"
-            android:layout_marginLeft="@dimen/slidinguppanel_drag_bg_stroke_margin"
-            android:layout_marginRight="@dimen/slidinguppanel_drag_bg_stroke_margin"
-            android:layout_marginBottom="@dimen/slidinguppanel_drag_bg_stroke_margin">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/cart_total_price_title"
-                android:text="@string/cart_total_price_title"
-                android:layout_marginLeft="@dimen/slidinguppanel_title_margin_left"
-                android:layout_marginTop="@dimen/slidinguppanel_title_margin_top"
-                android:layout_marginBottom="@dimen/slidinguppanel_title_margin_bottom"
-                android:textSize="@dimen/slidinguppanel_textsize"/>
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="4"
-                android:layout_marginRight="@dimen/slidinguppanel_title_margin_left"
-                android:layout_marginLeft="@dimen/slidinguppanel_title_margin_left"
-                android:layout_marginTop="@dimen/slidinguppanel_title_margin_top"
-                android:layout_marginBottom="@dimen/fab_padding">
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:background="@color/slidingUpPanel_footer_bg"
+                android:layout_marginLeft="@dimen/slidinguppanel_drag_bg_stroke_margin"
+                android:layout_marginRight="@dimen/slidinguppanel_drag_bg_stroke_margin"
+                android:layout_marginBottom="@dimen/slidinguppanel_drag_bg_stroke_margin">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cart_total_price_title"
+                    android:text="@string/cart_total_price_title"
+                    android:layout_marginLeft="@dimen/slidinguppanel_title_margin_left"
+                    android:layout_marginTop="@dimen/slidinguppanel_title_margin_top"
+                    android:layout_marginBottom="@dimen/slidinguppanel_title_margin_bottom"
+                    android:textSize="@dimen/slidinguppanel_textsize"/>
 
                 <LinearLayout
-                    android:layout_width="@dimen/zero"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
-                    android:orientation="vertical"
-                    android:gravity="right"
-                    android:layout_gravity="right"
-                    android:paddingRight="@dimen/slidinguppanel_total_price_margin">
-                    <TextView
-                        android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4"
+                    android:layout_marginRight="@dimen/slidinguppanel_title_margin_left"
+                    android:layout_marginLeft="@dimen/slidinguppanel_title_margin_left"
+                    android:layout_marginTop="@dimen/slidinguppanel_title_margin_top"
+                    android:layout_marginBottom="@dimen/fab_padding">
+
+                    <LinearLayout
+                        android:layout_width="@dimen/zero"
                         android:layout_height="wrap_content"
-                        android:id="@+id/cart_total_price"
+                        android:layout_weight="1.5"
+                        android:orientation="vertical"
+                        android:gravity="right"
+                        android:layout_gravity="right"
+                        android:paddingRight="@dimen/slidinguppanel_total_price_margin">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/cart_total_price"
+                            android:gravity="center_vertical|center"
+                            android:textSize="@dimen/slidinguppanel_bottom_total_price_textsize"
+                            android:textStyle="bold"
+                            android:textColor="@color/slidingUpPanel_cart_text"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/cart_total_price_betterment_tax"
+                            android:gravity="bottom|center"
+                            android:text="@string/betterment_tax"/>
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/cart_button_checkout"
+                        android:layout_width="@dimen/zero"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/slidinguppanel_btn_checkout_textsize"
                         android:gravity="center_vertical|center"
-                        android:textSize="@dimen/slidinguppanel_bottom_total_price_textsize"
-                        android:textStyle="bold"
-                        android:textColor="@color/slidingUpPanel_cart_text"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/cart_total_price_betterment_tax"
-                        android:gravity="bottom|center"
-                        android:text="@string/betterment_tax"/>
+                        android:paddingRight="@dimen/slidinguppanel_bottom_part_padding"
+                        android:paddingLeft="@dimen/slidinguppanel_bottom_part_padding"
+                        android:layout_weight="1.5"
+                        android:text="@string/cart_button_checkout"
+                        android:textColor="@color/slidinguppanel_footer_bg_textcolor"
+                        android:background="@drawable/slidinguppanel_button_selector"/>
+
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/cart_button_checkout"
-                    android:layout_width="@dimen/zero"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/slidinguppanel_btn_checkout_textsize"
-                    android:gravity="center_vertical|center"
-                    android:paddingRight="@dimen/slidinguppanel_bottom_part_padding"
-                    android:paddingLeft="@dimen/slidinguppanel_bottom_part_padding"
-                    android:layout_weight="1.5"
-                    android:text="@string/cart_button_checkout"
-                    android:textColor="@color/slidinguppanel_footer_bg_textcolor"
-                    android:background="@drawable/slidinguppanel_button_selector"/>
-
             </LinearLayout>
-        </LinearLayout>
+
+        </RelativeLayout>
     </LinearLayout>
 
 </RelativeLayout>

@@ -7,12 +7,10 @@
     <string name="appbar_opened_since">seit</string>
     <string name="appbar_closed">Geschlossen</string>
     <string name="cart_title">Warenkorb:</string>
-    <string name="cart_empty">Ihr Warenkorb ist leider noch leer</string>
+
     <string name="cart_total_price_title">Gesamtpreis:</string>
     <string name="cart_button_checkout">Zur Kasse</string>
-    <string name="cart_entry_unit_null_exception"></string>
-    <string name="cart_article_label"><![CDATA[&nbsp;Artikel]]></string>
-    <string name="cart_preview_delimiter"><![CDATA[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]]></string>
+    <string name="cart_article_label">Artikel</string>
     <string name="cart_product_quantity">Menge in</string>
     <string name="cart_product_removed">Artikel entfernt</string>
     <string name="cart_product_undo">Rückgängig</string>
@@ -38,21 +36,11 @@
 
     <string name="search_all_hint">(leer => alle Produkte)</string>
 
-    <string name="bold_start"><![CDATA[<b>]]></string>
-    <string name="bold_end"><![CDATA[</b>]]></string>
-    <string name="italic_start"><![CDATA[<i>]]></string>
-    <string name="italic_end"><![CDATA[</i>]]></string>
-    <string name="currency">€</string>
-    <string name="non_breaking_space"><![CDATA[&nbsp;]]></string>
-    <string name="colon">:</string>
     <string name="betterment_tax">inkl. MwSt.</string>
     <string name="title_activity_push">PushActivity</string>
     <string name="title_activity_main">MainActivity</string>
 
 
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
 
     <!-- Strings for navigation drawer titles -->
     <string name="news">News</string>
@@ -62,8 +50,5 @@
     <string name="navdrawer_login_hint_username">Username</string>
     <string name="navdrawer_login_hint_password">Password</string>
     <string name="navdrawer_button_login">Login</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

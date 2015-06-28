@@ -15,6 +15,7 @@ import de.fau.cs.mad.fablab.android.model.StorageFragment;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
 import de.fau.cs.mad.fablab.android.view.fragments.ICalAndNewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.cart.CartSlidingUpPanel;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 import de.fau.cs.mad.fablab.android.view.dependencyinjection.ActivityModule;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingFablabButton fablabButton;
     NavigationDrawer navigationDrawer;
     ActionBar actionBar;
+    CartSlidingUpPanel cartSlidingUpPanel;
 
     EventBus eventbus = EventBus.getDefault();
 
@@ -68,18 +70,21 @@ public class MainActivity extends AppCompatActivity {
 
         switch(destination) {
             case News:
+                cartSlidingUpPanel.setVisibility(true);
                 ICalAndNewsFragment iCalAndNewsFragment = (ICalAndNewsFragment) getSupportFragmentManager().findFragmentByTag(TAG_ICAL_AND_NEWS_FRAGMENT);
                 if(iCalAndNewsFragment == null) iCalAndNewsFragment = new ICalAndNewsFragment();
                 fragmentTransaction.replace(R.id.fragment_container, iCalAndNewsFragment, TAG_ICAL_AND_NEWS_FRAGMENT).commit();
                 break;
 
             case BarcodeScanner:
+                cartSlidingUpPanel.setVisibility(false);
                 BarcodeScannerFragment barcodeScannerFragment = (BarcodeScannerFragment) getSupportFragmentManager().findFragmentByTag(TAG_BARCODE_FRAGMENT);
                 if(barcodeScannerFragment == null) barcodeScannerFragment = new BarcodeScannerFragment();
                 fragmentTransaction.replace(R.id.fragment_container, barcodeScannerFragment, TAG_BARCODE_FRAGMENT).commit();
                 break;
 
             case ProductSearch:
+                cartSlidingUpPanel.setVisibility(true);
                 break;
         }
     }
@@ -89,11 +94,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         eventbus.unregister(this);
+        cartSlidingUpPanel.pause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        cartSlidingUpPanel = new CartSlidingUpPanel(this, findViewById(android.R.id.content));
         eventbus.register(this);
     }
 

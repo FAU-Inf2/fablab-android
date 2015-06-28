@@ -13,9 +13,10 @@
     <color name="AppbarColorClosed">#FF0000</color>
     <color name="AppbarColorOpened">#62DF25</color>
     <color name="slidingUpPanelStroke">#B1BCBE</color>
-    <color name="slidingUpPanel_bg">#FFFFFF</color>
+    <color name="slidingUpPanel_bg">#fff3f3f3</color>
+     <color name="slidingUpPanel_bg_cart_entry">#FFFFFF</color>
     <color name="slidingUpPanel_cart_text">#000000</color>
-    <color name="slidingUpPanel_footer_bg">#F2F2F2</color>
+    <color name="slidingUpPanel_footer_bg">#FFFFFF</color>
     <color name="slidingUpPanel_footer_button_bg">#e1e1e1</color>
     <color name="slidingUpPanel_footer_button_bg_pressed">#94ce18</color>
     <color name="slidingUpPanel_footer_button_txt">#154b85</color>

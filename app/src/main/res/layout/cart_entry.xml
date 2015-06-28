@@ -1,144 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cart_card_view"
-        android:layout_gravity="center"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/product_card_height"
-        android:layout_marginRight="@dimen/product_card_margin"
-        android:layout_marginLeft="@dimen/product_card_margin"
-        android:layout_marginTop="@dimen/product_card_margin"
-        android:layout_marginBottom="@dimen/product_card_margin"
-        card_view:cardCornerRadius="@dimen/zero">
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cart_card_view"
+    android:layout_gravity="center"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/product_card_height"
+    android:layout_marginRight="@dimen/product_card_margin"
+    android:layout_marginLeft="@dimen/product_card_margin"
+    android:layout_marginTop="@dimen/product_card_margin"
+    android:layout_marginBottom="@dimen/product_card_margin"
+    card_view:cardBackgroundColor="@color/slidingUpPanel_bg_cart_entry"
+    android:foreground="?android:attr/selectableItemBackground">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/product_card_margin"
+        android:paddingRight="@dimen/product_price_padding"
+        android:paddingBottom="@dimen/product_card_margin"
+        android:paddingTop="@dimen/product_card_margin"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:id="@+id/product_view">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:id="@+id/cart_product_photo"
+            android:layout_marginBottom="@dimen/zero"
+            android:layout_marginRight="@dimen/product_card_margin"
+            android:layout_marginLeft="@dimen/zero"
+            android:layout_marginTop="@dimen/zero"
+            android:layout_gravity="center_vertical|left"/>
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="@dimen/product_card_margin"
-            android:paddingRight="@dimen/product_price_padding"
-            android:paddingBottom="@dimen/product_card_margin"
-            android:paddingTop="@dimen/product_card_margin"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:id="@+id/product_view">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_alignParentLeft="true"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/cart_product_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:id="@+id/cart_product_photo"
-                android:layout_marginBottom="@dimen/zero"
-                android:layout_marginRight="@dimen/product_card_margin"
-                android:layout_marginLeft="@dimen/zero"
-                android:layout_marginTop="@dimen/zero"
-                android:layout_gravity="center_vertical|left"/>
+                android:textSize="@dimen/product_name_size"
+                android:singleLine="true"/>
+
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/cart_product_name"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:textSize="@dimen/product_name_size"
-                    android:singleLine="true"/>
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="fill_parent"
-                        android:orientation="vertical"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/cart_product_quantity"
-                            android:layout_weight="1"
-                            android:gravity="bottom"/>
-
-                        <Spinner
-                            android:id="@+id/cart_product_quantity_spinner"
-                            android:layout_width="@dimen/slidinguppanel_spinner_width"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/slidinguppanel_spinner_margin"
-                            android:spinnerMode="dropdown"
-                            android:gravity="bottom"
-                            style="@android:style/Widget.Holo.Light.Spinner"
-                            android:layout_weight="1"
-                            />
-                    </LinearLayout>
+                    android:orientation="vertical"
+                    android:weightSum="2">
 
                     <TextView
-                        android:id="@+id/cart_product_price"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:gravity="right|bottom"
-                        android:layout_weight="0.5"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/product_price_size"
-                        android:textColor="@color/slidingUpPanel_cart_text"/>
+                        android:layout_width="@dimen/slidinguppanel_quantity_width"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cart_product_quantity"
+                        android:layout_weight="1"
+                        android:gravity="bottom"/>
+
+                    <Spinner
+                        android:id="@+id/cart_product_quantity_spinner"
+                        android:layout_width="@dimen/slidinguppanel_spinner_width"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/slidinguppanel_spinner_margin"
+                        android:spinnerMode="dropdown"
+                        android:gravity="bottom"
+                        style="@android:style/Widget.Holo.Light.Spinner"
+                        android:layout_weight="1"
+                        />
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/cart_product_price"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="right|bottom"
+                    android:layout_weight="0.5"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/product_price_size"
+                    android:textColor="@color/slidingUpPanel_cart_text"/>
             </LinearLayout>
 
         </LinearLayout>
 
-        <!-- Undo part -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:background="@color/slidingUpPanel_product_removed"
-            android:visibility="gone"
-            android:clickable="false"
-            android:id="@+id/cart_entry_undo"
-            android:weightSum="11"
-            android:paddingLeft="@dimen/slidinguppanel_product_removed_padding"
-            android:paddingRight="@dimen/slidinguppanel_product_removed_padding">
-
-            <TextView
-                android:layout_width="@dimen/zero"
-                android:layout_height="match_parent"
-                android:id="@+id/cart_product_removed"
-                android:clickable="false"
-                android:textSize="@dimen/slidinguppanel_product_removed_textsize"
-                android:gravity="center_vertical|left"
-                android:textColor="@color/slidingUpPanel_bg"
-                android:layout_weight="6.1"/>
-            <ImageView
-                android:layout_width="@dimen/zero"
-                android:layout_height="65dp"
-                android:id="@+id/cart_product_removed_vertical_bar"
-                android:layout_weight="0.05"
-                android:background="@color/slidingUpPanel_bg"
-                android:layout_marginRight="@dimen/slidinguppanel_product_removed_margin"/>
-
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="25dp"
-                android:id="@+id/cart_product_undo_img"
-                android:src="@drawable/undo"
-                android:layout_weight="1.05"
-                android:clickable="true"/>
-
-            <Button
-                android:layout_width="@dimen/zero"
-                android:layout_height="match_parent"
-                android:id="@+id/cart_product_undo"
-                android:layout_weight="3.5"
-                android:textSize="@dimen/slidinguppanel_product_undo_button"
-                android:textStyle="bold"
-                android:gravity="right|center_vertical"
-                android:textColor="@color/slidingUpPanel_bg"
-                android:background="@android:color/transparent"/>
-
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

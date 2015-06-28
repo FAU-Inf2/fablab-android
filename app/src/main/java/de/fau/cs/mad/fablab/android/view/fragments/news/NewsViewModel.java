@@ -5,7 +5,7 @@ import de.fau.cs.mad.fablab.rest.core.News;
 import de.greenrobot.event.EventBus;
 
 public class NewsViewModel {
-    News mNews;
+    private News mNews;
 
     private Command<Void> mShowDialogCommand = new Command<Void>() {
         @Override
