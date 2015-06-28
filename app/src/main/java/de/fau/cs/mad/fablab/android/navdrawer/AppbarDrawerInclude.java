@@ -277,9 +277,6 @@ public class AppbarDrawerInclude  {
         if(menu.getItem(1) != null && menu.getItem(1).isVisible()) {
             menu.getItem(1).setIcon(R.drawable.sort_alpha);
             menu.getItem(1).setTitle(R.string.appbar_orderedby_name);
-
-            // TODO
-            /* Icons will still be changed to right ones, when I'm at home again */
         }
     }
 
