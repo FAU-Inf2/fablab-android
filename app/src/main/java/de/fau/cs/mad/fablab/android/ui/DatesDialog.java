@@ -1,7 +1,8 @@
 package de.fau.cs.mad.fablab.android.ui;
 
-import android.support.v4.app.DialogFragment;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.graphics.Bitmap;
 
 import de.fau.cs.mad.fablab.android.R;
 
@@ -20,12 +20,14 @@ public class DatesDialog extends DialogFragment{
     static final String DATE = "DATE";
     static final String TIME = "TIME";
     static final String LOCATION = "LOCATION";
+    static final String DESCRIPTION = "DESCRIPTION";
 
     private String title;
     private String date;
     private String time;
     private String location;
     private Bitmap image;
+    private String description;
 
     public static DatesFragment newInstance() {
         DatesFragment f = new DatesFragment();
@@ -43,6 +45,7 @@ public class DatesDialog extends DialogFragment{
         date = args.getString(DATE);
         time = args.getString(TIME);
         location = args.getString(LOCATION);
+        description = args.getString(DESCRIPTION);
     }
 
     @Override
@@ -55,14 +58,16 @@ public class DatesDialog extends DialogFragment{
         TextView time_TV = (TextView) v.findViewById((R.id.time_dates_dialog));
         TextView location_TV = (TextView) v.findViewById((R.id.location_dates_dialog));
         ImageView image_IV = (ImageView) v.findViewById((R.id.image_dates_dialog));
+        TextView description_TV = (TextView) v.findViewById(R.id.date_description_dates_dialog);
 
         title_TV.setText(title);
-        date_TV.setText("Am: " + date);
-        time_TV.setText("Um: " + time);
+        date_TV.setText("Datum: " + date);
+        time_TV.setText("Uhrzeit: " + time);
         location_TV.setText("Ort: " + location);
         image_IV.setImageBitmap(image);
+        description_TV.setText(description);
 
-        Button okButton = (Button) v.findViewById(R.id.ok_button_news_dialog);
+        Button okButton = (Button) v.findViewById(R.id.ok_button_dates_dialog);
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

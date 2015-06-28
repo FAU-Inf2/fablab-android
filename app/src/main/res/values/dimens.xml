@@ -75,7 +75,8 @@
     <dimen name="product_card_margin">3dp</dimen>
     <dimen name="product_price_padding">6dp</dimen>
     <dimen name="product_price_size">18sp</dimen>
-    <dimen name="product_name_size">16sp</dimen>
+    <dimen name="product_name_size">17sp</dimen>
+    <dimen name="product_detail_size">16sp</dimen>
 
     <dimen name="navdrawer_height">178dp</dimen>
     <dimen name="navdrawer_margin_top">14dp</dimen>

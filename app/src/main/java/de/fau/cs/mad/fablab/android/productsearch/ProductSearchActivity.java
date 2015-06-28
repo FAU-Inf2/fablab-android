@@ -15,14 +15,12 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import de.fau.cs.mad.fablab.android.BaseActivity;
@@ -111,14 +109,6 @@ public class ProductSearchActivity extends BaseActivity
         //For Autocomplete
         final AutoCompleteTextView searchView = (AutoCompleteTextView) findViewById(R.id.product_search_view);
         searchView.setThreshold(2); //min 2 chars before autocomplete
-
-        Button productSearchButton = (Button) findViewById(R.id.product_search_button);
-        productSearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                search(searchView.getText().toString());
-            }
-        });
 
         //Set adapter to AutoCompleteTextView
         ArrayAdapter<String>adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, AutoCompleteHelper.getInstance().getPossibleAutoCompleteWords());
