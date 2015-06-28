@@ -21,8 +21,7 @@ public final class LocationParser
 
         if(locationString != null)
         {
-            String cleanedString = deleteWhitespaces(locationString);
-            String splittedString[] = splitLocationString(cleanedString);
+            String splittedString[] = splitLocationString(locationString);
             String lastPartOfLocationString = splittedString[splittedString.length-1];
 
             if(hasIdentificationCode(lastPartOfLocationString))
@@ -41,16 +40,9 @@ public final class LocationParser
     }
 
     // first filter
-    private static String deleteWhitespaces(String locationString)
-    {
-        String result = locationString.replaceAll(" / ", "/");
-        return result;
-    }
-
-    // second filter
     private static String[] splitLocationString(String locationString)
     {
-        String[] parts = locationString.split("/");
+        String[] parts = locationString.split(" / ");
         return parts;
     }
 
@@ -63,7 +55,7 @@ public final class LocationParser
         return identificationCodeMatcher.find();
     }
 
-    // third filter
+    // second filter
     private static String extractIdentificationCode(String lastPartOfString)
     {
         String result = "";
@@ -75,7 +67,7 @@ public final class LocationParser
         return result;
     }
 
-    // forth filter
+    // third filter
     private static ProductLocation convertIdenticationCodeToProductLocation(String identificationCode)
     {
         ProductLocation productLocation = null;

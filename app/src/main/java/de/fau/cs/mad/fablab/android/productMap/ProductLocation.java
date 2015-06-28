@@ -8,32 +8,32 @@ public enum ProductLocation
     //BASEMENT_STOCK(),
 
     //Level 1
-    ELECTRIC_WORKSHOP(FablabView.ELECTRIC_WORKSHOP, FABLAB, 0, 0, 0.5, 0.25, "Elektrowerkstatt", "(E)"),
+    ELECTRIC_WORKSHOP(FablabView.ELECTRIC_WORKSHOP, FABLAB, 0, 0, 0.5, 0.28, "Elektrowerkstatt", "(E)"),
 
     //Level 2
-    DRAWER_RUBBER           (FablabView.ELECTRIC_WORKSHOP, ELECTRIC_WORKSHOP, 0, 0, 0, 0, "Schublade Moosgummi", ""),
+    DRAWER_RUBBER           (FablabView.ELECTRIC_WORKSHOP, ELECTRIC_WORKSHOP, 0, 0, 0.7, 0.42, "Schublade Moosgummi", ""),
 
     //Level 2
-    BOX_KABEL_FOUND         (FablabView.ELECTRIC_WORKSHOP, ELECTRIC_WORKSHOP, 0, 0, 0, 0, "Fundkabel", ""),
+    BOX_KABEL_FOUND         (FablabView.ELECTRIC_WORKSHOP, ELECTRIC_WORKSHOP, 0, 0, 0.7, 0.42, "Kiste Fundkabel", ""),
 
     //Level 2
-    BOX_REFLOW_OVEN         (null, ELECTRIC_WORKSHOP, 0, 0, ELECTRIC_WORKSHOP.getMainPositionX(), ELECTRIC_WORKSHOP.getMainPositionY(), "Kiste 'Zubeh\u00F6r Reflow-Ofen'", ""),
+    BOX_REFLOW_OVEN         (null, ELECTRIC_WORKSHOP, 0, 0, 0.7, 0.42, "Kiste \"Zubeh\u00F6r Reflow-Ofen\"", ""),
 
     //Level 2
-    SHELF_FOILS             (null, ELECTRIC_WORKSHOP, 0, 0, ELECTRIC_WORKSHOP.getMainPositionX(), ELECTRIC_WORKSHOP.getMainPositionY(), "Folienrack", ""),
+    SHELF_FOILS             (null, ELECTRIC_WORKSHOP, 0, 0, 0.7, 0.42, "Folienrack", ""),
 
     //Level 2
-    DRAWER_PAPER_FOILS      (null, ELECTRIC_WORKSHOP, 0, 0, ELECTRIC_WORKSHOP.getMainPositionX(), ELECTRIC_WORKSHOP.getMainPositionY(), "Schublade 'Buntes Papier/Overheadfolie/Laminierfolien", ""),
+    DRAWER_PAPER_FOILS      (null, ELECTRIC_WORKSHOP, 0, 0, 0.7, 0.42, "Schublade \"Buntes Papier/Overheadfolien/Laminierfolien\"", ""),
 
     //Level 2
-    BOX_TSHIRTS             (null, ELECTRIC_WORKSHOP, 0, 0, ELECTRIC_WORKSHOP.getMainPositionX(), ELECTRIC_WORKSHOP.getMainPositionY(), "Kiste T-Shirts", ""),
+    BOX_TSHIRTS             (null, ELECTRIC_WORKSHOP, 0, 0, 0, 0, "Kiste T-Shirts", ""),
 
     //Level 2
-    DRAWER_MAGAZINE         (null, ELECTRIC_WORKSHOP, 0, 0, ELECTRIC_WORKSHOP.getMainPositionX(), ELECTRIC_WORKSHOP.getMainPositionY(), "Schubladenmagazin", "(S)"),
+    DRAWER_MAGAZINE         (null, ELECTRIC_WORKSHOP, 0, 0, 0.9, 0.2, "Schubladenmagazin", "(S)"),
     //Level 3
-    SCREW_ASSORTMENT_ABOVE      (null, ELECTRIC_WORKSHOP, 0, 0, ELECTRIC_WORKSHOP.getMainPositionX(), ELECTRIC_WORKSHOP.getMainPositionY(), "Schraubensortiment oben", "(S3)"),
-    SCREW_ASSORTMENT_MIDDLE     (null, ELECTRIC_WORKSHOP, 0, 0, ELECTRIC_WORKSHOP.getMainPositionX(), ELECTRIC_WORKSHOP.getMainPositionY(), "Schraubensortiment mitte", "(S2)"),
-    SCREW_ASSORTMENT_BELOW      (null, ELECTRIC_WORKSHOP, 0, 0, ELECTRIC_WORKSHOP.getMainPositionX(), ELECTRIC_WORKSHOP.getMainPositionY(), "Schraubensortiment unten", "(S3)"),
+    SCREW_ASSORTMENT_ABOVE      (null, DRAWER_MAGAZINE, 0, 0, DRAWER_MAGAZINE.getMainPositionX(), DRAWER_MAGAZINE.getMainPositionY(), "Schraubensortiment oben", "(S3)"),
+    SCREW_ASSORTMENT_MIDDLE     (null, DRAWER_MAGAZINE, 0, 0, DRAWER_MAGAZINE.getMainPositionX(), DRAWER_MAGAZINE.getMainPositionY(), "Schraubensortiment mitte", "(S2)"),
+    SCREW_ASSORTMENT_BELOW      (null, DRAWER_MAGAZINE, 0, 0, DRAWER_MAGAZINE.getMainPositionX(), DRAWER_MAGAZINE.getMainPositionY(), "Schraubensortiment unten", "(S3)"),
 
     //Level 2
     ACRYLIC_GLAS_SHELF      (FablabView.ACRYLIC_GLAS_SHELF, ELECTRIC_WORKSHOP, 0, 0, 0.4, 0.4, "Acrylregal" ,"" ),
@@ -42,7 +42,7 @@ public enum ProductLocation
     BOX_STAMPS              (FablabView.ELECTRIC_WORKSHOP, ACRYLIC_GLAS_SHELF, 0, 0, ACRYLIC_GLAS_SHELF.getMainPositionX(), ACRYLIC_GLAS_SHELF.getMainPositionY(), "Kiste Stempel", ""),
 
     //Level 2
-    SHELF                   (FablabView.ELECTRIC_WORKSHOP, ELECTRIC_WORKSHOP, 0, 0, 0.9, 0.25, "Regal" , "(K)"),
+    SHELF                   (FablabView.ELECTRIC_WORKSHOP, ELECTRIC_WORKSHOP, 0, 0, 0.9, 0.30, "Regal" , "(K)"),
     //Level 3
     BOX_POWER_ADAPTERS          (FablabView.ELECTRIC_WORKSHOP, SHELF, 0, 0, SHELF.getMainPositionX(), SHELF.getMainPositionY(), "Kiste Netzteile", ""),
     BOX_CONNECTORS              (FablabView.ELECTRIC_WORKSHOP, SHELF, 0, 0, SHELF.getMainPositionX(), SHELF.getMainPositionY(), "Kiste Buchsen und Stecker", ""),

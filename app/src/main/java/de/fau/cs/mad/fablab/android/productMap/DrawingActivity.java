@@ -131,7 +131,7 @@ public class DrawingActivity extends View
         // inner doors
 
         // door between fablab rooms
-        canvas.drawLine(doorLeftPoint, canvas.getHeight()/2, doorRightPoint - openDoorOffset, canvas.getHeight()/2 - openDoorOffset, Paintings.DOOR_PAINTING.getPaint());
+        //canvas.drawLine(doorLeftPoint, canvas.getHeight()/2, doorRightPoint - openDoorOffset, canvas.getHeight()/2 - openDoorOffset, Paintings.DOOR_PAINTING.getPaint());
         // room door bottom
         canvas.drawLine(doorLeftPoint, canvas.getHeight() - padding, doorRightPoint - openDoorOffset, canvas.getHeight() - padding - openDoorOffset, Paintings.DOOR_PAINTING.getPaint());
 
