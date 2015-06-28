@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +20,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.fau.cs.mad.fablab.android.FabButton;
@@ -91,7 +91,7 @@ public class NewsActivity extends RoboActionBarActivity {
         }
     };
 
-    //This callback is used for product Search.
+    //This callback is used for ical retrieval.
     private Callback<List<ICal>> iCalCallback = new Callback<List<ICal>>() {
         @Override
         public void success(List<ICal> iCals, Response response) {
@@ -99,7 +99,11 @@ public class NewsActivity extends RoboActionBarActivity {
                 Toast.makeText(getBaseContext(), R.string.product_not_found, Toast.LENGTH_LONG).show();
             }
             iCalList.clear();
-            iCalList.addAll(iCals);
+            // only add events that are not terminated yet
+            Date now = new Date();
+            for (ICal event : iCals) {
+                if (event.getEndAsDate().after(now)) iCalList.add(event);
+            }
             datesSlidePagerAdapter.notifyDataSetChanged();
         }
 
@@ -251,9 +255,11 @@ public class NewsActivity extends RoboActionBarActivity {
             {
                 this.titleView.setText(news.getTitle());
                 this.subTitleView.setText(news.getDescriptionShort());
-                if(news.getLinkToPreviewImage() != null) {
+                if(news.getLinkToPreviewImage() != null && !news.getLinkToPreviewImage().contains("fablab_logo.png")) {
                     //new DownloadImageTask(iconView).execute(news.getLinkToPreviewImage());
                     Picasso.with(iconView.getContext()).load(news.getLinkToPreviewImage()).into(iconView);
+                } else {
+                    Picasso.with(iconView.getContext()).load(R.drawable.news_nopicture).into(iconView);
                 }
                 description = news.getDescription();
 

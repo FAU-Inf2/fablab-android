@@ -3,9 +3,11 @@
     android:id="@+id/navdrawer_header_loggedin"
     android:layout_width="match_parent"
     android:layout_height="178dp"
-    android:background="#333333"
+    android:background="@drawable/navdrawer_header"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:elevation="4dp"
+    android:layout_marginBottom="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"

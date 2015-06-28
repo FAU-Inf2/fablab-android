@@ -40,7 +40,7 @@
 
 
 
-    <string name="search_all_hint">(leer => alle Produkte)</string>
+    <string name="search_all_hint">alle Produkte</string>
 
     <string name="bold_start"><![CDATA[<b>]]></string>
     <string name="bold_end"><![CDATA[</b>]]></string>
