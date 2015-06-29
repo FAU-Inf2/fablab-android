@@ -20,6 +20,7 @@ import de.fau.cs.mad.fablab.android.navdrawer.AppbarDrawerInclude;
 import de.psdev.licensesdialog.LicensesDialog;
 import de.psdev.licensesdialog.licenses.ApacheSoftwareLicense20;
 import de.psdev.licensesdialog.licenses.GnuLesserGeneralPublicLicense21;
+import de.psdev.licensesdialog.licenses.License;
 import de.psdev.licensesdialog.model.Notice;
 import de.psdev.licensesdialog.model.Notices;
 
@@ -122,7 +123,19 @@ public class AboutActivity extends ActionBarActivity{
     public void openLibariesDialog()
     {
         final Notices notices = new Notices();
-        notices.addNotice(new Notice("jackson-databind", "https://github.com/FasterXML/jackson-databind/", "", new ApacheSoftwareLicense20()));
+        notices.addNotice(new Notice("jackson-databind", "https://github.com/FasterXML/jackson-databind/", null, new ApacheSoftwareLicense20()));
+        notices.addNotice(new Notice("retrofit", "https://github.com/square/retrofit", "Copyright 2013 Square, Inc.", new ApacheSoftwareLicense20()));
+        notices.addNotice(new Notice("okhttp", "https://github.com/square/okhttp", null, new ApacheSoftwareLicense20()));
+        notices.addNotice(new Notice("okio", "https://github.com/square/okio", null, new ApacheSoftwareLicense20()));
+        notices.addNotice(new Notice("ormlite", "http://ormlite.com/", null, null));
+        notices.addNotice(new Notice("zxing", "https://github.com/dm77/barcodescanner", null, new ApacheSoftwareLicense20()));
+        notices.addNotice(new Notice("AndroidSlidingUpPanel", "https://github.com/umano/AndroidSlidingUpPanel", null, new ApacheSoftwareLicense20()));
+        notices.addNotice(new Notice("SwipeableRecyclerView", "https://github.com/brnunes/SwipeableRecyclerView", null, new ApacheSoftwareLicense20()));
+        notices.addNotice(new Notice("CircleImageView", "https://github.com/hdodenhof/CircleImageView", null, new ApacheSoftwareLicense20()));
+        notices.addNotice(new Notice("FloatingActionButton", "https://github.com/Clans/FloatingActionButton", "Copyright 2015 Dmytro Tarianyk", new ApacheSoftwareLicense20()));
+        notices.addNotice(new Notice("RoboGuice", "https://github.com/roboguice/roboguice/", "Copyright 2009-2014 roboguice committers", new ApacheSoftwareLicense20()));
+        notices.addNotice(new Notice("EventBus", "https://github.com/greenrobot/EventBus", null, new ApacheSoftwareLicense20()));
+        notices.addNotice(new Notice("Picasso", "https://github.com/square/picasso", "Copyright 2013 Square, Inc.", new ApacheSoftwareLicense20()));
 
         LicensesDialog dialog = new LicensesDialog.Builder(this)
                 .setNotices(notices)
