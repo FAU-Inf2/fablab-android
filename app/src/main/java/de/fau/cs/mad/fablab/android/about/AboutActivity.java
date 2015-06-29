@@ -117,7 +117,9 @@ public class AboutActivity extends ActionBarActivity{
 
         int dividerId = dialog.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
         View divider = dialog.findViewById(dividerId);
-        divider.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        if(divider != null){
+            divider.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        }
     }
 
     public void openLibariesDialog()
