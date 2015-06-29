@@ -61,6 +61,8 @@
     <string name="appbar_orderby_name">Alphabetisch sortieren</string>
     <string name="appbar_orderby_price">Nach Preis sortieren</string>
 
+    <string name="ical_fullday_string">ganztägig</string>
+
     <string name="app_version">Version: 1.0</string>
     <string name="used_libraries">Open Source Lizenzen</string>
     <string name="about_title">About</string>
