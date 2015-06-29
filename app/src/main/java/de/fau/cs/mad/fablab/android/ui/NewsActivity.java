@@ -151,28 +151,7 @@ public class NewsActivity extends RoboActionBarActivity {
         iCalApi = new ICalApiClient(this).get();
         iCalApi.findAll(iCalCallback);
 
-        /*
-        List<ICal> listDates = new ArrayList<>();
-        ICal date1 = new ICal(); date1.setLocation("Fablab"); date1.setSummery("OpenLab");
-        listDates.add(date1);
-        ICal date2 = new ICal(); date2.setLocation("Fablab"); date2.setSummery("SelfLab");
-        listDates.add(date2);
-        ICal date3 = new ICal(); date3.setLocation("Cafete"); date3.setSummery("Kaffeetrinken");
-        listDates.add(date3);
-        ICal date4 = new ICal(); date4.setLocation("ziemlich lange location"); date4.setSummery("ziemlich langer Veranstaltungstitel");
-        listDates.add(date4);
-        ICal date5 = new ICal();
-        date5.setLocation("CIP");
-        date5.setSummery("Test ungerade");
-        listDates.add(date5);
-
-        datesSlidePagerAdapter = new DatesSlidePagerAdapter(getSupportFragmentManager(), listDates);
-        datesViewPager.setAdapter(datesSlidePagerAdapter);
-        */
-
         //Load Autocompleteionwords
-
-        //TODO
         AutoCompleteHelper.getInstance().loadProductNames(this);
     }
 
@@ -194,10 +173,6 @@ public class NewsActivity extends RoboActionBarActivity {
         super.onResume();
         CartSingleton.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), true);
         appbarDrawer.startTimer();
-
-        //TODO
-        //Load Autocompleteionwords
-        AutoCompleteHelper.getInstance().loadProductNames(this);
     }
 
     @Override
