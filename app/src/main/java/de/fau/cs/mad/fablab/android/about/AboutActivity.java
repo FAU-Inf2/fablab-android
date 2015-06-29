@@ -1,10 +1,14 @@
 package de.fau.cs.mad.fablab.android.about;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -89,27 +93,46 @@ public class AboutActivity extends ActionBarActivity{
         textView.setPadding(20, 20, 20, 20);
         textView.setText(Html.fromHtml(getResources().getString(R.string.about_content)));
         textView.setMovementMethod(LinkMovementMethod.getInstance()); // this is important to make the links clickable
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+        textView.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
         final AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setTitle(getResources().getString(R.string.about_title))
                 .setPositiveButton("Close", null)
                 .setView(textView)
                 .create();
 
-
         alertDialog.show();
+
+
+        setDialogColors(alertDialog);
+    }
+
+    private void setDialogColors(Dialog dialog){
+        int textViewId = dialog.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
+        TextView tv = (TextView) dialog.findViewById(textViewId);
+        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+        tv.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+        int dividerId = dialog.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
+        View divider = dialog.findViewById(dividerId);
+        divider.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
     }
 
     public void openLibariesDialog()
     {
         final Notices notices = new Notices();
-        notices.addNotice(new Notice("Test 1", "http://example.org", "Example Person", new ApacheSoftwareLicense20()));
-        notices.addNotice(new Notice("Test 2", "http://example.org", "Example Person 2", new GnuLesserGeneralPublicLicense21()));
+        notices.addNotice(new Notice("jackson-databind", "https://github.com/FasterXML/jackson-databind/", "", new ApacheSoftwareLicense20()));
 
-        new LicensesDialog.Builder(this)
+        LicensesDialog dialog = new LicensesDialog.Builder(this)
                 .setNotices(notices)
                 .setTitle(R.string.used_libraries)
                 .setIncludeOwnLicense(true)
-                .build()
-                .show();
+                .build();
+
+        Dialog licenseDialog = dialog.show();
+
+        setDialogColors(licenseDialog);
+
     }
 }
