@@ -54,7 +54,7 @@ public class ProductDialog extends DialogFragment {
         TextView title = (TextView) view.findViewById(R.id.product_dialog_title);
         final Button location = (Button) view.findViewById(R.id.product_dialog_location);
         final Button cart = (Button) view.findViewById(R.id.product_dialog_cart);
-        final Button report = (Button) view.findViewById(R.id.product_dialog_report);
+        /* final Button report = (Button) view.findViewById(R.id.product_dialog_report); */
 
         //set product name as title
         title.setText(product.getName());
@@ -72,12 +72,12 @@ public class ProductDialog extends DialogFragment {
                 productDialogListener.onAddToCartClick();
             }
         });
-        report.setOnClickListener(new View.OnClickListener() {
+        /* report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 productDialogListener.onReportClick();
             }
-        });
+        }); */
 
         //disable location button if no location is available
         if(LocationParser.getLocation(product.getLocation()) == null) {
@@ -88,8 +88,8 @@ public class ProductDialog extends DialogFragment {
         if(product.getPrice() == 0) {
             cart.setEnabled(false);
             cart.setClickable(false);
-            report.setEnabled(false);
-            report.setEnabled(false);
+            /* report.setEnabled(false);
+            report.setEnabled(false); */
         }
 
         return view;
