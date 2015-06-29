@@ -153,7 +153,8 @@ public class DatesFragment extends Fragment {
 
     private String getTime(ICal ical) {
         if (ical.isAllday()) {
-            return "ganztägig";
+            //TODO
+            return "ganztï¿½gig";
         } else {
             Calendar calStart = Calendar.getInstance();
             calStart.setTime(ical.getDtstartAsDate());

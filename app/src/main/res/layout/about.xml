@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/DrawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="7dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            android:id="@+id/appbar"
+            layout="@layout/appbar" />
+    </RelativeLayout>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
+    >
+
+    <TextView
+        android:id="@+id/about_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:gravity="center_horizontal"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        android:layout_margin="20dp"/>
+    <TextView
+        android:id="@+id/about_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_version"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/about_title"
+        android:textSize="20dp"
+        android:layout_marginBottom="20dp"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/textView_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_title"
+            android:gravity="center_horizontal"
+            android:textSize="30dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            >
+        </TextView>
+
+        <TextView
+            android:id="@+id/textView_used_libraries"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/used_libraries"
+            android:gravity="center_horizontal"
+            android:textSize="30dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            />
+
+    </LinearLayout>
+</RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/navdrawer_RecyclerView"
+        android:layout_width="320dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="#ffffff"
+        android:scrollbars="vertical">
+
+    </android.support.v7.widget.RecyclerView>
+</android.support.v4.widget.DrawerLayout>

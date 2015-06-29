@@ -171,6 +171,8 @@ public class NewsActivity extends RoboActionBarActivity {
         */
 
         //Load Autocompleteionwords
+
+        //TODO
         AutoCompleteHelper.getInstance().loadProductNames(this);
     }
 
@@ -193,6 +195,7 @@ public class NewsActivity extends RoboActionBarActivity {
         CartSingleton.MYCART.setSlidingUpPanel(this, findViewById(android.R.id.content), true);
         appbarDrawer.startTimer();
 
+        //TODO
         //Load Autocompleteionwords
         AutoCompleteHelper.getInstance().loadProductNames(this);
     }

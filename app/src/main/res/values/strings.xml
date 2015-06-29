@@ -60,4 +60,30 @@
     <string name="appbar_orderedby_price">Sortiert nach Preis</string>
     <string name="appbar_orderby_name">Alphabetisch sortieren</string>
     <string name="appbar_orderby_price">Nach Preis sortieren</string>
+
+    <string name="app_version">Version: 1.0</string>
+    <string name="used_libraries">Open Source Lizenzen</string>
+    <string name="about_title">About</string>
+    <string name="about_content">Diese App wurde im Rahmen des &lt;a href=&quot;https://www2.informatik.uni-erlangen.de/teaching/SS2015/MAD/index.html&quot;&gt;MAD Projekts&lt;/a&gt;
+        an der FAU Erlangen-Nürnberg entwickelt.      &lt;br&gt;
+        Der Quellcode kann unter &lt;a href=&quot;https://github.com/FAU-Inf2/fablab-android&quot;&gt;Github&lt;/a&gt; gefunden werden.    &lt;br&gt;
+        Feedback jederzeit gerne per &lt;a href=&quot;mailto:fablab@i2.cs.fau.de&quot;&gt;email&lt;/a&gt;
+        &lt;br&gt;
+        &lt;br&gt;
+        Die Entwickler sind :&lt;br&gt;
+        &lt;br&gt;
+        Emanuel Eimer&lt;br&gt;
+        Stefan Herpich&lt;br&gt;
+        Michael Sandner&lt;br&gt;
+        Julia Schottenhamml&lt;br&gt;
+        Johannes Pfann&lt;br&gt;
+        Max Jalowski&lt;br&gt;
+        Sebastian Haubner&lt;br&gt;
+        Katharina Full&lt;br&gt;
+        Philipp Kannhäuser&lt;br&gt;
+        Julian Lorz&lt;br&gt;
+        Daniel Rosenmüller&lt;br&gt;
+        &lt;br&gt;
+    </string>
+
 </resources>

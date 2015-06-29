@@ -21,6 +21,7 @@ import net.spaceapi.HackerSpace;
 import net.spaceapi.State;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.about.AboutActivity;
 import de.fau.cs.mad.fablab.android.barcodescanner.BarcodeScannerActivity;
 import de.fau.cs.mad.fablab.android.eventbus.DoorEvent;
 import de.fau.cs.mad.fablab.android.productsearch.ProductSearchActivity;
@@ -76,6 +77,7 @@ public class AppbarDrawerInclude  {
         navdrawer.addItem(new NavigationDrawerItem("News", NewsActivity.class, R.drawable.news));
         navdrawer.addItem(new NavigationDrawerItem("Produkt scannen", BarcodeScannerActivity.class, R.drawable.barcode));
         navdrawer.addItem(new NavigationDrawerItem("Produkt suchen", ProductSearchActivity.class, R.drawable.produktsuche));
+
         // navdrawer.addItem(new NavigationDrawerItem("Warenkorb", CartActivity.class, R.drawable.warenkorb));
 
         mAdapter = new NavigationDrawerAdapter(navdrawer, true);
