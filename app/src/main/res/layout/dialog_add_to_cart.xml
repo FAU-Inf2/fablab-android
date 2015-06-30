@@ -10,12 +10,13 @@
         android:orientation="vertical"
         android:padding="24dp">
 
+        <!--
         <ImageView
             android:id="@+id/add_to_cart_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/no_image_avl" />
-
+            -->
         <TextView
             android:id="@+id/add_to_cart_name"
             android:layout_width="wrap_content"

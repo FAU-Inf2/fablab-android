@@ -13,8 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -28,7 +26,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         private TextView cart_product_name;
-        private ImageView cart_product_photo;
+        //private ImageView cart_product_photo;
         private TextView cart_product_price;
         private Spinner cart_product_quantity_spinner;
         private TextView cart_product_quantity;
@@ -38,7 +36,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             this.cart_product_quantity = (TextView) itemView.findViewById(R.id.cart_product_quantity);
             this.cart_product_quantity_spinner = (Spinner) itemView.findViewById(R.id.cart_product_quantity_spinner);
             this.cart_product_name = (TextView) itemView.findViewById(R.id.cart_product_name);
-            this.cart_product_photo = (ImageView) itemView.findViewById(R.id.cart_product_photo);
+            //this.cart_product_photo = (ImageView) itemView.findViewById(R.id.cart_product_photo);
             this.cart_product_price = (TextView) itemView.findViewById(R.id.cart_product_price);
         }
     }
@@ -94,7 +92,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Html.fromHtml(productViewHolder.itemView.getResources().getString(R.string.currency)));
 
         // set img
-        productViewHolder.cart_product_photo.setImageResource(R.drawable.no_image_avl);
+        // productViewHolder.cart_product_photo.setImageResource(R.drawable.no_image_avl);
 
         // check the availability of attribute "unit" from product
         String italic_unit = productViewHolder.itemView.getResources().getString(R.string.cart_product_quantity) +
