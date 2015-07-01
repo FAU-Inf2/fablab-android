@@ -28,9 +28,6 @@
         android:theme="@style/AppTheme" >
         <activity android:name=".pushservice.PushActivity" />
         <activity
-            android:name=".cart.CheckoutActivity2"
-             />
-        <activity
             android:name=".productMap.ProductMapActivity"
             android:screenOrientation="portrait" />
         <activity
