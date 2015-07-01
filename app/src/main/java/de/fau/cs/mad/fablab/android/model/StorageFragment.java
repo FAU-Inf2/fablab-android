@@ -22,7 +22,8 @@ public class StorageFragment extends Fragment {
         mNewsModel = new NewsModel(mRestClient.getNewsApi());
         iCalStorage = new ICalStorage();
         navigationDrawerStorage = new NavigationDrawerStorage();
-        mCartModel = new CartModel(DatabaseHelper.getHelper(getActivity()).getCartDao());
+        mCartModel = new CartModel(DatabaseHelper.getHelper(getActivity()).getCartDao(),
+                mRestClient.getCartApi());
         mProductModel = new ProductModel(DatabaseHelper.getHelper(getActivity()).getProductDao(),
                 mRestClient.getProductApi());
     }

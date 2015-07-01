@@ -25,7 +25,7 @@ import de.fau.cs.mad.fablab.android.BaseActivity;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.productMap.LocationParser;
 import de.fau.cs.mad.fablab.android.productMap.ProductMapActivity;
-import de.fau.cs.mad.fablab.android.ui.UiUtils;
+import de.fau.cs.mad.fablab.android.util.UiUtils;
 import de.fau.cs.mad.fablab.rest.core.Product;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
 import retrofit.Callback;

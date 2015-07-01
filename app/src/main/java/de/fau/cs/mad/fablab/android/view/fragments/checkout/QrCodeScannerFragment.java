@@ -62,7 +62,7 @@ public class QrCodeScannerFragment extends BaseFragment
 
     @SuppressWarnings("unused")
     public void onEvent(QrCodeScannedEvent event) {
-        String qrCodeText = event.getQrCodeText();
-        // TODO start checkout
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                CheckoutFragment.newInstance(event.getQrCodeText())).commit();
     }
 }

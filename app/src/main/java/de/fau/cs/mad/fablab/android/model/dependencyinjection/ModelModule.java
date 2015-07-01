@@ -12,6 +12,7 @@ import de.fau.cs.mad.fablab.android.model.StorageFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.cart.CartSlidingUpPanel;
+import de.fau.cs.mad.fablab.android.view.fragments.checkout.CheckoutFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.icals.ICalViewPagerFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
 import de.fau.cs.mad.fablab.rest.myapi.ICalApi;
@@ -20,8 +21,8 @@ import de.fau.cs.mad.fablab.rest.myapi.ICalApi;
 @Module(
         complete = false,
         injects = {
-                AddToCartDialogFragment.class, BarcodeScannerFragment.class, CartSlidingUpPanel.class,
-                NewsFragment.class, ICalViewPagerFragment.class
+                AddToCartDialogFragment.class, CheckoutFragment.class, BarcodeScannerFragment.class,
+                CartSlidingUpPanel.class, NewsFragment.class, ICalViewPagerFragment.class
         })
 public class ModelModule {
     private final StorageFragment mStorageFragment;
