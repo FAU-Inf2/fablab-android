@@ -36,8 +36,8 @@
                 android:textColor="@color/AppBarTextColor" />
 
             <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:id="@+id/cart_total_price_preview"
                 android:layout_marginRight="@dimen/slidinguppanel_preview_margin_right"
                 android:layout_marginBottom="@dimen/slidinguppanel_preview_margin_bottom"
@@ -50,7 +50,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/cart_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="0dp"
             android:layout_weight=".70"
             android:scrollbars="vertical"/>
 

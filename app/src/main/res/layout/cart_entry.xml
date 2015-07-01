@@ -4,7 +4,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cart_card_view"
     android:layout_gravity="center"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="@dimen/product_card_height"
     android:layout_marginRight="@dimen/product_card_margin"
     android:layout_marginLeft="@dimen/product_card_margin"
@@ -26,7 +26,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:id="@+id/cart_product_photo"
@@ -36,25 +36,25 @@
             android:layout_marginTop="@dimen/zero"
             android:layout_gravity="center_vertical|left"/>
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/cart_product_name"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:textSize="@dimen/product_name_size"
                 android:singleLine="true"/>
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:weightSum="2">
 
@@ -79,8 +79,8 @@
 
                 <TextView
                     android:id="@+id/cart_product_price"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:gravity="right|bottom"
                     android:layout_weight="0.5"
                     android:textStyle="bold"
