@@ -31,7 +31,7 @@
                 sothree:umanoPanelHeight="40dp"
                 sothree:umanoShadowHeight="0dp"
                 sothree:umanoParalaxOffset="100dp"
-                sothree:umanoDragView="@+id/dragView"
+                sothree:umanoDragView="@+id/dragPart"
                 sothree:umanoOverlay="true">
 
                 <!-- Container for main fragments to be replaced -->

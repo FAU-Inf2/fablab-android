@@ -65,9 +65,6 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
                 R.dimen.slidinguppanel_panel_height_opened);
         mDragBgStrokeMargin = (int) res.getDimension(R.dimen.slidinguppanel_drag_bg_stroke_margin);
 
-        // only the top should be draggable
-        sliding_up_pl.setDragView(drag_part_ll);
-
         sliding_up_pl.setPanelHeight(mPanelHeight);
         // Adapt Panel height when user rotates device
         if (sliding_up_pl.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
@@ -147,9 +144,11 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
         if (mViewModel.isVisible()) {
             if (sliding_up_pl.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED) {
                 sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                sliding_up_pl.setPanelHeight(mPanelHeight);
             }
         } else {
             sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+            sliding_up_pl.setPanelHeight(0);
         }
     }
 
