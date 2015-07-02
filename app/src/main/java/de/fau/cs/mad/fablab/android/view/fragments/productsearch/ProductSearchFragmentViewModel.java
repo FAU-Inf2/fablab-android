@@ -1,7 +1,8 @@
 package de.fau.cs.mad.fablab.android.view.fragments.productsearch;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.pedrogomez.renderers.AdapteeCollection;
+import com.pedrogomez.renderers.ListAdapteeCollection;
+
 
 import javax.inject.Inject;
 
@@ -9,12 +10,12 @@ import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Product;
-import de.greenrobot.event.EventBus;
 
-public class ProductSearchFragmentViewModel implements ObservableArrayList.Listener<Product>
-{
+public class ProductSearchFragmentViewModel implements ObservableArrayList.Listener<Product> {
     ProductModel mModel;
     Listener mListener;
+
+    private ListAdapteeCollection<ProductSearchViewModel> mProductSearchViewModelCollection;
 
     boolean mSearchState = false;
 
@@ -32,16 +33,11 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
     public ProductSearchFragmentViewModel(ProductModel mModel){
         this.mModel = mModel;
         mModel.getProducts().setListener(this);
+        mProductSearchViewModelCollection = new ListAdapteeCollection<>();
     }
 
     public void setListener(Listener listener) {
         mListener = listener;
-
-        List<ProductSearchViewModel> viewModels = new ArrayList<>();
-        for (Product product : mModel.getProducts()) {
-            viewModels.add(new ProductSearchViewModel(product));
-        }
-        mListener.onDataPrepared(viewModels);
     }
 
     public Command<String> getSearchCommand() {
@@ -51,30 +47,43 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
 
     @Override
     public void onItemAdded(Product newItem) {
-        mListener.onItemAdded(new ProductSearchViewModel(newItem));
+        mProductSearchViewModelCollection.add(new ProductSearchViewModel(newItem));
         mSearchState = false;
-        mListener.onSearchStateChanged();
+        if (mListener != null) {
+            mListener.onDataChanged();
+            mListener.onSearchStateChanged();
+        }
     }
 
     @Override
     public void onItemRemoved(Product removedItem) {
         //TODO not working, item should be removed
-        mListener.onItemRemoved(new ProductSearchViewModel(removedItem));
+        mProductSearchViewModelCollection.remove(new ProductSearchViewModel(removedItem));
+        if (mListener != null) {
+            mListener.onDataChanged();
+        }
+    }
+
+    public AdapteeCollection<ProductSearchViewModel> getProductSearchViewModelCollection() {
+        return mProductSearchViewModelCollection;
     }
 
     public boolean getSearchState() {
         return mSearchState;
     }
 
+    public void initialize() {
+        if (mListener != null) {
+            for (Product product : mModel.getProducts()) {
+                mProductSearchViewModelCollection.add(new ProductSearchViewModel(product));
+            }
+            mListener.onDataChanged();
+        }
+    }
+
     public interface Listener{
-        void onItemAdded(ProductSearchViewModel viewModel);
-
-        void onItemRemoved(ProductSearchViewModel viewModel);
-
-        void onDataPrepared(List<ProductSearchViewModel> viewModels);
+        void onDataChanged();
 
         void onSearchStateChanged();
     }
 }
-
-

@@ -16,11 +16,11 @@ import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 
 public class NewsViewModelRenderer extends Renderer<NewsViewModel> {
     @InjectView(R.id.title_news_entry)
-    TextView titleView;
+    TextView title_tv;
     @InjectView(R.id.text_news_entry)
-    TextView subTitleView;
+    TextView text_tv;
     @InjectView(R.id.icon_news_entry)
-    ImageView iconView;
+    ImageView icon_tv;
 
     @Override
     protected void setUpView(View view) {
@@ -43,12 +43,12 @@ public class NewsViewModelRenderer extends Renderer<NewsViewModel> {
 
         new ViewCommandBinding().bind(getRootView(), viewModel.getShowDialogCommand());
 
-        titleView.setText(viewModel.getTitle());
-        subTitleView.setText(viewModel.getDescriptionShort());
+        title_tv.setText(viewModel.getTitle());
+        text_tv.setText(viewModel.getDescriptionShort());
 
         if (viewModel.getLinkToPreviewImage() != null) {
-            Picasso.with(iconView.getContext()).load(viewModel.getLinkToPreviewImage()).into(
-                    iconView);
+            Picasso.with(icon_tv.getContext()).load(viewModel.getLinkToPreviewImage()).into(
+                    icon_tv);
         }
     }
 }

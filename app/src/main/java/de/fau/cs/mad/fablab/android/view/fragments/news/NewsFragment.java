@@ -7,10 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.pedrogomez.renderers.ListAdapteeCollection;
 import com.pedrogomez.renderers.RVRendererAdapter;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -22,20 +19,14 @@ import de.greenrobot.event.EventBus;
 
 public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.Listener {
     @InjectView(R.id.news_recycler_view)
-    RecyclerView news_recycler_view;
+    RecyclerView news_rv;
 
     @Inject
-    NewsFragmentViewModel viewModel;
+    NewsFragmentViewModel mViewModel;
 
     private RVRendererAdapter<NewsViewModel> mAdapter;
-    private ListAdapteeCollection<NewsViewModel> mNewsViewModelCollection;
 
-    private EventBus mEventBus;
-
-    public NewsFragment() {
-        mNewsViewModelCollection = new ListAdapteeCollection<>();
-        mEventBus = EventBus.getDefault();
-    }
+    private EventBus mEventBus = EventBus.getDefault();
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -44,16 +35,17 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
         //create and set the layoutmanager needed by recyclerview
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        news_recycler_view.setLayoutManager(layoutManager);
+        news_rv.setLayoutManager(layoutManager);
 
         mAdapter = new RVRendererAdapter<>(getLayoutInflater(savedInstanceState),
-                new NewsViewModelRendererBuilder(), mNewsViewModelCollection);
-        news_recycler_view.setAdapter(mAdapter);
+                new NewsViewModelRendererBuilder(), mViewModel.getNewsViewModelCollection());
+        news_rv.setAdapter(mAdapter);
 
-        viewModel.setListener(this);
+        mViewModel.setListener(this);
+        mViewModel.initialize();
 
         //bind the getGetNewsCommand to the recyclerView
-        new RecyclerViewCommandBinding().bind(news_recycler_view, viewModel.getGetNewsCommand());
+        new RecyclerViewCommandBinding().bind(news_rv, mViewModel.getGetNewsCommand());
     }
 
     @Override
@@ -77,14 +69,7 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
     }
 
     @Override
-    public void onItemAdded(NewsViewModel viewModel) {
-        mNewsViewModelCollection.add(viewModel);
-        mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onDataPrepared(List<NewsViewModel> viewModels) {
-        mNewsViewModelCollection.addAll(viewModels);
+    public void onDataChanged() {
         mAdapter.notifyDataSetChanged();
     }
 

@@ -5,9 +5,9 @@ public class NewsClickedEvent {
     private final String mText;
     private final String mImageLink;
 
-    public NewsClickedEvent(String title, String content, String imageLink) {
+    public NewsClickedEvent(String title, String text, String imageLink) {
         mTitle = title;
-        mText = content;
+        mText = text;
         mImageLink = imageLink;
     }
 

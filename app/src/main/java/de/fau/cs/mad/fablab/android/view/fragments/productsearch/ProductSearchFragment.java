@@ -13,10 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.pedrogomez.renderers.ListAdapteeCollection;
 import com.pedrogomez.renderers.RVRendererAdapter;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -29,9 +26,8 @@ import de.greenrobot.event.EventBus;
 public class ProductSearchFragment extends BaseFragment implements ProductSearchFragmentViewModel.Listener {
 
     private RVRendererAdapter<ProductSearchViewModel> mAdapter;
-    private ListAdapteeCollection<ProductSearchViewModel> mProductSearchViewModelCollection;
     private AnimationDrawable mAnimationDrawable;
-    private EventBus mEventBus;
+    private EventBus mEventBus = EventBus.getDefault();
 
     @Inject
     ProductSearchFragmentViewModel mViewModel;
@@ -45,11 +41,6 @@ public class ProductSearchFragment extends BaseFragment implements ProductSearch
     RelativeLayout loadingSpinnerContainer;
     @InjectView(R.id.spinner_image)
     ImageView mLoadingSpinnerImage;
-
-    public ProductSearchFragment(){
-        mProductSearchViewModelCollection = new ListAdapteeCollection<>();
-        mEventBus = EventBus.getDefault();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,7 +57,7 @@ public class ProductSearchFragment extends BaseFragment implements ProductSearch
         mAnimationDrawable = (AnimationDrawable) mLoadingSpinnerImage.getBackground();
 
         mAdapter = new RVRendererAdapter<>(getLayoutInflater(savedInstanceState),
-                new ProductSearchViewModelRendererBuilder(), mProductSearchViewModelCollection);
+                new ProductSearchViewModelRendererBuilder(), mViewModel.getProductSearchViewModelCollection());
         mProductRecyclerView.setAdapter(mAdapter);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -86,7 +77,7 @@ public class ProductSearchFragment extends BaseFragment implements ProductSearch
         });
 
         mViewModel.setListener(this);
-
+        mViewModel.initialize();
     }
 
     @Override
@@ -103,21 +94,7 @@ public class ProductSearchFragment extends BaseFragment implements ProductSearch
     }
 
     @Override
-    public void onItemRemoved(ProductSearchViewModel viewModel){
-        //TODO not working
-        mProductSearchViewModelCollection.remove(viewModel);
-        mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onItemAdded(ProductSearchViewModel viewModel) {
-        mProductSearchViewModelCollection.add(viewModel);
-        mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onDataPrepared(List<ProductSearchViewModel> viewModels) {
-        mProductSearchViewModelCollection.addAll(viewModels);
+    public void onDataChanged() {
         mAdapter.notifyDataSetChanged();
     }
 

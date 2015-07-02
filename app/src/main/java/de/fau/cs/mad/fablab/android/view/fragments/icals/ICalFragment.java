@@ -41,7 +41,6 @@ public class ICalFragment extends BaseFragment implements ICalFragmentViewModel.
         ical_rv.setAdapter(mAdapter);
 
         mViewModel.setListener(this);
-
         mViewModel.initialize();
 
         //bind the getGetICalCommand to the recyclerView
