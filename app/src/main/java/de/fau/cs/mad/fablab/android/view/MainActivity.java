@@ -18,7 +18,6 @@ import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScanner
 import de.fau.cs.mad.fablab.android.view.fragments.cart.CartSlidingUpPanel;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
-import de.fau.cs.mad.fablab.android.view.dependencyinjection.ActivityModule;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
 import de.greenrobot.event.EventBus;
 
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().add(storageFragment, "storage").commit();
         }
 
-        mObjectGraph = ObjectGraph.create(new ActivityModule(this), new ModelModule(storageFragment));
+        mObjectGraph = ObjectGraph.create(new ModelModule(storageFragment));
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ICalAndNewsFragment(), TAG_ICAL_AND_NEWS_FRAGMENT).commit();

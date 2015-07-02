@@ -10,7 +10,7 @@ public class StorageFragment extends Fragment {
     private RestClient mRestClient;
     private NavigationDrawerStorage navigationDrawerStorage;
     private NewsModel mNewsModel;
-    private ICalStorage iCalStorage;
+    private ICalModel iCalModel;
     private CartModel mCartModel;
     private ProductModel mProductModel;
 
@@ -20,7 +20,7 @@ public class StorageFragment extends Fragment {
         setRetainInstance(true);
         mRestClient = new RestClient(getActivity().getApplicationContext());
         mNewsModel = new NewsModel(mRestClient.getNewsApi());
-        iCalStorage = new ICalStorage();
+        iCalModel = new ICalModel(mRestClient.getICalApi());
         navigationDrawerStorage = new NavigationDrawerStorage();
         mCartModel = new CartModel(DatabaseHelper.getHelper(getActivity()).getCartDao(),
                 mRestClient.getCartApi());
@@ -36,9 +36,8 @@ public class StorageFragment extends Fragment {
         return mNewsModel;
     }
 
-    public ICalStorage getICalStorage()
-    {
-        return iCalStorage;
+    public ICalModel getICalModel() {
+        return iCalModel;
     }
 
     public NavigationDrawerStorage getNavigationDrawerStorage() {

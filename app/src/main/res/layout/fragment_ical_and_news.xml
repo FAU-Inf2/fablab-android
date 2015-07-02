@@ -6,11 +6,11 @@
     android:orientation="vertical">
 
     <fragment
-        android:name="de.fau.cs.mad.fablab.android.view.fragments.icals.ICalViewPagerFragment"
+        android:name="de.fau.cs.mad.fablab.android.view.fragments.icals.ICalFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:tag="tag_ical_fragment"
-        tools:layout="@layout/fragment_dates_view_pager" />
+        tools:layout="@layout/fragment_dates" />
 
     <fragment
         android:name="de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment"

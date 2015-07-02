@@ -34,8 +34,10 @@
     <string name="qr_code_scanner_invalid_qr_code">Ungültiger QR-Code</string>
     <string name="ok">OK</string>
     <string name="invalid_location">Standort nicht verfügbar</string>
-
-
+    
+    <string name="dates_date">Datum:</string>
+    <string name="dates_time">Uhrzeit:</string>
+    <string name="dates_location">Ort:</string>
 
     <string name="search_all_hint">(leer => alle Produkte)</string>
 
