@@ -16,6 +16,7 @@ import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
 import de.fau.cs.mad.fablab.android.view.fragments.ICalAndNewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.cart.CartSlidingUpPanel;
+import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 import de.fau.cs.mad.fablab.android.view.dependencyinjection.ActivityModule;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
@@ -85,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
 
             case ProductSearch:
                 cartSlidingUpPanel.setVisibility(true);
+                ProductSearchFragment productSearchFragment = (ProductSearchFragment) getSupportFragmentManager().findFragmentByTag(TAG_PRODUCTSEARCH_FRAGMENT);
+                if(productSearchFragment == null) productSearchFragment = new ProductSearchFragment();
+                fragmentTransaction.replace(R.id.fragment_container, productSearchFragment, TAG_PRODUCTSEARCH_FRAGMENT).commit();
                 break;
         }
     }

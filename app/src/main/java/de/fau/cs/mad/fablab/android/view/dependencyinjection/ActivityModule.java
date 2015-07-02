@@ -15,6 +15,7 @@ import de.fau.cs.mad.fablab.android.view.fragments.checkout.QrCodeScannerFragmen
 import de.fau.cs.mad.fablab.android.view.fragments.icals.viewpager.ICalDetailFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.icals.viewpager.ICalFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsDetailsDialogFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 
 @SuppressWarnings("unused")
@@ -23,7 +24,8 @@ import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
         injects = {
                 ActionBar.class, AddToCartDialogFragment.class, FloatingFablabButton.class,
                 ICalAndNewsFragment.class, ICalFragment.class, ICalDetailFragment.class,
-                NavigationDrawer.class, NewsDetailsDialogFragment.class, QrCodeScannerFragment.class
+                NavigationDrawer.class, NewsDetailsDialogFragment.class, QrCodeScannerFragment.class,
+                ProductSearchFragment.class
         })
 public class ActivityModule {
     private final FragmentActivity mActivity;

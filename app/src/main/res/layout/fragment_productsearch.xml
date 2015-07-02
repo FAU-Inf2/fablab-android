@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <AutoCompleteTextView
+        android:id="@+id/product_search_view"
+        android:hint="@string/search_all_hint"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:textStyle="bold"
+        android:imeOptions="actionSend"
+        android:singleLine="true"
+        android:width="250dip" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/product_indexable_list_view"
+        android:layout_below="@+id/product_search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:dividerHeight="0dp"/>
+
+    <include layout="@layout/spinner" />
+
+</RelativeLayout>
