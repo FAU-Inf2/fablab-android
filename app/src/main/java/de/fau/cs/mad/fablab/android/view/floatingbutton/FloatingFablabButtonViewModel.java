@@ -3,11 +3,10 @@ package de.fau.cs.mad.fablab.android.view.floatingbutton;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.eventbus.NavigationEvent;
-import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.greenrobot.event.EventBus;
 
-public class FloatingFablabButtonViewModel extends BaseViewModel {
+public class FloatingFablabButtonViewModel {
 
     Listener mListener;
     EventBus mEventBus;
@@ -44,7 +43,7 @@ public class FloatingFablabButtonViewModel extends BaseViewModel {
         return startBarcodeScannerCommand;
     }
 
-    public interface Listener extends BaseViewModel.Listener{
+    public interface Listener {
         void onFloatingButtonClicked();
     }
 }

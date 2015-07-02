@@ -3,11 +3,10 @@ package de.fau.cs.mad.fablab.android.view.navdrawer;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.eventbus.NavigationEvent;
-import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.greenrobot.event.EventBus;
 
-public class NavigationDrawerViewModel extends BaseViewModel {
+public class NavigationDrawerViewModel {
 
     Listener mListener;
     NavigationDrawerModel mModel;
@@ -63,7 +62,7 @@ public class NavigationDrawerViewModel extends BaseViewModel {
         return navigateToProductSearchCommand;
     }
 
-    public interface Listener extends BaseViewModel.Listener {
+    public interface Listener {
         void onNavigationDrawerItemSelected(int itemId);
     }
 }

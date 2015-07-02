@@ -3,11 +3,10 @@ package de.fau.cs.mad.fablab.android.actionbar;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.eventbus.DoorEvent;
-import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.greenrobot.event.EventBus;
 
-public class ActionBarViewModel extends BaseViewModel {
+public class ActionBarViewModel {
 
     Listener listener;
     ActionBarModel model;
@@ -38,7 +37,7 @@ public class ActionBarViewModel extends BaseViewModel {
         return refreshOpenedStateCommand;
     }
 
-    public interface Listener extends BaseViewModel.Listener {
+    public interface Listener {
         //void onActionBarItemSelected();
     }
 }
