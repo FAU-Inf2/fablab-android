@@ -4,6 +4,9 @@ import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
 
 
+import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
+
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.ProductModel;
@@ -16,6 +19,7 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
     Listener mListener;
 
     private ListAdapteeCollection<ProductSearchViewModel> mProductSearchViewModelCollection;
+    private HashMap<Product, ProductSearchViewModel> mProductSearchViewModels;
 
     boolean mSearchState = false;
 
@@ -34,6 +38,8 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
         this.mModel = mModel;
         mModel.getProducts().setListener(this);
         mProductSearchViewModelCollection = new ListAdapteeCollection<>();
+        mProductSearchViewModels = new HashMap<>();
+
     }
 
     public void setListener(Listener listener) {
@@ -47,7 +53,9 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
 
     @Override
     public void onItemAdded(Product newItem) {
-        mProductSearchViewModelCollection.add(new ProductSearchViewModel(newItem));
+        ProductSearchViewModel viewModel = new ProductSearchViewModel(newItem);
+        mProductSearchViewModelCollection.add(viewModel);
+        mProductSearchViewModels.put(newItem, viewModel);
         mSearchState = false;
         if (mListener != null) {
             mListener.onDataChanged();
@@ -57,8 +65,8 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
 
     @Override
     public void onItemRemoved(Product removedItem) {
-        //TODO not working, item should be removed
-        mProductSearchViewModelCollection.remove(new ProductSearchViewModel(removedItem));
+        mProductSearchViewModelCollection.remove(mProductSearchViewModels.get(removedItem));
+        mProductSearchViewModels.remove(removedItem);
         if (mListener != null) {
             mListener.onDataChanged();
         }
