@@ -114,6 +114,11 @@ public class ProductSearchFragment extends BaseFragment implements ProductSearch
     public void onEvent(ProductClickedEvent event) {
         //TODO
         Toast.makeText(getActivity(), event.getProduct().getName(), Toast.LENGTH_SHORT).show();
+        ProductDialogFragment dialogFragment = new ProductDialogFragment();
+        Bundle arguments = new Bundle();
+        arguments.putSerializable(ProductDialogFragmentViewModel.KEY_PRODUCT, event.getProduct());
+        dialogFragment.setArguments(arguments);
+        dialogFragment.show(getFragmentManager(), "ProductDialogFragment");
     }
 
 }
