@@ -21,9 +21,6 @@ public class ProductSearchViewModelRenderer extends Renderer<ProductSearchViewMo
     TextView mProductPrice;
     @InjectView(R.id.product_unit)
     TextView mProductUnit;
-    @InjectView(R.id.product_photo)
-    ImageView mProductPhoto;
-
 
     @Override
     protected void setUpView(View view) {
