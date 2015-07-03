@@ -52,7 +52,7 @@ public class ProductDialogFragment extends BaseDialogFragment implements Product
             mCartButton.setEnabled(false);
             mCartButton.setClickable(false);
             mReportButton.setEnabled(false);
-            mReportButton.setEnabled(false);
+            mReportButton.setClickable(false);
 
         }else{
             new ViewCommandBinding().bind(mCartButton, mViewModel.getAddToCartCommand());

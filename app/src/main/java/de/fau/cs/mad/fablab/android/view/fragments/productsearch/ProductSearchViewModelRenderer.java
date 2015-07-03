@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.fragments.productsearch;
 
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,12 @@ import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 
 public class ProductSearchViewModelRenderer extends Renderer<ProductSearchViewModel> {
 
+    @InjectView(R.id.product_card_view)
+    CardView mProductCardView;
     @InjectView(R.id.product_name)
     TextView mProductName;
+    @InjectView(R.id.product_detail)
+    TextView mProductDetail;
     @InjectView(R.id.product_price)
     TextView mProductPrice;
     @InjectView(R.id.product_unit)
@@ -44,7 +49,21 @@ public class ProductSearchViewModelRenderer extends Renderer<ProductSearchViewMo
         new ViewCommandBinding().bind(getRootView(), viewModel.getShowDialogCommand());
 
         mProductName.setText(viewModel.getName());
+        mProductDetail.setText(viewModel.getNameDetails());
         mProductPrice.setText(viewModel.getPrice());
         mProductUnit.setText(viewModel.getUnit());
+
+        if(viewModel.isProductZeroPriced()){
+            mProductCardView.setCardBackgroundColor(mProductCardView.getResources()
+                    .getColor(R.color.spinner_background));
+            mProductName.setTextColor(mProductName.getResources().getColor(R.color
+                    .primary_text_disabled_material_light));
+            mProductDetail.setTextColor(mProductDetail.getResources().getColor(R.color
+                    .primary_text_disabled_material_light));
+            mProductPrice.setTextColor(mProductPrice.getResources().getColor(R.color
+                    .primary_text_disabled_material_light));
+            mProductUnit.setTextColor(mProductUnit.getResources().getColor(R.color
+                    .primary_text_disabled_material_light));
+        }
     }
 }
