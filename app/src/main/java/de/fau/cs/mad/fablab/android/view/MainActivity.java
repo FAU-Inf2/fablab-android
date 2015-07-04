@@ -23,6 +23,7 @@ import de.fau.cs.mad.fablab.android.eventbus.NavigationEvent;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
 import de.fau.cs.mad.fablab.android.util.TopExceptionHandler;
+import de.fau.cs.mad.fablab.android.util.UiUtils;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
 import de.fau.cs.mad.fablab.android.view.fragments.ICalAndNewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     NavigationDrawer navigationDrawer;
     ActionBar actionBar;
     CartSlidingUpPanel cartSlidingUpPanel;
+    UiUtils uiUtils;
 
     EventBus eventbus = EventBus.getDefault();
 
@@ -54,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //uiUtils = new UiUtils();
 
         // register the TopExceptionHandler
         Thread.setDefaultUncaughtExceptionHandler(new TopExceptionHandler(this));
@@ -102,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
 
-
+            UiUtils.changeDialogTitleColor(dialog);
             MainActivity.this.deleteFile("stack.trace");
         }
 
