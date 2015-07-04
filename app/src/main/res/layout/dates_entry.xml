@@ -43,10 +43,11 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="@dimen/card_vertical_padding"
-            android:paddingLeft="@dimen/card_horizontal_padding"
-            android:paddingRight="@dimen/card_horizontal_padding"
-            android:paddingTop="@dimen/card_vertical_padding">
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/card_vertical_margin"
+            android:paddingLeft="@dimen/card_horizontal_margin"
+            android:paddingRight="@dimen/card_horizontal_margin"
+            android:paddingTop="@dimen/card_vertical_margin">
 
 
             <ImageView
