@@ -45,7 +45,12 @@
     <string name="title_activity_push">PushActivity</string>
     <string name="title_activity_main">MainActivity</string>
 
-
+    <string name="stacktrace_messaging_yes">Ja</string>
+    <string name="stacktrace_messaging_no">Nein</string>
+    <string name="stacktrace_messaging_subject">Fehlermeldung FAU FabLab</string>
+    <string name="stacktrace_messaging_chooser_title">Sende Fehlermeldung mit:</string>
+    <string name="stacktrace_messaging_dialog_title">Fehlermeldung</string>
+    <string name="stacktrace_messaging_dialog_text">Leider ist bei der letzten Benutzung ein Fehler aufgetreten. Wir sind stetig bemüht die Applikation zu verbessern. Deshalb bitten wir Sie die Fehlermeldung an uns weiterzuleiten.</string>
 
     <!-- Strings for navigation drawer titles -->
     <string name="news">News</string>
