@@ -41,7 +41,9 @@ public class UiUtils {
     {
         int dividerId = dialog.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
         View divider = dialog.findViewById(dividerId);
-        divider.setBackgroundColor(dialog.getContext().getResources().getColor(R.color.colorPrimary));
+        if (divider != null) {
+            divider.setBackgroundColor(dialog.getContext().getResources().getColor(R.color.colorPrimary));
+        }
         int textViewId = dialog.getContext().getResources().getIdentifier("android:id/alertTitle", null, null);
         TextView tv = (TextView) dialog.findViewById(textViewId);
         tv.setTextColor(dialog.getContext().getResources().getColor(R.color.colorPrimary));
