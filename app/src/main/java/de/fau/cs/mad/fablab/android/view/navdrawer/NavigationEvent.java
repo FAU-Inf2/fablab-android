@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.eventbus;
+package de.fau.cs.mad.fablab.android.view.navdrawer;
 
 public enum NavigationEvent {
         News,

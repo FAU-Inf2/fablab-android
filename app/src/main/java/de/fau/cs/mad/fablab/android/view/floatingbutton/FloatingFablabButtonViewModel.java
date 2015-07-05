@@ -2,7 +2,7 @@ package de.fau.cs.mad.fablab.android.view.floatingbutton;
 
 import javax.inject.Inject;
 
-import de.fau.cs.mad.fablab.android.eventbus.NavigationEvent;
+import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.greenrobot.event.EventBus;
 

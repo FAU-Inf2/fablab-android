@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import dagger.ObjectGraph;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.actionbar.ActionBar;
-import de.fau.cs.mad.fablab.android.eventbus.NavigationEvent;
+import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationEvent;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
 import de.fau.cs.mad.fablab.android.util.TopExceptionHandler;
@@ -35,7 +35,6 @@ import de.greenrobot.event.EventBus;
 public class MainActivity extends AppCompatActivity {
 
     private final static String TAG_ICAL_AND_NEWS_FRAGMENT = "tag_ical_and_news_fragment";
-    private final static String TAG_NEWS_FRAGMENT = "tag_news_fragment";
     private final static String TAG_BARCODE_FRAGMENT = "tag_barcode_fragment";
     private final static String TAG_PRODUCTSEARCH_FRAGMENT = "tag_productsearch_fragment";
 
@@ -131,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar = new ActionBar(this, findViewById(android.R.id.content));
         fablabButton = new FloatingFablabButton(this, findViewById(android.R.id.content));
         navigationDrawer = new NavigationDrawer(this, findViewById(android.R.id.content));
+        navigationDrawer.restoreState(savedInstanceState);
     }
 
     private void navigate(NavigationEvent destination) {
@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
         switch(destination) {
             case News:
                 cartSlidingUpPanel.setVisibility(true);
+                navigationDrawer.setSelection(R.id.drawer_item_news);
                 ICalAndNewsFragment iCalAndNewsFragment = (ICalAndNewsFragment) getSupportFragmentManager().findFragmentByTag(TAG_ICAL_AND_NEWS_FRAGMENT);
                 if(iCalAndNewsFragment == null) iCalAndNewsFragment = new ICalAndNewsFragment();
                 fragmentTransaction.replace(R.id.fragment_container, iCalAndNewsFragment, TAG_ICAL_AND_NEWS_FRAGMENT).commit();
@@ -146,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
             case BarcodeScanner:
                 cartSlidingUpPanel.setVisibility(false);
+                navigationDrawer.setSelection(R.id.drawer_item_scanner);
                 BarcodeScannerFragment barcodeScannerFragment = (BarcodeScannerFragment) getSupportFragmentManager().findFragmentByTag(TAG_BARCODE_FRAGMENT);
                 if(barcodeScannerFragment == null) barcodeScannerFragment = new BarcodeScannerFragment();
                 fragmentTransaction.replace(R.id.fragment_container, barcodeScannerFragment, TAG_BARCODE_FRAGMENT).commit();
@@ -153,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
             case ProductSearch:
                 cartSlidingUpPanel.setVisibility(true);
+                navigationDrawer.setSelection(R.id.drawer_item_productsearch);
                 ProductSearchFragment productSearchFragment = (ProductSearchFragment) getSupportFragmentManager().findFragmentByTag(TAG_PRODUCTSEARCH_FRAGMENT);
                 if(productSearchFragment == null) productSearchFragment = new ProductSearchFragment();
                 fragmentTransaction.replace(R.id.fragment_container, productSearchFragment, TAG_PRODUCTSEARCH_FRAGMENT).commit();
@@ -176,6 +179,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        navigationDrawer.saveState(outState);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -188,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressWarnings("unused")
     public void onEvent(NavigationEvent destination) {
         navigate(destination);
     }
