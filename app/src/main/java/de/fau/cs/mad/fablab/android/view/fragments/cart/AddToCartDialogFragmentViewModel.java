@@ -5,6 +5,7 @@ import android.os.Bundle;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.CartModel;
+import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
@@ -14,6 +15,8 @@ public class AddToCartDialogFragmentViewModel {
 
     @Inject
     CartModel mCartModel;
+    @Inject
+    ProductModel mProductModel;
 
     private Product mProduct;
     private double mAmount;
@@ -23,6 +26,7 @@ public class AddToCartDialogFragmentViewModel {
     private final Command<Integer> mAddToCartCommand = new Command<Integer>() {
         @Override
         public void execute(Integer parameter) {
+            mProductModel.persist(mProduct);
             mCartModel.addEntry(mProduct, mAmount);
             if (mListener != null) {
                 mListener.onDismiss();

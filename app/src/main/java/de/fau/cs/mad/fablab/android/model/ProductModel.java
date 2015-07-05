@@ -55,11 +55,10 @@ public class ProductModel {
             }
         }
 
-        Product product = mProductApi.findByIdSynchronously(id);
-        if (product != null) {
-            mProductDao.create(product);
-            mProducts.add(product);
-        }
-        return product;
+        return mProductApi.findByIdSynchronously(id);
+    }
+
+    public void persist(Product product) {
+        mProductDao.createOrUpdate(product);
     }
 }
