@@ -3,6 +3,8 @@ package de.fau.cs.mad.fablab.android.model;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import de.fau.cs.mad.fablab.android.R;
+
 /**
  * The main storage fragment which initializes all other storage parts
  */
@@ -11,6 +13,7 @@ public class StorageFragment extends Fragment {
     private NewsModel mNewsModel;
     private CartModel mCartModel;
     private ProductModel mProductModel;
+    private SpaceApiModel mSpaceApiModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -18,11 +21,13 @@ public class StorageFragment extends Fragment {
         setRetainInstance(true);
 
         RestClient restClient = new RestClient(getActivity().getApplicationContext());
-        DatabaseHelper databaseHelper = DatabaseHelper.getHelper(getActivity());
+        DatabaseHelper databaseHelper = DatabaseHelper.getHelper(getActivity().getApplicationContext());
         mICalModel = new ICalModel(restClient.getICalApi());
         mNewsModel = new NewsModel(restClient.getNewsApi());
-        mCartModel = new CartModel(databaseHelper.getCartDao(), restClient.getCartApi());
+        PushModel pushModel = new PushModel(getActivity().getApplication(), restClient.getPushApi());
+        mCartModel = new CartModel(databaseHelper.getCartDao(), restClient.getCartApi(), pushModel);
         mProductModel = new ProductModel(databaseHelper.getProductDao(), restClient.getProductApi());
+        mSpaceApiModel = new SpaceApiModel(restClient.getSpaceApi(), getString(R.string.space_name));
     }
 
     public NewsModel getNewsModel(){
@@ -39,5 +44,9 @@ public class StorageFragment extends Fragment {
 
     public ProductModel getProductModel() {
         return mProductModel;
+    }
+
+    public SpaceApiModel getSpaceApiModel() {
+        return mSpaceApiModel;
     }
 }

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fau.cs.mad.fablab.android.model.events.CheckoutStatusChangedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.rest.core.Cart;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
@@ -28,16 +29,19 @@ public class CartModel {
 
     private RuntimeExceptionDao<Cart, Long> mCartDao;
     private CartApi mCartApi;
+    private PushModel mPushModel;
     private EventBus mEventBus = EventBus.getDefault();
     private Handler mCartStatusHandler = new Handler();
     private Runnable mCartStatusRunner;
 
     private Cart mCart;
     private ObservableArrayList<CartEntry> mCartEntries;
+    private String mCartCode;
 
-    public CartModel(RuntimeExceptionDao<Cart, Long> cartDao, CartApi cartApi) {
+    public CartModel(RuntimeExceptionDao<Cart, Long> cartDao, CartApi cartApi, PushModel pushModel) {
         mCartDao = cartDao;
         mCartApi = cartApi;
+        mPushModel = pushModel;
 
         QueryBuilder<Cart, Long> queryBuilder = cartDao.queryBuilder();
         try {
@@ -91,7 +95,7 @@ public class CartModel {
         CartServer cartServer = new CartServer();
         cartServer.setCartCode(cartCode);
         cartServer.setStatus(CartStatus.PENDING);
-        cartServer.setPushId("0");
+        cartServer.setPushId(mPushModel.getPushId());
         List<CartEntryServer> cartEntriesServer = new ArrayList<>();
         for (CartEntry entry : mCart.getEntries()) {
             cartEntriesServer.add(new CartEntryServer(entry.getProduct().getProductId(),
@@ -111,6 +115,8 @@ public class CartModel {
                 mEventBus.post(CartStatus.FAILED);
             }
         });
+
+        mCartCode = cartCode;
     }
 
     private void startPollingCartStatus(String cartCode) {
@@ -138,15 +144,10 @@ public class CartModel {
                public void success(CartStatus cartStatus, Response response) {
                    switch (cartStatus) {
                        case CANCELLED:
-                           mEventBus.post(CartStatus.CANCELLED);
-                           stopPollingCartStatus();
+                           cancelCheckout();
                            break;
                        case PAID:
-                           mCart.setStatus(CartStatus.PAID);
-                           mCartDao.update(mCart);
-                           createNewCart();
-                           mEventBus.post(CartStatus.PAID);
-                           stopPollingCartStatus();
+                           finishCheckout();
                            break;
                        default:
                            mCartStatusHandler.postDelayed(mCartStatusRunner, REFRESH_TIME_MILLIS);
@@ -158,6 +159,35 @@ public class CartModel {
                    mEventBus.post(CartStatus.FAILED);
                }
            });
+        }
+    }
+
+    private void cancelCheckout() {
+        mCartCode = null;
+        mEventBus.post(CartStatus.CANCELLED);
+        stopPollingCartStatus();
+    }
+
+    private void finishCheckout() {
+        mCartCode = null;
+        mCart.setStatus(CartStatus.PAID);
+        mCartDao.update(mCart);
+        createNewCart();
+        mEventBus.post(CartStatus.PAID);
+        stopPollingCartStatus();
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(CheckoutStatusChangedEvent event) {
+        if (event.getCartCode().equals(mCartCode)) {
+            switch (event.getStatus()) {
+                case CANCELLED:
+                    cancelCheckout();
+                    break;
+                case PAID:
+                    finishCheckout();
+                    break;
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.pushservice;
+package de.fau.cs.mad.fablab.android.model.push;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -6,8 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
-
-public class PushBroatCastReceiver extends WakefulBroadcastReceiver {
+public class PushBroadcastReceiver extends WakefulBroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // Explicitly specify that GcmIntentService will handle the intent.

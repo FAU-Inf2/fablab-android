@@ -7,6 +7,7 @@ import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
 import de.fau.cs.mad.fablab.android.model.NewsModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
+import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
 import de.fau.cs.mad.fablab.android.view.fragments.ICalAndNewsFragment;
@@ -30,7 +31,7 @@ import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
                 CartSlidingUpPanel.class, CheckoutFragment.class, FloatingFablabButton.class,
                 ICalAndNewsFragment.class, ICalDetailsDialogFragment.class, ICalFragment.class,
                 NavigationDrawer.class, NewsDetailsDialogFragment.class, NewsFragment.class,
-                ProductSearchFragment.class, ProductDialogFragment.class, QrCodeScannerFragment.class
+                ProductDialogFragment.class, ProductSearchFragment.class, QrCodeScannerFragment.class
         })
 public class ModelModule {
     private final StorageFragment mStorageFragment;
@@ -57,6 +58,11 @@ public class ModelModule {
     @Provides
     ProductModel provideProductModel() {
         return mStorageFragment.getProductModel();
+    }
+
+    @Provides
+    SpaceApiModel provideSpaceApiModel() {
+        return mStorageFragment.getSpaceApiModel();
     }
 }
 

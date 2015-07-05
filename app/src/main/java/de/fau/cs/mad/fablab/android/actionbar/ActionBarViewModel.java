@@ -2,31 +2,32 @@ package de.fau.cs.mad.fablab.android.actionbar;
 
 import javax.inject.Inject;
 
-import de.fau.cs.mad.fablab.android.eventbus.DoorEvent;
+import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
+import de.fau.cs.mad.fablab.android.model.events.SpaceApiStateChangedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.greenrobot.event.EventBus;
 
 public class ActionBarViewModel {
 
+    @Inject
+    SpaceApiModel mSpaceApiModel;
     Listener listener;
     ActionBarModel model;
-    EventBus mEventBus;
+    EventBus mEventBus = EventBus.getDefault();
 
     private boolean opened;
     private ActionBarTime time;
 
-    Command<Integer> refreshOpenedStateCommand = new Command<Integer>() {
+    private Command<Integer> refreshOpenedStateCommand = new Command<Integer>() {
         @Override
         public void execute(Integer parameter) {
-            mEventBus.post(DoorEvent.GET);
-            //listener.onActionBarItemSelected();
+            mSpaceApiModel.refreshState();
         }
     };
 
-    @Inject
     public ActionBarViewModel() {
-        this.model = new ActionBarModel();
-        this.mEventBus = EventBus.getDefault();
+        model = new ActionBarModel();
+        mEventBus.register(this);
     }
 
     public void setListener(Listener listener){
@@ -35,6 +36,11 @@ public class ActionBarViewModel {
 
     public Command<Integer> getRefreshOpenedStateCommand () {
         return refreshOpenedStateCommand;
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(SpaceApiStateChangedEvent event) {
+        // TODO update state
     }
 
     public interface Listener {

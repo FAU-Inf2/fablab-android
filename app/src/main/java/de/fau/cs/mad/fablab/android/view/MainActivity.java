@@ -127,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ICalAndNewsFragment(), TAG_ICAL_AND_NEWS_FRAGMENT).commit();
         }
 
-        actionBar = new ActionBar(this, findViewById(android.R.id.content));
         fablabButton = new FloatingFablabButton(this, findViewById(android.R.id.content));
         navigationDrawer = new NavigationDrawer(this, findViewById(android.R.id.content));
         navigationDrawer.restoreState(savedInstanceState);
@@ -174,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        actionBar = new ActionBar(this, findViewById(android.R.id.content));
         cartSlidingUpPanel = new CartSlidingUpPanel(this, findViewById(android.R.id.content));
         eventbus.register(this);
     }
