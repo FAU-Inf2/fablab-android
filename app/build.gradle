@@ -41,7 +41,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue "string", "API_URL", "https://ec2-52-28-173-123.eu-central-1.compute.amazonaws.com"
+
             signingConfig signingConfigs.release
+        }
+
+        debug{
+            resValue "string", "API_URL", "https://ec2-52-28-173-123.eu-central-1.compute.amazonaws.com"
         }
     }
 

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">FAU Fablab</string>
 
-    <string name="API_URL">https://ec2-52-28-173-123.eu-central-1.compute.amazonaws.com</string>
+
     <string name="development_truststore_pass">dummypass4dev</string>
 
     <string name="SpaceName">FAU+FabLab</string>
