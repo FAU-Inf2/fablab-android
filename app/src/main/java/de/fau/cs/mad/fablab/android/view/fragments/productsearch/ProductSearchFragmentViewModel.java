@@ -28,7 +28,9 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
         public void execute(String parameter) {
             mSearchState = true;
             mModel.searchForProduct(parameter);
-            mListener.onSearchStateChanged();
+            if(mListener != null) {
+                mListener.onSearchStateChanged();
+            }
         }
     };
 
@@ -83,7 +85,9 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
     public void initialize() {
         if (mListener != null) {
             for (Product product : mModel.getProducts()) {
-                mProductSearchViewModelCollection.add(new ProductSearchViewModel(product));
+                ProductSearchViewModel viewModel = new ProductSearchViewModel(product);
+                mProductSearchViewModelCollection.add(viewModel);
+                mProductSearchViewModels.put(product, viewModel);
             }
             mListener.onDataChanged();
         }
