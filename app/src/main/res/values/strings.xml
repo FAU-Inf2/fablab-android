@@ -54,8 +54,8 @@
 
     <!-- Strings for navigation drawer titles -->
     <string name="news">News</string>
-    <string name="productsearch">Produktsuche</string>
-    <string name="scanner">Barcode Scanner</string>
+    <string name="productsearch">Produkt suchen</string>
+    <string name="scanner">Produkt scannen</string>
     <string name="about">Über</string>
 
     <string name="navdrawer_login_hint_username">Username</string>
