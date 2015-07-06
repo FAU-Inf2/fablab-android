@@ -8,12 +8,12 @@ import de.greenrobot.event.EventBus;
 
 public class FloatingFablabButtonViewModel {
 
-    Listener mListener;
-    EventBus mEventBus;
+    private Listener mListener;
+    private EventBus mEventBus = EventBus.getDefault();
 
     @Inject
     public FloatingFablabButtonViewModel(){
-        mEventBus = EventBus.getDefault();
+
     }
 
     private Command<Void> startProductSearchCommand = new Command<Void>() {
@@ -32,7 +32,7 @@ public class FloatingFablabButtonViewModel {
     };
 
     public void setListener(Listener listener){
-        this.mListener = listener;
+        mListener = listener;
     }
 
     public Command<Void> getStartProductSearchCommand() {

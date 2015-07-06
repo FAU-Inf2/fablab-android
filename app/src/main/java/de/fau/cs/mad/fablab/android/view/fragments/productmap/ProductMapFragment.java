@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
-import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
+import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 
-public class ProductMapFragment extends BaseFragment {
+public class ProductMapFragment extends BaseDialogFragment {
     private DrawingActivity mDrawView;
 
     @Inject

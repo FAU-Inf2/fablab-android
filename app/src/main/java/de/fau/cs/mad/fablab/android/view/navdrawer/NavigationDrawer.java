@@ -55,6 +55,11 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
         mViewModel.setSelection(itemId);
     }
 
+    public void enableDrawer(boolean enable) {
+        mDrawerLayout.setDrawerLockMode(enable ? DrawerLayout.LOCK_MODE_UNLOCKED
+                : DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
     public void restoreState(Bundle savedInstanceState) {
         mViewModel.restoreState(savedInstanceState);
     }

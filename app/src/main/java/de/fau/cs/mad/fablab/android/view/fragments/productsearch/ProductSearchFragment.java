@@ -91,6 +91,8 @@ public class ProductSearchFragment extends BaseFragment implements ProductSearch
     public void onResume() {
         super.onResume();
         mEventBus.register(this);
+
+        setDisplayOptions(R.id.drawer_item_productsearch, true, true);
     }
 
     @Override

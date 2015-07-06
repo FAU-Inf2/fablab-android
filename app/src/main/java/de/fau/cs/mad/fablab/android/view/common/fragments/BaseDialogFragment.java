@@ -19,4 +19,15 @@ public abstract class BaseDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!getShowsDialog()) {
+            MainActivity activity = (MainActivity) getActivity();
+            activity.enableNavigationDrawer(false);
+            activity.showFloatingActionButton(false);
+            activity.showCartSlidingUpPanel(false);
+        }
+    }
 }

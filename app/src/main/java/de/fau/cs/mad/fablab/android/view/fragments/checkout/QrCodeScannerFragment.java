@@ -11,11 +11,11 @@ import javax.inject.Inject;
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ScannerViewCommandBinding;
-import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
+import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import de.greenrobot.event.EventBus;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class QrCodeScannerFragment extends BaseFragment
+public class QrCodeScannerFragment extends BaseDialogFragment
         implements QrCodeScannerFragmentViewModel.Listener {
     @InjectView(R.id.scanner)
     ZXingScannerView mScannerView;

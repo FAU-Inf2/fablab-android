@@ -84,4 +84,3 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
         dialog.show(getFragmentManager(), "NewsDetailsDialogFragment");
     }
 }
-

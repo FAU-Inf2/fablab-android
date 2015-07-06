@@ -55,4 +55,10 @@ public class AboutFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_about, container, false);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setDisplayOptions(R.id.drawer_item_about, false, false);
+    }
 }
