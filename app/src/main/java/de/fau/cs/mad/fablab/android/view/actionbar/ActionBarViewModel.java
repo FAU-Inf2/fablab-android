@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.actionbar;
+package de.fau.cs.mad.fablab.android.view.actionbar;
 
 import javax.inject.Inject;
 

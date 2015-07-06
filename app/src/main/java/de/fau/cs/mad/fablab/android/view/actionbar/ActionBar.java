@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.actionbar;
+package de.fau.cs.mad.fablab.android.view.actionbar;
 
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;

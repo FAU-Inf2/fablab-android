@@ -2,7 +2,7 @@ package de.fau.cs.mad.fablab.android.model.dependencyinjection;
 
 import dagger.Module;
 import dagger.Provides;
-import de.fau.cs.mad.fablab.android.actionbar.ActionBar;
+import de.fau.cs.mad.fablab.android.view.actionbar.ActionBar;
 import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
 import de.fau.cs.mad.fablab.android.model.NewsModel;

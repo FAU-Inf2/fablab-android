@@ -18,7 +18,7 @@ import java.io.InputStreamReader;
 import butterknife.ButterKnife;
 import dagger.ObjectGraph;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.actionbar.ActionBar;
+import de.fau.cs.mad.fablab.android.view.actionbar.ActionBar;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationEvent;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
