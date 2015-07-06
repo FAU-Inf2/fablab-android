@@ -13,37 +13,20 @@
     card_view:cardBackgroundColor="@color/slidingUpPanel_bg_cart_entry"
     android:foreground="?android:attr/selectableItemBackground">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="@dimen/product_card_margin"
-        android:paddingRight="@dimen/product_price_padding"
-        android:paddingBottom="@dimen/product_card_margin"
-        android:paddingTop="@dimen/product_card_margin"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:id="@+id/product_view">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:id="@+id/cart_product_photo"
-            android:layout_marginBottom="@dimen/zero"
-            android:layout_marginRight="@dimen/product_card_margin"
-            android:layout_marginLeft="@dimen/zero"
-            android:layout_marginTop="@dimen/zero"
-            android:layout_gravity="center_vertical|left"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:paddingLeft="@dimen/product_price_padding"
+            android:paddingRight="@dimen/product_price_padding"
+            android:paddingBottom="@dimen/product_card_margin"
+            android:paddingTop="@dimen/product_card_margin"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:id="@+id/product_view">
             <TextView
                 android:id="@+id/cart_product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
                 android:textSize="@dimen/product_name_size"
                 android:singleLine="true"/>
 
@@ -90,5 +73,4 @@
 
         </LinearLayout>
 
-    </LinearLayout>
 </android.support.v7.widget.CardView>
