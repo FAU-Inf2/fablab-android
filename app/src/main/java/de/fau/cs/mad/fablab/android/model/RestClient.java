@@ -3,6 +3,7 @@ package de.fau.cs.mad.fablab.android.model;
 import android.content.Context;
 import android.util.Log;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,10 +44,14 @@ public class RestClient {
         OkHttpClient httpClient = new OkHttpClient();
         httpClient.setSslSocketFactory(getPinnedCertSslSocketFactory());
 
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        mapper.setDateFormat(new SimpleDateFormat(Format.DATE_FORMAT));
+
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(API_URL)
                 .setClient(new OkClient(httpClient))
-                .setConverter(new JacksonConverter(new ObjectMapper().setDateFormat(new SimpleDateFormat(Format.DATE_FORMAT))))
+                .setConverter(new JacksonConverter(mapper))
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL
                         : RestAdapter.LogLevel.NONE);
 
