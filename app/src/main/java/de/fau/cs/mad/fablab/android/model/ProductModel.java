@@ -21,8 +21,6 @@ public class ProductModel {
         mProductDao = productDao;
         mProductApi = productApi;
         mProducts = new ObservableArrayList<>();
-
-        mProducts.addAll(mProductDao.queryForAll());
     }
 
     Callback<List<Product>> productSearchCallback = new Callback<List<Product>>() {
