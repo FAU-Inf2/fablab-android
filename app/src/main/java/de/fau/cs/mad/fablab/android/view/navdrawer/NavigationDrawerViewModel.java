@@ -79,9 +79,9 @@ public class NavigationDrawerViewModel {
     public void restoreState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             mSelectedItem = savedInstanceState.getInt(KEY_SELECTED_ITEM);
-            if (mListener != null) {
-                mListener.onNavigationDrawerItemSelected(mSelectedItem);
-            }
+        }
+        if (mListener != null) {
+            mListener.onNavigationDrawerItemSelected(mSelectedItem);
         }
     }
 
