@@ -15,7 +15,6 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
-import de.greenrobot.event.EventBus;
 
 public class ProductDialogFragment extends BaseDialogFragment implements ProductDialogFragmentViewModel.Listener{
 
@@ -31,8 +30,6 @@ public class ProductDialogFragment extends BaseDialogFragment implements Product
     @InjectView(R.id.product_dialog_report)
     Button mReportButton;
 
-    EventBus mEventBus = EventBus.getDefault();
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -43,6 +40,7 @@ public class ProductDialogFragment extends BaseDialogFragment implements Product
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mViewModel.setListener(this);
         mViewModel.restoreState(getArguments(), savedInstanceState);
 
         mDialogTitle.setText(mViewModel.getProductName());
@@ -75,23 +73,20 @@ public class ProductDialogFragment extends BaseDialogFragment implements Product
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        mEventBus.unregister(this);
+    public void onAddToCart() {
+        dismiss();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                AddToCartDialogFragment.newInstance(mViewModel.getProduct())).addToBackStack(null)
+                .commit();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mEventBus.register(this);
+    public void onOutOfStock() {
+        //TODO
     }
 
-    public void onEvent(ProductClickedEvent event){
-        //FIXME dialog gets not dismissed correctly and reopens in AddToCartDialogFragment
-        dismiss();
-
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                AddToCartDialogFragment.newInstance(event.getProduct())).addToBackStack(null)
-                .commit();
+    @Override
+    public void onShowLocation() {
+        //TODO
     }
 }

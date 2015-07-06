@@ -16,24 +16,29 @@ public class ProductDialogFragmentViewModel {
 
     private Listener mListener;
     private Product mProduct;
-    private EventBus mEventBus = EventBus.getDefault();
 
     private Command<Void> mAddToCartCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            mEventBus.post(new ProductClickedEvent(mProduct));
+            if(mListener != null) {
+                mListener.onAddToCart();
+            }
         }
     };
     private Command<Void> mOutOfStockCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            //TODO
+            if(mListener != null) {
+                mListener.onOutOfStock();
+            }
         }
     };
     private Command<Void> mShowLocationCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            //TODO
+            if(mListener != null) {
+                mListener.onShowLocation();
+            }
         }
     };
 
@@ -54,6 +59,10 @@ public class ProductDialogFragmentViewModel {
 
     public void saveState(Bundle outState){
         //TODO
+    }
+
+    public Product getProduct() {
+        return mProduct;
     }
 
     public String getProductName() {
@@ -81,6 +90,8 @@ public class ProductDialogFragmentViewModel {
     }
 
     public interface Listener{
-
+        void onAddToCart();
+        void onOutOfStock();
+        void onShowLocation();
     }
 }
