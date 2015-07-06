@@ -44,6 +44,13 @@ public class NavigationDrawerViewModel {
         }
     };
 
+    private final Command<Integer> mNavigateToSettingsCommand = new Command<Integer>() {
+        @Override
+        public void execute(Integer itemid) {
+            mEventBus.post(NavigationEvent.Settings);
+        }
+    };
+
     @Inject
     public NavigationDrawerViewModel() {
 
@@ -67,6 +74,10 @@ public class NavigationDrawerViewModel {
 
     public Command<Integer> getNavigateToAboutCommand() {
         return mNavigateToAboutCommand;
+    }
+
+    public Command<Integer> getNavigateToSettingsCommand() {
+        return mNavigateToSettingsCommand;
     }
 
     public void setSelection(int itemId) {

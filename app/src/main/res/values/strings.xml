@@ -57,6 +57,7 @@
     <string name="productsearch">Produkt suchen</string>
     <string name="scanner">Produkt scannen</string>
     <string name="about">Über</string>
+    <string name="settings">Einstellungen</string>
 
     <string name="navdrawer_login_hint_username">Username</string>
     <string name="navdrawer_login_hint_password">Password</string>

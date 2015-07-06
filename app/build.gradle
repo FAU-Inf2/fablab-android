@@ -115,6 +115,8 @@ dependencies {
     provided 'com.squareup.dagger:dagger-compiler:1.2.+'
 
     compile 'com.github.pedrovgs:renderers:2.0.1'
+
+    compile 'com.github.machinarius:preferencefragment:0.1.1'
 }
 
 allprojects {

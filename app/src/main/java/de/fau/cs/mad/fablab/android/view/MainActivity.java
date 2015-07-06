@@ -10,6 +10,7 @@ import dagger.ObjectGraph;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
+import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
 import de.fau.cs.mad.fablab.android.util.StackTraceReporter;
 import de.fau.cs.mad.fablab.android.util.TopExceptionHandler;
 import de.fau.cs.mad.fablab.android.view.actionbar.ActionBar;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String TAG_PRODUCTSEARCH_FRAGMENT = "tag_productsearch_fragment";
     private final static String TAG_BARCODE_FRAGMENT = "tag_barcode_fragment";
     private final static String TAG_ABOUT_FRAGMENT = "tag_about_fragment";
+    private final static String TAG_SETTINGS_FRAGMENT = "tag_settings_fragment";
 
     private ActionBar mActionBar;
     private NavigationDrawer mNavigationDrawer;
@@ -165,6 +167,16 @@ public class MainActivity extends AppCompatActivity {
                 }
                 fragmentTransaction.replace(R.id.fragment_container, aboutFragment,
                         TAG_ABOUT_FRAGMENT).addToBackStack(null).commit();
+                break;
+            case Settings:
+                SettingsFragment settingsFragment =
+                        (SettingsFragment) getSupportFragmentManager().findFragmentByTag(
+                                TAG_SETTINGS_FRAGMENT);
+                if (settingsFragment == null) {
+                    settingsFragment = new SettingsFragment();
+                }
+                fragmentTransaction.replace(R.id.fragment_container, settingsFragment,
+                        TAG_SETTINGS_FRAGMENT).addToBackStack(null).commit();
                 break;
         }
     }

@@ -4,5 +4,6 @@ public enum NavigationEvent {
     News,
     BarcodeScanner,
     ProductSearch,
-    About
+    About,
+    Settings
 }
