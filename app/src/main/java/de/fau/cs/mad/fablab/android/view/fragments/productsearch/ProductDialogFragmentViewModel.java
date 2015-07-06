@@ -70,7 +70,7 @@ public class ProductDialogFragmentViewModel {
     }
 
     public boolean hasLocation() {
-        return LocationParser.getLocation(mProduct.getLocation()) == null;
+        return LocationParser.getLocation(mProduct.getLocation()) != null;
     }
 
     public boolean isProductZeroPriced() {
