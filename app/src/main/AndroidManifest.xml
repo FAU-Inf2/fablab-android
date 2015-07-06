@@ -15,9 +15,6 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".productMap.ProductMapActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".productsearch.ProductSearchActivity"
             android:launchMode="singleTop">
             <intent-filter>

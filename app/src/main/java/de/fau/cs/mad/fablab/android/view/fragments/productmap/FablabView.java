@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.productMap;
+package de.fau.cs.mad.fablab.android.view.fragments.productmap;
 
 
 public enum FablabView

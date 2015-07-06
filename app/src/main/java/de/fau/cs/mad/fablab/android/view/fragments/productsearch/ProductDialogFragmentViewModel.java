@@ -1,11 +1,10 @@
 package de.fau.cs.mad.fablab.android.view.fragments.productsearch;
 
-import android.location.Location;
 import android.os.Bundle;
 
 import javax.inject.Inject;
 
-import de.fau.cs.mad.fablab.android.productMap.LocationParser;
+import de.fau.cs.mad.fablab.android.view.fragments.productmap.LocationParser;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Product;
 import de.greenrobot.event.EventBus;
