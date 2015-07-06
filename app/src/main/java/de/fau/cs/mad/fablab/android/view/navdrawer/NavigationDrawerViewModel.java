@@ -37,6 +37,13 @@ public class NavigationDrawerViewModel {
         }
     };
 
+    private final Command<Integer> mNavigateToAboutCommand = new Command<Integer>() {
+        @Override
+        public void execute(Integer itemid) {
+            mEventBus.post(NavigationEvent.About);
+        }
+    };
+
     @Inject
     public NavigationDrawerViewModel() {
 
@@ -56,6 +63,10 @@ public class NavigationDrawerViewModel {
 
     public Command<Integer> getNavigateToProductSearchCommand() {
         return mNavigateToProductSearchCommand;
+    }
+
+    public Command<Integer> getNavigateToAboutCommand() {
+        return mNavigateToAboutCommand;
     }
 
     public void setSelection(int itemId) {

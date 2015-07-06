@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import dagger.ObjectGraph;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.actionbar.ActionBar;
+import de.fau.cs.mad.fablab.android.view.fragments.about.AboutFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationEvent;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String TAG_ICAL_AND_NEWS_FRAGMENT = "tag_ical_and_news_fragment";
     private final static String TAG_BARCODE_FRAGMENT = "tag_barcode_fragment";
     private final static String TAG_PRODUCTSEARCH_FRAGMENT = "tag_productsearch_fragment";
+    private final static String TAG_ABOUT_FRAGMENT = "tag_about_fragment";
 
     private ObjectGraph mObjectGraph;
 
@@ -140,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 cartSlidingUpPanel.setVisibility(true);
                 navigationDrawer.setSelection(R.id.drawer_item_news);
                 ICalAndNewsFragment iCalAndNewsFragment = (ICalAndNewsFragment) getSupportFragmentManager().findFragmentByTag(TAG_ICAL_AND_NEWS_FRAGMENT);
-                if(iCalAndNewsFragment == null) iCalAndNewsFragment = new ICalAndNewsFragment();
+                if (iCalAndNewsFragment == null) iCalAndNewsFragment = new ICalAndNewsFragment();
                 fragmentTransaction.replace(R.id.fragment_container, iCalAndNewsFragment, TAG_ICAL_AND_NEWS_FRAGMENT).commit();
                 break;
 
@@ -148,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 cartSlidingUpPanel.setVisibility(false);
                 navigationDrawer.setSelection(R.id.drawer_item_scanner);
                 BarcodeScannerFragment barcodeScannerFragment = (BarcodeScannerFragment) getSupportFragmentManager().findFragmentByTag(TAG_BARCODE_FRAGMENT);
-                if(barcodeScannerFragment == null) barcodeScannerFragment = new BarcodeScannerFragment();
+                if (barcodeScannerFragment == null) barcodeScannerFragment = new BarcodeScannerFragment();
                 fragmentTransaction.replace(R.id.fragment_container, barcodeScannerFragment, TAG_BARCODE_FRAGMENT).commit();
                 break;
 
@@ -156,8 +158,15 @@ public class MainActivity extends AppCompatActivity {
                 cartSlidingUpPanel.setVisibility(true);
                 navigationDrawer.setSelection(R.id.drawer_item_productsearch);
                 ProductSearchFragment productSearchFragment = (ProductSearchFragment) getSupportFragmentManager().findFragmentByTag(TAG_PRODUCTSEARCH_FRAGMENT);
-                if(productSearchFragment == null) productSearchFragment = new ProductSearchFragment();
+                if (productSearchFragment == null) productSearchFragment = new ProductSearchFragment();
                 fragmentTransaction.replace(R.id.fragment_container, productSearchFragment, TAG_PRODUCTSEARCH_FRAGMENT).commit();
+                break;
+            case About:
+                cartSlidingUpPanel.setVisibility(false);
+                navigationDrawer.setSelection(R.id.drawer_item_about);
+                AboutFragment aboutFragment = (AboutFragment) getSupportFragmentManager().findFragmentByTag(TAG_ABOUT_FRAGMENT);
+                if (aboutFragment == null) aboutFragment = new AboutFragment();
+                fragmentTransaction.replace(R.id.fragment_container, aboutFragment).commit();
                 break;
         }
     }

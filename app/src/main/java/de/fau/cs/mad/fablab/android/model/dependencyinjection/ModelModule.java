@@ -9,6 +9,7 @@ import de.fau.cs.mad.fablab.android.model.NewsModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.about.AboutFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productmap.ProductMapFragment;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
 import de.fau.cs.mad.fablab.android.view.fragments.ICalAndNewsFragment;
@@ -28,12 +29,12 @@ import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 @SuppressWarnings("unused")
 @Module(
         injects = {
-                ActionBar.class, AddToCartDialogFragment.class, BarcodeScannerFragment.class,
-                CartSlidingUpPanel.class, CheckoutFragment.class, FloatingFablabButton.class,
-                ICalAndNewsFragment.class, ICalDetailsDialogFragment.class, ICalFragment.class,
-                NavigationDrawer.class, NewsDetailsDialogFragment.class, NewsFragment.class,
-                ProductDialogFragment.class, ProductMapFragment.class, ProductSearchFragment.class,
-                QrCodeScannerFragment.class
+                AboutFragment.class, ActionBar.class, AddToCartDialogFragment.class,
+                BarcodeScannerFragment.class, CartSlidingUpPanel.class, CheckoutFragment.class,
+                FloatingFablabButton.class, ICalAndNewsFragment.class,
+                ICalDetailsDialogFragment.class, ICalFragment.class, NavigationDrawer.class,
+                NewsDetailsDialogFragment.class, NewsFragment.class, ProductDialogFragment.class,
+                ProductMapFragment.class, ProductSearchFragment.class, QrCodeScannerFragment.class
         })
 public class ModelModule {
     private final StorageFragment mStorageFragment;

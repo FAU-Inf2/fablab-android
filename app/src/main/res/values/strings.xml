@@ -56,9 +56,76 @@
     <string name="news">News</string>
     <string name="productsearch">Produktsuche</string>
     <string name="scanner">Barcode Scanner</string>
+    <string name="about">Über</string>
 
     <string name="navdrawer_login_hint_username">Username</string>
     <string name="navdrawer_login_hint_password">Password</string>
     <string name="navdrawer_button_login">Login</string>
+
+    <string name="about_content">
+        <![CDATA[
+        Diese App wurde im Rahmen des <a href="https://www2.informatik.uni-erlangen.de/teaching/SS2015/MAD/index.html">MAD Projekts</a>
+        an der FAU Erlangen-Nürnberg entwickelt.<br>
+        Der Quellcode kann unter <a href="https://github.com/FAU-Inf2/fablab-android">Github</a> gefunden werden.<br>
+        Feedback jederzeit gerne per <a href="mailto:fablab@i2.cs.fau.de">E-Mail</a>.<br>
+        <br>
+        Die Entwickler sind:<br>
+        <br>
+        Emanuel Eimer<br>
+        Stefan Herpich<br>
+        Michael Sandner<br>
+        Julia Schottenhamml<br>
+        Johannes Pfann<br>
+        Max Jalowski<br>
+        Sebastian Haubner<br>
+        Katharina Full<br>
+        Philip Kanhäußer<br>
+        Julian Lorz<br>
+        Daniel Rosenmüller
+        ]]>
+    </string>
+    <string name="about_open_source_licenses">Open Source Lizenzen</string>
+    <string name="about_used_libraries">
+        <![CDATA[
+        <b>jackson-databind</b> (Apache License 2.0)<br>
+        <a href="https://github.com/FasterXML/jackson-databind/">Projektseite</a><br>
+        <br>
+        <b>retrofit</b> (Apache License 2.0)<br>
+        <a href="https://github.com/square/retrofit">Projektseite</a><br>
+        <br>
+        <b>okhttp</b> (Apache License 2.0)<br>
+        <a href="https://github.com/square/okhttp">Projektseite</a><br>
+        <br>
+        <b>okio</b> (Apache License 2.0)<br>
+        <a href="https://github.com/square/okio">Projektseite</a><br
+        ><br>
+        <b>ormlite</b> (ISC license)<br>
+        <a href="http://ormlite.com/">Projektseite</a><br>
+        <br>
+        <b>zxing</b> (Apache License 2.0)<br>
+        <a href="https://github.com/dm77/barcodescanner">Projektseite</a><br>
+        <br>
+        <b>AndroidSlidingUpPanel</b> (Apache License 2.0)<br>
+        <a href="https://github.com/umano/AndroidSlidingUpPanel">Projektseite</a><br>
+        <br>
+        <b>SwipeableRecyclerView</b> (Apache License 2.0)<br>
+        <a href="https://github.com/brnunes/Swiabout_acknowledgementspeableRecyclerView">Projektseite</a><br>
+        <br>
+        <b>CircleImageView</b> (Apache License 2.0)<br>
+        <a href="https://github.com/hdodenhof/CircleImageView">Projektseite</a><br>
+        <br>
+        <b>FloatingActionButton</b> (Apache License 2.0)<br>
+        <a href="https://github.com/Clans/FloatingActionButton">Projektseite</a><br>
+        <br>
+        <b>EventBus</b> (Apache License 2.0)<br>
+        <a href="https://github.com/greenrobot/EventBus">Projektseite</a><br>
+        <br>
+        <b>Picasso</b> (Apache License 2.0)<br>
+        <a href="https://github.com/square/picasso">Projektseite</a><br>
+        <br>
+        <b>Renderers</b> (Apache License 2.0)<br>
+        <a href="https://github.com/pedrovgs/Renderers">Projektseite</a>
+        ]]>
+    </string>
 
 </resources>
