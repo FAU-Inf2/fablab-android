@@ -22,6 +22,11 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_7
     }
 
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+
     defaultConfig {
         applicationId "de.fau.cs.mad.fablab.android"
         minSdkVersion 14
@@ -83,6 +88,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.okio:okio:1.0.1'
+    compile 'com.squareup.retrofit:converter-jackson:1.9.0'
     compile 'com.j256.ormlite:ormlite-core:4.48'
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'javax.persistence:persistence-api:1.0'

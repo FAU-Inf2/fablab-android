@@ -3,12 +3,14 @@ package de.fau.cs.mad.fablab.android.model;
 import android.content.Context;
 import android.util.Log;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.io.InputStream;
 import java.security.KeyStore;
+import java.text.SimpleDateFormat;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -26,6 +28,7 @@ import de.fau.cs.mad.fablab.rest.myapi.SpaceApi;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
+import retrofit.converter.JacksonConverter;
 
 public class RestClient {
     private static final String LOG_TAG = "RestClient";
@@ -40,14 +43,10 @@ public class RestClient {
         OkHttpClient httpClient = new OkHttpClient();
         httpClient.setSslSocketFactory(getPinnedCertSslSocketFactory());
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat(Format.DATE_FORMAT)
-                .create();
-
         RestAdapter.Builder builder = new RestAdapter.Builder()
                 .setEndpoint(API_URL)
                 .setClient(new OkClient(httpClient))
-                .setConverter(new GsonConverter(gson))
+                .setConverter(new JacksonConverter(new ObjectMapper().setDateFormat(new SimpleDateFormat(Format.DATE_FORMAT))))
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL
                         : RestAdapter.LogLevel.NONE);
 
