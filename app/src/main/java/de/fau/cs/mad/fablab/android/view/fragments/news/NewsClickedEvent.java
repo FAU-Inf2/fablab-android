@@ -1,13 +1,13 @@
 package de.fau.cs.mad.fablab.android.view.fragments.news;
 
 public class NewsClickedEvent {
-    private String mTitle;
-    private String mText;
-    private String mImageLink;
+    private final String mTitle;
+    private final String mText;
+    private final String mImageLink;
 
-    public NewsClickedEvent(String title, String content, String imageLink) {
+    public NewsClickedEvent(String title, String text, String imageLink) {
         mTitle = title;
-        mText = content;
+        mText = text;
         mImageLink = imageLink;
     }
 

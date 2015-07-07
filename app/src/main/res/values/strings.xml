@@ -7,12 +7,10 @@
     <string name="appbar_opened_since">seit</string>
     <string name="appbar_closed">Geschlossen</string>
     <string name="cart_title">Warenkorb:</string>
-    <string name="cart_empty">Ihr Warenkorb ist leider noch leer</string>
+
     <string name="cart_total_price_title">Gesamtpreis:</string>
     <string name="cart_button_checkout">Zur Kasse</string>
-    <string name="cart_entry_unit_null_exception"></string>
-    <string name="cart_article_label"><![CDATA[&nbsp;Artikel]]></string>
-    <string name="cart_preview_delimiter"><![CDATA[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]]></string>
+    <string name="cart_article_label">Artikel</string>
     <string name="cart_product_quantity">Menge in</string>
     <string name="cart_product_removed">Artikel entfernt</string>
     <string name="cart_product_undo">Rückgängig</string>
@@ -28,42 +26,107 @@
     <string name="product_dialog_report">Ausgegangenes Produkt melden</string>
     <string name="retrofit_callback_failure">Leider ist bei der Abfrage ein Fehler aufgetreten</string>
     <string name="title_scan_qr_code">QR-Code an der Kasse scannen</string>
-    <string name="checkout_pay">Jetzt an der Kasse bezahlen</string>
+    <string name="checkout_pay">Bitte gehen Sie zur Kasse und bezahlen Sie.</string>
     <string name="checkout_error">Fehler beim Übertragen des Warenkorbs</string>
-    <string name="checkout_invalid_qr_code">Ungültiger QR-Code</string>
+    <string name="checkout_cancelled">Der Bezahlvorgang wurde abgebrochen</string>
+    <string name="checkout_paid">Ihr Warenkorb wurde bezahlt</string>
+    <string name="retry">Nochmal versuchen</string>
+    <string name="qr_code_scanner_invalid_qr_code">Ungültiger QR-Code</string>
     <string name="ok">OK</string>
     <string name="invalid_location">Standort nicht verfügbar</string>
 
-
+    <string name="dates_date">Datum:</string>
+    <string name="dates_time">Uhrzeit:</string>
+    <string name="dates_location">Ort:</string>
 
     <string name="search_all_hint">(leer => alle Produkte)</string>
 
-    <string name="bold_start"><![CDATA[<b>]]></string>
-    <string name="bold_end"><![CDATA[</b>]]></string>
-    <string name="italic_start"><![CDATA[<i>]]></string>
-    <string name="italic_end"><![CDATA[</i>]]></string>
-    <string name="currency">€</string>
-    <string name="non_breaking_space"><![CDATA[&nbsp;]]></string>
-    <string name="colon">:</string>
     <string name="betterment_tax">inkl. MwSt.</string>
     <string name="title_activity_push">PushActivity</string>
     <string name="title_activity_main">MainActivity</string>
 
-
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="stacktrace_messaging_yes">Ja</string>
+    <string name="stacktrace_messaging_no">Nein</string>
+    <string name="stacktrace_messaging_subject">Fehlermeldung FAU FabLab</string>
+    <string name="stacktrace_messaging_chooser_title">Sende Fehlermeldung mit:</string>
+    <string name="stacktrace_messaging_dialog_title">Fehlermeldung</string>
+    <string name="stacktrace_messaging_dialog_text">Leider ist bei der letzten Benutzung ein Fehler aufgetreten. Wir sind stetig bemüht die Applikation zu verbessern. Deshalb bitten wir Sie die Fehlermeldung an uns weiterzuleiten.</string>
 
     <!-- Strings for navigation drawer titles -->
     <string name="news">News</string>
-    <string name="productsearch">Produktsuche</string>
-    <string name="scanner">Barcode Scanner</string>
+    <string name="productsearch">Produkt suchen</string>
+    <string name="scanner">Produkt scannen</string>
+    <string name="about">Über</string>
+    <string name="settings">Einstellungen</string>
 
     <string name="navdrawer_login_hint_username">Username</string>
     <string name="navdrawer_login_hint_password">Password</string>
     <string name="navdrawer_button_login">Login</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about_content">
+        <![CDATA[
+        Diese App wurde im Rahmen des <a href="https://www2.informatik.uni-erlangen.de/teaching/SS2015/MAD/index.html">MAD Projekts</a>
+        an der FAU Erlangen-Nürnberg entwickelt.<br>
+        Der Quellcode kann unter <a href="https://github.com/FAU-Inf2/fablab-android">Github</a> gefunden werden.<br>
+        Feedback jederzeit gerne per <a href="mailto:fablab@i2.cs.fau.de">E-Mail</a>.<br>
+        <br>
+        Die Entwickler sind:<br>
+        <br>
+        Emanuel Eimer<br>
+        Stefan Herpich<br>
+        Michael Sandner<br>
+        Julia Schottenhamml<br>
+        Johannes Pfann<br>
+        Max Jalowski<br>
+        Sebastian Haubner<br>
+        Katharina Full<br>
+        Philip Kanhäußer<br>
+        Julian Lorz<br>
+        Daniel Rosenmüller
+        ]]>
+    </string>
+    <string name="about_open_source_licenses">Open Source Lizenzen</string>
+    <string name="about_used_libraries">
+        <![CDATA[
+        <b>jackson-databind</b> (Apache License 2.0)<br>
+        <a href="https://github.com/FasterXML/jackson-databind/">Projektseite</a><br>
+        <br>
+        <b>retrofit</b> (Apache License 2.0)<br>
+        <a href="https://github.com/square/retrofit">Projektseite</a><br>
+        <br>
+        <b>okhttp</b> (Apache License 2.0)<br>
+        <a href="https://github.com/square/okhttp">Projektseite</a><br>
+        <br>
+        <b>okio</b> (Apache License 2.0)<br>
+        <a href="https://github.com/square/okio">Projektseite</a><br
+        ><br>
+        <b>ormlite</b> (ISC license)<br>
+        <a href="http://ormlite.com/">Projektseite</a><br>
+        <br>
+        <b>zxing</b> (Apache License 2.0)<br>
+        <a href="https://github.com/dm77/barcodescanner">Projektseite</a><br>
+        <br>
+        <b>AndroidSlidingUpPanel</b> (Apache License 2.0)<br>
+        <a href="https://github.com/umano/AndroidSlidingUpPanel">Projektseite</a><br>
+        <br>
+        <b>SwipeableRecyclerView</b> (Apache License 2.0)<br>
+        <a href="https://github.com/brnunes/Swiabout_acknowledgementspeableRecyclerView">Projektseite</a><br>
+        <br>
+        <b>CircleImageView</b> (Apache License 2.0)<br>
+        <a href="https://github.com/hdodenhof/CircleImageView">Projektseite</a><br>
+        <br>
+        <b>FloatingActionButton</b> (Apache License 2.0)<br>
+        <a href="https://github.com/Clans/FloatingActionButton">Projektseite</a><br>
+        <br>
+        <b>EventBus</b> (Apache License 2.0)<br>
+        <a href="https://github.com/greenrobot/EventBus">Projektseite</a><br>
+        <br>
+        <b>Picasso</b> (Apache License 2.0)<br>
+        <a href="https://github.com/square/picasso">Projektseite</a><br>
+        <br>
+        <b>Renderers</b> (Apache License 2.0)<br>
+        <a href="https://github.com/pedrovgs/Renderers">Projektseite</a>
+        ]]>
+    </string>
 
 </resources>

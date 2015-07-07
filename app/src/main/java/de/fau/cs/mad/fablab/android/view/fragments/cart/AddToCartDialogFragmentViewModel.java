@@ -1,10 +1,11 @@
 package de.fau.cs.mad.fablab.android.view.fragments.cart;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 
 import javax.inject.Inject;
 
+import de.fau.cs.mad.fablab.android.model.CartModel;
+import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
@@ -12,19 +13,24 @@ public class AddToCartDialogFragmentViewModel {
     public static final String KEY_PRODUCT = "product";
     private static final String KEY_AMOUNT = "amount";
 
+    @Inject
+    CartModel mCartModel;
+    @Inject
+    ProductModel mProductModel;
+
     private Product mProduct;
     private double mAmount;
 
     private Listener mListener;
 
-    @Inject
-    FragmentManager mFragmentManager;
-
     private final Command<Integer> mAddToCartCommand = new Command<Integer>() {
         @Override
         public void execute(Integer parameter) {
-            // TODO add product to cart
-            mFragmentManager.popBackStack();
+            mProductModel.persist(mProduct);
+            mCartModel.addEntry(mProduct, mAmount);
+            if (mListener != null) {
+                mListener.onDismiss();
+            }
         }
     };
 
@@ -84,6 +90,8 @@ public class AddToCartDialogFragmentViewModel {
     }
 
     public interface Listener {
+        void onDismiss();
+
         void onUpdatePriceTotal(double priceTotal);
     }
 }

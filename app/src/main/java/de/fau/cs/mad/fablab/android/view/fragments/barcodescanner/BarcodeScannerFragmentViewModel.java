@@ -7,20 +7,18 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
+import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Product;
-import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import de.greenrobot.event.EventBus;
 
 public class BarcodeScannerFragmentViewModel {
     @Inject
-    ProductApi mProductApi;
-    @Inject
-    BarcodeScannerViewLauncher mViewLauncher;
+    ProductModel mProductModel;
 
     private Listener mListener;
+
+    private EventBus mEventBus;
 
     private final Pattern mBarcodePattern = Pattern.compile("200(00000)?\\d{5}");
     private final Command<Result> mProcessBarcodeCommand = new Command<Result>() {
@@ -40,21 +38,15 @@ public class BarcodeScannerFragmentViewModel {
                     productId = barcode.substring(3, 7);
                 }
 
-                mProductApi.findById(productId, new Callback<Product>() {
-                    @Override
-                    public void success(Product product, Response response) {
-                        mProcessBarcodeCommand.setIsExecutable(true);
-                        mViewLauncher.showAddToCartDialogFragment(product);
+                Product product = mProductModel.findProductById(productId);
+                mProcessBarcodeCommand.setIsExecutable(true);
+                if (product != null) {
+                    mEventBus.post(new ProductFoundEvent(product));
+                } else {
+                    if (mListener != null) {
+                        mListener.onShowProductNotFoundMessage();
                     }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        mProcessBarcodeCommand.setIsExecutable(true);
-                        if (mListener != null) {
-                            mListener.onShowProductNotFoundMessage();
-                        }
-                    }
-                });
+                }
             } else {
                 mProcessBarcodeCommand.setIsExecutable(true);
                 if (mListener != null) {
@@ -63,6 +55,11 @@ public class BarcodeScannerFragmentViewModel {
             }
         }
     };
+
+    @Inject
+    public BarcodeScannerFragmentViewModel() {
+        mEventBus = EventBus.getDefault();
+    }
 
     public void setListener(Listener listener) {
         mListener = listener;

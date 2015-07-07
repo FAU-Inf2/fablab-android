@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="de.fau.cs.mad.fablab.android.view.MainActivity">
 
-    <RelativeLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -22,13 +22,32 @@
                 android:id="@+id/appbar"
                 layout="@layout/appbar" />
 
-            <!-- Container for main fragments to be replaced -->
-            <FrameLayout
-                android:id="@+id/fragment_container"
+            <com.sothree.slidinguppanel.SlidingUpPanelLayout
+                xmlns:sothree="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/sliding_layout"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:foreground="?android:windowContentOverlay" />
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                sothree:umanoPanelHeight="40dp"
+                sothree:umanoShadowHeight="0dp"
+                sothree:umanoParalaxOffset="100dp"
+                sothree:umanoDragView="@+id/dragPart"
+                sothree:umanoOverlay="true">
+
+                <!-- Container for main fragments to be replaced -->
+                <FrameLayout
+                    android:id="@+id/fragment_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:foreground="?android:windowContentOverlay" />
+
+                <!-- Cart Sliding Up Panel -->
+                <include
+                    android:id="@+id/cart"
+                    layout="@layout/cart" />
+
+            </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
         </LinearLayout>
 
@@ -39,8 +58,7 @@
             android:id="@+id/shopping_cart_FAM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|right"
             android:layout_marginRight="@dimen/fab_padding"
             android:layout_marginBottom="@dimen/fab_padding"
             fab:menu_colorNormal="@android:color/black"
@@ -69,7 +87,7 @@
                 />
 
         </com.github.clans.fab.FloatingActionMenu>
-    </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
     <!-- Navigation drawer -->
     <android.support.design.widget.NavigationView

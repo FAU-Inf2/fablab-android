@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import javax.inject.Inject;
 
-import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 
 public class NewsDetailsDialogViewModel {
@@ -93,7 +92,7 @@ public class NewsDetailsDialogViewModel {
         outState.putBoolean(KEY_IMAGE_ZOOM, mImageZoom);
     }
 
-    public interface Listener extends BaseViewModel.Listener {
+    public interface Listener {
         void onImageLayoutChanged();
 
         void onDismiss();

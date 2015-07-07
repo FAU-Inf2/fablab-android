@@ -1,92 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dates_card"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginRight="@dimen/card_horizontal_margin"
-    android:layout_marginLeft="@dimen/card_horizontal_margin"
-    android:layout_marginTop="@dimen/card_vertical_margin"
     android:layout_marginBottom="@dimen/card_vertical_margin"
-    >
+    android:layout_marginLeft="@dimen/card_horizontal_margin"
+    android:layout_marginRight="@dimen/card_horizontal_margin"
+    android:layout_marginTop="@dimen/card_vertical_margin"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardBackgroundColor="@color/cardDefault">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/card_horizontal_margin"
-        android:paddingRight="@dimen/card_horizontal_margin"
-        android:paddingBottom="@dimen/card_vertical_margin"
-        android:paddingTop="@dimen/card_vertical_margin"
-        >
+        android:padding="0dp">
 
         <TextView
             android:id="@+id/title_dates_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:text="Title"
-            />
+            android:layout_margin="3dp"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="left"
+            android:paddingBottom="@dimen/card_vertical_padding"
+            android:paddingLeft="@dimen/card_horizontal_padding"
+            android:paddingRight="@dimen/card_horizontal_padding"
+            android:paddingTop="@dimen/card_vertical_padding"
+            android:singleLine="true"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha=".20"
+            android:background="@android:color/black" />
 
         <RelativeLayout
-            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
+            android:gravity="center_horizontal"
+            android:paddingBottom="@dimen/card_vertical_margin"
+            android:paddingLeft="@dimen/card_horizontal_margin"
+            android:paddingRight="@dimen/card_horizontal_margin"
+            android:paddingTop="@dimen/card_vertical_margin">
+
 
             <ImageView
                 android:id="@+id/icon_dates_entry"
                 android:layout_width="@dimen/dates_entry_event_icon_size"
                 android:layout_height="@dimen/dates_entry_event_icon_size"
-                android:src="@drawable/ic_event_black_24dp"
-                android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:alpha=".30"
+                android:src="@drawable/ic_event_black_24dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_toEndOf="@+id/icon_dates_entry"
                 android:layout_toRightOf="@+id/icon_dates_entry"
-                android:layout_toEndOf="@+id/icon_dates_entry">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/date_dates_entry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:text="Date"
-                    android:singleLine="true"
                     android:layout_centerVertical="true"
-                    android:paddingLeft="@dimen/dates_entry_icon_date_margin"
                     android:layout_toRightOf="@+id/icon_dates_entry"
-                    />
+                    android:paddingLeft="@dimen/dates_entry_icon_date_margin"
+                    android:singleLine="true"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/time_dates_entry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:text="Time"
-                    android:singleLine="true"
                     android:layout_centerVertical="true"
-                    android:paddingLeft="@dimen/dates_entry_icon_date_margin"
+                    android:layout_marginTop="-3dp"
                     android:layout_toRightOf="@+id/icon_dates_entry"
-                    />
+                    android:paddingLeft="@dimen/dates_entry_icon_date_margin"
+                    android:singleLine="true"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/location_dates_entry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/black"
-                    android:text="Location"
-                    android:singleLine="true"
                     android:layout_centerVertical="true"
-                    android:paddingLeft="@dimen/dates_entry_icon_date_margin"
+                    android:layout_marginTop="-3dp"
                     android:layout_toRightOf="@+id/icon_dates_entry"
-                    />
+                    android:paddingLeft="@dimen/dates_entry_icon_date_margin"
+                    android:singleLine="true"
+                    android:textColor="@android:color/white" />
 
             </LinearLayout>
 

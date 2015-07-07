@@ -4,21 +4,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/spinner" />
+
     <TextView
-        android:id="@+id/checkout_text"
+        android:id="@+id/checkout_status_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/checkout_pay" />
+        android:layout_centerVertical="true" />
 
     <Button
-        android:id="@+id/button_finish"
+        android:id="@+id/checkout_retry_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/checkout_text"
+        android:layout_below="@+id/checkout_status_description"
         android:layout_centerHorizontal="true"
-        android:onClick="finish"
-        android:text="Bezahlt" />
+        android:text="@string/retry" />
+
+    <Button
+        android:id="@+id/checkout_ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/checkout_status_description"
+        android:layout_centerHorizontal="true"
+        android:text="@android:string/ok" />
+
 </RelativeLayout>

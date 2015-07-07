@@ -2,6 +2,7 @@ package de.fau.cs.mad.fablab.android.view.fragments.cart;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +15,7 @@ import javax.inject.Inject;
 
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.util.Formatter;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.NumberPickerCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
@@ -48,8 +50,7 @@ public class AddToCartDialogFragment extends BaseDialogFragment
         mViewModel.restoreState(getArguments(), savedInstanceState);
 
         mNameTextView.setText(mViewModel.getName());
-        mPriceTextView.setText(getFormattedPrice(mViewModel.getPrice())
-                + getString(R.string.currency) + " "
+        mPriceTextView.setText(Html.fromHtml(Formatter.formatPrice(mViewModel.getPrice())) + " "
                 + getString(R.string.add_to_cart_price_per_unit) + " " + mViewModel.getUnit());
 
         mNumberPicker.setMinValue(1);
@@ -58,8 +59,7 @@ public class AddToCartDialogFragment extends BaseDialogFragment
         mNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         new NumberPickerCommandBinding().bind(mNumberPicker, mViewModel.getChangeAmountCommand());
 
-        mPriceTotalTextView.setText(getFormattedPrice(mViewModel.getPriceTotal())
-                + getString(R.string.currency));
+        mPriceTotalTextView.setText(Html.fromHtml(Formatter.formatPrice(mViewModel.getPriceTotal())));
 
         mViewModel.setListener(this);
     }
@@ -91,11 +91,12 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     }
 
     @Override
-    public void onUpdatePriceTotal(double priceTotal) {
-        mPriceTotalTextView.setText(getFormattedPrice(priceTotal) + getString(R.string.currency));
+    public void onDismiss() {
+        dismiss();
     }
 
-    private String getFormattedPrice(double price) {
-        return String.format("%.2f", price);
+    @Override
+    public void onUpdatePriceTotal(double priceTotal) {
+        mPriceTotalTextView.setText(Html.fromHtml(Formatter.formatPrice(priceTotal)));
     }
 }

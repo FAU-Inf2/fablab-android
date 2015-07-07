@@ -18,7 +18,7 @@ before_install:
 - mv madfau.keystore app/
 script: "./gradlew assemble"
 after_success:
-- mv app/build/outputs/apk/app-release.apk fablab-android-$TRAVIS_BRANCH-`git rev-parse
+- mv app/build/outputs/apk/app-googleplay-release.apk fablab-android-$TRAVIS_BRANCH-`git rev-parse
   HEAD`.apk
 - curl -u $LOGIN -F "apk=@fablab-android-$TRAVIS_BRANCH-`git rev-parse HEAD`.apk"
   -F "project=fablab-android" $URL

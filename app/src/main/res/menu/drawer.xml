@@ -14,5 +14,13 @@
             android:id="@+id/drawer_item_scanner"
             android:icon="@drawable/barcode"
             android:title="@string/scanner" />
+        <item
+            android:id="@+id/drawer_item_settings"
+            android:icon="@drawable/about"
+            android:title="@string/settings" />
+        <item
+            android:id="@+id/drawer_item_about"
+            android:icon="@drawable/about"
+            android:title="@string/about" />
     </group>
 </menu>

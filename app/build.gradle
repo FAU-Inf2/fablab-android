@@ -22,6 +22,11 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_7
     }
 
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+
     defaultConfig {
         applicationId "de.fau.cs.mad.fablab.android"
         minSdkVersion 14
@@ -42,6 +47,16 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+        }
+    }
+
+    productFlavors {
+        googleplay {
+
+        }
+
+        fdroid {
+
         }
     }
 
@@ -73,6 +88,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.okio:okio:1.0.1'
+    compile 'com.squareup.retrofit:converter-jackson:1.9.0'
     compile 'com.j256.ormlite:ormlite-core:4.48'
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'javax.persistence:persistence-api:1.0'
@@ -90,7 +106,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:1.2.1'
     compile 'com.github.clans:fab:1.5.0'
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile "com.google.android.gms:play-services:3.1.+"
+    googleplayCompile "com.google.android.gms:play-services:3.1.+"
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
 
@@ -99,6 +115,8 @@ dependencies {
     provided 'com.squareup.dagger:dagger-compiler:1.2.+'
 
     compile 'com.github.pedrovgs:renderers:2.0.1'
+
+    compile 'com.github.machinarius:preferencefragment:0.1.1'
 }
 
 allprojects {

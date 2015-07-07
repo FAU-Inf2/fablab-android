@@ -30,34 +30,28 @@ public class ProductAdapter extends ArrayAdapter<Product> implements SectionInde
 
         //get gui elements
         CardView productCardView = (CardView) view.findViewById(R.id.product_card_view);
-        ImageView productPhoto = (ImageView) view.findViewById(R.id.product_photo);
         TextView productName = (TextView) view.findViewById(R.id.product_name);
         TextView productPrice = (TextView) view.findViewById(R.id.product_price);
         TextView productUnit = (TextView) view.findViewById(R.id.product_unit);
-
-        //set product photo
-        productPhoto.setImageResource(R.drawable.no_image_avl);
 
         //format and set product name
         String[] splitProductName = getItem(position).getName().split(" ");
         String formattedProductName = "";
         for (int i = 0; i < splitProductName.length; i++) {
             if (i == 0) {
-                formattedProductName += view.getResources().getString(R.string.bold_start)
+                formattedProductName += "<b>"
                         + splitProductName[i]
-                        + view.getResources().getString(R.string.bold_end)
-                        + view.getResources().getString(R.string.non_breaking_space);
+                        + "</b>&nbsp;";
             } else {
                 formattedProductName += splitProductName[i]
-                        + view.getResources().getString(R.string.non_breaking_space);
+                        + "&nbsp;";
             }
         }
         productName.setText(Html.fromHtml(formattedProductName));
 
         //format and set product price
         String formattedProductPrice = String.format("%.2f", getItem(position).getPrice())
-                + view.getResources().getString(R.string.non_breaking_space)
-                + view.getResources().getString(R.string.currency);
+                + "&nbsp;€";
         productPrice.setText(Html.fromHtml(formattedProductPrice));
 
         //set product unit
@@ -67,7 +61,6 @@ public class ProductAdapter extends ArrayAdapter<Product> implements SectionInde
         if(getItem(position).getPrice() == 0) {
             productCardView.setCardBackgroundColor(getContext().getResources()
                     .getColor(R.color.spinner_background));
-            productPhoto.setAlpha(0.5f);
             productName.setTextColor(getContext().getResources().getColor(R.color
                     .primary_text_disabled_material_light));
             productPrice.setTextColor(getContext().getResources().getColor(R.color

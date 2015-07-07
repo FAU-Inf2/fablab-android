@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <fragment
-        android:name="de.fau.cs.mad.fablab.android.view.fragments.icals.ICalViewPagerFragment"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:tag="tag_ical_fragment"
-        tools:layout="@layout/fragment_dates_view_pager" />
+        android:id="@+id/fragment_ical"/>
 
-    <fragment
-        android:name="de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:tag="tag_news_fragment"
-        tools:layout="@layout/fragment_news" />
+        android:id="@+id/fragment_news"/>
 </LinearLayout>

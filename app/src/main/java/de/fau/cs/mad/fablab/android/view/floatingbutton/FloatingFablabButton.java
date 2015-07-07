@@ -40,4 +40,8 @@ public class FloatingFablabButton implements FloatingFablabButtonViewModel.Liste
     public void onFloatingButtonClicked() {
         actionMenu.toggle(true);
     }
+
+    public void setVisibility(boolean visible) {
+        actionMenu.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
 }

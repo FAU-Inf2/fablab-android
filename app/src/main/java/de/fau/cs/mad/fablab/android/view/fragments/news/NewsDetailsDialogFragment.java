@@ -25,13 +25,13 @@ import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 public class NewsDetailsDialogFragment extends BaseDialogFragment
         implements NewsDetailsDialogViewModel.Listener {
     @InjectView(R.id.title_news_dialog)
-    TextView tv_title;
+    TextView title_tv;
     @InjectView(R.id.news_text_news_dialog)
-    TextView tv_content;
+    TextView text_tv;
     @InjectView(R.id.image_news_dialog)
-    ImageView iv_image;
+    ImageView image_iv;
     @InjectView(R.id.ok_button_news_dialog)
-    Button dismissButton;
+    Button dismiss_button;
 
     @Inject
     NewsDetailsDialogViewModel mViewModel;
@@ -43,14 +43,14 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment
         mViewModel.setListener(this);
         mViewModel.restoreState(getArguments(), savedInstanceState);
 
-        new ViewCommandBinding().bind(iv_image, mViewModel.getImageClickCommand());
-        new ViewCommandBinding().bind(dismissButton, mViewModel.getDismissCommand());
+        new ViewCommandBinding().bind(image_iv, mViewModel.getImageClickCommand());
+        new ViewCommandBinding().bind(dismiss_button, mViewModel.getDismissCommand());
 
-        tv_content.setLinksClickable(true);
-        tv_content.setMovementMethod(LinkMovementMethod.getInstance());
-        tv_content.setText(Html.fromHtml(mViewModel.getText()));
-        tv_title.setText(mViewModel.getTitle());
-        Picasso.with(iv_image.getContext()).load(mViewModel.getImageLink()).into(iv_image);
+        text_tv.setLinksClickable(true);
+        text_tv.setMovementMethod(LinkMovementMethod.getInstance());
+        text_tv.setText(Html.fromHtml(mViewModel.getText()));
+        title_tv.setText(mViewModel.getTitle());
+        Picasso.with(image_iv.getContext()).load(mViewModel.getImageLink()).into(image_iv);
     }
 
     @Override
@@ -71,10 +71,10 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment
     @Override
     public void onImageLayoutChanged() {
         if (mViewModel.isImageZoom()) {
-            iv_image.setLayoutParams(new LinearLayout.LayoutParams(
+            image_iv.setLayoutParams(new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         } else {
-            iv_image.setLayoutParams(new LinearLayout.LayoutParams(
+            image_iv.setLayoutParams(new LinearLayout.LayoutParams(
                     (int) getResources().getDimension(R.dimen.news_dialog_icon_size),
                     (int) getResources().getDimension(R.dimen.news_dialog_icon_size)));
         }

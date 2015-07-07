@@ -2,19 +2,18 @@ package de.fau.cs.mad.fablab.android.view.floatingbutton;
 
 import javax.inject.Inject;
 
-import de.fau.cs.mad.fablab.android.eventbus.NavigationEvent;
-import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
+import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.greenrobot.event.EventBus;
 
-public class FloatingFablabButtonViewModel extends BaseViewModel {
+public class FloatingFablabButtonViewModel {
 
-    Listener mListener;
-    EventBus mEventBus;
+    private Listener mListener;
+    private EventBus mEventBus = EventBus.getDefault();
 
     @Inject
     public FloatingFablabButtonViewModel(){
-        mEventBus = EventBus.getDefault();
+
     }
 
     private Command<Void> startProductSearchCommand = new Command<Void>() {
@@ -33,7 +32,7 @@ public class FloatingFablabButtonViewModel extends BaseViewModel {
     };
 
     public void setListener(Listener listener){
-        this.mListener = listener;
+        mListener = listener;
     }
 
     public Command<Void> getStartProductSearchCommand() {
@@ -44,7 +43,7 @@ public class FloatingFablabButtonViewModel extends BaseViewModel {
         return startBarcodeScannerCommand;
     }
 
-    public interface Listener extends BaseViewModel.Listener{
+    public interface Listener {
         void onFloatingButtonClicked();
     }
 }
