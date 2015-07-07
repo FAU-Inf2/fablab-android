@@ -1,6 +1,7 @@
 package de.fau.cs.mad.fablab.android.view.fragments.cart;
 
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,11 +58,15 @@ public class CartEntryViewModelRenderer extends Renderer<CartEntryViewModel>
         for (int i = 1; i < name.length; i++) {
             productName += "&nbsp;" + name[i];
         }
+
         product_name_tv.setText(Html.fromHtml(productName));
         getRootView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                product_name_tv.setSingleLine(product_name_tv.getLineCount() != 1);
+                //product_name_tv.setSingleLine(product_name_tv.getLineCount() != 1);
+                product_name_tv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                product_name_tv.setMarqueeRepeatLimit(1);
+                product_name_tv.setSelected(true);
             }
         });
 
