@@ -47,7 +47,7 @@ android {
         }
 
         debug{
-            resValue "string", "API_URL", "https://ec2-52-28-173-123.eu-central-1.compute.amazonaws.com"
+            resValue "string", "API_URL", "https://ec2-52-28-16-59.eu-central-1.compute.amazonaws.com"
         }
     }
 
