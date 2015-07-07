@@ -54,8 +54,6 @@ public class ProductSearchViewModelRenderer extends Renderer<ProductSearchViewMo
         mProductUnit.setText(viewModel.getUnit());
 
         if(viewModel.isProductZeroPriced()){
-            mProductCardView.setCardBackgroundColor(mProductCardView.getResources()
-                    .getColor(R.color.spinner_background));
             mProductName.setTextColor(mProductName.getResources().getColor(R.color
                     .primary_text_disabled_material_light));
             mProductDetail.setTextColor(mProductDetail.getResources().getColor(R.color

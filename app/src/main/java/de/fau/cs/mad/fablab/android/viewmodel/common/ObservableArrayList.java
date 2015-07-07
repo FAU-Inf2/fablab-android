@@ -33,6 +33,14 @@ public class ObservableArrayList<T> extends ArrayList<T> {
         void onItemAdded(T newItem);
 
         /**
+         * Called after a collection of items has been added to the list
+         *
+         * @param collection The collection of items that was added to the list
+         */
+
+        void onAllItemsAdded(Collection<? extends T> collection);
+
+        /**
          * Called after an item has been removed from the list
          *
          * @param removedItem The item that was removed from the list
@@ -79,9 +87,7 @@ public class ObservableArrayList<T> extends ArrayList<T> {
     public boolean addAll(int location, Collection<? extends T> collection) {
         boolean success = super.addAll(location, collection);
         if (success && listener != null) {
-            for (T item : collection) {
-                listener.onItemAdded(item);
-            }
+            listener.onAllItemsAdded(collection);
         }
         return success;
     }
@@ -90,9 +96,7 @@ public class ObservableArrayList<T> extends ArrayList<T> {
     public boolean addAll(Collection<? extends T> collection) {
         boolean success = super.addAll(collection);
         if (success && listener != null) {
-            for (T item : collection) {
-                listener.onItemAdded(item);
-            }
+            listener.onAllItemsAdded(collection);
         }
         return success;
     }

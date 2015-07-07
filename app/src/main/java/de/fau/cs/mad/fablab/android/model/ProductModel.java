@@ -26,9 +26,7 @@ public class ProductModel {
     Callback<List<Product>> productSearchCallback = new Callback<List<Product>>() {
         @Override
         public void success(List<Product> products, Response response) {
-            for(Product product : products){
-                mProducts.add(product);
-            }
+            mProducts.addAll(products);
         }
 
         @Override
