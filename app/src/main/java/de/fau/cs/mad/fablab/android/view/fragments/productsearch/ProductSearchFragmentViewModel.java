@@ -4,10 +4,12 @@ import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
 
 
+import java.text.Collator;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.inject.Inject;
@@ -120,11 +122,13 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
         void onSearchStateChanged();
     }
 
-    public class SortByName implements Comparator<ProductSearchViewModel> {
+    class SortByName implements Comparator<ProductSearchViewModel> {
 
         @Override
         public int compare(ProductSearchViewModel psvm1, ProductSearchViewModel psvm2) {
-            return psvm1.getUnformattedName().compareTo(psvm2.getUnformattedName());
+            Collator collator = Collator.getInstance(Locale.GERMAN);
+            collator.setStrength(Collator.SECONDARY);
+            return collator.compare(psvm1.getUnformattedName(), psvm2.getUnformattedName());
         }
 
     }
