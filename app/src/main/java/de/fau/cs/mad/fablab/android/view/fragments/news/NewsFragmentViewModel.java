@@ -3,6 +3,8 @@ package de.fau.cs.mad.fablab.android.view.fragments.news;
 import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
 
+import java.util.Collection;
+
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.NewsModel;
@@ -43,6 +45,16 @@ public class NewsFragmentViewModel implements ObservableArrayList.Listener<News>
         mNewsViewModelCollection.add(new NewsViewModel(newItem));
         if (mListener != null) {
             mListener.onDataChanged();
+        }
+    }
+
+    @Override
+    public void onAllItemsAdded(Collection<? extends News> collection) {
+        for (News newItem : collection) {
+            mNewsViewModelCollection.add(new NewsViewModel(newItem));
+            if (mListener != null) {
+                mListener.onDataChanged();
+            }
         }
     }
 

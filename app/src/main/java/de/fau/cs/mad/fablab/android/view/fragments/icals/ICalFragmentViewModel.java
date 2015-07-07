@@ -3,6 +3,8 @@ package de.fau.cs.mad.fablab.android.view.fragments.icals;
 import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
 
+import java.util.Collection;
+
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.ICalModel;
@@ -43,6 +45,16 @@ public class ICalFragmentViewModel implements ObservableArrayList.Listener<ICal>
         mICalViewModelCollection.add(new ICalViewModel(newItem));
         if (mListener != null) {
             mListener.onDataChanged();
+        }
+    }
+
+    @Override
+    public void onAllItemsAdded(Collection<? extends ICal> collection) {
+        for (ICal newItem : collection) {
+            mICalViewModelCollection.add(new ICalViewModel(newItem));
+            if (mListener != null) {
+                mListener.onDataChanged();
+            }
         }
     }
 

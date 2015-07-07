@@ -3,6 +3,8 @@ package de.fau.cs.mad.fablab.android.view.fragments.cart;
 import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
 
+import java.util.Collection;
+
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.CartModel;
@@ -86,6 +88,16 @@ public class CartSlidingUpPanelViewModel implements ObservableArrayList.Listener
         mCartEntryViewModelCollection.add(new CartEntryViewModel(newItem, mModel));
         if (mListener != null) {
             mListener.onDataChanged();
+        }
+    }
+
+    @Override
+    public void onAllItemsAdded(Collection<? extends CartEntry> collection) {
+        for(CartEntry newItem : collection) {
+            mCartEntryViewModelCollection.add(new CartEntryViewModel(newItem, mModel));
+            if (mListener != null) {
+                mListener.onDataChanged();
+            }
         }
     }
 

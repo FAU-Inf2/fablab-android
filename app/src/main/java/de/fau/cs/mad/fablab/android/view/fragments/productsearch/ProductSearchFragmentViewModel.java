@@ -4,6 +4,9 @@ import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
 
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -59,10 +62,28 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
         mProductSearchViewModelCollection.add(viewModel);
         mProductSearchViewModels.put(newItem, viewModel);
         mSearchState = false;
+        Collections.sort(mProductSearchViewModelCollection, new SortByName());
         if (mListener != null) {
             mListener.onDataChanged();
             mListener.onSearchStateChanged();
         }
+    }
+
+    @Override
+    public void onAllItemsAdded(Collection<? extends Product> collection) {
+        ProductSearchViewModel viewModel;
+        for (Product newItem : collection) {
+            viewModel = new ProductSearchViewModel(newItem);
+            mProductSearchViewModelCollection.add(viewModel);
+            mProductSearchViewModels.put(newItem, viewModel);
+        }
+        mSearchState = false;
+        Collections.sort(mProductSearchViewModelCollection, new SortByName());
+        if (mListener != null) {
+            mListener.onDataChanged();
+            mListener.onSearchStateChanged();
+        }
+
     }
 
     @Override
@@ -89,13 +110,22 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
                 mProductSearchViewModelCollection.add(viewModel);
                 mProductSearchViewModels.put(product, viewModel);
             }
+            Collections.sort(mProductSearchViewModelCollection, new SortByName());
             mListener.onDataChanged();
         }
     }
 
     public interface Listener{
         void onDataChanged();
-
         void onSearchStateChanged();
+    }
+
+    public class SortByName implements Comparator<ProductSearchViewModel> {
+
+        @Override
+        public int compare(ProductSearchViewModel psvm1, ProductSearchViewModel psvm2) {
+            return psvm1.getUnformattedName().compareTo(psvm2.getUnformattedName());
+        }
+
     }
 }

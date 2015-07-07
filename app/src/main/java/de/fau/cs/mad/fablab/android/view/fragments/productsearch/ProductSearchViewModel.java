@@ -24,6 +24,10 @@ public class ProductSearchViewModel {
         return mShowDialogCommand;
     }
 
+    public String getUnformattedName() {
+        return mProduct.getName();
+    }
+
     public String getName() {
         return Formatter.formatProductName(mProduct.getName())[0];
     }
