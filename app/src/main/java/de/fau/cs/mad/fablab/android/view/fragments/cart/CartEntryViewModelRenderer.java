@@ -64,8 +64,11 @@ public class CartEntryViewModelRenderer extends Renderer<CartEntryViewModel>
             @Override
             public void onClick(View v) {
                 //product_name_tv.setSingleLine(product_name_tv.getLineCount() != 1);
-                product_name_tv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-                product_name_tv.setMarqueeRepeatLimit(1);
+                if(product_name_tv.getEllipsize() == TextUtils.TruncateAt.MARQUEE){
+                    product_name_tv.setEllipsize(TextUtils.TruncateAt.END);
+                }else{
+                    product_name_tv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                }
                 product_name_tv.setSelected(true);
             }
         });
