@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:recyclerviewfastscroller="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <AutoCompleteTextView
-        android:id="@+id/product_search_view"
+        android:id="@+id/product_search_text_view"
         android:hint="@string/search_all_hint"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -15,13 +16,37 @@
         android:singleLine="true"
         android:width="250dip" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/product_indexable_list_view"
-        android:layout_below="@+id/product_search_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@null"
-        android:dividerHeight="0dp"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/product_search_text_view">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/product_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null"
+            android:dividerHeight="0dp"/>
+
+        <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
+            android:id="@+id/product_fast_scroller"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
+        <de.fau.cs.mad.fablab.android.view.fragments.productsearch.AlphabeticSectionTitleIndicator
+            android:id="@+id/product_fast_scroller_section_title_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/product_fast_scroller"
+            android:layout_toStartOf="@id/product_fast_scroller"
+            recyclerviewfastscroller:rfs_backgroundColor="@android:color/white"
+            recyclerviewfastscroller:rfs_textColor="@android:color/black"
+            />
+
+        </RelativeLayout>
+
 
     <include layout="@layout/spinner" />
 

@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -20,7 +21,10 @@ import javax.inject.Inject;
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
+import de.fau.cs.mad.fablab.rest.core.Product;
 import de.greenrobot.event.EventBus;
+import xyz.danoz.recyclerviewfastscroller.sectionindicator.title.SectionTitleIndicator;
+import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller;
 
 
 public class ProductSearchFragment extends BaseFragment implements ProductSearchFragmentViewModel.Listener {
@@ -32,10 +36,14 @@ public class ProductSearchFragment extends BaseFragment implements ProductSearch
     @Inject
     ProductSearchFragmentViewModel mViewModel;
 
-    @InjectView(R.id.product_search_view)
+    @InjectView(R.id.product_search_text_view)
     AutoCompleteTextView mProductSearchTextView;
-    @InjectView(R.id.product_indexable_list_view)
+    @InjectView(R.id.product_recycler_view)
     RecyclerView mProductRecyclerView;
+    @InjectView(R.id.product_fast_scroller)
+    VerticalRecyclerViewFastScroller mProductFastScroller;
+    @InjectView(R.id.product_fast_scroller_section_title_indicator)
+    SectionTitleIndicator mProductSectionTitleIndicator;
 
     @InjectView(R.id.spinner)
     RelativeLayout loadingSpinnerContainer;
@@ -56,9 +64,13 @@ public class ProductSearchFragment extends BaseFragment implements ProductSearch
         mLoadingSpinnerImage.setBackgroundResource(R.drawable.spinner);
         mAnimationDrawable = (AnimationDrawable) mLoadingSpinnerImage.getBackground();
 
-        mAdapter = new RVRendererAdapter<>(getLayoutInflater(savedInstanceState),
+        mAdapter = new ProductRVRendererAdapter(getLayoutInflater(savedInstanceState),
                 new ProductSearchViewModelRendererBuilder(), mViewModel.getProductSearchViewModelCollection());
         mProductRecyclerView.setAdapter(mAdapter);
+
+        mProductFastScroller.setRecyclerView(mProductRecyclerView);
+        mProductRecyclerView.addOnScrollListener(mProductFastScroller.getOnScrollListener());
+        mProductFastScroller.setSectionIndicator(mProductSectionTitleIndicator);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
