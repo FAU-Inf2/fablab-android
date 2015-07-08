@@ -25,6 +25,15 @@ public class CartEntryViewModel {
         }
     };
 
+    private final Command<Void> mTextViewClickedCommand = new Command<Void>(){
+        @Override
+        public void execute(Void parameter){
+            if (mListener != null){
+                mListener.onTextViewClicked();
+            }
+        }
+    };
+
     public CartEntryViewModel(CartEntry cartEntry, CartModel model) {
         mCartEntry = cartEntry;
         mModel = model;
@@ -36,6 +45,10 @@ public class CartEntryViewModel {
 
     public Command<Integer> getUpdateAmountCommand() {
         return mUpdateAmountCommand;
+    }
+
+    public Command<Void> getTextViewClickedCommand(){
+        return mTextViewClickedCommand;
     }
 
     public CartEntry getCartEntry() {
@@ -60,5 +73,7 @@ public class CartEntryViewModel {
 
     public interface Listener {
         void onAmountChanged();
+
+        void onTextViewClicked();
     }
 }
