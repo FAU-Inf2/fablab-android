@@ -19,6 +19,7 @@ import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.Formatter;
 import de.fau.cs.mad.fablab.android.view.common.binding.SpinnerCommandBinding;
+import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 
 public class CartEntryViewModelRenderer extends Renderer<CartEntryViewModel>
         implements CartEntryViewModel.Listener {
@@ -60,15 +61,6 @@ public class CartEntryViewModelRenderer extends Renderer<CartEntryViewModel>
         }
 
         product_name_tv.setText(Html.fromHtml(productName));
-        getRootView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //product_name_tv.setSingleLine(product_name_tv.getLineCount() != 1);
-                product_name_tv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-                product_name_tv.setMarqueeRepeatLimit(1);
-                product_name_tv.setSelected(true);
-            }
-        });
 
         String unit = getRootView().getResources().getString(R.string.cart_product_quantity) +
                 "&nbsp;<i>" + viewModel.getUnit() + "</i>:";
@@ -86,11 +78,23 @@ public class CartEntryViewModelRenderer extends Renderer<CartEntryViewModel>
         product_amount_spinner.setSelection(((int) viewModel.getAmount()) - 1);
         new SpinnerCommandBinding().bind(product_amount_spinner, viewModel.getUpdateAmountCommand());
 
+        new ViewCommandBinding().bind(product_name_tv, viewModel.getTextViewClickedCommand());
+
         product_price_tv.setText(Formatter.formatPrice(viewModel.getTotalPrice()));
     }
 
     @Override
     public void onAmountChanged() {
         product_price_tv.setText(Formatter.formatPrice(getContent().getTotalPrice()));
+    }
+
+    @Override
+    public void onTextViewClicked(){
+        if(product_name_tv.getEllipsize() == TextUtils.TruncateAt.MARQUEE){
+            product_name_tv.setEllipsize(TextUtils.TruncateAt.END);
+        }else{
+            product_name_tv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        }
+        product_name_tv.setSelected(true);
     }
 }
