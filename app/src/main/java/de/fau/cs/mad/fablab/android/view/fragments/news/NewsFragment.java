@@ -3,7 +3,6 @@ package de.fau.cs.mad.fablab.android.view.fragments.news;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,11 +74,6 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
     @Override
     public void onDataChanged() {
         mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onNewsListScrolling(RecyclerViewDeltaCommandBinding.RecyclerViewDelta delta) {
-        //TODO make something useful here
     }
 
     @SuppressWarnings("unused")

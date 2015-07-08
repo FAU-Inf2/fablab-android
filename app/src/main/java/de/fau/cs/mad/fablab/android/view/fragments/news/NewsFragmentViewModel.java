@@ -8,14 +8,17 @@ import java.util.Collection;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.NewsModel;
+import de.fau.cs.mad.fablab.android.model.events.NewsListScrollingEvent;
 import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewDeltaCommandBinding;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.News;
+import de.greenrobot.event.EventBus;
 
 public class NewsFragmentViewModel implements ObservableArrayList.Listener<News> {
     private NewsModel mModel;
     private Listener mListener;
+    private EventBus mEventBus = EventBus.getDefault();
 
     private ListAdapteeCollection<NewsViewModel> mNewsViewModelCollection;
 
@@ -28,9 +31,7 @@ public class NewsFragmentViewModel implements ObservableArrayList.Listener<News>
     private Command<RecyclerViewDeltaCommandBinding.RecyclerViewDelta> mNewsScrollingCommand = new Command<RecyclerViewDeltaCommandBinding.RecyclerViewDelta>() {
         @Override
         public void execute(RecyclerViewDeltaCommandBinding.RecyclerViewDelta parameter) {
-            if(mListener != null){
-                mListener.onNewsListScrolling(parameter);
-            }
+            mEventBus.post(new NewsListScrollingEvent(parameter));
         }
     };
 
@@ -91,6 +92,5 @@ public class NewsFragmentViewModel implements ObservableArrayList.Listener<News>
 
     public interface Listener {
         void onDataChanged();
-        void onNewsListScrolling(RecyclerViewDeltaCommandBinding.RecyclerViewDelta delta);
     }
 }
