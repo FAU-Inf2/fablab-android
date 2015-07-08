@@ -8,6 +8,7 @@ import java.util.Collection;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.NewsModel;
+import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewDeltaCommandBinding;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.News;
@@ -24,6 +25,14 @@ public class NewsFragmentViewModel implements ObservableArrayList.Listener<News>
             mModel.fetchNextNews();
         }
     };
+    private Command<RecyclerViewDeltaCommandBinding.RecyclerViewDelta> mNewsScrollingCommand = new Command<RecyclerViewDeltaCommandBinding.RecyclerViewDelta>() {
+        @Override
+        public void execute(RecyclerViewDeltaCommandBinding.RecyclerViewDelta parameter) {
+            if(mListener != null){
+                mListener.onNewsListScrolling(parameter);
+            }
+        }
+    };
 
     @Inject
     public NewsFragmentViewModel(NewsModel model) {
@@ -38,6 +47,10 @@ public class NewsFragmentViewModel implements ObservableArrayList.Listener<News>
 
     public Command<Void> getGetNewsCommand() {
         return mCommandGetNews;
+    }
+
+    public Command<RecyclerViewDeltaCommandBinding.RecyclerViewDelta> getNewsScrollingCommand() {
+        return mNewsScrollingCommand;
     }
 
     @Override
@@ -78,5 +91,6 @@ public class NewsFragmentViewModel implements ObservableArrayList.Listener<News>
 
     public interface Listener {
         void onDataChanged();
+        void onNewsListScrolling(RecyclerViewDeltaCommandBinding.RecyclerViewDelta delta);
     }
 }
