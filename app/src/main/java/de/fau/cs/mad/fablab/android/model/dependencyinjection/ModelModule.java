@@ -10,7 +10,7 @@ import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
 import de.fau.cs.mad.fablab.android.model.StorageFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.about.AboutFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.productmap.ProductMapFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.productMap.ProductMapFragment;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
 import de.fau.cs.mad.fablab.android.view.fragments.ICalAndNewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;

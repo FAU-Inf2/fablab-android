@@ -23,7 +23,6 @@ import java.util.List;
 
 import de.fau.cs.mad.fablab.android.BaseActivity;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.view.fragments.productmap.LocationParser;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
 import de.fau.cs.mad.fablab.rest.core.Product;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
@@ -225,15 +224,15 @@ public class ProductSearchActivity extends BaseActivity
                 "Regal / Plexiglas";
 
         //check if location is valid
-        if(LocationParser.getLocation(location) != null) {
-            //show location
-
-        } else {
-            //show error dialog
-            productDialog.dismiss();
-            errorDialog = ErrorDialog.newInstance(getResources().getString(R.string.invalid_location));
-            errorDialog.show(getFragmentManager(), "error_dialog");
-        }
+//        if(LocationParser.getLocation(location) != null) {
+//            //show location
+//
+//        } else {
+//            //show error dialog
+//            productDialog.dismiss();
+//            errorDialog = ErrorDialog.newInstance(getResources().getString(R.string.invalid_location));
+//            errorDialog.show(getFragmentManager(), "error_dialog");
+//        }
     }
 
     @Override

@@ -4,10 +4,8 @@ import android.os.Bundle;
 
 import javax.inject.Inject;
 
-import de.fau.cs.mad.fablab.android.view.fragments.productmap.LocationParser;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Product;
-import de.greenrobot.event.EventBus;
 
 public class ProductDialogFragmentViewModel {
 
@@ -68,9 +66,9 @@ public class ProductDialogFragmentViewModel {
         return mProduct.getName();
     }
 
-    public boolean hasLocation() {
-        return LocationParser.getLocation(mProduct.getLocation()) != null;
-    }
+    //public boolean hasLocation() {
+    //    return LocationParser.getLocation(mProduct.getLocation()) != null;
+    //}
 
     public boolean isProductZeroPriced() {
         return mProduct.getPrice() == 0.0;
