@@ -20,6 +20,7 @@ import javax.inject.Inject;
 
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.util.UiUtils;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.fau.cs.mad.fablab.rest.core.Product;
 import de.greenrobot.event.EventBus;
@@ -115,6 +116,7 @@ public class ProductSearchFragment extends BaseFragment implements ProductSearch
     @Override
     public void onSearchStateChanged() {
         if(mViewModel.getSearchState()){
+            UiUtils.hideKeyboard(getActivity());
             loadingSpinnerContainer.setVisibility(View.VISIBLE);
             mAnimationDrawable.start();
         }
