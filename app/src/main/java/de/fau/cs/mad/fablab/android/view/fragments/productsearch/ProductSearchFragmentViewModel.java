@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.fragments.productsearch;
 
+
 import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
 
@@ -10,7 +11,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.inject.Inject;
 
@@ -19,9 +19,12 @@ import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
+import de.greenrobot.event.EventBus;
+
 public class ProductSearchFragmentViewModel implements ObservableArrayList.Listener<Product> {
     ProductModel mModel;
     Listener mListener;
+    EventBus mEventBus;
 
     private ListAdapteeCollection<ProductSearchViewModel> mProductSearchViewModelCollection;
     private HashMap<Product, ProductSearchViewModel> mProductSearchViewModels;
@@ -43,6 +46,7 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
     @Inject
     public ProductSearchFragmentViewModel(ProductModel mModel){
         this.mModel = mModel;
+        mEventBus = EventBus.getDefault();
         mModel.getProducts().setListener(this);
         mProductSearchViewModelCollection = new ListAdapteeCollection<>();
         mProductSearchViewModels = new HashMap<>();
@@ -117,9 +121,27 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
         }
     }
 
+    public void pause() {
+        mEventBus.unregister(this);
+    }
+
+    public void resume() {
+        mEventBus.register(this);
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(ProductSearchRetrofitErrorEvent event) {
+        mSearchState = false;
+        if(mListener != null) {
+            mListener.onSearchStateChanged();
+            mListener.onRetrofitErrorOccurred();
+        }
+    }
+
     public interface Listener{
         void onDataChanged();
         void onSearchStateChanged();
+        void onRetrofitErrorOccurred();
     }
 
     class SortByName implements Comparator<ProductSearchViewModel> {
@@ -132,4 +154,5 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
         }
 
     }
+
 }

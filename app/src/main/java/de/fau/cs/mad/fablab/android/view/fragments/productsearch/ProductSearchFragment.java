@@ -8,7 +8,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -22,7 +21,6 @@ import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
-import de.fau.cs.mad.fablab.rest.core.Product;
 import de.greenrobot.event.EventBus;
 import xyz.danoz.recyclerviewfastscroller.sectionindicator.title.SectionTitleIndicator;
 import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller;
@@ -97,14 +95,14 @@ public class ProductSearchFragment extends BaseFragment implements ProductSearch
     public void onPause() {
         super.onPause();
         mEventBus.unregister(this);
-
+        mViewModel.pause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mEventBus.register(this);
-
+        mViewModel.resume();
         setDisplayOptions(R.id.drawer_item_productsearch, true, true);
     }
 
@@ -124,6 +122,11 @@ public class ProductSearchFragment extends BaseFragment implements ProductSearch
             loadingSpinnerContainer.setVisibility(View.GONE);
             mAnimationDrawable.stop();
         }
+    }
+
+    @Override
+    public void onRetrofitErrorOccurred() {
+        Toast.makeText(getActivity(), R.string.retrofit_callback_failure, Toast.LENGTH_LONG).show();
     }
 
     @SuppressWarnings("unused")

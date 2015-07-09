@@ -4,12 +4,15 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import java.util.List;
 
+import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchRetrofitErrorEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.rest.core.Product;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import de.greenrobot.event.EventBus;
 
 public class ProductModel {
     private RuntimeExceptionDao<Product, String> mProductDao;
@@ -31,7 +34,7 @@ public class ProductModel {
 
         @Override
         public void failure(RetrofitError error) {
-            //TODO maybe eventbus ?
+            EventBus.getDefault().post(new ProductSearchRetrofitErrorEvent());
         }
     };
 
