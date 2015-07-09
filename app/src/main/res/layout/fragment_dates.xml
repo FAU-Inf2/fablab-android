@@ -1,11 +1,7 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="de.fau.cs.mad.fablab.android.view.fragments.icals.ICalFragment">
-
-    <android.support.v7.widget.RecyclerView
+<android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/ical_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/news_activity_dates_viewpager_height" />
-</FrameLayout>
+        android:layout_height="@dimen/news_activity_dates_viewpager_height"
+        tools:context="de.fau.cs.mad.fablab.android.view.fragments.icals.ICalFragment"/>

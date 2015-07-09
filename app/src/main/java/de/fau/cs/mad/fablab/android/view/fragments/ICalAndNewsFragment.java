@@ -1,10 +1,13 @@
 package de.fau.cs.mad.fablab.android.view.fragments;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import javax.inject.Inject;
 
@@ -62,7 +65,7 @@ public class ICalAndNewsFragment extends BaseFragment implements ICalAndNewsFrag
     }
 
     public void onEvent(NewsListScrollingEvent event){
-        //TODO make something useful here
-        Log.d("ICalAndNewsFragment", event.getDelta().getDx()+ " "+event.getDelta().getDy());
+        FrameLayout iCalView = (FrameLayout) getView().findViewById(R.id.fragment_ical);
+        iCalView.setTranslationY(iCalView.getTranslationY() - event.getDelta().getDy());
     }
 }
