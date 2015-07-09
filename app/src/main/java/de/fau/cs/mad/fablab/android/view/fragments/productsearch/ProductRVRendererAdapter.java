@@ -12,7 +12,7 @@ import java.util.Locale;
 
 public class ProductRVRendererAdapter extends RVRendererAdapter implements SectionIndexer {
 
-    private final String SECTIONS = " #ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private final String SECTIONS = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public ProductRVRendererAdapter(LayoutInflater layoutInflater, RendererBuilder rendererBuilder,
                                     AdapteeCollection collection) {
@@ -34,21 +34,16 @@ public class ProductRVRendererAdapter extends RVRendererAdapter implements Secti
 
     @Override
     public int getSectionForPosition(int position) {
-        if(position < getItemCount()) {
+        if(getItemCount() > 0) {
+            if(position >= getItemCount()) {
+                position = getItemCount() -1;
+            }
             Collator collator = Collator.getInstance(Locale.GERMAN);
             collator.setStrength(Collator.PRIMARY);
-            //alphabetic section
-            for (int i = 2; i < SECTIONS.length(); i++) {
+            for (int i = 1; i < SECTIONS.length(); i++) {
                 if(collator.compare(String.valueOf(((ProductSearchViewModel)getItem(position))
-                        .getUnformattedName().charAt(0)),String.valueOf(SECTIONS.charAt(i))) == 0) {
+                        .getUnformattedName().charAt(0)), String.valueOf(SECTIONS.charAt(i))) == 0) {
                     return i;
-                }
-            }
-            //numeric section
-            for (int i = 0; i < 9; i++) {
-                if(collator.compare(String.valueOf(((ProductSearchViewModel)getItem(position))
-                        .getUnformattedName().charAt(0)),String.valueOf(i)) == 0) {
-                    return 1;
                 }
             }
         }
