@@ -129,6 +129,10 @@ public class ProductSearchFragment extends BaseFragment implements ProductSearch
         Toast.makeText(getActivity(), R.string.retrofit_callback_failure, Toast.LENGTH_LONG).show();
     }
 
+    public void onNoProductsFound() {
+        Toast.makeText(getActivity(), R.string.no_products_found, Toast.LENGTH_LONG).show();
+    }
+
     @SuppressWarnings("unused")
     public void onEvent(ProductClickedEvent event) {
         ProductDialogFragment dialogFragment = new ProductDialogFragment();

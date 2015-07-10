@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import java.util.List;
 
+import de.fau.cs.mad.fablab.android.view.fragments.productsearch.NoProductsFoundEvent;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchRetrofitErrorEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.rest.core.Product;
@@ -29,6 +30,9 @@ public class ProductModel {
     Callback<List<Product>> productSearchCallback = new Callback<List<Product>>() {
         @Override
         public void success(List<Product> products, Response response) {
+            if(products.isEmpty()) {
+                EventBus.getDefault().post(new NoProductsFoundEvent());
+            }
             mProducts.addAll(products);
         }
 

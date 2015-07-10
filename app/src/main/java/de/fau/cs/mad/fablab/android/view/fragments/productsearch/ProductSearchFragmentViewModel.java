@@ -138,10 +138,20 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
         }
     }
 
+    @SuppressWarnings("unused")
+    public void onEvent(NoProductsFoundEvent event) {
+        mSearchState = false;
+        if(mListener != null) {
+            mListener.onSearchStateChanged();
+            mListener.onNoProductsFound();
+        }
+    }
+
     public interface Listener{
         void onDataChanged();
         void onSearchStateChanged();
         void onRetrofitErrorOccurred();
+        void onNoProductsFound();
     }
 
     class SortByName implements Comparator<ProductSearchViewModel> {
