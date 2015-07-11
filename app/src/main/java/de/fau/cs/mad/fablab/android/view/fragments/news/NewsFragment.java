@@ -14,10 +14,12 @@ import javax.inject.Inject;
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewCommandBinding;
+import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewDeltaCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.greenrobot.event.EventBus;
 
 public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.Listener {
+
     @InjectView(R.id.news_recycler_view)
     RecyclerView news_rv;
 
@@ -46,6 +48,7 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
 
         //bind the getGetNewsCommand to the recyclerView
         new RecyclerViewCommandBinding().bind(news_rv, mViewModel.getGetNewsCommand());
+        new RecyclerViewDeltaCommandBinding().bind(news_rv, mViewModel.getNewsScrollingCommand());
     }
 
     @Override

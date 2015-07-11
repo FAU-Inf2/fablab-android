@@ -9,17 +9,16 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:fitsSystemWindows="true">
+            android:orientation="vertical">
 
             <!-- Toolbar of V22 to overlay statusbar -->
             <include
-                android:id="@+id/appbar"
                 layout="@layout/appbar" />
 
             <com.sothree.slidinguppanel.SlidingUpPanelLayout

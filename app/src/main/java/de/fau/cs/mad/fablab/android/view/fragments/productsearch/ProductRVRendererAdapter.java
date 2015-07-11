@@ -7,6 +7,9 @@ import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.RVRendererAdapter;
 import com.pedrogomez.renderers.RendererBuilder;
 
+import java.text.Collator;
+import java.util.Locale;
+
 public class ProductRVRendererAdapter extends RVRendererAdapter implements SectionIndexer {
 
     private final String SECTIONS = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -31,10 +34,15 @@ public class ProductRVRendererAdapter extends RVRendererAdapter implements Secti
 
     @Override
     public int getSectionForPosition(int position) {
-        if(position < getItemCount()) {
+        if(getItemCount() > 0) {
+            if(position >= getItemCount()) {
+                position = getItemCount() -1;
+            }
+            Collator collator = Collator.getInstance(Locale.GERMAN);
+            collator.setStrength(Collator.PRIMARY);
             for (int i = 1; i < SECTIONS.length(); i++) {
-                if (String.valueOf(((ProductSearchViewModel)getItem(position)).getUnformattedName()
-                        .charAt(0)).equals(String.valueOf(SECTIONS.charAt(i)))) {
+                if(collator.compare(String.valueOf(((ProductSearchViewModel)getItem(position))
+                        .getUnformattedName().charAt(0)), String.valueOf(SECTIONS.charAt(i))) == 0) {
                     return i;
                 }
             }

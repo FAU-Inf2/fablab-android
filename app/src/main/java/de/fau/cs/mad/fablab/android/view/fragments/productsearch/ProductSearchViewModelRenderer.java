@@ -62,6 +62,15 @@ public class ProductSearchViewModelRenderer extends Renderer<ProductSearchViewMo
                     .primary_text_disabled_material_light));
             mProductUnit.setTextColor(mProductUnit.getResources().getColor(R.color
                     .primary_text_disabled_material_light));
+        } else {
+            mProductName.setTextColor(mProductName.getResources().getColor(R.color
+                    .primary_text_default_material_light));
+            mProductDetail.setTextColor(mProductDetail.getResources().getColor(R.color
+                    .primary_text_default_material_light));
+            mProductPrice.setTextColor(mProductPrice.getResources().getColor(R.color
+                    .primary_text_default_material_light));
+            mProductUnit.setTextColor(mProductUnit.getResources().getColor(R.color
+                    .primary_text_default_material_light));
         }
     }
 }

@@ -25,6 +25,7 @@
     <string name="product_dialog_cart">Zum Warenkorb hinzufügen</string>
     <string name="product_dialog_report">Ausgegangenes Produkt melden</string>
     <string name="retrofit_callback_failure">Leider ist bei der Abfrage ein Fehler aufgetreten</string>
+    <string name="no_products_found">Es wurden keine Produkte gefunden</string>
     <string name="title_scan_qr_code">QR-Code an der Kasse scannen</string>
     <string name="checkout_pay">Bitte gehen Sie zur Kasse und bezahlen Sie.</string>
     <string name="checkout_error">Fehler beim Übertragen des Warenkorbs</string>
@@ -39,7 +40,7 @@
     <string name="dates_time">Uhrzeit:</string>
     <string name="dates_location">Ort:</string>
 
-    <string name="search_all_hint">(leer => alle Produkte)</string>
+    <string name="search_all_hint">Alle Produkte</string>
 
     <string name="betterment_tax">inkl. MwSt.</string>
     <string name="title_activity_push">PushActivity</string>
