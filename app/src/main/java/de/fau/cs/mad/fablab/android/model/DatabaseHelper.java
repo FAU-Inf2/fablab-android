@@ -11,7 +11,6 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 
-import de.fau.cs.mad.fablab.android.productsearch.AutoCompleteWords;
 import de.fau.cs.mad.fablab.rest.core.Cart;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.fau.cs.mad.fablab.rest.core.Product;

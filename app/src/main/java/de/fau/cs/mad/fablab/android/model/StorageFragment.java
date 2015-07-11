@@ -13,6 +13,7 @@ public class StorageFragment extends Fragment {
     private NewsModel mNewsModel;
     private CartModel mCartModel;
     private ProductModel mProductModel;
+    private AutoCompleteModel mAutoCompleteModel;
     private SpaceApiModel mSpaceApiModel;
 
     @Override
@@ -27,6 +28,8 @@ public class StorageFragment extends Fragment {
         PushModel pushModel = new PushModel(getActivity().getApplication(), restClient.getPushApi());
         mCartModel = new CartModel(databaseHelper.getCartDao(), restClient.getCartApi(), pushModel);
         mProductModel = new ProductModel(databaseHelper.getProductDao(), restClient.getProductApi());
+        mAutoCompleteModel = new AutoCompleteModel(databaseHelper.getAutoCompleteWordsDao(),
+                restClient.getProductApi());
         mSpaceApiModel = new SpaceApiModel(restClient.getSpaceApi(), getString(R.string.space_name));
     }
 
@@ -44,6 +47,10 @@ public class StorageFragment extends Fragment {
 
     public ProductModel getProductModel() {
         return mProductModel;
+    }
+
+    public AutoCompleteModel getAutoCompleteModel() {
+        return mAutoCompleteModel;
     }
 
     public SpaceApiModel getSpaceApiModel() {

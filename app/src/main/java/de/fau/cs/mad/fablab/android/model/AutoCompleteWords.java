@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.productsearch;
+package de.fau.cs.mad.fablab.android.model;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
@@ -10,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 
 @Entity
 @Table(name="AutoCompleteHelper")
@@ -28,8 +27,8 @@ public class AutoCompleteWords implements Serializable {
     @Column(name="last_refresh")
     private Date lastRefresh;
 
-
     public  AutoCompleteWords(){}
+
     public AutoCompleteWords(String[] possibleAutoCompleteWords) {
         this.possibleAutoCompleteWords = possibleAutoCompleteWords;
         this.lastRefresh = new Date();
