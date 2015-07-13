@@ -62,6 +62,7 @@
     <string name="navdrawer_login_hint_username">Username</string>
     <string name="navdrawer_login_hint_password">Password</string>
     <string name="navdrawer_button_login">Login</string>
+    <string name="app_website">fablab.fau.de</string>
 
     <string name="about_content">
         <![CDATA[

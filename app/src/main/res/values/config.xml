@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="api_url">https://ec2-52-28-16-59.eu-central-1.compute.amazonaws.com</string>
     <string name="development_truststore_pass">dummypass4dev</string>
 
     <string name="space_name">FAU+FabLab</string>
