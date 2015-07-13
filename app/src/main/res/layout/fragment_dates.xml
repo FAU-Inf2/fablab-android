@@ -4,4 +4,5 @@
         android:id="@+id/ical_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/news_activity_dates_viewpager_height"
+        android:paddingTop="@dimen/card_vertical_margin"
         tools:context="de.fau.cs.mad.fablab.android.view.fragments.icals.ICalFragment"/>

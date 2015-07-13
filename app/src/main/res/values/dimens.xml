@@ -24,6 +24,7 @@
     <dimen name="fab_padding">15dp</dimen>
     <dimen name="news_activity_actionbar_recyclerview_margin">5dp</dimen>
     <dimen name="news_activity_dates_viewpager_height">130dp</dimen>
+    <dimen name="news_activity_news_padding_top">122dp</dimen>
 
     <dimen name="dates_entry_icon_date_margin">10dp</dimen>
 
