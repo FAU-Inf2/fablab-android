@@ -40,7 +40,6 @@
         android:text="@string/product_dialog_cart"
         />
 
-    <!--
     <Button
         android:id="@+id/product_dialog_report"
         android:layout_width="match_parent"
@@ -52,6 +51,5 @@
         android:layout_marginBottom="@dimen/product_dialog_margin_tb"
         android:text="@string/product_dialog_report"
         />
-    -->
 
 </LinearLayout>

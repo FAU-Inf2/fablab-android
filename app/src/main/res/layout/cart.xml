@@ -36,8 +36,8 @@
                 android:textColor="@color/AppBarTextColor" />
 
             <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:id="@+id/cart_total_price_preview"
                 android:layout_marginRight="@dimen/slidinguppanel_preview_margin_right"
                 android:layout_marginBottom="@dimen/slidinguppanel_preview_margin_bottom"
@@ -50,14 +50,14 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/cart_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="0dp"
             android:layout_weight=".70"
             android:scrollbars="vertical"/>
 
-<!-- Footer-->
+        <!-- Footer-->
         <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -125,59 +125,6 @@
                         android:background="@drawable/slidinguppanel_button_selector"/>
 
                 </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/undo_toast"
-                android:id="@+id/cart_undo_bar"
-                android:weightSum="10"
-                android:visibility="gone"
-                android:orientation="horizontal"
-                android:layout_marginLeft="@dimen/slidinguppanel_undo_bar_margin_left"
-                android:layout_marginRight="@dimen/slidinguppanel_undo_bar_margin_right"
-                android:layout_marginTop="@dimen/slidinguppanel_undo_bar_margin_top"
-                android:paddingLeft="@dimen/slidinguppanel_undo_bar_padding"
-                android:paddingRight="@dimen/slidinguppanel_undo_bar_padding">
-
-                <TextView
-                    android:layout_width="@dimen/zero"
-                    android:layout_height="match_parent"
-                    android:id="@+id/cart_product_removed"
-                    android:clickable="false"
-                    android:textSize="@dimen/slidinguppanel_product_removed_textsize"
-                    android:gravity="center_vertical|left"
-                    android:textColor="@color/slidingUpPanel_bg"
-                    android:layout_weight="4.2"/>
-                <ImageView
-                    android:layout_width="@dimen/zero"
-                    android:layout_height="@dimen/slidinguppanel_undo_bar_vertical_bar_height"
-                    android:id="@+id/cart_product_removed_vertical_bar"
-                    android:layout_weight="0.8"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/vertical_bar"
-                    android:layout_marginRight="@dimen/slidinguppanel_product_removed_margin"/>
-
-                <ImageView
-                    android:layout_width="@dimen/zero"
-                    android:layout_height="@dimen/slidinguppanel_undo_bar_img_height"
-                    android:id="@+id/cart_product_undo_img"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/undo"
-                    android:layout_weight="1"
-                    android:clickable="true"/>
-
-                <Button
-                    android:layout_width="@dimen/zero"
-                    android:layout_height="match_parent"
-                    android:id="@+id/cart_product_undo"
-                    android:layout_weight="4"
-                    android:textSize="@dimen/slidinguppanel_product_undo_button"
-                    android:textStyle="bold"
-                    android:gravity="right|center_vertical"
-                    android:textColor="@color/slidingUpPanel_bg"
-                    android:background="@android:color/transparent"/>
-
             </LinearLayout>
 
         </RelativeLayout>

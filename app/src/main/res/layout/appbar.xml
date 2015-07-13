@@ -7,7 +7,7 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:layout_margin="0dp"
     android:elevation="4dp"
-    >
+    android:id="@+id/appbar">
 
     <TextView
         android:layout_width="wrap_content"
@@ -48,8 +48,4 @@
             android:id="@+id/appbar_time" />
 
     </LinearLayout>
-
-
-
-
 </android.support.v7.widget.Toolbar>

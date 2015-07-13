@@ -5,7 +5,8 @@
     android:layout_height="@dimen/navdrawer_height"
     android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:paddingTop="@dimen/navdrawer_header_padding_top">
 
     <LinearLayout
         android:id="@+id/lin1"

@@ -1,91 +1,132 @@
 <resources>
     <string name="app_name">FAU Fablab</string>
 
-
-    <string name="development_truststore_pass">dummypass4dev</string>
-
-    <string name="SpaceName">FAU+FabLab</string>
     <string name="appbar_fau">FAU</string>
     <string name="appbar_fablab">FabLab</string>
     <string name="appbar_opened">Geöffnet</string>
     <string name="appbar_opened_since">seit</string>
     <string name="appbar_closed">Geschlossen</string>
     <string name="cart_title">Warenkorb:</string>
-    <string name="cart_empty">Ihr Warenkorb ist leider noch leer</string>
+
     <string name="cart_total_price_title">Gesamtpreis:</string>
     <string name="cart_button_checkout">Zur Kasse</string>
-    <string name="cart_entry_unit_null_exception"></string>
-    <string name="cart_article_label"><![CDATA[&nbsp;Artikel]]></string>
-    <string name="cart_preview_delimiter"><![CDATA[&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]]></string>
+    <string name="cart_article_label">Artikel</string>
     <string name="cart_product_quantity">Menge in</string>
-    <string name="cart_product_removed">entfernt</string>
-    <string name="cart_product_undo">rückgängig</string>
+    <string name="cart_product_removed">Artikel entfernt</string>
+    <string name="cart_product_undo">Rückgängig</string>
     <string name="search_hint">Suche Produkt</string>
     <string name="title_scan_product">Produkt scannen</string>
     <string name="action_add_to_cart">In den Warenkorb</string>
     <string name="add_to_cart_price_per_unit">pro</string>
     <string name="add_to_cart_amount">Menge:</string>
     <string name="barcode_scanner_invalid_barcode">Ungültiger Barcode</string>
-    <string name="product_not_found">Produkt nicht gefunden</string>
+    <string name="barcode_scanner_product_not_found">Produkt nicht gefunden</string>
     <string name="product_dialog_location">Standort anzeigen</string>
     <string name="product_dialog_cart">Zum Warenkorb hinzufügen</string>
     <string name="product_dialog_report">Ausgegangenes Produkt melden</string>
     <string name="retrofit_callback_failure">Leider ist bei der Abfrage ein Fehler aufgetreten</string>
+    <string name="no_products_found">Es wurden keine Produkte gefunden</string>
     <string name="title_scan_qr_code">QR-Code an der Kasse scannen</string>
-    <string name="checkout_pay">Jetzt an der Kasse bezahlen</string>
+    <string name="checkout_pay">Bitte gehen Sie zur Kasse und bezahlen Sie.</string>
     <string name="checkout_error">Fehler beim Übertragen des Warenkorbs</string>
-    <string name="checkout_invalid_qr_code">Ungültiger QR-Code</string>
+    <string name="checkout_cancelled">Der Bezahlvorgang wurde abgebrochen</string>
+    <string name="checkout_paid">Ihr Warenkorb wurde bezahlt</string>
+    <string name="retry">Nochmal versuchen</string>
+    <string name="qr_code_scanner_invalid_qr_code">Ungültiger QR-Code</string>
     <string name="ok">OK</string>
     <string name="invalid_location">Standort nicht verfügbar</string>
 
+    <string name="dates_date">Datum:</string>
+    <string name="dates_time">Uhrzeit:</string>
+    <string name="dates_location">Ort:</string>
 
+    <string name="search_all_hint">Alle Produkte</string>
 
-    <string name="search_all_hint">alle Produkte</string>
-
-    <string name="bold_start"><![CDATA[<b>]]></string>
-    <string name="bold_end"><![CDATA[</b>]]></string>
-    <string name="italic_start"><![CDATA[<i>]]></string>
-    <string name="italic_end"><![CDATA[</i>]]></string>
-    <string name="currency">€</string>
-    <string name="non_breaking_space"><![CDATA[&nbsp;]]></string>
-    <string name="colon">:</string>
     <string name="betterment_tax">inkl. MwSt.</string>
     <string name="title_activity_push">PushActivity</string>
+
+    <string name="stacktrace_messaging_yes">Ja</string>
+    <string name="stacktrace_messaging_no">Nein</string>
+    <string name="stacktrace_messaging_subject">Fehlermeldung FAU FabLab</string>
+    <string name="stacktrace_messaging_chooser_title">Sende Fehlermeldung mit:</string>
+    <string name="stacktrace_messaging_dialog_title">Fehlermeldung</string>
+    <string name="stacktrace_messaging_dialog_text">Leider ist bei der letzten Benutzung ein Fehler aufgetreten. Wir sind stetig bemüht die Applikation zu verbessern. Deshalb bitten wir Sie die Fehlermeldung an uns weiterzuleiten.</string>
+
+    <!-- Strings for navigation drawer titles -->
+    <string name="news">News</string>
+    <string name="productsearch">Produkt suchen</string>
+    <string name="scanner">Produkt scannen</string>
+    <string name="about">Über</string>
+    <string name="settings">Einstellungen</string>
 
     <string name="navdrawer_login_hint_username">Username</string>
     <string name="navdrawer_login_hint_password">Password</string>
     <string name="navdrawer_button_login">Login</string>
-    <string name="app_website">fablab.fau.de</string>
-    <string name="appbar_orderedby_name">Sortiert nach Name</string>
-    <string name="appbar_orderedby_price">Sortiert nach Preis</string>
-    <string name="appbar_orderby_name">Alphabetisch sortieren</string>
-    <string name="appbar_orderby_price">Nach Preis sortieren</string>
 
-    <string name="ical_fullday_string">ganztägig</string>
-
-    <string name="app_version">Version: 1.0</string>
-    <string name="used_libraries">Open Source Lizenzen</string>
-    <string name="about_title">About</string>
-    <string name="about_content">Diese App wurde im Rahmen des &lt;a href=&quot;https://www2.informatik.uni-erlangen.de/teaching/SS2015/MAD/index.html&quot;&gt;MAD Projekts&lt;/a&gt;
-        an der FAU Erlangen-Nürnberg entwickelt.      &lt;br&gt;
-        Der Quellcode kann unter &lt;a href=&quot;https://github.com/FAU-Inf2/fablab-android&quot;&gt;Github&lt;/a&gt; gefunden werden.    &lt;br&gt;
-        Feedback jederzeit gerne per &lt;a href=&quot;mailto:fablab@i2.cs.fau.de&quot;&gt;email&lt;/a&gt;
-        &lt;br&gt;
-        &lt;br&gt;
-        Die Entwickler sind :&lt;br&gt;
-        &lt;br&gt;
-        Emanuel Eimer&lt;br&gt;
-        Stefan Herpich&lt;br&gt;
-        Michael Sandner&lt;br&gt;
-        Julia Schottenhamml&lt;br&gt;
-        Johannes Pfann&lt;br&gt;
-        Max Jalowski&lt;br&gt;
-        Sebastian Haubner&lt;br&gt;
-        Katharina Full&lt;br&gt;
-        Philip Kanhäußer&lt;br&gt;
-        Julian Lorz&lt;br&gt;
-        Daniel Rosenmüller&lt;br&gt;
-        &lt;br&gt;
+    <string name="about_content">
+        <![CDATA[
+        Diese App wurde im Rahmen des <a href="https://www2.informatik.uni-erlangen.de/teaching/SS2015/MAD/index.html">MAD Projekts</a>
+        an der FAU Erlangen-Nürnberg entwickelt.<br>
+        Der Quellcode kann unter <a href="https://github.com/FAU-Inf2/fablab-android">Github</a> gefunden werden.<br>
+        Feedback jederzeit gerne per <a href="mailto:fablab@i2.cs.fau.de">E-Mail</a>.<br>
+        <br>
+        Die Entwickler sind:<br>
+        <br>
+        Emanuel Eimer<br>
+        Stefan Herpich<br>
+        Michael Sandner<br>
+        Julia Schottenhamml<br>
+        Johannes Pfann<br>
+        Max Jalowski<br>
+        Sebastian Haubner<br>
+        Katharina Full<br>
+        Philip Kanhäußer<br>
+        Julian Lorz<br>
+        Daniel Rosenmüller
+        ]]>
+    </string>
+    <string name="about_open_source_licenses">Open Source Lizenzen</string>
+    <string name="about_used_libraries">
+        <![CDATA[
+        <b>jackson-databind</b> (Apache License 2.0)<br>
+        <a href="https://github.com/FasterXML/jackson-databind/">Projektseite</a><br>
+        <br>
+        <b>retrofit</b> (Apache License 2.0)<br>
+        <a href="https://github.com/square/retrofit">Projektseite</a><br>
+        <br>
+        <b>okhttp</b> (Apache License 2.0)<br>
+        <a href="https://github.com/square/okhttp">Projektseite</a><br>
+        <br>
+        <b>okio</b> (Apache License 2.0)<br>
+        <a href="https://github.com/square/okio">Projektseite</a><br
+        ><br>
+        <b>ormlite</b> (ISC license)<br>
+        <a href="http://ormlite.com/">Projektseite</a><br>
+        <br>
+        <b>zxing</b> (Apache License 2.0)<br>
+        <a href="https://github.com/dm77/barcodescanner">Projektseite</a><br>
+        <br>
+        <b>AndroidSlidingUpPanel</b> (Apache License 2.0)<br>
+        <a href="https://github.com/umano/AndroidSlidingUpPanel">Projektseite</a><br>
+        <br>
+        <b>SwipeableRecyclerView</b> (Apache License 2.0)<br>
+        <a href="https://github.com/brnunes/Swiabout_acknowledgementspeableRecyclerView">Projektseite</a><br>
+        <br>
+        <b>CircleImageView</b> (Apache License 2.0)<br>
+        <a href="https://github.com/hdodenhof/CircleImageView">Projektseite</a><br>
+        <br>
+        <b>FloatingActionButton</b> (Apache License 2.0)<br>
+        <a href="https://github.com/Clans/FloatingActionButton">Projektseite</a><br>
+        <br>
+        <b>EventBus</b> (Apache License 2.0)<br>
+        <a href="https://github.com/greenrobot/EventBus">Projektseite</a><br>
+        <br>
+        <b>Picasso</b> (Apache License 2.0)<br>
+        <a href="https://github.com/square/picasso">Projektseite</a><br>
+        <br>
+        <b>Renderers</b> (Apache License 2.0)<br>
+        <a href="https://github.com/pedrovgs/Renderers">Projektseite</a>
+        ]]>
     </string>
 
 </resources>

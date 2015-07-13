@@ -2,9 +2,9 @@
 <resources>
     <color name="colorPrimary">#384F54</color>
     <color name="colorPrimaryDark">#2D3F43</color>
-    <color name="colorAccent">#889FA4</color>
+    <color name="colorAccent">#FF6800</color>
     <color name="colorTextPrimary">#000000</color>
-    <color name="colorTextSecondary">#384F54</color>
+    <color name="colorTextSecondary">#FF6800</color>
     <color name="AppBarTextColor">#FFFFFF</color>
     <color name="windowBackground">#E0E0E0</color>
     <color name="cardOpenlab">#788F94</color>
@@ -27,5 +27,4 @@
     <color name="spinner_background">#ffcecece</color>
 
     <color name="navdrawer_hint">#AAAAAA</color>
-    <color name="navdrawer_item_checked">#889FA4</color>
 </resources>

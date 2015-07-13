@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.fau.cs.mad.fablab.android">
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <permission
+        android:name="de.fau.cs.mad.fablab.android.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="de.fau.cs.mad.fablab.android.permission.C2D_MESSAGE" />
+
+    <application>
+        <receiver
+            android:name=".model.push.PushBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="de.fau.cs.mad.fablab.android" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".model.push.PushIntentService" />
+
+    </application>
+
+</manifest>

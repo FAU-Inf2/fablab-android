@@ -1,110 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:paddingRight="@dimen/news_dialog_vertical_margin"
-    android:paddingLeft="@dimen/news_dialog_vertical_margin"
-    android:paddingTop="@dimen/news_dialog_horizontal_margin"
     android:paddingBottom="@dimen/news_dialog_horizontal_margin"
-    >
+    android:paddingLeft="@dimen/news_dialog_vertical_margin"
+    android:paddingRight="@dimen/news_dialog_vertical_margin"
+    android:paddingTop="@dimen/news_dialog_horizontal_margin">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/news_dialog_title_text_margin"
-        android:id="@+id/linearLayout"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="@dimen/news_dialog_title_text_margin">
 
         <ImageView
+            android:id="@+id/image_dates_dialog"
             android:layout_width="@dimen/news_dialog_icon_size"
             android:layout_height="@dimen/news_dialog_icon_size"
-            android:layout_centerVertical="true"
-            android:id="@+id/image_dates_dialog"
-            android:src="@drawable/fablab_icon_black"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/fablab_icon_black" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/title_dates_dialog"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/abc_text_size_title_material"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/abc_text_size_title_material" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/linearLayout"
-        android:id="@+id/linearLayout2"
-        >
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/news_dialog_vertical_margin"
-            android:textColor="@android:color/black"
             android:id="@+id/date_dates_dialog"
-            />
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/news_dialog_vertical_margin"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/black" />
+
+        <TextView
             android:id="@+id/time_dates_dialog"
-            />
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/news_dialog_vertical_margin"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/black" />
+
+        <TextView
             android:id="@+id/location_dates_dialog"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/news_dialog_vertical_margin"
+            android:textColor="@android:color/black" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/linearLayout2">
+        android:layout_below="@+id/linearLayout2"
+        android:orientation="vertical">
 
         <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/ok_button_news_dialog"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/linearLayout"
-            android:layout_above="@+id/ok_button_news_dialog"
-            android:layout_marginBottom="@dimen/news_entry_scrollview_margin"
-            android:id="@+id/scrollView">
+            android:layout_marginBottom="@dimen/news_entry_scrollview_margin">
 
             <TextView
+                android:id="@+id/date_description_dates_dialog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:id="@+id/date_description_dates_dialog"
-                android:text="real news entry"
-                />
+                android:autoLink="web"
+                android:textColor="@android:color/black" />
         </ScrollView>
 
         <Button
+            android:id="@+id/ok_button_dates_dialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ok"
-            android:id="@+id/ok_button_dates_dialog"
             android:layout_gravity="right"
-            android:layout_marginTop="@dimen/news_entry_button_margin"/>
+            android:layout_marginTop="@dimen/news_entry_button_margin"
+            android:text="@android:string/ok" />
     </LinearLayout>
 
 </RelativeLayout>
