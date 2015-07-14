@@ -6,8 +6,12 @@
     <string name="appbar_opened">Geöffnet</string>
     <string name="appbar_opened_since">seit</string>
     <string name="appbar_closed">Geschlossen</string>
-    <string name="cart_title">Warenkorb:</string>
+    <string name="appbar_orderedby_name">Sortiert nach Name</string>
+    <string name="appbar_orderedby_price">Sortiert nach Preis</string>
+    <string name="appbar_orderby_name">Nach Name sortieren</string>
+    <string name="appbar_orderby_price">Nach Preis sortieren</string>
 
+    <string name="cart_title">Warenkorb:</string>
     <string name="cart_total_price_title">Gesamtpreis:</string>
     <string name="cart_button_checkout">Zur Kasse</string>
     <string name="cart_article_label">Artikel</string>

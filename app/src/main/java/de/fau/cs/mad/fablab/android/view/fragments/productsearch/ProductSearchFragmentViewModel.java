@@ -1,9 +1,7 @@
 package de.fau.cs.mad.fablab.android.view.fragments.productsearch;
 
-
 import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
-
 
 import java.text.Collator;
 import java.util.Collection;
@@ -23,15 +21,16 @@ import de.fau.cs.mad.fablab.rest.core.Product;
 import de.greenrobot.event.EventBus;
 
 public class ProductSearchFragmentViewModel implements ObservableArrayList.Listener<Product> {
-    ProductModel mProductModel;
-    AutoCompleteModel mAutoCompleteModel;
-    Listener mListener;
-    EventBus mEventBus;
+
+    private ProductModel mProductModel;
+    private AutoCompleteModel mAutoCompleteModel;
+    private Listener mListener;
+    private EventBus mEventBus;
+    private boolean mSearchState = false;
+    private boolean mIsOrderedByName = true;
 
     private ListAdapteeCollection<ProductSearchViewModel> mProductSearchViewModelCollection;
     private HashMap<Product, ProductSearchViewModel> mProductSearchViewModels;
-
-    boolean mSearchState = false;
 
     private Command<String> searchCommand = new Command<String>() {
         @Override
@@ -41,6 +40,22 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
             if(mListener != null) {
                 mListener.onSearchStateChanged();
             }
+        }
+    };
+
+    private Command<Integer> orderProductsByNameCommand = new Command<Integer>() {
+        @Override
+        public void execute(Integer parameter) {
+            mIsOrderedByName = true;
+            orderItemsByName();
+        }
+    };
+
+    private Command<Integer> orderProductsByPriceCommand = new Command<Integer>() {
+        @Override
+        public void execute(Integer parameter) {
+            mIsOrderedByName = false;
+            orderItemsByPrice();
         }
     };
 
@@ -63,51 +78,41 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
         return searchCommand;
     }
 
-    @Override
-    public void onItemAdded(Product newItem) {
-        ProductSearchViewModel viewModel = new ProductSearchViewModel(newItem);
-        mProductSearchViewModelCollection.add(viewModel);
-        mProductSearchViewModels.put(newItem, viewModel);
-        mSearchState = false;
-        Collections.sort(mProductSearchViewModelCollection, new SortByName());
-        if (mListener != null) {
+
+    public Command<Integer> getOrderProductsByNameCommand() {
+        return orderProductsByNameCommand;
+    }
+
+    public Command<Integer> getOrderProductsByPriceCommand() {
+        return orderProductsByPriceCommand;
+    }
+
+    private void orderItemsByName() {
+        Collections.sort(mProductSearchViewModelCollection, new OrderByName());
+        if(mListener != null) {
             mListener.onDataChanged();
-            mListener.onSearchStateChanged();
+            mListener.onProductOrderChanged();
         }
     }
 
-    @Override
-    public void onAllItemsAdded(Collection<? extends Product> collection) {
-        ProductSearchViewModel viewModel;
-        for (Product newItem : collection) {
-            viewModel = new ProductSearchViewModel(newItem);
-            mProductSearchViewModelCollection.add(viewModel);
-            mProductSearchViewModels.put(newItem, viewModel);
-        }
-        mSearchState = false;
-        Collections.sort(mProductSearchViewModelCollection, new SortByName());
-        if (mListener != null) {
+    private void orderItemsByPrice() {
+        Collections.sort(mProductSearchViewModelCollection, new OrderByPrice());
+        if(mListener != null) {
             mListener.onDataChanged();
-            mListener.onSearchStateChanged();
+            mListener.onProductOrderChanged();
         }
-
-    }
-
-    @Override
-    public void onItemRemoved(Product removedItem) {
-        mProductSearchViewModelCollection.remove(mProductSearchViewModels.get(removedItem));
-        mProductSearchViewModels.remove(removedItem);
-        if (mListener != null) {
-            mListener.onDataChanged();
-        }
-    }
-
-    public AdapteeCollection<ProductSearchViewModel> getProductSearchViewModelCollection() {
-        return mProductSearchViewModelCollection;
     }
 
     public boolean getSearchState() {
         return mSearchState;
+    }
+
+    public boolean isOrderedByName() {
+        return mIsOrderedByName;
+    }
+
+    public AdapteeCollection<ProductSearchViewModel> getProductSearchViewModelCollection() {
+        return mProductSearchViewModelCollection;
     }
 
     public String[] getAutoCompleteWords() {
@@ -125,17 +130,68 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
                 mProductSearchViewModelCollection.add(viewModel);
                 mProductSearchViewModels.put(product, viewModel);
             }
-            Collections.sort(mProductSearchViewModelCollection, new SortByName());
+            if(mIsOrderedByName) {
+                orderItemsByName();
+            } else {
+                orderItemsByPrice();
+            }
             mListener.onDataChanged();
         }
+    }
+
+    public void resume() {
+        mEventBus.register(this);
     }
 
     public void pause() {
         mEventBus.unregister(this);
     }
 
-    public void resume() {
-        mEventBus.register(this);
+    @Override
+    public void onItemAdded(Product newItem) {
+        ProductSearchViewModel viewModel = new ProductSearchViewModel(newItem);
+        mProductSearchViewModelCollection.add(viewModel);
+        mProductSearchViewModels.put(newItem, viewModel);
+        mSearchState = false;
+        if(mIsOrderedByName) {
+            orderItemsByName();
+        } else {
+            orderItemsByPrice();
+        }
+        if (mListener != null) {
+            mListener.onDataChanged();
+            mListener.onSearchStateChanged();
+        }
+    }
+
+    @Override
+    public void onAllItemsAdded(Collection<? extends Product> collection) {
+        ProductSearchViewModel viewModel;
+        for (Product newItem : collection) {
+            viewModel = new ProductSearchViewModel(newItem);
+            mProductSearchViewModelCollection.add(viewModel);
+            mProductSearchViewModels.put(newItem, viewModel);
+        }
+        mSearchState = false;
+        if(mIsOrderedByName) {
+            orderItemsByName();
+        } else {
+            orderItemsByPrice();
+        }
+        if (mListener != null) {
+            mListener.onDataChanged();
+            mListener.onSearchStateChanged();
+        }
+
+    }
+
+    @Override
+    public void onItemRemoved(Product removedItem) {
+        mProductSearchViewModelCollection.remove(mProductSearchViewModels.get(removedItem));
+        mProductSearchViewModels.remove(removedItem);
+        if (mListener != null) {
+            mListener.onDataChanged();
+        }
     }
 
     @SuppressWarnings("unused")
@@ -156,14 +212,7 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
         }
     }
 
-    public interface Listener{
-        void onDataChanged();
-        void onSearchStateChanged();
-        void onRetrofitErrorOccurred();
-        void onNoProductsFound();
-    }
-
-    class SortByName implements Comparator<ProductSearchViewModel> {
+    class OrderByName implements Comparator<ProductSearchViewModel> {
 
         @Override
         public int compare(ProductSearchViewModel psvm1, ProductSearchViewModel psvm2) {
@@ -172,6 +221,29 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
             return collator.compare(psvm1.getUnformattedName(), psvm2.getUnformattedName());
         }
 
+    }
+
+    class OrderByPrice implements Comparator<ProductSearchViewModel> {
+
+        @Override
+        public int compare(ProductSearchViewModel psvm1, ProductSearchViewModel psvm2) {
+            if(psvm1.getUnformattedPrice() > psvm2.getUnformattedPrice()) {
+                return 1;
+            } else if(psvm1.getUnformattedPrice() < psvm2.getUnformattedPrice()) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
+
+    }
+
+    public interface Listener{
+        void onDataChanged();
+        void onSearchStateChanged();
+        void onRetrofitErrorOccurred();
+        void onNoProductsFound();
+        void onProductOrderChanged();
     }
 
 }

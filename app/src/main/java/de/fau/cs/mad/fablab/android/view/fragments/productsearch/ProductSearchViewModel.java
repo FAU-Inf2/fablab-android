@@ -36,6 +36,10 @@ public class ProductSearchViewModel {
         return Formatter.formatProductName(mProduct.getName())[1];
     }
 
+    public double getUnformattedPrice() {
+        return mProduct.getPrice();
+    }
+
     public String getPrice() {
         return Formatter.formatPrice(mProduct.getPrice());
     }
