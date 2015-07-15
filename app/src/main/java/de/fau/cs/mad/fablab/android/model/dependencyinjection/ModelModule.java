@@ -2,6 +2,7 @@ package de.fau.cs.mad.fablab.android.model.dependencyinjection;
 
 import dagger.Module;
 import dagger.Provides;
+import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
 import de.fau.cs.mad.fablab.android.view.actionbar.ActionBar;
 import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
@@ -61,6 +62,11 @@ public class ModelModule {
     @Provides
     ProductModel provideProductModel() {
         return mStorageFragment.getProductModel();
+    }
+
+    @Provides
+    AutoCompleteModel provideAutoCompleteModel() {
+        return mStorageFragment.getAutoCompleteModel();
     }
 
     @Provides

@@ -14,6 +14,7 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
+import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
@@ -22,7 +23,8 @@ import de.fau.cs.mad.fablab.rest.core.Product;
 import de.greenrobot.event.EventBus;
 
 public class ProductSearchFragmentViewModel implements ObservableArrayList.Listener<Product> {
-    ProductModel mModel;
+    ProductModel mProductModel;
+    AutoCompleteModel mAutoCompleteModel;
     Listener mListener;
     EventBus mEventBus;
 
@@ -35,22 +37,22 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
         @Override
         public void execute(String parameter) {
             mSearchState = true;
-            mModel.searchForProduct(parameter);
+            mProductModel.searchForProduct(parameter);
             if(mListener != null) {
                 mListener.onSearchStateChanged();
             }
         }
     };
 
-
     @Inject
-    public ProductSearchFragmentViewModel(ProductModel mModel){
-        this.mModel = mModel;
+    public ProductSearchFragmentViewModel(ProductModel productModel, AutoCompleteModel
+            autoCompleteModel){
+        mProductModel = productModel;
+        mAutoCompleteModel = autoCompleteModel;
         mEventBus = EventBus.getDefault();
-        mModel.getProducts().setListener(this);
+        mProductModel.getProducts().setListener(this);
         mProductSearchViewModelCollection = new ListAdapteeCollection<>();
         mProductSearchViewModels = new HashMap<>();
-
     }
 
     public void setListener(Listener listener) {
@@ -60,7 +62,6 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
     public Command<String> getSearchCommand() {
         return searchCommand;
     }
-
 
     @Override
     public void onItemAdded(Product newItem) {
@@ -109,9 +110,17 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
         return mSearchState;
     }
 
+    public String[] getAutoCompleteWords() {
+        return mAutoCompleteModel.getAutoCompleteWords();
+    }
+
+    public void loadProductNames() {
+        mAutoCompleteModel.loadProductNames();
+    }
+
     public void initialize() {
         if (mListener != null) {
-            for (Product product : mModel.getProducts()) {
+            for (Product product : mProductModel.getProducts()) {
                 ProductSearchViewModel viewModel = new ProductSearchViewModel(product);
                 mProductSearchViewModelCollection.add(viewModel);
                 mProductSearchViewModels.put(product, viewModel);

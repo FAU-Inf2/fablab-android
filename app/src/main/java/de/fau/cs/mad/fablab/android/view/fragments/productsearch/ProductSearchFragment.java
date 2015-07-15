@@ -8,7 +8,9 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ import javax.inject.Inject;
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
+import de.fau.cs.mad.fablab.android.view.common.binding.AutoCompleteTextViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.greenrobot.event.EventBus;
 import xyz.danoz.recyclerviewfastscroller.sectionindicator.title.SectionTitleIndicator;
@@ -60,6 +63,8 @@ public class ProductSearchFragment extends BaseFragment implements ProductSearch
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mViewModel.loadProductNames();
+
         mLoadingSpinnerImage.setBackgroundResource(R.drawable.spinner);
         mAnimationDrawable = (AnimationDrawable) mLoadingSpinnerImage.getBackground();
 
@@ -76,6 +81,14 @@ public class ProductSearchFragment extends BaseFragment implements ProductSearch
         mProductRecyclerView.setLayoutManager(layoutManager);
 
         mProductSearchTextView.setThreshold(2);
+        ArrayAdapter autoCompleteAdapter = new ArrayAdapter(getActivity(),
+                android.R.layout.simple_dropdown_item_1line,
+                mViewModel.getAutoCompleteWords());
+        mProductSearchTextView.setAdapter(autoCompleteAdapter);
+
+        new AutoCompleteTextViewCommandBinding().bind(mProductSearchTextView,
+                mViewModel.getSearchCommand());
+
         mProductSearchTextView.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button
@@ -115,6 +128,8 @@ public class ProductSearchFragment extends BaseFragment implements ProductSearch
     public void onSearchStateChanged() {
         if(mViewModel.getSearchState()){
             UiUtils.hideKeyboard(getActivity());
+            mProductSearchTextView.dismissDropDown();
+            mProductSearchTextView.clearFocus();
             loadingSpinnerContainer.setVisibility(View.VISIBLE);
             mAnimationDrawable.start();
         }
