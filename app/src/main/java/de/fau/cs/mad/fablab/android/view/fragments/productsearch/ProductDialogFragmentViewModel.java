@@ -2,9 +2,13 @@ package de.fau.cs.mad.fablab.android.view.fragments.productsearch;
 
 import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
+import de.fau.cs.mad.fablab.rest.core.Category;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class ProductDialogFragmentViewModel {
@@ -66,9 +70,18 @@ public class ProductDialogFragmentViewModel {
         return mProduct.getName();
     }
 
-    //public boolean hasLocation() {
-    //    return LocationParser.getLocation(mProduct.getLocation()) != null;
-    //}
+    public boolean hasLocation()
+    {
+        return true;
+        //Todo: activate when server method is finished
+//        if( mProduct.hasLocation() == true;
+//            return true;
+//        else
+//            return false;
+    }
+
+    //public String getProductLocation() {}
+
 
     public boolean isProductZeroPriced() {
         return mProduct.getPrice() == 0.0;
