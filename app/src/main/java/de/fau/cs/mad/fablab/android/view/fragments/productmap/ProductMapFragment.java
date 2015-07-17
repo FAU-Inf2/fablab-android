@@ -4,39 +4,42 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
-import javax.inject.Inject;
-
+import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 
-public class ProductMapFragment extends BaseDialogFragment {
-    private DrawingActivity mDrawView;
-
-    @Inject
-    ProductMapFragmentViewModel mViewModel;
-
-    public static ProductMapFragment newInstance(String location) {
-        ProductMapFragment productMapFragment = new ProductMapFragment();
-        Bundle args = new Bundle();
-        args.putString(ProductMapFragmentViewModel.KEY_LOCATION, location);
-        productMapFragment.setArguments(args);
-        return productMapFragment;
-    }
-
+public class ProductMapFragment extends BaseDialogFragment
+{
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mViewModel.initialize(getArguments());
-
-        mDrawView.setDrawingParameter(FablabView.MAIN_ROOM, mViewModel.getMainPositionX(),
-                mViewModel.getMainPositionY(), mViewModel.getLocationName(),
-                mViewModel.getIdentificationCode());
-    }
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mDrawView = new DrawingActivity(getActivity());
-        return mDrawView;
+                             Bundle savedInstanceState)
+    {
+        View rootView = inflater.inflate(R.layout.fragment_locationmap, container, false);
+
+        String locationId = "";
+        try
+        {
+            if (savedInstanceState == null)
+            {
+                //Todo: activate when server method is finished
+                //locationId = savedInstanceState.getString("location");
+                String testurl = "http://google.com";
+                //String url = "" + locationId;
+                WebView view = (WebView) rootView.findViewById(R.id.location_webView);
+                view.getSettings().setJavaScriptEnabled(true);
+                view.loadUrl(testurl);
+
+                return rootView;
+
+            } else
+                throw new IllegalArgumentException("no location id available");
+        } catch (Exception exception)
+        {
+            //getActivity().getFragmentManager().beginTransaction().remove(this).commit();
+            //throw exception;
+        }
+
+        return rootView;
     }
 }

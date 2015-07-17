@@ -15,6 +15,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.productmap.ProductMapFragment;
 
 public class ProductDialogFragment extends BaseDialogFragment implements ProductDialogFragmentViewModel.Listener{
 
@@ -58,6 +59,8 @@ public class ProductDialogFragment extends BaseDialogFragment implements Product
         }
 
         if(mViewModel.hasLocation()){
+            //Todo: activate and choose correct getLocation method
+            // savedInstanceState.putString("location", mViewModel.getLocation());
             new ViewCommandBinding().bind(mLocationButton, mViewModel.getShowLocationCommand());
         }else{
             mLocationButton.setEnabled(false);
@@ -87,6 +90,8 @@ public class ProductDialogFragment extends BaseDialogFragment implements Product
 
     @Override
     public void onShowLocation() {
-        //TODO
+        dismiss();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new ProductMapFragment()).commit();
     }
 }
