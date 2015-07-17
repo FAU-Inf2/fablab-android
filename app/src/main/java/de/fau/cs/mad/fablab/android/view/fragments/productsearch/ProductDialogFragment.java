@@ -15,7 +15,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.productMap.ProductMapFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.productmap.ProductMapFragment;
 
 public class ProductDialogFragment extends BaseDialogFragment implements ProductDialogFragmentViewModel.Listener{
 

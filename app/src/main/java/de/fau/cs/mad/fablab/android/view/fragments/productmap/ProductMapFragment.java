@@ -1,6 +1,5 @@
-package de.fau.cs.mad.fablab.android.view.fragments.productMap;
+package de.fau.cs.mad.fablab.android.view.fragments.productmap;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
