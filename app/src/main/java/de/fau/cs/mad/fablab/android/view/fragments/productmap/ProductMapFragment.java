@@ -24,7 +24,7 @@ public class ProductMapFragment extends BaseDialogFragment
             {
                 //Todo: activate when server method is finished
                 //locationId = savedInstanceState.getString("location");
-                String testurl = "http://google.com";
+                String testurl = "http://52.28.16.59/productMap/index.html";
                 //String url = "" + locationId;
                 WebView view = (WebView) rootView.findViewById(R.id.location_webView);
                 view.getSettings().setJavaScriptEnabled(true);
