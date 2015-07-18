@@ -20,15 +20,16 @@ public class ProductMapFragment extends BaseDialogFragment
         String locationId = "";
         try
         {
-            if (savedInstanceState == null)
+            Bundle bundle = this.getArguments();
+            if (bundle != null)
             {
                 //Todo: activate when server method is finished
-                //locationId = savedInstanceState.getString("location");
+                locationId = bundle.getString("location");
                 String testurl = "http://52.28.16.59/productMap/index.html";
-                //String url = "" + locationId;
+                String url = testurl + "?id=" + locationId;
                 WebView view = (WebView) rootView.findViewById(R.id.location_webView);
                 view.getSettings().setJavaScriptEnabled(true);
-                view.loadUrl(testurl);
+                view.loadUrl(url);
 
                 return rootView;
 
@@ -41,5 +42,15 @@ public class ProductMapFragment extends BaseDialogFragment
         }
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 }

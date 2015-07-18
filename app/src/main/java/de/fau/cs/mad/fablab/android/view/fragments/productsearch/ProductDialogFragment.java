@@ -60,7 +60,6 @@ public class ProductDialogFragment extends BaseDialogFragment implements Product
 
         if(mViewModel.hasLocation()){
             //Todo: activate and choose correct getLocation method
-            // savedInstanceState.putString("location", mViewModel.getLocation());
             new ViewCommandBinding().bind(mLocationButton, mViewModel.getShowLocationCommand());
         }else{
             mLocationButton.setEnabled(false);
@@ -72,6 +71,7 @@ public class ProductDialogFragment extends BaseDialogFragment implements Product
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putString("location", "088/0815");
         mViewModel.saveState(outState);
     }
 
@@ -91,7 +91,12 @@ public class ProductDialogFragment extends BaseDialogFragment implements Product
     @Override
     public void onShowLocation() {
         dismiss();
+        Bundle bundle = new Bundle();
+
+        bundle.putString("location", "0820/0815");
+        ProductMapFragment pm = new ProductMapFragment();
+        pm.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new ProductMapFragment()).commit();
+                pm).addToBackStack(null).commit();
     }
 }
