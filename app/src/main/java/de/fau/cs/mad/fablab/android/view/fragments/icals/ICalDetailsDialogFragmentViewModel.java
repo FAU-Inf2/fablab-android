@@ -2,6 +2,10 @@ package de.fau.cs.mad.fablab.android.view.fragments.icals;
 
 import android.os.Bundle;
 
+import java.security.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
@@ -12,6 +16,7 @@ public class ICalDetailsDialogFragmentViewModel {
     public static final String KEY_TIME = "key_time";
     public static final String KEY_LOCATION = "key_location";
     public static final String KEY_DESCRIPTION = "key_description";
+
 
     Listener mListener;
 
@@ -48,7 +53,8 @@ public class ICalDetailsDialogFragmentViewModel {
         return mTitle;
     }
 
-    public String getDate() {
+    public String getDate()
+    {
         return mDate;
     }
 

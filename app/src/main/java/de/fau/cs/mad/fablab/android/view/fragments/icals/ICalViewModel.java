@@ -33,8 +33,14 @@ public class ICalViewModel {
     {
         //month+1, because Calendar is zero-based (eg january = 0 and not 1)
         Calendar cal = Calendar.getInstance();
+        Calendar currentCal = Calendar.getInstance();
         cal.setTime(mICal.getDtstartAsDate());
-        return Integer.toString(cal.get(Calendar.DAY_OF_MONTH)) + "." + Integer.toString(cal.get(Calendar.MONTH)+1) + "." + Integer.toString(cal.get(Calendar.YEAR));
+
+        // check if ical date is current date
+        if (cal.get(Calendar.DAY_OF_YEAR) == currentCal.get(Calendar.DAY_OF_YEAR) && cal.get(Calendar.YEAR) == currentCal.get(Calendar.YEAR))
+            return "Heute";
+        else
+            return Integer.toString(cal.get(Calendar.DAY_OF_MONTH)) + "." + Integer.toString(cal.get(Calendar.MONTH) + 1) + "." + Integer.toString(cal.get(Calendar.YEAR));
     }
 
     public String getTime() {
