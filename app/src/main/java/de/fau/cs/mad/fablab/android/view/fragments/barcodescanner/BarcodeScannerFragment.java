@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.fragments.barcodescanner;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ public class BarcodeScannerFragment extends BaseFragment
         super.onActivityCreated(savedInstanceState);
 
         mViewModel.setListener(this);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
         new ScannerViewCommandBinding().bind(mScannerView, mViewModel.getProcessBarcodeCommand());
     }
@@ -39,11 +41,13 @@ public class BarcodeScannerFragment extends BaseFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_scanner, container, false);
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         mEventBus.unregister(this);
         mViewModel.pause();
     }
@@ -51,6 +55,7 @@ public class BarcodeScannerFragment extends BaseFragment
     @Override
     public void onResume() {
         super.onResume();
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         mEventBus.register(this);
         mViewModel.resume();
 

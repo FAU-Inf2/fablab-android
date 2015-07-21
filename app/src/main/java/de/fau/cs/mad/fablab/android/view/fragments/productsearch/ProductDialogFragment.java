@@ -94,9 +94,9 @@ public class ProductDialogFragment extends BaseDialogFragment implements Product
         Bundle bundle = new Bundle();
 
         bundle.putString("location", "0820/0815");
-        ProductMapFragment pm = new ProductMapFragment();
-        pm.setArguments(bundle);
+        ProductMapFragment productMapFragment = new ProductMapFragment();
+        productMapFragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                pm).addToBackStack(null).commit();
+                productMapFragment).addToBackStack(null).commit();
     }
 }
