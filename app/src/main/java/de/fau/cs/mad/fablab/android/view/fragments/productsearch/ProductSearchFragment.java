@@ -107,7 +107,7 @@ public class ProductSearchFragment extends BaseFragment implements
         mProductRecyclerView.setLayoutManager(layoutManager);
 
         mProductSearchTextView.setThreshold(2);
-        ArrayAdapter autoCompleteAdapter = new ArrayAdapter(getActivity(),
+        ArrayAdapter<String> autoCompleteAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_dropdown_item_1line,
                 mViewModel.getAutoCompleteWords());
         mProductSearchTextView.setAdapter(autoCompleteAdapter);
