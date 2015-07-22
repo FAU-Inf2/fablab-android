@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.view.fragments.barcodescanner;
+package de.fau.cs.mad.fablab.android.model.events;
 
 import de.fau.cs.mad.fablab.rest.core.Product;
 

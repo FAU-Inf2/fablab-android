@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.ProductModel;
+import de.fau.cs.mad.fablab.android.model.events.ProductFoundEvent;
+import de.fau.cs.mad.fablab.android.model.events.ProductNotFoundEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Product;
 import de.greenrobot.event.EventBus;
@@ -18,7 +20,7 @@ public class BarcodeScannerFragmentViewModel {
 
     private Listener mListener;
 
-    private EventBus mEventBus;
+    private EventBus mEventBus = EventBus.getDefault();
 
     private final Pattern mBarcodePattern = Pattern.compile("200(00000)?\\d{5}");
     private final Command<Result> mProcessBarcodeCommand = new Command<Result>() {
@@ -38,15 +40,7 @@ public class BarcodeScannerFragmentViewModel {
                     productId = barcode.substring(3, 7);
                 }
 
-                Product product = mProductModel.findProductById(productId);
-                mProcessBarcodeCommand.setIsExecutable(true);
-                if (product != null) {
-                    mEventBus.post(new ProductFoundEvent(product));
-                } else {
-                    if (mListener != null) {
-                        mListener.onShowProductNotFoundMessage();
-                    }
-                }
+                mProductModel.findProductById(productId);
             } else {
                 mProcessBarcodeCommand.setIsExecutable(true);
                 if (mListener != null) {
@@ -58,7 +52,7 @@ public class BarcodeScannerFragmentViewModel {
 
     @Inject
     public BarcodeScannerFragmentViewModel() {
-        mEventBus = EventBus.getDefault();
+
     }
 
     public void setListener(Listener listener) {
@@ -71,13 +65,32 @@ public class BarcodeScannerFragmentViewModel {
 
     public void resume() {
         mProcessBarcodeCommand.setIsAvailable(true);
+        mEventBus.register(this);
     }
 
     public void pause() {
         mProcessBarcodeCommand.setIsAvailable(false);
+        mEventBus.unregister(this);
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(ProductFoundEvent event) {
+        mProcessBarcodeCommand.setIsExecutable(true);
+        if (mListener != null) {
+            mListener.onShowAddToCartDialog(event.getProduct());
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(ProductNotFoundEvent event) {
+        mProcessBarcodeCommand.setIsExecutable(true);
+        if (mListener != null) {
+            mListener.onShowProductNotFoundMessage();
+        }
     }
 
     public interface Listener {
+        void onShowAddToCartDialog(Product product);
         void onShowProductNotFoundMessage();
         void onShowInvalidBarcodeMessage();
     }

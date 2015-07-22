@@ -14,7 +14,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ScannerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
-import de.greenrobot.event.EventBus;
+import de.fau.cs.mad.fablab.rest.core.Product;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class BarcodeScannerFragment extends BaseFragment
@@ -24,8 +24,6 @@ public class BarcodeScannerFragment extends BaseFragment
 
     @Inject
     BarcodeScannerFragmentViewModel mViewModel;
-
-    private EventBus mEventBus = EventBus.getDefault();
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -48,7 +46,6 @@ public class BarcodeScannerFragment extends BaseFragment
     public void onPause() {
         super.onPause();
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-        mEventBus.unregister(this);
         mViewModel.pause();
     }
 
@@ -56,10 +53,16 @@ public class BarcodeScannerFragment extends BaseFragment
     public void onResume() {
         super.onResume();
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-        mEventBus.register(this);
         mViewModel.resume();
 
         setDisplayOptions(R.id.drawer_item_scanner, false, false);
+    }
+
+    @Override
+    public void onShowAddToCartDialog(Product product) {
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                AddToCartDialogFragment.newInstance(product)).addToBackStack(null)
+                .commit();
     }
 
     @Override
@@ -72,12 +75,5 @@ public class BarcodeScannerFragment extends BaseFragment
     public void onShowInvalidBarcodeMessage() {
         Toast.makeText(getActivity(), R.string.barcode_scanner_invalid_barcode, Toast.LENGTH_LONG)
                 .show();
-    }
-
-    @SuppressWarnings("unused")
-    public void onEvent(ProductFoundEvent event) {
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                AddToCartDialogFragment.newInstance(event.getProduct())).addToBackStack(null)
-                .commit();
     }
 }
