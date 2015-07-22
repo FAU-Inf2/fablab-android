@@ -20,7 +20,7 @@ public class NewsViewModelRenderer extends Renderer<NewsViewModel> {
     @InjectView(R.id.text_news_entry)
     TextView text_tv;
     @InjectView(R.id.icon_news_entry)
-    ImageView icon_tv;
+    ImageView icon_iv;
 
     @Override
     protected void setUpView(View view) {
@@ -47,8 +47,10 @@ public class NewsViewModelRenderer extends Renderer<NewsViewModel> {
         text_tv.setText(viewModel.getDescriptionShort());
 
         if (viewModel.getLinkToPreviewImage() != null) {
-            Picasso.with(icon_tv.getContext()).load(viewModel.getLinkToPreviewImage()).into(
-                    icon_tv);
+            Picasso.with(icon_iv.getContext()).load(viewModel.getLinkToPreviewImage()).fit()
+                    .centerCrop().into(icon_iv);
+        } else {
+            Picasso.with(icon_iv.getContext()).load(R.drawable.news_nopicture).fit().into(icon_iv);
         }
     }
 }

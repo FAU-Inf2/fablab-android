@@ -21,8 +21,6 @@
             android:layout_width="@dimen/card_icon_size"
             android:layout_height="@dimen/card_icon_size"
             android:layout_centerVertical="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/fablab_icon_black"
             />
 
         <LinearLayout
