@@ -1,6 +1,5 @@
 package de.fau.cs.mad.fablab.android.view.fragments.productsearch;
 
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -38,7 +37,6 @@ public class ProductSearchFragment extends BaseFragment implements
         ProductSearchFragmentViewModel.Listener {
 
     private RVRendererAdapter<ProductSearchViewModel> mAdapter;
-    private AnimationDrawable mAnimationDrawable;
     private EventBus mEventBus = EventBus.getDefault();
     private MenuItem mOrderByItem;
 
@@ -53,10 +51,10 @@ public class ProductSearchFragment extends BaseFragment implements
     VerticalRecyclerViewFastScroller mProductFastScroller;
     @InjectView(R.id.product_fast_scroller_section_title_indicator)
     SectionTitleIndicator mProductSectionTitleIndicator;
-    @InjectView(R.id.spinner)
-    RelativeLayout loadingSpinnerContainer;
-    @InjectView(R.id.spinner_image)
-    ImageView mLoadingSpinnerImage;
+    @InjectView(R.id.product_recycler_view_container)
+    RelativeLayout mProductRecyclerViewContainer;
+    @InjectView(R.id.product_progress_bar)
+    ProgressBar mProductProgressBar;
 
     @Override
     public void onCreate (Bundle savedInstanceState) {
@@ -89,9 +87,6 @@ public class ProductSearchFragment extends BaseFragment implements
         super.onActivityCreated(savedInstanceState);
 
         mViewModel.loadProductNames();
-
-        mLoadingSpinnerImage.setBackgroundResource(R.drawable.spinner);
-        mAnimationDrawable = (AnimationDrawable) mLoadingSpinnerImage.getBackground();
 
         mAdapter = new ProductRVRendererAdapter(getLayoutInflater(savedInstanceState),
                 new ProductSearchViewModelRendererBuilder(),
@@ -156,12 +151,12 @@ public class ProductSearchFragment extends BaseFragment implements
             UiUtils.hideKeyboard(getActivity());
             mProductSearchTextView.dismissDropDown();
             mProductSearchTextView.clearFocus();
-            loadingSpinnerContainer.setVisibility(View.VISIBLE);
-            mAnimationDrawable.start();
+            mProductRecyclerViewContainer.setVisibility(View.GONE);
+            mProductProgressBar.setVisibility(View.VISIBLE);
         }
         else{
-            loadingSpinnerContainer.setVisibility(View.GONE);
-            mAnimationDrawable.stop();
+            mProductProgressBar.setVisibility(View.GONE);
+            mProductRecyclerViewContainer.setVisibility(View.VISIBLE);
         }
     }
 

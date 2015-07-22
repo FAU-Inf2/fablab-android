@@ -6,27 +6,28 @@
 
     <AutoCompleteTextView
         android:id="@+id/product_search_text_view"
-        android:hint="@string/search_all_hint"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
-        android:textStyle="bold"
+        android:width="250dip"
+        android:hint="@string/search_all_hint"
         android:imeOptions="actionSend"
         android:singleLine="true"
-        android:width="250dip" />
+        android:textStyle="bold" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/product_search_text_view">
+        android:layout_below="@id/product_search_text_view"
+        android:id="@+id/product_recycler_view_container">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/product_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@null"
-            android:dividerHeight="0dp"/>
+            android:dividerHeight="0dp" />
 
         <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
             android:id="@+id/product_fast_scroller"
@@ -42,12 +43,16 @@
             android:layout_toLeftOf="@id/product_fast_scroller"
             android:layout_toStartOf="@id/product_fast_scroller"
             recyclerviewfastscroller:rfs_backgroundColor="@android:color/white"
-            recyclerviewfastscroller:rfs_textColor="@android:color/black"
-            />
+            recyclerviewfastscroller:rfs_textColor="@android:color/black" />
+    </RelativeLayout>
 
-        </RelativeLayout>
-
-
-    <include layout="@layout/spinner" />
+    <ProgressBar
+        android:id="@+id/product_progress_bar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
 
 </RelativeLayout>

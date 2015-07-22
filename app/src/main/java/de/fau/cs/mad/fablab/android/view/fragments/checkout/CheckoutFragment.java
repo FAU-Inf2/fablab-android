@@ -5,25 +5,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import javax.inject.Inject;
 
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.util.UiUtils;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 
 public class CheckoutFragment extends BaseDialogFragment implements CheckoutViewModel.Listener {
     static final String KEY_CART_CODE = "key_cart_code";
 
-    @InjectView(R.id.spinner)
-    RelativeLayout spinner_rl;
-    @InjectView(R.id.spinner_image)
-    ImageView spinner_iv;
+    @InjectView(R.id.checkout_progress_bar)
+    ProgressBar progress_bar;
     @InjectView(R.id.checkout_status_description)
     TextView status_description_tv;
     @InjectView(R.id.checkout_retry_button)
@@ -73,13 +69,13 @@ public class CheckoutFragment extends BaseDialogFragment implements CheckoutView
     @Override
     public void onShowSpinner() {
         status_description_tv.setVisibility(View.GONE);
-        UiUtils.showSpinner(spinner_rl, spinner_iv);
+        progress_bar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onHideSpinner() {
+        progress_bar.setVisibility(View.GONE);
         status_description_tv.setVisibility(View.VISIBLE);
-        UiUtils.hideSpinner(spinner_rl, spinner_iv);
     }
 
     @Override

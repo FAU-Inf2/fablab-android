@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/spinner" />
-
     <TextView
         android:id="@+id/checkout_status_description"
         android:layout_width="wrap_content"
@@ -28,5 +26,14 @@
         android:layout_below="@+id/checkout_status_description"
         android:layout_centerHorizontal="true"
         android:text="@android:string/ok" />
+
+    <ProgressBar
+        android:id="@+id/checkout_progress_bar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
 
 </RelativeLayout>
