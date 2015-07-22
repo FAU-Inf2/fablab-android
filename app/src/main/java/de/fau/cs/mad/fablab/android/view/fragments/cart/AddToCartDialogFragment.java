@@ -92,7 +92,7 @@ public class AddToCartDialogFragment extends BaseDialogFragment
 
     @Override
     public void onDismiss() {
-        dismiss();
+        getFragmentManager().popBackStack();
     }
 
     @Override
