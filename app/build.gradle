@@ -149,7 +149,7 @@ afterEvaluate {
         it.outputDir = generatedSourcesDir
         it.packageName = 'de.fau.cs.mad.fablab.rest.myapi'
         it.excludedClassNamesRegex = "MyHiddenResource"
-        it.generateSynchronousMethods = true
+        it.generateSynchronousMethods = false
         it.generateCallbackMethods = true
         it.generateRxJavaMethods = false
     }
