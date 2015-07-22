@@ -124,59 +124,73 @@ public class MainActivity extends AppCompatActivity {
     @SuppressWarnings("unused")
     public void onEvent(NavigationEvent destination) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        String currentFragmentTag = getSupportFragmentManager().findFragmentById(
+                R.id.fragment_container).getTag();
 
         switch(destination) {
             case News:
-                ICalAndNewsFragment iCalAndNewsFragment =
-                        (ICalAndNewsFragment) getSupportFragmentManager().findFragmentByTag(
-                                TAG_ICAL_AND_NEWS_FRAGMENT);
-                if (iCalAndNewsFragment == null) {
-                    iCalAndNewsFragment = new ICalAndNewsFragment();
+                if (!TAG_ICAL_AND_NEWS_FRAGMENT.equals(currentFragmentTag)) {
+                    ICalAndNewsFragment iCalAndNewsFragment =
+                            (ICalAndNewsFragment) getSupportFragmentManager().findFragmentByTag(
+                                    TAG_ICAL_AND_NEWS_FRAGMENT);
+                    if (iCalAndNewsFragment == null) {
+                        iCalAndNewsFragment = new ICalAndNewsFragment();
+                    }
+                    fragmentTransaction.replace(R.id.fragment_container, iCalAndNewsFragment,
+                            TAG_ICAL_AND_NEWS_FRAGMENT).addToBackStack(null).commit();
                 }
-                fragmentTransaction.replace(R.id.fragment_container, iCalAndNewsFragment,
-                        TAG_ICAL_AND_NEWS_FRAGMENT).addToBackStack(null).commit();
                 break;
 
             case BarcodeScanner:
-                BarcodeScannerFragment barcodeScannerFragment =
-                        (BarcodeScannerFragment) getSupportFragmentManager().findFragmentByTag(
-                                TAG_BARCODE_FRAGMENT);
-                if (barcodeScannerFragment == null) {
-                    barcodeScannerFragment = new BarcodeScannerFragment();
+                if (!TAG_BARCODE_FRAGMENT.equals(currentFragmentTag)) {
+                    BarcodeScannerFragment barcodeScannerFragment =
+                            (BarcodeScannerFragment) getSupportFragmentManager().findFragmentByTag(
+                                    TAG_BARCODE_FRAGMENT);
+                    if (barcodeScannerFragment == null) {
+                        barcodeScannerFragment = new BarcodeScannerFragment();
+                    }
+                    fragmentTransaction.replace(R.id.fragment_container, barcodeScannerFragment,
+                            TAG_BARCODE_FRAGMENT).addToBackStack(null).commit();
                 }
-                fragmentTransaction.replace(R.id.fragment_container, barcodeScannerFragment,
-                        TAG_BARCODE_FRAGMENT).addToBackStack(null).commit();
                 break;
 
             case ProductSearch:
-                ProductSearchFragment productSearchFragment =
-                        (ProductSearchFragment) getSupportFragmentManager().findFragmentByTag(
-                                TAG_PRODUCTSEARCH_FRAGMENT);
-                if (productSearchFragment == null) {
-                    productSearchFragment = new ProductSearchFragment();
+                if (!TAG_PRODUCTSEARCH_FRAGMENT.equals(currentFragmentTag)) {
+                    ProductSearchFragment productSearchFragment =
+                            (ProductSearchFragment) getSupportFragmentManager().findFragmentByTag(
+                                    TAG_PRODUCTSEARCH_FRAGMENT);
+                    if (productSearchFragment == null) {
+                        productSearchFragment = new ProductSearchFragment();
+                    }
+                    fragmentTransaction.replace(R.id.fragment_container, productSearchFragment,
+                            TAG_PRODUCTSEARCH_FRAGMENT).addToBackStack(null).commit();
                 }
-                fragmentTransaction.replace(R.id.fragment_container, productSearchFragment,
-                        TAG_PRODUCTSEARCH_FRAGMENT).addToBackStack(null).commit();
                 break;
-            case About:
-                AboutFragment aboutFragment =
-                        (AboutFragment) getSupportFragmentManager().findFragmentByTag(
-                                TAG_ABOUT_FRAGMENT);
-                if (aboutFragment == null) {
-                    aboutFragment = new AboutFragment();
-                }
-                fragmentTransaction.replace(R.id.fragment_container, aboutFragment,
-                        TAG_ABOUT_FRAGMENT).addToBackStack(null).commit();
-                break;
+
             case Settings:
-                SettingsFragment settingsFragment =
-                        (SettingsFragment) getSupportFragmentManager().findFragmentByTag(
-                                TAG_SETTINGS_FRAGMENT);
-                if (settingsFragment == null) {
-                    settingsFragment = new SettingsFragment();
+                if (!TAG_SETTINGS_FRAGMENT.equals(currentFragmentTag)) {
+                    SettingsFragment settingsFragment =
+                            (SettingsFragment) getSupportFragmentManager().findFragmentByTag(
+                                    TAG_SETTINGS_FRAGMENT);
+                    if (settingsFragment == null) {
+                        settingsFragment = new SettingsFragment();
+                    }
+                    fragmentTransaction.replace(R.id.fragment_container, settingsFragment,
+                            TAG_SETTINGS_FRAGMENT).addToBackStack(null).commit();
                 }
-                fragmentTransaction.replace(R.id.fragment_container, settingsFragment,
-                        TAG_SETTINGS_FRAGMENT).addToBackStack(null).commit();
+                break;
+
+            case About:
+                if (!TAG_ABOUT_FRAGMENT.equals(currentFragmentTag)) {
+                    AboutFragment aboutFragment =
+                            (AboutFragment) getSupportFragmentManager().findFragmentByTag(
+                                    TAG_ABOUT_FRAGMENT);
+                    if (aboutFragment == null) {
+                        aboutFragment = new AboutFragment();
+                    }
+                    fragmentTransaction.replace(R.id.fragment_container, aboutFragment,
+                            TAG_ABOUT_FRAGMENT).addToBackStack(null).commit();
+                }
                 break;
         }
     }
