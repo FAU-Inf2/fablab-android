@@ -62,7 +62,7 @@
             android:layout_marginBottom="@dimen/fab_padding"
             fab:menu_colorNormal="@android:color/black"
             fab:menu_colorPressed="@android:color/black"
-            fab:menu_icon="@drawable/ic_add_shopping_cart_white_24dp"
+            fab:menu_icon="@drawable/ic_fab_shopping_cart"
             >
 
             <com.github.clans.fab.FloatingActionButton
@@ -72,7 +72,7 @@
                 fab:fab_size="mini"
                 fab:fab_colorNormal="@android:color/black"
                 fab:fab_colorPressed="@android:color/black"
-                android:src="@drawable/ic_camera_alt_white_24dp"
+                android:src="@drawable/ic_fab_scan_product"
                 />
 
             <com.github.clans.fab.FloatingActionButton
@@ -82,7 +82,7 @@
                 fab:fab_size="mini"
                 fab:fab_colorNormal="@android:color/black"
                 fab:fab_colorPressed="@android:color/black"
-                android:src="@drawable/ic_search_white_24dp"
+                android:src="@drawable/ic_fab_search_product"
                 />
 
         </com.github.clans.fab.FloatingActionMenu>
@@ -96,7 +96,7 @@
         android:layout_gravity="start"
         android:background="@android:color/white"
         app:headerLayout="@layout/navdrawer_header_login"
-        app:itemIconTint="@android:color/black"
+        app:itemIconTint="#757575"
         app:itemTextColor="@android:color/black"
         app:menu="@menu/drawer" />
 

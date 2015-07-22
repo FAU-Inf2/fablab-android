@@ -4,23 +4,23 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_item_news"
-            android:icon="@drawable/news"
+            android:icon="@drawable/ic_nav_news"
             android:title="@string/news"/>
         <item
             android:id="@+id/drawer_item_productsearch"
-            android:icon="@drawable/produktsuche"
+            android:icon="@drawable/ic_nav_search_product"
             android:title="@string/productsearch"/>
         <item
             android:id="@+id/drawer_item_scanner"
-            android:icon="@drawable/barcode"
+            android:icon="@drawable/ic_nav_scan_product"
             android:title="@string/scanner" />
         <item
             android:id="@+id/drawer_item_settings"
-            android:icon="@drawable/about"
+            android:icon="@drawable/ic_nav_settings"
             android:title="@string/settings" />
         <item
             android:id="@+id/drawer_item_about"
-            android:icon="@drawable/about"
+            android:icon="@drawable/ic_nav_about"
             android:title="@string/about" />
     </group>
 </menu>

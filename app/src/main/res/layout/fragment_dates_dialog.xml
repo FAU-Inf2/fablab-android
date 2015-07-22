@@ -22,8 +22,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/fablab_icon_black" />
+            android:layout_centerVertical="true" />
 
         <TextView
             android:id="@+id/title_dates_dialog"

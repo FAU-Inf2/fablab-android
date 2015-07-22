@@ -22,7 +22,6 @@
             android:layout_height="@dimen/news_dialog_icon_size"
             android:layout_centerVertical="true"
             android:id="@+id/image_news_dialog"
-            android:src="@drawable/fablab_icon_black"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />

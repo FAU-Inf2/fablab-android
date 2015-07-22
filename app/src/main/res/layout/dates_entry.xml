@@ -58,7 +58,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:alpha=".30"
-                android:src="@drawable/ic_event_black_24dp" />
+                android:src="@drawable/ic_nav_news" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
