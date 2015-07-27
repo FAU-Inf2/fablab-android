@@ -1,9 +1,11 @@
 package de.fau.cs.mad.fablab.android.view;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import butterknife.ButterKnife;
 import dagger.ObjectGraph;
@@ -44,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         mEventBus.post(new BackButtonPressedEvent());
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mActionBar.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -90,10 +98,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mActionBar.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mEventBus.post(new BackButtonPressedEvent());
+                getSupportFragmentManager().popBackStack();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         mEventBus.unregister(this);
         mCartSlidingUpPanel.pause();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mActionBar.onPostCreate();
     }
 
     @Override
@@ -115,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void enableNavigationDrawer(boolean enable) {
         mNavigationDrawer.enableDrawer(enable);
+        mActionBar.showNavdrawerIcon(enable);
     }
 
     public void setNavigationDrawerSelection(int menuItemId) {

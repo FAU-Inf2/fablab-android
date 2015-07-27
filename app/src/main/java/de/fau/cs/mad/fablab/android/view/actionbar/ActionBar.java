@@ -1,8 +1,10 @@
 package de.fau.cs.mad.fablab.android.view.actionbar;
 
+import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import javax.inject.Inject;
@@ -24,7 +26,7 @@ public class ActionBar implements ActionBarViewModel.Listener {
     @InjectView(R.id.drawer_layout)
     DrawerLayout drawer;
 
-    ActionBarDrawerToggle mDrawerToggle;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     public ActionBar(MainActivity activity, View view) {
         ButterKnife.inject(this, view);
@@ -33,9 +35,13 @@ public class ActionBar implements ActionBarViewModel.Listener {
         mViewModel.setListener(this);
 
         activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (activity.getSupportActionBar() != null) {
+            activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
-        mDrawerToggle = new ActionBarDrawerToggle(activity, drawer, toolbar, R.string.app_name, R.string.app_name) {
+        mDrawerToggle = new ActionBarDrawerToggle(activity, drawer, R.string.app_name,
+                R.string.app_name) {
 
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -48,13 +54,29 @@ public class ActionBar implements ActionBarViewModel.Listener {
             }
         };
         drawer.setDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();
+    }
+
+    public void showNavdrawerIcon(boolean show) {
+        mDrawerToggle.setDrawerIndicatorEnabled(show);
     }
 
     public void bindMenuItems() {
         new MenuItemCommandBinding().bind(toolbar.getMenu().findItem(R.id.action_opened),
                 mViewModel.getRefreshOpenedStateCommand());
     }
+
+    public void onPostCreate() {
+        mDrawerToggle.syncState();
+    }
+
+    public void onConfigurationChanged(Configuration newConfig) {
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return mDrawerToggle.onOptionsItemSelected(item);
+    }
+
 
     /*@Override
     public void onActionBarItemSelected() {
