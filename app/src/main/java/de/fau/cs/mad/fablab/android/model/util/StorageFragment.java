@@ -1,9 +1,19 @@
-package de.fau.cs.mad.fablab.android.model;
+package de.fau.cs.mad.fablab.android.model.util;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
+import de.fau.cs.mad.fablab.android.model.CartModel;
+import de.fau.cs.mad.fablab.android.model.CheckoutModel;
+import de.fau.cs.mad.fablab.android.model.ICalModel;
+import de.fau.cs.mad.fablab.android.model.NewsModel;
+import de.fau.cs.mad.fablab.android.model.ProductModel;
+import de.fau.cs.mad.fablab.android.model.PushModel;
+import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
+import de.fau.cs.mad.fablab.android.model.util.DatabaseHelper;
+import de.fau.cs.mad.fablab.android.model.util.RestClient;
 
 /**
  * The main storage fragment which initializes all other storage parts

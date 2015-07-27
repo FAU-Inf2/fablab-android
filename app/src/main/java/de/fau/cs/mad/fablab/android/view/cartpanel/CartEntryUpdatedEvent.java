@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.view.fragments.cart;
+package de.fau.cs.mad.fablab.android.view.cartpanel;
 
 public class CartEntryUpdatedEvent {
     private final CartEntryViewModel mViewModel;

@@ -2,6 +2,7 @@ package de.fau.cs.mad.fablab.android.model;
 
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
+import de.fau.cs.mad.fablab.android.model.entities.AutoCompleteWords;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
 
 import java.util.ArrayList;

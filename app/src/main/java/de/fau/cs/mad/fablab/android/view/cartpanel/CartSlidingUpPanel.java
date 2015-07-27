@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.view.fragments.cart;
+package de.fau.cs.mad.fablab.android.view.cartpanel;
 
 import android.content.res.Resources;
 import android.os.Handler;
@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.Formatter;
-import de.fau.cs.mad.fablab.android.view.MainActivity;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.SwipeableRecyclerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.fragments.checkout.QrCodeScannerFragment;

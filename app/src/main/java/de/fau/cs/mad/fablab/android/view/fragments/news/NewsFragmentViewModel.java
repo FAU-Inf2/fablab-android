@@ -8,7 +8,7 @@ import java.util.Collection;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.NewsModel;
-import de.fau.cs.mad.fablab.android.model.events.NewsListScrollingEvent;
+import de.fau.cs.mad.fablab.android.view.fragments.icalandnews.NewsListScrollingEvent;
 import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewDeltaCommandBinding;
 import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;

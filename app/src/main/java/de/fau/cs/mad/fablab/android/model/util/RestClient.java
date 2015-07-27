@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.model;
+package de.fau.cs.mad.fablab.android.model.util;
 
 import android.content.Context;
 import android.util.Log;

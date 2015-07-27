@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.model;
+package de.fau.cs.mad.fablab.android.model.entities;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;

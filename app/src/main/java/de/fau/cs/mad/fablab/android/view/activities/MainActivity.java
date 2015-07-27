@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.view;
+package de.fau.cs.mad.fablab.android.view.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -10,17 +10,17 @@ import android.view.MenuItem;
 import butterknife.ButterKnife;
 import dagger.ObjectGraph;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.model.StorageFragment;
+import de.fau.cs.mad.fablab.android.model.util.StorageFragment;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
 import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
 import de.fau.cs.mad.fablab.android.util.StackTraceReporter;
 import de.fau.cs.mad.fablab.android.util.TopExceptionHandler;
 import de.fau.cs.mad.fablab.android.view.actionbar.ActionBar;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
-import de.fau.cs.mad.fablab.android.view.fragments.ICalAndNewsFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.icalandnews.ICalAndNewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.about.AboutFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.cart.CartSlidingUpPanel;
+import de.fau.cs.mad.fablab.android.view.cartpanel.CartSlidingUpPanel;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationEvent;

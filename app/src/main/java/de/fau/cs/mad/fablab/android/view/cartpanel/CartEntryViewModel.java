@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.view.fragments.cart;
+package de.fau.cs.mad.fablab.android.view.cartpanel;
 
 import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.model.entities.CartEntry;

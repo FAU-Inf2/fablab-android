@@ -14,6 +14,8 @@ import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
+import de.fau.cs.mad.fablab.android.model.events.NoProductsFoundEvent;
+import de.fau.cs.mad.fablab.android.model.events.ProductSearchRetrofitErrorEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Product;

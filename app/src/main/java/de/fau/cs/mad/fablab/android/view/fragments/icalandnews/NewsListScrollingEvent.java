@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.model.events;
+package de.fau.cs.mad.fablab.android.view.fragments.icalandnews;
 
 import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewDeltaCommandBinding;
 

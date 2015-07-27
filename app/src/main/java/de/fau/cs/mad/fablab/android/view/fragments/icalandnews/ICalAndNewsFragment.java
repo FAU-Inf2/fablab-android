@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.view.fragments;
+package de.fau.cs.mad.fablab.android.view.fragments.icalandnews;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import javax.inject.Inject;
 
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.model.events.NewsListScrollingEvent;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.icals.ICalFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;

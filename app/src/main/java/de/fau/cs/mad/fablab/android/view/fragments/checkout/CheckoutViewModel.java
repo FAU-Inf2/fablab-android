@@ -5,7 +5,7 @@ import android.os.Bundle;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.CheckoutModel;
-import de.fau.cs.mad.fablab.android.view.BackButtonPressedEvent;
+import de.fau.cs.mad.fablab.android.view.activities.BackButtonPressedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.CartStatus;
 import de.greenrobot.event.EventBus;

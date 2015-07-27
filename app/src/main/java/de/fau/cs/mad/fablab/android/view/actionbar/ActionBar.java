@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.view.MainActivity;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 
 public class ActionBar implements ActionBarViewModel.Listener {

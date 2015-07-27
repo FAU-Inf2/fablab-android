@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.view.MainActivity;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 
 public class FloatingFablabButton implements FloatingFablabButtonViewModel.Listener{
