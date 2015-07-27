@@ -16,7 +16,7 @@ import de.greenrobot.event.EventBus;
 public class CartSlidingUpPanelViewModel implements ObservableArrayList.Listener<CartEntry> {
     private CartModel mModel;
     private Listener mListener;
-    private EventBus mEventBus;
+    private EventBus mEventBus = EventBus.getDefault();
 
     private ListAdapteeCollection<CartEntryViewModel> mCartEntryViewModelCollection;
     private CartEntry mLastRemovedEntry;
@@ -56,21 +56,11 @@ public class CartSlidingUpPanelViewModel implements ObservableArrayList.Listener
         mModel = model;
         mModel.getCartEntries().setListener(this);
 
-        mEventBus = EventBus.getDefault();
-        mEventBus.register(this);
-
         mCartEntryViewModelCollection = new ListAdapteeCollection<>();
     }
 
     public void setListener(Listener listener) {
         mListener = listener;
-
-        if (mListener != null) {
-            for (CartEntry cartEntry : mModel.getCartEntries()) {
-                mCartEntryViewModelCollection.add(new CartEntryViewModel(cartEntry, mModel));
-            }
-            mListener.onDataChanged();
-        }
     }
 
     public Command<Integer> getRemoveCartEntryCommand() {
@@ -133,8 +123,21 @@ public class CartSlidingUpPanelViewModel implements ObservableArrayList.Listener
         }
     }
 
+    public void initialize() {
+        if (mListener != null) {
+            for (CartEntry cartEntry : mModel.getCartEntries()) {
+                mCartEntryViewModelCollection.add(new CartEntryViewModel(cartEntry, mModel));
+            }
+            mListener.onDataChanged();
+        }
+    }
+
     public void pause() {
         mEventBus.unregister(this);
+    }
+
+    public void resume() {
+        mEventBus.register(this);
     }
 
     @SuppressWarnings("unused")

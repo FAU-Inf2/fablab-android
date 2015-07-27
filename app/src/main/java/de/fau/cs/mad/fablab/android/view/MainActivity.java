@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             storageFragment = new StorageFragment();
             getSupportFragmentManager().beginTransaction().add(storageFragment,
                     TAG_STORAGE_FRAGMENT).commit();
+            getSupportFragmentManager().executePendingTransactions();
         }
 
         mObjectGraph = ObjectGraph.create(new ModelModule(storageFragment));
@@ -68,9 +69,11 @@ public class MainActivity extends AppCompatActivity {
                     new ICalAndNewsFragment(), TAG_ICAL_AND_NEWS_FRAGMENT).commit();
         }
 
-        mFablabButton = new FloatingFablabButton(this, findViewById(android.R.id.content));
+        mActionBar = new ActionBar(this, findViewById(android.R.id.content));
         mNavigationDrawer = new NavigationDrawer(this, findViewById(android.R.id.content));
         mNavigationDrawer.restoreState(savedInstanceState);
+        mFablabButton = new FloatingFablabButton(this, findViewById(android.R.id.content));
+        mCartSlidingUpPanel = new CartSlidingUpPanel(this, findViewById(android.R.id.content));
     }
 
     @Override
@@ -90,9 +93,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mActionBar = new ActionBar(this, findViewById(android.R.id.content));
-        mCartSlidingUpPanel = new CartSlidingUpPanel(this, findViewById(android.R.id.content));
         mEventBus.register(this);
+        mCartSlidingUpPanel.resume();
     }
 
     @Override

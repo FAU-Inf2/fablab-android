@@ -64,10 +64,6 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
         mDragBgStrokeMargin = (int) res.getDimension(R.dimen.slidinguppanel_drag_bg_stroke_margin);
 
         sliding_up_pl.setPanelHeight(mPanelHeight);
-        // Adapt Panel height when user rotates device
-        if (sliding_up_pl.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
-            updatePanelHeaderSize(1);
-        }
         sliding_up_pl.setPanelSlideListener(new SlidingUpPanelLayout.SimplePanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
@@ -88,6 +84,7 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
         new ViewCommandBinding().bind(checkout_button, mViewModel.getStartCheckoutCommand());
 
         mViewModel.setListener(this);
+        mViewModel.initialize();
     }
 
     private void updatePanelHeaderSize(float slideOffset) {
@@ -160,5 +157,13 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
 
     public void pause() {
         mViewModel.pause();
+    }
+
+    public void resume() {
+        // Adapt Panel height when user rotates device
+        if (sliding_up_pl.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            updatePanelHeaderSize(1);
+        }
+        mViewModel.resume();
     }
 }
