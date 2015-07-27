@@ -4,7 +4,8 @@ import android.os.Bundle;
 
 import javax.inject.Inject;
 
-import de.fau.cs.mad.fablab.android.model.CartModel;
+import de.fau.cs.mad.fablab.android.model.CheckoutModel;
+import de.fau.cs.mad.fablab.android.view.BackButtonPressedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.CartStatus;
 import de.greenrobot.event.EventBus;
@@ -13,7 +14,7 @@ public class CheckoutViewModel {
     private static final String KEY_CHECKOUT_STARTED = "key_checkout_started";
 
     @Inject
-    CartModel mCartModel;
+    CheckoutModel mModel;
     private Listener mListener;
     private EventBus mEventBus = EventBus.getDefault();
 
@@ -27,7 +28,7 @@ public class CheckoutViewModel {
             if (mListener != null) {
                 mListener.onShowSpinner();
             }
-            mCartModel.startCheckout(mCartCode);
+            mModel.startCheckout(mCartCode);
         }
     };
 
@@ -52,38 +53,35 @@ public class CheckoutViewModel {
         return mOkCommand;
     }
 
-    public void initialize() {
-        mRetryCommand.setIsAvailable(false);
-        mOkCommand.setIsAvailable(false);
-
-        if (mListener != null) {
-            mListener.onShowSpinner();
-        }
+    public void cancelCheckout() {
+        mModel.cancelCheckout();
     }
 
     public void restoreState(Bundle args, Bundle savedInstanceState) {
+        mRetryCommand.setIsAvailable(false);
+        mOkCommand.setIsAvailable(false);
+
+        mCartCode = args.getString(CheckoutFragment.KEY_CART_CODE);
         if (savedInstanceState != null) {
             mCheckoutStarted = savedInstanceState.getBoolean(KEY_CHECKOUT_STARTED, false);
         }
 
-        mCartCode = args.getString(CheckoutFragment.KEY_CART_CODE);
+        mEventBus.register(this);
+
         if (!mCheckoutStarted) {
-            mCartModel.startCheckout(mCartCode);
+            mModel.startCheckout(mCartCode);
             mCheckoutStarted = true;
         }
 
-        mEventBus.register(this);
+        updateState(mModel.getStatus());
     }
 
-    public void saveState(Bundle outState) {
-        outState.putBoolean(KEY_CHECKOUT_STARTED, mCheckoutStarted);
-        mEventBus.unregister(this);
-    }
-
-    @SuppressWarnings("unused")
-    public void onEvent(CartStatus event) {
+    private void updateState(CartStatus status) {
         if (mListener != null) {
-            switch (event) {
+            switch (status) {
+                case SHOPPING:
+                    mListener.onShowSpinner();
+                    break;
                 case PENDING:
                     mListener.onHideSpinner();
                     mListener.onShowPayMessage();
@@ -103,6 +101,21 @@ public class CheckoutViewModel {
                     break;
             }
         }
+    }
+
+    public void saveState(Bundle outState) {
+        outState.putBoolean(KEY_CHECKOUT_STARTED, mCheckoutStarted);
+        mEventBus.unregister(this);
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(CartStatus event) {
+        updateState(event);
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(BackButtonPressedEvent event) {
+        cancelCheckout();
     }
 
     public interface Listener {

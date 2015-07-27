@@ -41,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
     private EventBus mEventBus = EventBus.getDefault();
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mEventBus.post(new BackButtonPressedEvent());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

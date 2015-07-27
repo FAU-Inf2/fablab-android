@@ -12,6 +12,7 @@ public class StorageFragment extends Fragment {
     private ICalModel mICalModel;
     private NewsModel mNewsModel;
     private CartModel mCartModel;
+    private CheckoutModel mCheckoutModel;
     private ProductModel mProductModel;
     private AutoCompleteModel mAutoCompleteModel;
     private SpaceApiModel mSpaceApiModel;
@@ -25,8 +26,9 @@ public class StorageFragment extends Fragment {
         DatabaseHelper databaseHelper = DatabaseHelper.getHelper(getActivity().getApplicationContext());
         mICalModel = new ICalModel(restClient.getICalApi());
         mNewsModel = new NewsModel(restClient.getNewsApi());
+        mCartModel = new CartModel(databaseHelper.getCartDao());
         PushModel pushModel = new PushModel(getActivity().getApplication(), restClient.getPushApi());
-        mCartModel = new CartModel(databaseHelper.getCartDao(), restClient.getCartApi(), pushModel);
+        mCheckoutModel = new CheckoutModel(mCartModel, restClient.getCartApi(), pushModel);
         mProductModel = new ProductModel(databaseHelper.getProductDao(), restClient.getProductApi());
         mAutoCompleteModel = new AutoCompleteModel(databaseHelper.getAutoCompleteWordsDao(),
                 restClient.getProductApi());
@@ -43,6 +45,10 @@ public class StorageFragment extends Fragment {
 
     public CartModel getCartModel() {
         return mCartModel;
+    }
+
+    public CheckoutModel getCheckoutModel() {
+        return mCheckoutModel;
     }
 
     public ProductModel getProductModel() {

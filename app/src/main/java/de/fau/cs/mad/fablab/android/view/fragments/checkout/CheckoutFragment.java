@@ -47,10 +47,6 @@ public class CheckoutFragment extends BaseDialogFragment implements CheckoutView
         new ViewCommandBinding().bind(retry_button, mViewModel.getRetryCommand());
         new ViewCommandBinding().bind(ok_button, mViewModel.getOkCommand());
 
-        if (savedInstanceState == null) {
-            mViewModel.initialize();
-        }
-
         mViewModel.restoreState(getArguments(), savedInstanceState);
     }
 
