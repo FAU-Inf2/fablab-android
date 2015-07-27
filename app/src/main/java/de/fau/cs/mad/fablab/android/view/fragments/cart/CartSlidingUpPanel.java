@@ -1,6 +1,7 @@
 package de.fau.cs.mad.fablab.android.view.fragments.cart;
 
 import android.content.res.Resources;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +25,6 @@ import de.fau.cs.mad.fablab.android.view.common.binding.SwipeableRecyclerViewCom
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.fragments.checkout.QrCodeScannerFragment;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
-import de.greenrobot.event.EventBus;
 
 public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener {
     @InjectView(R.id.sliding_layout)
@@ -46,6 +46,14 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     private RVRendererAdapter<CartEntryViewModel> mAdapter;
 
     private MainActivity mActivity;
+
+    private Handler mHandler = new Handler();
+    private Runnable mUpdateVisibilityRunnable = new Runnable() {
+        @Override
+        public void run() {
+            updateVisibility();
+        }
+    };
 
     private int mPanelHeight;
     private int mPanelHeightDiff;
@@ -142,12 +150,18 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     }
 
     private void updateVisibility() {
-        if (mViewModel.isVisible()) {
-            if (sliding_up_pl.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED) {
-                sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-            }
+        if (sliding_up_pl.getPanelState() == SlidingUpPanelLayout.PanelState.DRAGGING) {
+            sliding_up_pl.setTouchEnabled(false);
+            mHandler.postDelayed(mUpdateVisibilityRunnable, 1);
         } else {
-            sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+            if (mViewModel.isVisible()) {
+                if (sliding_up_pl.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED) {
+                    sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                }
+            } else {
+                sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+            }
+            sliding_up_pl.setTouchEnabled(true);
         }
     }
 
