@@ -100,6 +100,6 @@ public class CheckoutFragment extends BaseDialogFragment implements CheckoutView
 
     @Override
     public void onDismiss() {
-        dismiss();
+        getFragmentManager().popBackStack();
     }
 }
