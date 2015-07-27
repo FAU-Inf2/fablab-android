@@ -144,11 +144,9 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
         if (mViewModel.isVisible()) {
             if (sliding_up_pl.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED) {
                 sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                sliding_up_pl.setPanelHeight(mPanelHeight);
             }
         } else {
             sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
-            sliding_up_pl.setPanelHeight(0);
         }
     }
 
