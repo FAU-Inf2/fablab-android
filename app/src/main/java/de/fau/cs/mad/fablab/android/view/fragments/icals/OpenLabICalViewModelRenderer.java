@@ -6,6 +6,6 @@ public class OpenLabICalViewModelRenderer extends ICalViewModelRenderer {
     @Override
     public void render() {
         super.render();
-        dates_cv.setCardBackgroundColor(getRootView().getResources().getColor(R.color.cardOpenlab));
+        dates_cv.setCardBackgroundColor(getRootView().getResources().getColor(R.color.card_openlab));
     }
 }

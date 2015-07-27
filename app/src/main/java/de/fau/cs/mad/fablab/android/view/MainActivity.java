@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         mEventBus.unregister(this);
+        mActionBar.pause();
         mCartSlidingUpPanel.pause();
     }
 
@@ -130,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mEventBus.register(this);
+        mActionBar.resume();
         mCartSlidingUpPanel.resume();
     }
 

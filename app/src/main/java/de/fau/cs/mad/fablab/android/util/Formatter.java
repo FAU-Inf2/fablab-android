@@ -21,4 +21,22 @@ public class Formatter {
         }
         return new String[]{formattedProductName, formattedProductDetail};
     }
+
+    public static String formatTime(long time) {
+        if (time < 0) {
+            return "";
+        } else if (time < 60) {
+            return time + "m";
+        } else if (time < (60 * 24)) {
+            long hours = time / 60;
+            long minutes = time % 60;
+            if (minutes == 0) {
+                return hours + "h";
+            } else {
+                return hours + "h " + minutes + "m";
+            }
+        } else {
+            return "";
+        }
+    }
 }

@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -17,16 +18,19 @@ import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 
 public class ActionBar implements ActionBarViewModel.Listener {
 
-    @Inject
-    ActionBarViewModel mViewModel;
-
     @InjectView(R.id.appbar)
     Toolbar toolbar;
-
     @InjectView(R.id.drawer_layout)
     DrawerLayout drawer;
+    @InjectView(R.id.appbar_time)
+    TextView time_tv;
+
+    private MenuItem mOpenStateMenuItem;
 
     private ActionBarDrawerToggle mDrawerToggle;
+
+    @Inject
+    ActionBarViewModel mViewModel;
 
     public ActionBar(MainActivity activity, View view) {
         ButterKnife.inject(this, view);
@@ -61,8 +65,18 @@ public class ActionBar implements ActionBarViewModel.Listener {
     }
 
     public void bindMenuItems() {
-        new MenuItemCommandBinding().bind(toolbar.getMenu().findItem(R.id.action_opened),
+        mOpenStateMenuItem = toolbar.getMenu().findItem(R.id.action_opened);
+        new MenuItemCommandBinding().bind(mOpenStateMenuItem,
                 mViewModel.getRefreshOpenedStateCommand());
+        mViewModel.initialize();
+    }
+
+    public void pause() {
+        mViewModel.pause();
+    }
+
+    public void resume() {
+        mViewModel.resume();
     }
 
     public void onPostCreate() {
@@ -77,9 +91,19 @@ public class ActionBar implements ActionBarViewModel.Listener {
         return mDrawerToggle.onOptionsItemSelected(item);
     }
 
-
-    /*@Override
-    public void onActionBarItemSelected() {
-
-    }*/
+    @Override
+    public void onStateUpdated(boolean open, String time) {
+        if (mOpenStateMenuItem != null) {
+            if (open) {
+                mOpenStateMenuItem.setIcon(R.drawable.opened);
+                mOpenStateMenuItem.setTitle(R.string.appbar_opened);
+                time_tv.setTextColor(time_tv.getResources().getColor(R.color.appbar_color_opened));
+            } else {
+                mOpenStateMenuItem.setIcon(R.drawable.closed);
+                mOpenStateMenuItem.setTitle(R.string.appbar_closed);
+                time_tv.setTextColor(time_tv.getResources().getColor(R.color.appbar_color_closed));
+            }
+            time_tv.setText(time);
+        }
+    }
 }

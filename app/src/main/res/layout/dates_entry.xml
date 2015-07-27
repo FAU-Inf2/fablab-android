@@ -10,7 +10,7 @@
     android:layout_marginTop="@dimen/card_vertical_margin"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    card_view:cardBackgroundColor="@color/cardDefault">
+    card_view:cardBackgroundColor="@color/card_default">
 
     <LinearLayout
         android:layout_width="wrap_content"

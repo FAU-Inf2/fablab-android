@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
 import de.fau.cs.mad.fablab.android.model.events.SpaceApiStateChangedEvent;
+import de.fau.cs.mad.fablab.android.util.Formatter;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.greenrobot.event.EventBus;
 
@@ -11,39 +12,47 @@ public class ActionBarViewModel {
 
     @Inject
     SpaceApiModel mSpaceApiModel;
-    Listener listener;
-    ActionBarModel model;
-    EventBus mEventBus = EventBus.getDefault();
+    private Listener mListener;
+    private EventBus mEventBus = EventBus.getDefault();
 
-    private boolean opened;
-    private ActionBarTime time;
-
-    private Command<Integer> refreshOpenedStateCommand = new Command<Integer>() {
+    private final Command<Integer> refreshOpenedStateCommand = new Command<Integer>() {
         @Override
         public void execute(Integer parameter) {
             mSpaceApiModel.refreshState();
         }
     };
 
-    public ActionBarViewModel() {
-        model = new ActionBarModel();
-        mEventBus.register(this);
-    }
-
     public void setListener(Listener listener){
-        this.listener = listener;
+        mListener = listener;
     }
 
     public Command<Integer> getRefreshOpenedStateCommand () {
         return refreshOpenedStateCommand;
     }
 
+    public void initialize() {
+        if (mListener != null) {
+            mListener.onStateUpdated(mSpaceApiModel.getOpen(), Formatter.formatTime(
+                    mSpaceApiModel.getTime()));
+        }
+    }
+
+    public void pause() {
+        mEventBus.unregister(this);
+    }
+
+    public void resume() {
+        mEventBus.register(this);
+    }
+
     @SuppressWarnings("unused")
     public void onEvent(SpaceApiStateChangedEvent event) {
-        // TODO update state
+        if (mListener != null) {
+            mListener.onStateUpdated(event.getOpen(), Formatter.formatTime(event.getTime()));
+        }
     }
 
     public interface Listener {
-        //void onActionBarItemSelected();
+        void onStateUpdated(boolean open, String time);
     }
 }
