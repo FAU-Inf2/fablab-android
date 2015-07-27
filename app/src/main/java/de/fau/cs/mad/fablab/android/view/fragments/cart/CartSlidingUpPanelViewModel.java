@@ -3,17 +3,15 @@ package de.fau.cs.mad.fablab.android.view.fragments.cart;
 import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
 
-import java.util.Collection;
-
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.CartModel;
-import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
+import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.greenrobot.event.EventBus;
 
-public class CartSlidingUpPanelViewModel implements ObservableArrayList.Listener<CartEntry> {
+public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
     private CartModel mModel;
     private Listener mListener;
     private EventBus mEventBus = EventBus.getDefault();
@@ -81,21 +79,6 @@ public class CartSlidingUpPanelViewModel implements ObservableArrayList.Listener
         if (mListener != null) {
             mListener.onDataChanged();
         }
-    }
-
-    @Override
-    public void onAllItemsAdded(Collection<? extends CartEntry> collection) {
-        for(CartEntry newItem : collection) {
-            mCartEntryViewModelCollection.add(new CartEntryViewModel(newItem, mModel));
-            if (mListener != null) {
-                mListener.onDataChanged();
-            }
-        }
-    }
-
-    @Override
-    public void onItemRemoved(CartEntry removedItem) {
-
     }
 
     public AdapteeCollection<CartEntryViewModel> getCartEntryViewModelCollection() {

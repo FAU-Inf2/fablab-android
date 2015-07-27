@@ -8,11 +8,11 @@ import java.util.Collection;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.ICalModel;
-import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
+import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.ICal;
 
-public class ICalFragmentViewModel implements ObservableArrayList.Listener<ICal> {
+public class ICalFragmentViewModel extends BaseViewModel<ICal> {
     private ICalModel mModel;
     private Listener mListener;
 
@@ -56,11 +56,6 @@ public class ICalFragmentViewModel implements ObservableArrayList.Listener<ICal>
                 mListener.onDataChanged();
             }
         }
-    }
-
-    @Override
-    public void onItemRemoved(ICal removedItem) {
-
     }
 
     public AdapteeCollection<ICalViewModel> getICalViewModelCollection() {

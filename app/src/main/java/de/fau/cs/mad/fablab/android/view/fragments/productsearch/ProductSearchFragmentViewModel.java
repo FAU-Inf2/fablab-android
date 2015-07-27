@@ -14,13 +14,13 @@ import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
-import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
+import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
 import de.greenrobot.event.EventBus;
 
-public class ProductSearchFragmentViewModel implements ObservableArrayList.Listener<Product> {
+public class ProductSearchFragmentViewModel extends BaseViewModel<Product> {
 
     private ProductModel mProductModel;
     private AutoCompleteModel mAutoCompleteModel;
@@ -145,23 +145,6 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
 
     public void pause() {
         mEventBus.unregister(this);
-    }
-
-    @Override
-    public void onItemAdded(Product newItem) {
-        ProductSearchViewModel viewModel = new ProductSearchViewModel(newItem);
-        mProductSearchViewModelCollection.add(viewModel);
-        mProductSearchViewModels.put(newItem, viewModel);
-        mSearchState = false;
-        if(mIsOrderedByName) {
-            orderItemsByName();
-        } else {
-            orderItemsByPrice();
-        }
-        if (mListener != null) {
-            mListener.onDataChanged();
-            mListener.onSearchStateChanged();
-        }
     }
 
     @Override

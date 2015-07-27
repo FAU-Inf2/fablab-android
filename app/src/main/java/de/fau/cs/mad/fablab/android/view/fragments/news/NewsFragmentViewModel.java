@@ -10,12 +10,12 @@ import javax.inject.Inject;
 import de.fau.cs.mad.fablab.android.model.NewsModel;
 import de.fau.cs.mad.fablab.android.model.events.NewsListScrollingEvent;
 import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewDeltaCommandBinding;
-import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
+import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.News;
 import de.greenrobot.event.EventBus;
 
-public class NewsFragmentViewModel implements ObservableArrayList.Listener<News> {
+public class NewsFragmentViewModel extends BaseViewModel<News> {
     private NewsModel mModel;
     private Listener mListener;
     private EventBus mEventBus = EventBus.getDefault();
@@ -70,11 +70,6 @@ public class NewsFragmentViewModel implements ObservableArrayList.Listener<News>
                 mListener.onDataChanged();
             }
         }
-    }
-
-    @Override
-    public void onItemRemoved(News removedItem) {
-
     }
 
     public AdapteeCollection<NewsViewModel> getNewsViewModelCollection() {
