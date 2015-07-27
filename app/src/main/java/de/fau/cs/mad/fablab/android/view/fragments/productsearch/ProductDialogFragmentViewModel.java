@@ -2,13 +2,9 @@ package de.fau.cs.mad.fablab.android.view.fragments.productsearch;
 
 import android.os.Bundle;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
-import de.fau.cs.mad.fablab.rest.core.Category;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class ProductDialogFragmentViewModel {
@@ -21,7 +17,7 @@ public class ProductDialogFragmentViewModel {
     private Command<Void> mAddToCartCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            if(mListener != null) {
+            if (mListener != null) {
                 mListener.onAddToCart();
             }
         }
@@ -29,7 +25,7 @@ public class ProductDialogFragmentViewModel {
     private Command<Void> mOutOfStockCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            if(mListener != null) {
+            if (mListener != null) {
                 mListener.onOutOfStock();
             }
         }
@@ -37,54 +33,15 @@ public class ProductDialogFragmentViewModel {
     private Command<Void> mShowLocationCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            if(mListener != null) {
+            if (mListener != null) {
                 mListener.onShowLocation();
             }
         }
     };
 
     @Inject
-    public ProductDialogFragmentViewModel(){
+    public ProductDialogFragmentViewModel() {
 
-    }
-
-    public void setListener(Listener listener) {
-        this.mListener = listener;
-    }
-
-    public void restoreState(Bundle arguments, Bundle savedInstanceState){
-        mProduct = (Product)arguments.getSerializable(KEY_PRODUCT);
-
-        //TODO savedInstanceState
-    }
-
-    public void saveState(Bundle outState){
-        //TODO
-    }
-
-    public Product getProduct() {
-        return mProduct;
-    }
-
-    public String getProductName() {
-        return mProduct.getName();
-    }
-
-    public boolean hasLocation()
-    {
-        return true;
-        //Todo: activate when server method is finished
-//        if( mProduct.hasLocation() == true;
-//            return true;
-//        else
-//            return false;
-    }
-
-    //public String getProductLocation() {}
-
-
-    public boolean isProductZeroPriced() {
-        return mProduct.getPrice() == 0.0;
     }
 
     public Command<Void> getAddToCartCommand() {
@@ -99,9 +56,42 @@ public class ProductDialogFragmentViewModel {
         return mShowLocationCommand;
     }
 
-    public interface Listener{
+    public void setListener(Listener listener) {
+        mListener = listener;
+    }
+
+    public Product getProduct() {
+        return mProduct;
+    }
+
+    public String getProductName() {
+        return mProduct.getName();
+    }
+
+    public boolean isProductZeroPriced() {
+        return mProduct.getPrice() == 0.0;
+    }
+
+    public boolean hasLocation() {
+        return true;
+        //Todo: activate when server method is finished
+        //return mProduct.hasLocation();
+    }
+
+    public String getProductLocation() {
+        //Todo: choose correct getLocation method
+        return "0820/0815";
+    }
+
+    public void initialize(Bundle arguments) {
+        mProduct = (Product) arguments.getSerializable(KEY_PRODUCT);
+    }
+
+    public interface Listener {
         void onAddToCart();
+
         void onOutOfStock();
+
         void onShowLocation();
     }
 }

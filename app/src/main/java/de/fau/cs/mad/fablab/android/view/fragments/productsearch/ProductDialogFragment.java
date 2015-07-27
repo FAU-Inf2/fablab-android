@@ -17,7 +17,8 @@ import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productmap.ProductMapFragment;
 
-public class ProductDialogFragment extends BaseDialogFragment implements ProductDialogFragmentViewModel.Listener{
+public class ProductDialogFragment extends BaseDialogFragment
+        implements ProductDialogFragmentViewModel.Listener {
 
     @Inject
     ProductDialogFragmentViewModel mViewModel;
@@ -42,7 +43,7 @@ public class ProductDialogFragment extends BaseDialogFragment implements Product
         super.onActivityCreated(savedInstanceState);
 
         mViewModel.setListener(this);
-        mViewModel.restoreState(getArguments(), savedInstanceState);
+        mViewModel.initialize(getArguments());
 
         mDialogTitle.setText(mViewModel.getProductName());
         mLocationButton.setEnabled(mViewModel.hasLocation());
@@ -59,20 +60,12 @@ public class ProductDialogFragment extends BaseDialogFragment implements Product
         }
 
         if(mViewModel.hasLocation()){
-            //Todo: activate and choose correct getLocation method
             new ViewCommandBinding().bind(mLocationButton, mViewModel.getShowLocationCommand());
         }else{
             mLocationButton.setEnabled(false);
         }
 
         mViewModel.setListener(this);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("location", "088/0815");
-        mViewModel.saveState(outState);
     }
 
     @Override
@@ -91,11 +84,11 @@ public class ProductDialogFragment extends BaseDialogFragment implements Product
     @Override
     public void onShowLocation() {
         dismiss();
-        Bundle bundle = new Bundle();
 
-        bundle.putString("location", "0820/0815");
         ProductMapFragment productMapFragment = new ProductMapFragment();
-        productMapFragment.setArguments(bundle);
+        Bundle arguments = new Bundle();
+        arguments.putString(ProductMapFragment.KEY_LOCATION, mViewModel.getProductLocation());
+        productMapFragment.setArguments(arguments);
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 productMapFragment).addToBackStack(null).commit();
     }
