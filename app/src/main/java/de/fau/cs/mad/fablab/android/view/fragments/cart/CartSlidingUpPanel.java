@@ -46,7 +46,6 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     private RVRendererAdapter<CartEntryViewModel> mAdapter;
 
     private MainActivity mActivity;
-    private EventBus mEventBus;
 
     private int mPanelHeight;
     private int mPanelHeightDiff;
@@ -54,7 +53,6 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
 
     public CartSlidingUpPanel(MainActivity activity, View view) {
         mActivity = activity;
-        mEventBus = EventBus.getDefault();
 
         activity.inject(this);
         ButterKnife.inject(this, view);
@@ -90,7 +88,6 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
         new ViewCommandBinding().bind(checkout_button, mViewModel.getStartCheckoutCommand());
 
         mViewModel.setListener(this);
-        mEventBus.register(this);
     }
 
     private void updatePanelHeaderSize(float slideOffset) {
@@ -129,6 +126,13 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
         updateVisibility();
     }
 
+    @Override
+    public void onStartCheckout() {
+        setVisibility(false);
+        mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new QrCodeScannerFragment()).addToBackStack(null).commit();
+    }
+
     private void refreshPrice() {
         String totalPrice = Formatter.formatPrice(mViewModel.getTotalPrice());
 
@@ -155,14 +159,6 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     }
 
     public void pause() {
-        mEventBus.unregister(this);
         mViewModel.pause();
-    }
-
-    @SuppressWarnings("unused")
-    public void onEvent(StartCheckoutEvent event) {
-        setVisibility(false);
-        mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new QrCodeScannerFragment()).addToBackStack(null).commit();
     }
 }

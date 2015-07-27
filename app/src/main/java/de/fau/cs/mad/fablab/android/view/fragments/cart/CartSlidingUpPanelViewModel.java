@@ -45,7 +45,9 @@ public class CartSlidingUpPanelViewModel implements ObservableArrayList.Listener
     private final Command<Void> mStartCheckoutCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            mEventBus.post(new StartCheckoutEvent());
+            if (mListener != null) {
+                mListener.onStartCheckout();
+            }
         }
     };
 
@@ -148,5 +150,7 @@ public class CartSlidingUpPanelViewModel implements ObservableArrayList.Listener
         void onShowUndoSnackbar();
 
         void onVisibilityChanged();
+
+        void onStartCheckout();
     }
 }
