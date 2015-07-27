@@ -10,10 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fau.cs.mad.fablab.android.model.entities.Cart;
+import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
 import de.fau.cs.mad.fablab.android.model.events.CheckoutStatusChangedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
-import de.fau.cs.mad.fablab.rest.core.Cart;
-import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.fau.cs.mad.fablab.rest.core.CartEntryServer;
 import de.fau.cs.mad.fablab.rest.core.CartServer;
 import de.fau.cs.mad.fablab.rest.core.CartStatus;

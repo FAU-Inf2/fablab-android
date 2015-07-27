@@ -8,9 +8,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.CartModel;
+import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
 import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
-import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.greenrobot.event.EventBus;
 
 public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
