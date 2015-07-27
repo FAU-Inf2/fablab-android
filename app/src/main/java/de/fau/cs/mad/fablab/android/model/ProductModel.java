@@ -6,6 +6,7 @@ import java.util.List;
 
 import de.fau.cs.mad.fablab.android.model.events.ProductFoundEvent;
 import de.fau.cs.mad.fablab.android.model.events.ProductNotFoundEvent;
+import de.fau.cs.mad.fablab.android.model.util.CancellableCallback;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.NoProductsFoundEvent;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchRetrofitErrorEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
@@ -24,20 +25,7 @@ public class ProductModel {
 
     private ObservableArrayList<Product> mProducts;
 
-    private Callback<List<Product>> mProductSearchCallback = new Callback<List<Product>>() {
-        @Override
-        public void success(List<Product> products, Response response) {
-            if(products.isEmpty()) {
-                EventBus.getDefault().post(new NoProductsFoundEvent());
-            }
-            mProducts.addAll(products);
-        }
-
-        @Override
-        public void failure(RetrofitError error) {
-            mEventBus.post(new ProductSearchRetrofitErrorEvent());
-        }
-    };
+    private CancellableCallback<List<Product>> mProductSearchCallback;
 
     private Callback<Product> mProductIdSearch = new Callback<Product>() {
         @Override
@@ -57,8 +45,29 @@ public class ProductModel {
         mProducts = new ObservableArrayList<>();
     }
 
-    public void searchForProduct(String searchString){
+    public void searchForProduct(String searchString) {
+        if (mProductSearchCallback != null) {
+            mProductSearchCallback.cancel();
+        }
         mProducts.clear();
+        mProductSearchCallback = new CancellableCallback<List<Product>>() {
+            @Override
+            public void success(List<Product> products, Response response) {
+                if (!isCancelled()) {
+                    if (products.isEmpty()) {
+                        EventBus.getDefault().post(new NoProductsFoundEvent());
+                    }
+                    mProducts.addAll(products);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                if (!isCancelled()) {
+                    mEventBus.post(new ProductSearchRetrofitErrorEvent());
+                }
+            }
+        };
         mProductApi.findByName(searchString, 0, 0, mProductSearchCallback);
     }
 
