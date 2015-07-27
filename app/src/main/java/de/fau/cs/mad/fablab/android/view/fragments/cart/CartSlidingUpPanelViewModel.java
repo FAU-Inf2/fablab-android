@@ -3,6 +3,8 @@ package de.fau.cs.mad.fablab.android.view.fragments.cart;
 import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.CartModel;
@@ -27,7 +29,7 @@ public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
             mCartEntryViewModelCollection.remove((int) parameter);
             mModel.removeEntry(mLastRemovedEntry);
             if (mListener != null) {
-                mListener.onDataChanged();
+                mListener.onItemRemoved();
                 mListener.onShowUndoSnackbar();
             }
         }
@@ -77,7 +79,15 @@ public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
     public void onItemAdded(CartEntry newItem) {
         mCartEntryViewModelCollection.add(new CartEntryViewModel(newItem, mModel));
         if (mListener != null) {
-            mListener.onDataChanged();
+            mListener.onItemAdded(getCartEntriesCount() - 1);
+        }
+    }
+
+    @Override
+    public void onAllItemsRemoved(List<CartEntry> list) {
+        mCartEntryViewModelCollection.clear();
+        if (mListener != null) {
+            mListener.onDataPrepared();
         }
     }
 
@@ -111,7 +121,7 @@ public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
             for (CartEntry cartEntry : mModel.getCartEntries()) {
                 mCartEntryViewModelCollection.add(new CartEntryViewModel(cartEntry, mModel));
             }
-            mListener.onDataChanged();
+            mListener.onDataPrepared();
         }
     }
 
@@ -126,12 +136,18 @@ public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
     @SuppressWarnings("unused")
     public void onEvent(CartEntryUpdatedEvent event) {
         if (mListener != null) {
-            mListener.onDataChanged();
+            mListener.onItemChanged(mCartEntryViewModelCollection.indexOf(event.getViewModel()));
         }
     }
 
     public interface Listener {
-        void onDataChanged();
+        void onDataPrepared();
+
+        void onItemAdded(int position);
+
+        void onItemChanged(int position);
+
+        void onItemRemoved();
 
         void onShowUndoSnackbar();
 

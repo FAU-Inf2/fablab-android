@@ -20,7 +20,7 @@ public class CartEntryViewModel {
                 if (mListener != null) {
                     mListener.onAmountChanged();
                 }
-                EventBus.getDefault().post(new CartEntryUpdatedEvent());
+                EventBus.getDefault().post(new CartEntryUpdatedEvent(CartEntryViewModel.this));
             }
         }
     };

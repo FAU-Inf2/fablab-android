@@ -106,8 +106,27 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     }
 
     @Override
-    public void onDataChanged() {
+    public void onDataPrepared() {
         mAdapter.notifyDataSetChanged();
+        refreshPrice();
+        updateVisibility();
+    }
+
+    @Override
+    public void onItemAdded(int position) {
+        mAdapter.notifyItemInserted(position);
+        refreshPrice();
+        updateVisibility();
+    }
+
+    @Override
+    public void onItemChanged(int position) {
+        mAdapter.notifyItemChanged(position);
+        refreshPrice();
+    }
+
+    @Override
+    public void onItemRemoved() {
         refreshPrice();
         updateVisibility();
     }

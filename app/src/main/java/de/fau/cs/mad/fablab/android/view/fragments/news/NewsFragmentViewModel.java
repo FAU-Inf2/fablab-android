@@ -55,20 +55,19 @@ public class NewsFragmentViewModel extends BaseViewModel<News> {
     }
 
     @Override
-    public void onItemAdded(News newItem) {
-        mNewsViewModelCollection.add(new NewsViewModel(newItem));
-        if (mListener != null) {
-            mListener.onDataChanged();
-        }
+    public void onAllItemsAdded(Collection<? extends News> collection) {
+        addItems(collection);
     }
 
-    @Override
-    public void onAllItemsAdded(Collection<? extends News> collection) {
-        for (News newItem : collection) {
+    private void addItems(Collection<? extends News> news) {
+        int positionStart = mNewsViewModelCollection.size();
+        int count = 0;
+        for (News newItem : news) {
             mNewsViewModelCollection.add(new NewsViewModel(newItem));
-            if (mListener != null) {
-                mListener.onDataChanged();
-            }
+            count++;
+        }
+        if (mListener != null && count > 0) {
+            mListener.onDataInserted(positionStart, count);
         }
     }
 
@@ -77,15 +76,10 @@ public class NewsFragmentViewModel extends BaseViewModel<News> {
     }
 
     public void initialize() {
-        if (mListener != null) {
-            for (News news : mModel.getNews()) {
-                mNewsViewModelCollection.add(new NewsViewModel(news));
-            }
-            mListener.onDataChanged();
-        }
+        addItems(mModel.getNews());
     }
 
     public interface Listener {
-        void onDataChanged();
+        void onDataInserted(int positionStart, int itemCount);
     }
 }

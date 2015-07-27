@@ -23,9 +23,7 @@ public class NewsModel {
     private Callback<List<News>> mNewsApiCallback = new Callback<List<News>>() {
         @Override
         public void success(List<News> news, Response response) {
-            for (News item : news) {
-                mNews.add(item);
-            }
+            mNews.addAll(news);
             mNewsRequested = false;
         }
 

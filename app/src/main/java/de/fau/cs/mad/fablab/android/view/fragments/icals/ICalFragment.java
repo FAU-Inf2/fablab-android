@@ -68,8 +68,8 @@ public class ICalFragment extends BaseFragment implements ICalFragmentViewModel.
     }
 
     @Override
-    public void onDataChanged() {
-        mAdapter.notifyDataSetChanged();
+    public void onDataInserted(int positionStart, int itemCount) {
+        mAdapter.notifyItemRangeInserted(positionStart, itemCount);
     }
 
     @SuppressWarnings("unused")

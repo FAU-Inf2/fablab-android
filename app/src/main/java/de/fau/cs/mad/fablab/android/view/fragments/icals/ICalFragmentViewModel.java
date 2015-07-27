@@ -41,20 +41,19 @@ public class ICalFragmentViewModel extends BaseViewModel<ICal> {
     }
 
     @Override
-    public void onItemAdded(ICal newItem) {
-        mICalViewModelCollection.add(new ICalViewModel(newItem));
-        if (mListener != null) {
-            mListener.onDataChanged();
-        }
+    public void onAllItemsAdded(Collection<? extends ICal> collection) {
+        addItems(collection);
     }
 
-    @Override
-    public void onAllItemsAdded(Collection<? extends ICal> collection) {
-        for (ICal newItem : collection) {
+    private void addItems(Collection<? extends ICal> icals) {
+        int positionStart = mICalViewModelCollection.size();
+        int count = 0;
+        for (ICal newItem : icals) {
             mICalViewModelCollection.add(new ICalViewModel(newItem));
-            if (mListener != null) {
-                mListener.onDataChanged();
-            }
+            count++;
+        }
+        if (mListener != null && count > 0) {
+            mListener.onDataInserted(positionStart, count);
         }
     }
 
@@ -63,15 +62,10 @@ public class ICalFragmentViewModel extends BaseViewModel<ICal> {
     }
 
     public void initialize() {
-        if (mListener != null) {
-            for (ICal iCal : mModel.getICalsList()) {
-                mICalViewModelCollection.add(new ICalViewModel(iCal));
-            }
-            mListener.onDataChanged();
-        }
+        addItems(mModel.getICalsList());
     }
 
     public interface Listener {
-        void onDataChanged();
+        void onDataInserted(int positionStart, int itemCount);
     }
 }
