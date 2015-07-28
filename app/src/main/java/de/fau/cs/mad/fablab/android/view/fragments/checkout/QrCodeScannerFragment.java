@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.fragments.checkout;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ public class QrCodeScannerFragment extends BaseDialogFragment
         super.onActivityCreated(savedInstanceState);
 
         mViewModel.setListener(this);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
         new ScannerViewCommandBinding().bind(mScannerView, mViewModel.getProcessQrCodeCommand());
     }
@@ -43,6 +45,7 @@ public class QrCodeScannerFragment extends BaseDialogFragment
     @Override
     public void onPause() {
         super.onPause();
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         mEventBus.unregister(this);
         mViewModel.pause();
     }
@@ -50,6 +53,7 @@ public class QrCodeScannerFragment extends BaseDialogFragment
     @Override
     public void onResume() {
         super.onResume();
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         mEventBus.register(this);
         mViewModel.resume();
     }

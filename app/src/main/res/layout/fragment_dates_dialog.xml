@@ -90,13 +90,27 @@
                 android:textColor="@android:color/black" />
         </ScrollView>
 
-        <Button
-            android:id="@+id/ok_button_dates_dialog"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="@dimen/news_entry_button_margin"
-            android:text="@android:string/ok" />
+            android:layout_below="@+id/linearLayout3"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/calendar_button_dates_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="@string/add_to_calendar"/>
+
+            <Button
+                android:id="@+id/ok_button_dates_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="@android:string/ok" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

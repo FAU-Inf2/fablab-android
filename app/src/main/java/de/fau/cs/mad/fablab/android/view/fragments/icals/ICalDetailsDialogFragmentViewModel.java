@@ -1,10 +1,19 @@
 package de.fau.cs.mad.fablab.android.view.fragments.icals;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.net.Uri;
 
 import java.security.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.inject.Inject;
 
@@ -35,6 +44,51 @@ public class ICalDetailsDialogFragmentViewModel {
         }
     };
 
+    private Command<Intent> addToCalendarCommand = new Command<Intent>()
+    {
+        @Override
+        public void execute(Intent parameter)
+        {
+            String[] date = mDate.split("\\.");
+            String[] time = mTime.split(" - ");
+            String[] startTime = null;
+            String[] stopTime = null;
+            if(time.length == 2)
+            {
+                startTime = time[0].split(":");
+                stopTime = time[1].split(":");
+            }
+
+            Calendar beginTime = Calendar.getInstance();
+            if(date.length == 3 && startTime.length == 2 && stopTime.length==2)
+            {
+                beginTime.set(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]), Integer.parseInt(startTime[0]), Integer.parseInt(startTime[1]));
+            }
+            else
+                beginTime.set(2000, 1, 1, 12, 0);
+            Calendar endTime = Calendar.getInstance();
+            if(date.length == 3 && startTime.length == 2 && stopTime.length==2)
+            {
+                endTime.set(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]), Integer.parseInt(stopTime[0]), Integer.parseInt(stopTime[1]));
+            }
+            else
+                endTime.set(2000, 1, 1, 12, 0);
+
+            Intent intent = new Intent(Intent.ACTION_INSERT)
+                    .setData(CalendarContract.Events.CONTENT_URI)
+                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
+                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
+                    .putExtra(CalendarContract.Events.TITLE, mTitle)
+                    .putExtra(CalendarContract.Events.EVENT_LOCATION, mLocation)
+                    .putExtra(CalendarContract.Events.DESCRIPTION, mDescription);
+
+            if(mTime == "ganzt\u00E4gig")
+                intent.putExtra(CalendarContract.Events.ALL_DAY, true);
+
+            mListener.startCalendar(intent);
+        }
+    };
+
     @Inject
     public ICalDetailsDialogFragmentViewModel() {
 
@@ -48,6 +102,8 @@ public class ICalDetailsDialogFragmentViewModel {
     {
         return dismissDialogCommand;
     }
+
+    public Command<Intent> getAddToCalendarCommand() {return addToCalendarCommand; }
 
     public String getTitle() {
         return mTitle;
@@ -80,6 +136,8 @@ public class ICalDetailsDialogFragmentViewModel {
 
     public interface Listener {
         void onDismiss();
+        void startCalendar(Intent intent);
     }
+
 
 }

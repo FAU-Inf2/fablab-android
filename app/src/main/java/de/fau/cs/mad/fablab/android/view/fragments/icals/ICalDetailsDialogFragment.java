@@ -1,6 +1,8 @@
 package de.fau.cs.mad.fablab.android.view.fragments.icals;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +10,16 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 import javax.inject.Inject;
 
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.common.binding.CalendarCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
+import de.greenrobot.event.EventBus;
 
 public class ICalDetailsDialogFragment extends BaseDialogFragment
         implements ICalDetailsDialogFragmentViewModel.Listener {
@@ -29,9 +35,12 @@ public class ICalDetailsDialogFragment extends BaseDialogFragment
     TextView description_tv;
     @InjectView(R.id.ok_button_dates_dialog)
     Button dismiss_button;
+    @InjectView(R.id.calendar_button_dates_dialog)
+    Button calendar_button;
 
     @Inject
     ICalDetailsDialogFragmentViewModel mViewModel;
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -41,6 +50,7 @@ public class ICalDetailsDialogFragment extends BaseDialogFragment
         mViewModel.initialize(getArguments());
 
         new ViewCommandBinding().bind(dismiss_button, mViewModel.getDismissDialogCommand());
+        new CalendarCommandBinding().bind(calendar_button, mViewModel.getAddToCalendarCommand());
 
         title_tv.setText(mViewModel.getTitle());
         date_tv.setText(getString(R.string.dates_date) + " " + mViewModel.getDate());
@@ -52,6 +62,7 @@ public class ICalDetailsDialogFragment extends BaseDialogFragment
             location_tv.setVisibility(View.GONE);
         }
         description_tv.setText(mViewModel.getDescription());
+
     }
 
     @Override
@@ -66,4 +77,10 @@ public class ICalDetailsDialogFragment extends BaseDialogFragment
     public void onDismiss() {
         dismiss();
     }
+
+    @Override
+    public void startCalendar(Intent intent){
+        startActivity(intent);
+    }
+
 }

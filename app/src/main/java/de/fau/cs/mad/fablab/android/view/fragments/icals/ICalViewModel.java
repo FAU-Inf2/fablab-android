@@ -1,5 +1,10 @@
 package de.fau.cs.mad.fablab.android.view.fragments.icals;
 
+import android.content.ContentResolver;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.CalendarContract;
+
 import java.util.Calendar;
 
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
@@ -57,7 +62,12 @@ public class ICalViewModel {
         }
     }
 
+
     public String getLocation() {
         return mICal.getLocation();
     }
+
+
+
+
 }
