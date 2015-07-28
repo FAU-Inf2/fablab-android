@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.model;
+package de.fau.cs.mad.fablab.android.model.util;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,8 +11,9 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 
-import de.fau.cs.mad.fablab.rest.core.Cart;
-import de.fau.cs.mad.fablab.rest.core.CartEntry;
+import de.fau.cs.mad.fablab.android.model.entities.AutoCompleteWords;
+import de.fau.cs.mad.fablab.android.model.entities.Cart;
+import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {

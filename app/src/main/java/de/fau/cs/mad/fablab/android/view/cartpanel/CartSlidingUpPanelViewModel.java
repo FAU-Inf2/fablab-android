@@ -1,22 +1,22 @@
-package de.fau.cs.mad.fablab.android.view.fragments.cart;
+package de.fau.cs.mad.fablab.android.view.cartpanel;
 
 import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.CartModel;
-import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
+import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
+import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
-import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.greenrobot.event.EventBus;
 
-public class CartSlidingUpPanelViewModel implements ObservableArrayList.Listener<CartEntry> {
+public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
     private CartModel mModel;
     private Listener mListener;
-    private EventBus mEventBus;
+    private EventBus mEventBus = EventBus.getDefault();
 
     private ListAdapteeCollection<CartEntryViewModel> mCartEntryViewModelCollection;
     private CartEntry mLastRemovedEntry;
@@ -29,7 +29,7 @@ public class CartSlidingUpPanelViewModel implements ObservableArrayList.Listener
             mCartEntryViewModelCollection.remove((int) parameter);
             mModel.removeEntry(mLastRemovedEntry);
             if (mListener != null) {
-                mListener.onDataChanged();
+                mListener.onItemRemoved();
                 mListener.onShowUndoSnackbar();
             }
         }
@@ -45,7 +45,9 @@ public class CartSlidingUpPanelViewModel implements ObservableArrayList.Listener
     private final Command<Void> mStartCheckoutCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            mEventBus.post(new StartCheckoutEvent());
+            if (mListener != null) {
+                mListener.onStartCheckout();
+            }
         }
     };
 
@@ -54,21 +56,11 @@ public class CartSlidingUpPanelViewModel implements ObservableArrayList.Listener
         mModel = model;
         mModel.getCartEntries().setListener(this);
 
-        mEventBus = EventBus.getDefault();
-        mEventBus.register(this);
-
         mCartEntryViewModelCollection = new ListAdapteeCollection<>();
     }
 
     public void setListener(Listener listener) {
         mListener = listener;
-
-        if (mListener != null) {
-            for (CartEntry cartEntry : mModel.getCartEntries()) {
-                mCartEntryViewModelCollection.add(new CartEntryViewModel(cartEntry, mModel));
-            }
-            mListener.onDataChanged();
-        }
     }
 
     public Command<Integer> getRemoveCartEntryCommand() {
@@ -87,23 +79,16 @@ public class CartSlidingUpPanelViewModel implements ObservableArrayList.Listener
     public void onItemAdded(CartEntry newItem) {
         mCartEntryViewModelCollection.add(new CartEntryViewModel(newItem, mModel));
         if (mListener != null) {
-            mListener.onDataChanged();
+            mListener.onItemAdded(getCartEntriesCount() - 1);
         }
     }
 
     @Override
-    public void onAllItemsAdded(Collection<? extends CartEntry> collection) {
-        for(CartEntry newItem : collection) {
-            mCartEntryViewModelCollection.add(new CartEntryViewModel(newItem, mModel));
-            if (mListener != null) {
-                mListener.onDataChanged();
-            }
+    public void onAllItemsRemoved(List<CartEntry> list) {
+        mCartEntryViewModelCollection.clear();
+        if (mListener != null) {
+            mListener.onDataPrepared();
         }
-    }
-
-    @Override
-    public void onItemRemoved(CartEntry removedItem) {
-
     }
 
     public AdapteeCollection<CartEntryViewModel> getCartEntryViewModelCollection() {
@@ -131,22 +116,43 @@ public class CartSlidingUpPanelViewModel implements ObservableArrayList.Listener
         }
     }
 
+    public void initialize() {
+        if (mListener != null) {
+            for (CartEntry cartEntry : mModel.getCartEntries()) {
+                mCartEntryViewModelCollection.add(new CartEntryViewModel(cartEntry, mModel));
+            }
+            mListener.onDataPrepared();
+        }
+    }
+
     public void pause() {
         mEventBus.unregister(this);
+    }
+
+    public void resume() {
+        mEventBus.register(this);
     }
 
     @SuppressWarnings("unused")
     public void onEvent(CartEntryUpdatedEvent event) {
         if (mListener != null) {
-            mListener.onDataChanged();
+            mListener.onItemChanged(mCartEntryViewModelCollection.indexOf(event.getViewModel()));
         }
     }
 
     public interface Listener {
-        void onDataChanged();
+        void onDataPrepared();
+
+        void onItemAdded(int position);
+
+        void onItemChanged(int position);
+
+        void onItemRemoved();
 
         void onShowUndoSnackbar();
 
         void onVisibilityChanged();
+
+        void onStartCheckout();
     }
 }

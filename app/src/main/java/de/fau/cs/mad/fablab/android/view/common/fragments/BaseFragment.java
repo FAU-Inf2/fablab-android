@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 
 import butterknife.ButterKnife;
-import de.fau.cs.mad.fablab.android.view.MainActivity;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 
 /**
  * Base class for all Fragments

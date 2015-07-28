@@ -5,7 +5,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.View;
 
 import butterknife.ButterKnife;
-import de.fau.cs.mad.fablab.android.view.MainActivity;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 
 public abstract class BaseDialogFragment extends DialogFragment {
     @Override

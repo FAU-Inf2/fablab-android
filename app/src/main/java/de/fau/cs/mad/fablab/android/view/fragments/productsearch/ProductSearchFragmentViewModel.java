@@ -7,20 +7,22 @@ import java.text.Collator;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
-import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
+import de.fau.cs.mad.fablab.android.model.events.NoProductsFoundEvent;
+import de.fau.cs.mad.fablab.android.model.events.ProductSearchRetrofitErrorEvent;
+import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
 import de.greenrobot.event.EventBus;
 
-public class ProductSearchFragmentViewModel implements ObservableArrayList.Listener<Product> {
+public class ProductSearchFragmentViewModel extends BaseViewModel<Product> {
 
     private ProductModel mProductModel;
     private AutoCompleteModel mAutoCompleteModel;
@@ -30,7 +32,6 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
     private boolean mIsOrderedByName = true;
 
     private ListAdapteeCollection<ProductSearchViewModel> mProductSearchViewModelCollection;
-    private HashMap<Product, ProductSearchViewModel> mProductSearchViewModels;
 
     private Command<String> searchCommand = new Command<String>() {
         @Override
@@ -67,7 +68,6 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
         mEventBus = EventBus.getDefault();
         mProductModel.getProducts().setListener(this);
         mProductSearchViewModelCollection = new ListAdapteeCollection<>();
-        mProductSearchViewModels = new HashMap<>();
     }
 
     public void setListener(Listener listener) {
@@ -128,7 +128,6 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
             for (Product product : mProductModel.getProducts()) {
                 ProductSearchViewModel viewModel = new ProductSearchViewModel(product);
                 mProductSearchViewModelCollection.add(viewModel);
-                mProductSearchViewModels.put(product, viewModel);
             }
             if(mIsOrderedByName) {
                 orderItemsByName();
@@ -148,29 +147,11 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
     }
 
     @Override
-    public void onItemAdded(Product newItem) {
-        ProductSearchViewModel viewModel = new ProductSearchViewModel(newItem);
-        mProductSearchViewModelCollection.add(viewModel);
-        mProductSearchViewModels.put(newItem, viewModel);
-        mSearchState = false;
-        if(mIsOrderedByName) {
-            orderItemsByName();
-        } else {
-            orderItemsByPrice();
-        }
-        if (mListener != null) {
-            mListener.onDataChanged();
-            mListener.onSearchStateChanged();
-        }
-    }
-
-    @Override
     public void onAllItemsAdded(Collection<? extends Product> collection) {
         ProductSearchViewModel viewModel;
         for (Product newItem : collection) {
             viewModel = new ProductSearchViewModel(newItem);
             mProductSearchViewModelCollection.add(viewModel);
-            mProductSearchViewModels.put(newItem, viewModel);
         }
         mSearchState = false;
         if(mIsOrderedByName) {
@@ -186,9 +167,8 @@ public class ProductSearchFragmentViewModel implements ObservableArrayList.Liste
     }
 
     @Override
-    public void onItemRemoved(Product removedItem) {
-        mProductSearchViewModelCollection.remove(mProductSearchViewModels.get(removedItem));
-        mProductSearchViewModels.remove(removedItem);
+    public void onAllItemsRemoved(List<Product> removedItems) {
+        mProductSearchViewModelCollection.clear();
         if (mListener != null) {
             mListener.onDataChanged();
         }

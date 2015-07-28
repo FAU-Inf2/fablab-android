@@ -1,4 +1,4 @@
-package de.fau.cs.mad.fablab.android.view.fragments.cart;
+package de.fau.cs.mad.fablab.android.view.cartpanel;
 
 import com.pedrogomez.renderers.Renderer;
 import com.pedrogomez.renderers.RendererBuilder;

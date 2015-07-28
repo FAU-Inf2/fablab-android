@@ -3,20 +3,21 @@ package de.fau.cs.mad.fablab.android.model.dependencyinjection;
 import dagger.Module;
 import dagger.Provides;
 import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
+import de.fau.cs.mad.fablab.android.model.CheckoutModel;
 import de.fau.cs.mad.fablab.android.view.actionbar.ActionBar;
 import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
 import de.fau.cs.mad.fablab.android.model.NewsModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
-import de.fau.cs.mad.fablab.android.model.StorageFragment;
+import de.fau.cs.mad.fablab.android.model.util.StorageFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.about.AboutFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productmap.ProductMapFragment;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
-import de.fau.cs.mad.fablab.android.view.fragments.ICalAndNewsFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.icalandnews.ICalAndNewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.cart.CartSlidingUpPanel;
+import de.fau.cs.mad.fablab.android.view.cartpanel.CartSlidingUpPanel;
 import de.fau.cs.mad.fablab.android.view.fragments.checkout.CheckoutFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.checkout.QrCodeScannerFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.icals.ICalDetailsDialogFragment;
@@ -57,6 +58,11 @@ public class ModelModule {
     @Provides
     CartModel provideCartModel() {
         return mStorageFragment.getCartModel();
+    }
+
+    @Provides
+    CheckoutModel provideCheckoutModel() {
+        return mStorageFragment.getCheckoutModel();
     }
 
     @Provides

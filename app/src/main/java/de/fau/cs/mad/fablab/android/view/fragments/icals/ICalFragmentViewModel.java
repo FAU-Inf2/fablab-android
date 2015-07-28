@@ -8,11 +8,11 @@ import java.util.Collection;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.ICalModel;
-import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
+import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.ICal;
 
-public class ICalFragmentViewModel implements ObservableArrayList.Listener<ICal> {
+public class ICalFragmentViewModel extends BaseViewModel<ICal> {
     private ICalModel mModel;
     private Listener mListener;
 
@@ -41,26 +41,20 @@ public class ICalFragmentViewModel implements ObservableArrayList.Listener<ICal>
     }
 
     @Override
-    public void onItemAdded(ICal newItem) {
-        mICalViewModelCollection.add(new ICalViewModel(newItem));
-        if (mListener != null) {
-            mListener.onDataChanged();
-        }
-    }
-
-    @Override
     public void onAllItemsAdded(Collection<? extends ICal> collection) {
-        for (ICal newItem : collection) {
-            mICalViewModelCollection.add(new ICalViewModel(newItem));
-            if (mListener != null) {
-                mListener.onDataChanged();
-            }
-        }
+        addItems(collection);
     }
 
-    @Override
-    public void onItemRemoved(ICal removedItem) {
-
+    private void addItems(Collection<? extends ICal> icals) {
+        int positionStart = mICalViewModelCollection.size();
+        int count = 0;
+        for (ICal newItem : icals) {
+            mICalViewModelCollection.add(new ICalViewModel(newItem));
+            count++;
+        }
+        if (mListener != null && count > 0) {
+            mListener.onDataInserted(positionStart, count);
+        }
     }
 
     public AdapteeCollection<ICalViewModel> getICalViewModelCollection() {
@@ -68,15 +62,10 @@ public class ICalFragmentViewModel implements ObservableArrayList.Listener<ICal>
     }
 
     public void initialize() {
-        if (mListener != null) {
-            for (ICal iCal : mModel.getICalsList()) {
-                mICalViewModelCollection.add(new ICalViewModel(iCal));
-            }
-            mListener.onDataChanged();
-        }
+        addItems(mModel.getICalsList());
     }
 
     public interface Listener {
-        void onDataChanged();
+        void onDataInserted(int positionStart, int itemCount);
     }
 }

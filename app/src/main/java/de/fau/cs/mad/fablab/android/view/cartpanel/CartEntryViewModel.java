@@ -1,8 +1,8 @@
-package de.fau.cs.mad.fablab.android.view.fragments.cart;
+package de.fau.cs.mad.fablab.android.view.cartpanel;
 
 import de.fau.cs.mad.fablab.android.model.CartModel;
+import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
-import de.fau.cs.mad.fablab.rest.core.CartEntry;
 import de.greenrobot.event.EventBus;
 
 public class CartEntryViewModel {
@@ -20,7 +20,7 @@ public class CartEntryViewModel {
                 if (mListener != null) {
                     mListener.onAmountChanged();
                 }
-                EventBus.getDefault().post(new CartEntryUpdatedEvent());
+                EventBus.getDefault().post(new CartEntryUpdatedEvent(CartEntryViewModel.this));
             }
         }
     };

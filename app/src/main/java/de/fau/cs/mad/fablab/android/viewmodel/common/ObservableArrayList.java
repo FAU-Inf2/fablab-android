@@ -37,7 +37,6 @@ public class ObservableArrayList<T> extends ArrayList<T> {
          *
          * @param collection The collection of items that was added to the list
          */
-
         void onAllItemsAdded(Collection<? extends T> collection);
 
         /**
@@ -47,6 +46,12 @@ public class ObservableArrayList<T> extends ArrayList<T> {
          */
         void onItemRemoved(T removedItem);
 
+        /**
+         * Called after all items have been removed from the list
+         *
+         * @param removedItems The items that were removed from the list
+         */
+        void onAllItemsRemoved(List<T> removedItems);
     }
 
 
@@ -106,9 +111,7 @@ public class ObservableArrayList<T> extends ArrayList<T> {
         if (listener != null) {
             List<T> allItems = new ArrayList<>(this);
             super.clear();
-            for (T item : allItems) {
-                listener.onItemRemoved(item);
-            }
+            listener.onAllItemsRemoved(allItems);
         } else {
             super.clear();
         }

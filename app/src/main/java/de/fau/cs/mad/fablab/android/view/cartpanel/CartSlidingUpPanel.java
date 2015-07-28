@@ -1,6 +1,7 @@
-package de.fau.cs.mad.fablab.android.view.fragments.cart;
+package de.fau.cs.mad.fablab.android.view.cartpanel;
 
 import android.content.res.Resources;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,12 +20,11 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.Formatter;
-import de.fau.cs.mad.fablab.android.view.MainActivity;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.SwipeableRecyclerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.fragments.checkout.QrCodeScannerFragment;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
-import de.greenrobot.event.EventBus;
 
 public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener {
     @InjectView(R.id.sliding_layout)
@@ -46,7 +46,14 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     private RVRendererAdapter<CartEntryViewModel> mAdapter;
 
     private MainActivity mActivity;
-    private EventBus mEventBus;
+
+    private Handler mHandler = new Handler();
+    private Runnable mUpdateVisibilityRunnable = new Runnable() {
+        @Override
+        public void run() {
+            updateVisibility();
+        }
+    };
 
     private int mPanelHeight;
     private int mPanelHeightDiff;
@@ -54,7 +61,6 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
 
     public CartSlidingUpPanel(MainActivity activity, View view) {
         mActivity = activity;
-        mEventBus = EventBus.getDefault();
 
         activity.inject(this);
         ButterKnife.inject(this, view);
@@ -66,10 +72,6 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
         mDragBgStrokeMargin = (int) res.getDimension(R.dimen.slidinguppanel_drag_bg_stroke_margin);
 
         sliding_up_pl.setPanelHeight(mPanelHeight);
-        // Adapt Panel height when user rotates device
-        if (sliding_up_pl.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
-            updatePanelHeaderSize(1);
-        }
         sliding_up_pl.setPanelSlideListener(new SlidingUpPanelLayout.SimplePanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
@@ -90,7 +92,7 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
         new ViewCommandBinding().bind(checkout_button, mViewModel.getStartCheckoutCommand());
 
         mViewModel.setListener(this);
-        mEventBus.register(this);
+        mViewModel.initialize();
     }
 
     private void updatePanelHeaderSize(float slideOffset) {
@@ -104,8 +106,27 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     }
 
     @Override
-    public void onDataChanged() {
+    public void onDataPrepared() {
         mAdapter.notifyDataSetChanged();
+        refreshPrice();
+        updateVisibility();
+    }
+
+    @Override
+    public void onItemAdded(int position) {
+        mAdapter.notifyItemInserted(position);
+        refreshPrice();
+        updateVisibility();
+    }
+
+    @Override
+    public void onItemChanged(int position) {
+        mAdapter.notifyItemChanged(position);
+        refreshPrice();
+    }
+
+    @Override
+    public void onItemRemoved() {
         refreshPrice();
         updateVisibility();
     }
@@ -129,6 +150,13 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
         updateVisibility();
     }
 
+    @Override
+    public void onStartCheckout() {
+        setVisibility(false);
+        mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new QrCodeScannerFragment()).addToBackStack(null).commit();
+    }
+
     private void refreshPrice() {
         String totalPrice = Formatter.formatPrice(mViewModel.getTotalPrice());
 
@@ -141,14 +169,18 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     }
 
     private void updateVisibility() {
-        if (mViewModel.isVisible()) {
-            if (sliding_up_pl.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED) {
-                sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                sliding_up_pl.setPanelHeight(mPanelHeight);
-            }
+        if (sliding_up_pl.getPanelState() == SlidingUpPanelLayout.PanelState.DRAGGING) {
+            sliding_up_pl.setTouchEnabled(false);
+            mHandler.postDelayed(mUpdateVisibilityRunnable, 1);
         } else {
-            sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
-            sliding_up_pl.setPanelHeight(0);
+            if (mViewModel.isVisible()) {
+                if (sliding_up_pl.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED) {
+                    sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                }
+            } else {
+                sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+            }
+            sliding_up_pl.setTouchEnabled(true);
         }
     }
 
@@ -157,14 +189,14 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     }
 
     public void pause() {
-        mEventBus.unregister(this);
         mViewModel.pause();
     }
 
-    @SuppressWarnings("unused")
-    public void onEvent(StartCheckoutEvent event) {
-        setVisibility(false);
-        mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new QrCodeScannerFragment()).addToBackStack(null).commit();
+    public void resume() {
+        // Adapt Panel height when user rotates device
+        if (sliding_up_pl.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            updatePanelHeaderSize(1);
+        }
+        mViewModel.resume();
     }
 }

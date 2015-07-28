@@ -1,24 +1,26 @@
-package de.fau.cs.mad.fablab.android.view;
+package de.fau.cs.mad.fablab.android.view.activities;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import butterknife.ButterKnife;
 import dagger.ObjectGraph;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.model.StorageFragment;
+import de.fau.cs.mad.fablab.android.model.util.StorageFragment;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
 import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
 import de.fau.cs.mad.fablab.android.util.StackTraceReporter;
 import de.fau.cs.mad.fablab.android.util.TopExceptionHandler;
 import de.fau.cs.mad.fablab.android.view.actionbar.ActionBar;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
-import de.fau.cs.mad.fablab.android.view.fragments.ICalAndNewsFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.icalandnews.ICalAndNewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.about.AboutFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.cart.CartSlidingUpPanel;
+import de.fau.cs.mad.fablab.android.view.cartpanel.CartSlidingUpPanel;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationEvent;
@@ -41,6 +43,18 @@ public class MainActivity extends AppCompatActivity {
     private EventBus mEventBus = EventBus.getDefault();
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        mEventBus.post(new BackButtonPressedEvent());
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mActionBar.onConfigurationChanged(newConfig);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -59,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             storageFragment = new StorageFragment();
             getSupportFragmentManager().beginTransaction().add(storageFragment,
                     TAG_STORAGE_FRAGMENT).commit();
+            getSupportFragmentManager().executePendingTransactions();
         }
 
         mObjectGraph = ObjectGraph.create(new ModelModule(storageFragment));
@@ -68,9 +83,11 @@ public class MainActivity extends AppCompatActivity {
                     new ICalAndNewsFragment(), TAG_ICAL_AND_NEWS_FRAGMENT).commit();
         }
 
-        mFablabButton = new FloatingFablabButton(this, findViewById(android.R.id.content));
+        mActionBar = new ActionBar(this, findViewById(android.R.id.content));
         mNavigationDrawer = new NavigationDrawer(this, findViewById(android.R.id.content));
         mNavigationDrawer.restoreState(savedInstanceState);
+        mFablabButton = new FloatingFablabButton(this, findViewById(android.R.id.content));
+        mCartSlidingUpPanel = new CartSlidingUpPanel(this, findViewById(android.R.id.content));
     }
 
     @Override
@@ -81,18 +98,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mActionBar.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mEventBus.post(new BackButtonPressedEvent());
+                getSupportFragmentManager().popBackStack();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         mEventBus.unregister(this);
+        mActionBar.pause();
         mCartSlidingUpPanel.pause();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mActionBar.onPostCreate();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mActionBar = new ActionBar(this, findViewById(android.R.id.content));
-        mCartSlidingUpPanel = new CartSlidingUpPanel(this, findViewById(android.R.id.content));
         mEventBus.register(this);
+        mActionBar.resume();
+        mCartSlidingUpPanel.resume();
     }
 
     @Override
@@ -107,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void enableNavigationDrawer(boolean enable) {
         mNavigationDrawer.enableDrawer(enable);
+        mActionBar.showNavdrawerIcon(enable);
     }
 
     public void setNavigationDrawerSelection(int menuItemId) {

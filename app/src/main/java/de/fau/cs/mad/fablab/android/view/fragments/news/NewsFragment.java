@@ -72,8 +72,8 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
     }
 
     @Override
-    public void onDataChanged() {
-        mAdapter.notifyDataSetChanged();
+    public void onDataInserted(int positionStart, int itemCount) {
+        mAdapter.notifyItemRangeInserted(positionStart, itemCount);
     }
 
     @SuppressWarnings("unused")

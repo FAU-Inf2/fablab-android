@@ -1,33 +1,30 @@
-package de.fau.cs.mad.fablab.android.view.fragments;
+package de.fau.cs.mad.fablab.android.view.fragments.icalandnews;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import javax.inject.Inject;
 
+import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.model.events.NewsListScrollingEvent;
-import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewDeltaCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.icals.ICalFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
 import de.greenrobot.event.EventBus;
 
-public class ICalAndNewsFragment extends BaseFragment implements ICalAndNewsFragmentViewModel.Listener{
+public class ICalAndNewsFragment extends BaseFragment {
 
-    EventBus mEventBus = EventBus.getDefault();
-    @Inject
-    ICalAndNewsFragmentViewModel mViewModel;
+    @InjectView(R.id.fragment_ical)
+    FrameLayout ical_fl;
+
+    private EventBus mEventBus = EventBus.getDefault();
 
     @Inject
     public ICalAndNewsFragment() {
-        mEventBus.register(this);
+
     }
 
     @Override
@@ -39,7 +36,14 @@ public class ICalAndNewsFragment extends BaseFragment implements ICalAndNewsFrag
     @Override
     public void onResume() {
         super.onResume();
+        mEventBus.register(this);
         setDisplayOptions(R.id.drawer_item_news, true, true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mEventBus.unregister(this);
     }
 
     @Override
@@ -65,7 +69,6 @@ public class ICalAndNewsFragment extends BaseFragment implements ICalAndNewsFrag
     }
 
     public void onEvent(NewsListScrollingEvent event){
-        FrameLayout iCalView = (FrameLayout) getView().findViewById(R.id.fragment_ical);
-        iCalView.setTranslationY(iCalView.getTranslationY() - event.getDelta().getDy());
+        ical_fl.setTranslationY(ical_fl.getTranslationY() - event.getDelta().getDy());
     }
 }

@@ -38,7 +38,6 @@
     <string name="checkout_paid">Ihr Warenkorb wurde bezahlt</string>
     <string name="retry">Nochmal versuchen</string>
     <string name="qr_code_scanner_invalid_qr_code">Ungültiger QR-Code</string>
-    <string name="ok">OK</string>
     <string name="invalid_location">Standort nicht verfügbar</string>
 
     <string name="dates_date">Datum:</string>
@@ -46,9 +45,6 @@
     <string name="dates_location">Ort:</string>
 
     <string name="search_all_hint">Alle Produkte</string>
-
-    <string name="betterment_tax">inkl. MwSt.</string>
-    <string name="title_activity_push">PushActivity</string>
 
     <string name="stacktrace_messaging_yes">Ja</string>
     <string name="stacktrace_messaging_no">Nein</string>

@@ -7,12 +7,11 @@
     <color name="colorTextSecondary">#FF6800</color>
     <color name="AppBarTextColor">#FFFFFF</color>
     <color name="windowBackground">#E0E0E0</color>
-    <color name="cardOpenlab">#788F94</color>
-    <color name="cardSelflab">#789487</color>
-    <color name="cardDefault">#9C5151</color>
-    <color name="cardImportant">#FF0000</color>
-    <color name="AppbarColorClosed">#FF0000</color>
-    <color name="AppbarColorOpened">#62DF25</color>
+    <color name="card_openlab">#788F94</color>
+    <color name="card_selflab">#789487</color>
+    <color name="card_default">#9C5151</color>
+    <color name="appbar_color_closed">#FF0000</color>
+    <color name="appbar_color_opened">#62DF25</color>
     <color name="slidingUpPanelStroke">#B1BCBE</color>
     <color name="slidingUpPanel_bg">#fff3f3f3</color>
     <color name="slidingUpPanel_bg_cart_entry">#FFFFFF</color>
@@ -22,9 +21,6 @@
     <color name="slidingUpPanel_footer_button_bg_pressed">#94ce18</color>
     <color name="slidingUpPanel_footer_button_txt">#154b85</color>
     <color name="slidingUpPanel_footer_button_txt_pressed">#FFFFFF</color>
-    <color name="slidingUpPanel_product_removed">#696969</color>
-
-    <color name="spinner_background">#ffcecece</color>
 
     <color name="navdrawer_hint">#AAAAAA</color>
 </resources>
