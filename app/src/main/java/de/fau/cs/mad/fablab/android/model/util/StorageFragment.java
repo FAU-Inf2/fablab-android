@@ -33,7 +33,7 @@ public class StorageFragment extends Fragment {
         RestClient restClient = new RestClient(getActivity().getApplicationContext(), false);
         DatabaseHelper databaseHelper = DatabaseHelper.getHelper(getActivity().getApplicationContext());
         mICalModel = new ICalModel(restClient.getICalApi());
-        mNewsModel = new NewsModel(restClient.getNewsApi(), databaseHelper.getNewsDao());
+        mNewsModel = new NewsModel(restClient.getNewsApi());
         mCartModel = new CartModel(databaseHelper.getCartDao());
         PushModel pushModel = new PushModel(getActivity().getApplication(), restClient.getPushApi());
         mCheckoutModel = new CheckoutModel(mCartModel, restClient.getCartApi(), pushModel);
