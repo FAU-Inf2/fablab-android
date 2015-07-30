@@ -4,6 +4,7 @@ import dagger.Module;
 import dagger.Provides;
 import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
 import de.fau.cs.mad.fablab.android.model.CheckoutModel;
+import de.fau.cs.mad.fablab.android.model.FablabMailModel;
 import de.fau.cs.mad.fablab.android.view.actionbar.ActionBar;
 import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
@@ -78,5 +79,11 @@ public class ModelModule {
     @Provides
     SpaceApiModel provideSpaceApiModel() {
         return mStorageFragment.getSpaceApiModel();
+    }
+
+    @Provides
+    FablabMailModel provideFablabMailModel()
+    {
+        return mStorageFragment.getFablabMailModel();
     }
 }

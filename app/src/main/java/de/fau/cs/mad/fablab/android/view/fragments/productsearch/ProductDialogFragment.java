@@ -1,5 +1,7 @@
 package de.fau.cs.mad.fablab.android.view.fragments.productsearch;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productmap.ProductMapFragment;
+import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class ProductDialogFragment extends BaseDialogFragment
         implements ProductDialogFragmentViewModel.Listener {
@@ -78,7 +81,19 @@ public class ProductDialogFragment extends BaseDialogFragment
 
     @Override
     public void onOutOfStock() {
-        //TODO
+        dismiss();
+        Product outProduct = mViewModel.getProduct();
+        Intent sendIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto", mViewModel.getMailAddress(), null));
+        String subject = getActivity().getString(R.string.outOfStock_messaging_subject);
+        String body = "Product is out of stock:" + "\n";
+        body += "product name: " + outProduct.getName() + "\n";
+        body += "product id: " + outProduct.getProductId() + "\n";
+
+        sendIntent.putExtra(Intent.EXTRA_TEXT, body);
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+
+        getActivity().startActivity(Intent.createChooser(sendIntent, getActivity().getString(R.string.outOfStock_messaging_chooser_title)));
     }
 
     @Override

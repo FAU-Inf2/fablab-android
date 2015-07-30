@@ -7,6 +7,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
 import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.model.CheckoutModel;
+import de.fau.cs.mad.fablab.android.model.FablabMailModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
 import de.fau.cs.mad.fablab.android.model.NewsModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
@@ -24,6 +25,7 @@ public class StorageFragment extends Fragment {
     private ProductModel mProductModel;
     private AutoCompleteModel mAutoCompleteModel;
     private SpaceApiModel mSpaceApiModel;
+    private FablabMailModel mFablabMailModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class StorageFragment extends Fragment {
         setRetainInstance(true);
 
         RestClient restClient = new RestClient(getActivity().getApplicationContext(), false);
+        RestClient restClientString = new RestClient(getActivity().getApplicationContext(), true);
         DatabaseHelper databaseHelper = DatabaseHelper.getHelper(getActivity().getApplicationContext());
         mICalModel = new ICalModel(restClient.getICalApi());
         mNewsModel = new NewsModel(restClient.getNewsApi());
@@ -41,6 +44,7 @@ public class StorageFragment extends Fragment {
         mAutoCompleteModel = new AutoCompleteModel(databaseHelper.getAutoCompleteWordsDao(),
                 restClient.getProductApi());
         mSpaceApiModel = new SpaceApiModel(restClient.getSpaceApi(), getString(R.string.space_name));
+        mFablabMailModel = new FablabMailModel(restClientString.getDataApi());
     }
 
     public NewsModel getNewsModel(){
@@ -69,5 +73,10 @@ public class StorageFragment extends Fragment {
 
     public SpaceApiModel getSpaceApiModel() {
         return mSpaceApiModel;
+    }
+
+    public FablabMailModel getFablabMailModel()
+    {
+        return mFablabMailModel;
     }
 }

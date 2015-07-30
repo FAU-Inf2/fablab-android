@@ -52,6 +52,8 @@
     <string name="stacktrace_messaging_chooser_title">Sende Fehlermeldung mit:</string>
     <string name="stacktrace_messaging_dialog_title">Fehlermeldung</string>
     <string name="stacktrace_messaging_dialog_text">Leider ist bei der letzten Benutzung ein Fehler aufgetreten. Wir sind stetig bemüht die Applikation zu verbessern. Deshalb bitten wir Sie die Fehlermeldung an uns weiterzuleiten.</string>
+    <string name="outOfStock_messaging_subject">Ausgegangenes Produkt</string>
+    <string name="outOfStock_messaging_chooser_title">Sende Meldung mit:</string>
 
     <!-- Strings for navigation drawer titles -->
     <string name="news">News</string>
