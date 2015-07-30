@@ -12,8 +12,6 @@ import de.fau.cs.mad.fablab.android.model.NewsModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.model.PushModel;
 import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
-import de.fau.cs.mad.fablab.android.model.util.DatabaseHelper;
-import de.fau.cs.mad.fablab.android.model.util.RestClient;
 
 /**
  * The main storage fragment which initializes all other storage parts
@@ -32,10 +30,10 @@ public class StorageFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
 
-        RestClient restClient = new RestClient(getActivity().getApplicationContext());
+        RestClient restClient = new RestClient(getActivity().getApplicationContext(), false);
         DatabaseHelper databaseHelper = DatabaseHelper.getHelper(getActivity().getApplicationContext());
         mICalModel = new ICalModel(restClient.getICalApi());
-        mNewsModel = new NewsModel(restClient.getNewsApi());
+        mNewsModel = new NewsModel(restClient.getNewsApi(), databaseHelper.getNewsDao());
         mCartModel = new CartModel(databaseHelper.getCartDao());
         PushModel pushModel = new PushModel(getActivity().getApplication(), restClient.getPushApi());
         mCheckoutModel = new CheckoutModel(mCartModel, restClient.getCartApi(), pushModel);

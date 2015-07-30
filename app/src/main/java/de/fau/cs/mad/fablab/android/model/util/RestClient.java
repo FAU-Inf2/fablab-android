@@ -5,8 +5,6 @@ import android.util.Log;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.io.InputStream;
@@ -21,6 +19,7 @@ import de.fau.cs.mad.fablab.android.BuildConfig;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.rest.core.Format;
 import de.fau.cs.mad.fablab.rest.myapi.CartApi;
+import de.fau.cs.mad.fablab.rest.myapi.DataApi;
 import de.fau.cs.mad.fablab.rest.myapi.ICalApi;
 import de.fau.cs.mad.fablab.rest.myapi.NewsApi;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
@@ -28,7 +27,6 @@ import de.fau.cs.mad.fablab.rest.myapi.PushApi;
 import de.fau.cs.mad.fablab.rest.myapi.SpaceApi;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
-import retrofit.converter.GsonConverter;
 import retrofit.converter.JacksonConverter;
 
 public class RestClient {
@@ -37,25 +35,39 @@ public class RestClient {
     private RestAdapter mRestAdapter;
     private Context mContext;
 
-    public RestClient(Context context) {
+    public RestClient(Context context, boolean string) {
         mContext = context;
         final String API_URL = mContext.getString(R.string.api_url);
 
         OkHttpClient httpClient = new OkHttpClient();
         httpClient.setSslSocketFactory(getPinnedCertSslSocketFactory());
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        mapper.setDateFormat(new SimpleDateFormat(Format.DATE_FORMAT));
+        // extra converter for Strings needed
+        if(!string) {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+            mapper.setDateFormat(new SimpleDateFormat(Format.DATE_FORMAT));
 
-        RestAdapter.Builder builder = new RestAdapter.Builder()
-                .setEndpoint(API_URL)
-                .setClient(new OkClient(httpClient))
-                .setConverter(new JacksonConverter(mapper))
-                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL
-                        : RestAdapter.LogLevel.NONE);
+            RestAdapter.Builder builder = new RestAdapter.Builder()
+                    .setEndpoint(API_URL)
+                    .setClient(new OkClient(httpClient))
+                    .setConverter(new JacksonConverter(mapper))
+                    .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL
+                            : RestAdapter.LogLevel.NONE);
 
-        mRestAdapter = builder.build();
+            mRestAdapter = builder.build();
+        }
+        else
+        {
+            RestAdapter.Builder builder = new RestAdapter.Builder()
+                    .setEndpoint(API_URL)
+                    .setClient(new OkClient(httpClient))
+                    .setConverter(new StringConverter())
+                    .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL
+                            : RestAdapter.LogLevel.NONE);
+
+            mRestAdapter = builder.build();
+        }
     }
 
     /**
@@ -111,5 +123,9 @@ public class RestClient {
 
     public SpaceApi getSpaceApi() {
         return mRestAdapter.create(SpaceApi.class);
+    }
+
+    public DataApi getDataApi(){
+        return mRestAdapter.create(DataApi.class);
     }
 }
