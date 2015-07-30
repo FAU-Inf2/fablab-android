@@ -84,7 +84,7 @@ public class StackTraceReporter {
         if (traceAvailable) {
 
             mDataApi = new RestClient(activity.getApplicationContext(), true).getDataApi();
-            mDataApi.getMailAddress(mMailAddressCallback);
+            mDataApi.getFabLabMailAddress(mMailAddressCallback);
 
             activity.deleteFile("stack.trace");
         }
