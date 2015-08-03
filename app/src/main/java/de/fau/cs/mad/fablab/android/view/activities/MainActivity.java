@@ -10,18 +10,19 @@ import android.view.MenuItem;
 import butterknife.ButterKnife;
 import dagger.ObjectGraph;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.model.util.StorageFragment;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
-import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
+import de.fau.cs.mad.fablab.android.model.util.StorageFragment;
 import de.fau.cs.mad.fablab.android.util.StackTraceReporter;
 import de.fau.cs.mad.fablab.android.util.TopExceptionHandler;
 import de.fau.cs.mad.fablab.android.view.actionbar.ActionBar;
-import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
-import de.fau.cs.mad.fablab.android.view.fragments.icalandnews.ICalAndNewsFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.about.AboutFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
 import de.fau.cs.mad.fablab.android.view.cartpanel.CartSlidingUpPanel;
+import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
+import de.fau.cs.mad.fablab.android.view.fragments.about.AboutFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.alert.AlertDialogFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.icalandnews.ICalAndNewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationEvent;
 import de.greenrobot.event.EventBus;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String TAG_BARCODE_FRAGMENT = "tag_barcode_fragment";
     private final static String TAG_ABOUT_FRAGMENT = "tag_about_fragment";
     private final static String TAG_SETTINGS_FRAGMENT = "tag_settings_fragment";
+    private final static String TAG_ALERT_FRAGMENT = "tag_alert_fragment";
 
     private ActionBar mActionBar;
     private NavigationDrawer mNavigationDrawer;
@@ -231,6 +233,22 @@ public class MainActivity extends AppCompatActivity {
                     }
                     fragmentTransaction.replace(R.id.fragment_container, aboutFragment,
                             TAG_ABOUT_FRAGMENT).addToBackStack(null).commit();
+                }
+                break;
+
+            case Alert:
+                if(!TAG_ALERT_FRAGMENT.equals(currentFragmentTag))
+                {
+                    AlertDialogFragment alertDialogFragment =
+                            (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag(
+                                    TAG_ALERT_FRAGMENT
+                            );
+                    if(alertDialogFragment == null)
+                    {
+                        alertDialogFragment = new AlertDialogFragment();
+                    }
+                    fragmentTransaction.replace(R.id.fragment_container, alertDialogFragment,
+                            TAG_ALERT_FRAGMENT).addToBackStack(null).commit();
                 }
                 break;
         }
