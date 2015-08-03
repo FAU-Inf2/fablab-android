@@ -83,4 +83,28 @@ public class ICalDetailsDialogFragment extends BaseDialogFragment
         startActivity(intent);
     }
 
+    public void onEvent(AddToCalendarEvent event)
+    {
+        int[] date = event.getDate();
+
+        Calendar calendarStartTime = Calendar.getInstance();
+        int[] startTime = event.getStartTime();
+        calendarStartTime.set(date[0], date[1], date[2], startTime[0], startTime[1]);
+
+        Calendar calendarEndTime = Calendar.getInstance();
+        int[] endTime = event.getEndTime();
+        calendarEndTime.set(date[0], date[1], date[2], endTime[0], endTime[1]);
+
+
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, calendarStartTime.getTimeInMillis())
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, calendarEndTime.getTimeInMillis())
+                .putExtra(CalendarContract.Events.TITLE, event.getTitle())
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, event.getLocation())
+                .putExtra(CalendarContract.Events.DESCRIPTION, event.getDescription());
+
+        startActivity(intent);
+    }
+
 }

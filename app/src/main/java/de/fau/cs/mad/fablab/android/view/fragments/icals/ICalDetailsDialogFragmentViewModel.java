@@ -18,6 +18,7 @@ import java.util.TimeZone;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
+import de.greenrobot.event.EventBus;
 
 public class ICalDetailsDialogFragmentViewModel {
     public static final String KEY_TITLE = "key_title";
@@ -103,7 +104,7 @@ public class ICalDetailsDialogFragmentViewModel {
         return dismissDialogCommand;
     }
 
-    public Command<Intent> getAddToCalendarCommand() {return addToCalendarCommand; }
+    public Command<Intent> getAddToCalendarCommand() {  return addToCalendarCommand; }
 
     public String getTitle() {
         return mTitle;
