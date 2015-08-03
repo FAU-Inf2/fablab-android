@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingRight="@dimen/product_dialog_margin"
+    android:paddingLeft="@dimen/product_dialog_margin"
+    android:paddingTop="@dimen/product_dialog_margin"
+    android:paddingBottom="@dimen/product_dialog_margin"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/abc_text_size_large_material"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/alert_dialog_title"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/product_dialog_text_margin_bottom" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/abc_text_size_title_material"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/alert_dialog_tool"
+        android:layout_marginBottom="@dimen/product_dialog_text_margin_bottom" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/alert_dialog_tool_spinner"
+        >
+    </Spinner>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/abc_text_size_title_material"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/alert_dialog_problem"
+        android:layout_marginBottom="@dimen/product_dialog_text_margin_bottom" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/alert_dialog_edit_text"
+        android:gravity="top"
+        android:layout_marginBottom="@dimen/alert_dialog_edittext_bottom_margin"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/news_entry_button_margin"
+        >
+
+        <Button
+            android:id="@+id/alert_dialog_cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/alert_dialog_cancel_button"
+            />
+
+        <Button
+            android:id="@+id/alert_dialog_ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/alert_dialog_ok_button"
+            />
+    </LinearLayout>
+
+</LinearLayout>

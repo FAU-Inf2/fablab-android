@@ -30,6 +30,8 @@
 
     <dimen name="dates_entry_event_icon_size">50dp</dimen>
 
+    <dimen name="alert_dialog_edittext_bottom_margin">40dp</dimen>
+
     <dimen name="product_dialog_margin">24dp</dimen>
     <dimen name="product_dialog_text_margin_bottom">10dp</dimen>
     <dimen name="product_dialog_margin_lr">20dp</dimen>
