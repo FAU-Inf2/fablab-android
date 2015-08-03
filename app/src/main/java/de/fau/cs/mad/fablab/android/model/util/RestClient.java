@@ -20,6 +20,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.rest.core.Format;
 import de.fau.cs.mad.fablab.rest.myapi.CartApi;
 import de.fau.cs.mad.fablab.rest.myapi.DataApi;
+import de.fau.cs.mad.fablab.rest.myapi.DrupalApi;
 import de.fau.cs.mad.fablab.rest.myapi.ICalApi;
 import de.fau.cs.mad.fablab.rest.myapi.NewsApi;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
@@ -127,5 +128,10 @@ public class RestClient {
 
     public DataApi getDataApi(){
         return mRestAdapter.create(DataApi.class);
+    }
+
+    public DrupalApi getDrupalApi()
+    {
+        return mRestAdapter.create(DrupalApi.class);
     }
 }

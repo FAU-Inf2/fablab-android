@@ -7,6 +7,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
 import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.model.CheckoutModel;
+import de.fau.cs.mad.fablab.android.model.DrupalModel;
 import de.fau.cs.mad.fablab.android.model.FablabMailModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
 import de.fau.cs.mad.fablab.android.model.NewsModel;
@@ -26,6 +27,7 @@ public class StorageFragment extends Fragment {
     private AutoCompleteModel mAutoCompleteModel;
     private SpaceApiModel mSpaceApiModel;
     private FablabMailModel mFablabMailModel;
+    private DrupalModel mDrupalModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class StorageFragment extends Fragment {
                 restClient.getProductApi());
         mSpaceApiModel = new SpaceApiModel(restClient.getSpaceApi(), getString(R.string.space_name));
         mFablabMailModel = new FablabMailModel(restClientString.getDataApi());
+        mDrupalModel = new DrupalModel(restClient.getDrupalApi());
     }
 
     public NewsModel getNewsModel(){
@@ -78,5 +81,10 @@ public class StorageFragment extends Fragment {
     public FablabMailModel getFablabMailModel()
     {
         return mFablabMailModel;
+    }
+
+    public DrupalModel getDrupalModel()
+    {
+        return mDrupalModel;
     }
 }
