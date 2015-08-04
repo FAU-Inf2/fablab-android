@@ -17,6 +17,9 @@ import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewCommandBindi
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.greenrobot.event.EventBus;
 
+/***
+ * The view of all Icals
+ */
 public class ICalFragment extends BaseFragment implements ICalFragmentViewModel.Listener {
     @InjectView(R.id.ical_recycler_view)
     RecyclerView ical_rv;
@@ -72,15 +75,19 @@ public class ICalFragment extends BaseFragment implements ICalFragmentViewModel.
         mAdapter.notifyItemRangeInserted(positionStart, itemCount);
     }
 
-    @SuppressWarnings("unused")
-    public void onEvent(ICalClickedEvent event) {
+
+    //new
+    public void onEvent(ICalClickedEvent event)
+    {
         ICalDetailsDialogFragment fragment = new ICalDetailsDialogFragment();
         Bundle args = new Bundle();
         args.putString(ICalDetailsDialogFragmentViewModel.KEY_TITLE, event.getTitle());
-        args.putString(ICalDetailsDialogFragmentViewModel.KEY_DATE, event.getDate());
-        args.putString(ICalDetailsDialogFragmentViewModel.KEY_TIME, event.getTime());
+        args.putIntArray(ICalDetailsDialogFragmentViewModel.KEY_DATE, event.getDate());
+        args.putIntArray(ICalDetailsDialogFragmentViewModel.KEY_START_TIME, event.getStartTime());
+        args.putIntArray(ICalDetailsDialogFragmentViewModel.KEY_END_TIME, event.getEndTime());
         args.putString(ICalDetailsDialogFragmentViewModel.KEY_LOCATION, event.getLocation());
         args.putString(ICalDetailsDialogFragmentViewModel.KEY_DESCRIPTION, event.getDescription());
+        args.putBoolean(ICalDetailsDialogFragmentViewModel.KEY_ALLDAY, event.isAllday());
         fragment.setArguments(args);
         fragment.show(getFragmentManager(), "ICalDetailsDialogFragment");
     }

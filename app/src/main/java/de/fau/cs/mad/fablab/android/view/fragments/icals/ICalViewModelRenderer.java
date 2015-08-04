@@ -46,6 +46,7 @@ public class ICalViewModelRenderer extends Renderer<ICalViewModel> {
     public void render() {
         ICalViewModel viewModel = getContent();
 
+
         new ViewCommandBinding().bind(getRootView(), viewModel.getShowDialogCommand());
 
         Resources res = getRootView().getResources();

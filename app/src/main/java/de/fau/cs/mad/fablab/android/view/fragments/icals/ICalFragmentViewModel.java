@@ -25,6 +25,8 @@ public class ICalFragmentViewModel extends BaseViewModel<ICal> {
         }
     };
 
+
+
     @Inject
     public ICalFragmentViewModel(ICalModel model) {
         mModel = model;
@@ -39,6 +41,7 @@ public class ICalFragmentViewModel extends BaseViewModel<ICal> {
     public Command<Void> getGetICalCommand() {
         return mCommandGetICals;
     }
+
 
     @Override
     public void onAllItemsAdded(Collection<? extends ICal> collection) {

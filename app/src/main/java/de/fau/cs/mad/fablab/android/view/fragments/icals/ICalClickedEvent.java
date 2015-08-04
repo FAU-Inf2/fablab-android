@@ -2,30 +2,39 @@ package de.fau.cs.mad.fablab.android.view.fragments.icals;
 
 public class ICalClickedEvent {
     private final String mTitle;
-    private final String mDate;
-    private final String mTime;
     private final String mLocation;
     private final String mDescription;
 
-    public ICalClickedEvent(String title, String date, String time, String location,
-                            String description) {
+    private final int[] mDate;
+    private final int[] mStartTime;
+    private final int[] mEndTime;
+
+    private final boolean mIsAllday;
+
+
+    public ICalClickedEvent(String title, int[] date, int[] startTime, int[] endTime, String location,
+                            String description, boolean isAllday) {
         mTitle = title;
         mDate = date;
-        mTime = time;
+        mStartTime = startTime;
+        mEndTime = endTime;
         mLocation = location;
         mDescription = description;
+        mIsAllday = isAllday;
     }
 
-    public String getTitle() {
-        return mTitle;
-    }
+    public String getTitle() { return mTitle; }
 
-    public String getDate() {
+    public int[] getDate() {
         return mDate;
     }
 
-    public String getTime() {
-        return mTime;
+    public int[] getStartTime() {
+        return mStartTime;
+    }
+
+    public int[] getEndTime() {
+        return mEndTime;
     }
 
     public String getLocation() {
@@ -35,4 +44,7 @@ public class ICalClickedEvent {
     public String getDescription() {
         return mDescription;
     }
+
+    public boolean isAllday() {return mIsAllday; }
+
 }

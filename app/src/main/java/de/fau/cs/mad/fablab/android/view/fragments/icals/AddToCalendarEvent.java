@@ -2,37 +2,50 @@ package de.fau.cs.mad.fablab.android.view.fragments.icals;
 
 public class AddToCalendarEvent
 {
-    private final int[] date;
-    private final int[] startTime;
-    private final int[] endTime;
-    private final String title;
-    private final String location;
-    private final String description;
-    private final boolean isAllday;
+    private final String mTitle;
+    private final String mLocation;
+    private final String mDescription;
 
-    public AddToCalendarEvent(int[] date, int[] startTime, int[] endTime, String title, String location, String description, boolean isAllday)
-    {
-        this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.title = title;
-        this.location = location;
-        this.description = description;
-        this.isAllday = isAllday;
+    private final int[] mDate;
+    private final int[] mStartTime;
+    private final int[] mEndTime;
+
+    private final boolean mIsAllday;
+
+
+    public AddToCalendarEvent(String title, int[] date, int[] startTime, int[] endTime, String location,
+                            String description, boolean isAllday) {
+        mTitle = title;
+        mDate = date;
+        mStartTime = startTime;
+        mEndTime = endTime;
+        mLocation = location;
+        mDescription = description;
+        mIsAllday = isAllday;
     }
 
-    public int[] getDate(){return date; }
+    public String getTitle() { return mTitle; }
 
-    public int[] getStartTime() { return startTime; }
+    public int[] getDate() {
+        return mDate;
+    }
 
-    public int[] getEndTime() { return endTime; }
+    public int[] getStartTime() {
+        return mStartTime;
+    }
 
-    public String getTitle() { return title; }
+    public int[] getEndTime() {
+        return mEndTime;
+    }
 
-    public String getLocation() { return location; }
+    public String getLocation() {
+        return mLocation;
+    }
 
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return mDescription;
+    }
 
-    public boolean isAllday() { return isAllday; }
+    public boolean isAllday() {return mIsAllday; }
 
 }

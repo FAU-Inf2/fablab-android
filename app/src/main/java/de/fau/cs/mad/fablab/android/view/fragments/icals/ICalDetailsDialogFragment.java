@@ -41,6 +41,8 @@ public class ICalDetailsDialogFragment extends BaseDialogFragment
     @Inject
     ICalDetailsDialogFragmentViewModel mViewModel;
 
+    private EventBus mEventBus = EventBus.getDefault();
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class ICalDetailsDialogFragment extends BaseDialogFragment
         mViewModel.initialize(getArguments());
 
         new ViewCommandBinding().bind(dismiss_button, mViewModel.getDismissDialogCommand());
-        new CalendarCommandBinding().bind(calendar_button, mViewModel.getAddToCalendarCommand());
+        new ViewCommandBinding().bind(calendar_button, mViewModel.getAddToCalendarCommand());
 
         title_tv.setText(mViewModel.getTitle());
         date_tv.setText(getString(R.string.dates_date) + " " + mViewModel.getDate());
@@ -74,14 +76,23 @@ public class ICalDetailsDialogFragment extends BaseDialogFragment
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        mEventBus.unregister(this);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mEventBus.register(this);
+    }
+
+    @Override
     public void onDismiss() {
         dismiss();
     }
 
-    @Override
-    public void startCalendar(Intent intent){
-        startActivity(intent);
-    }
 
     public void onEvent(AddToCalendarEvent event)
     {
@@ -89,11 +100,11 @@ public class ICalDetailsDialogFragment extends BaseDialogFragment
 
         Calendar calendarStartTime = Calendar.getInstance();
         int[] startTime = event.getStartTime();
-        calendarStartTime.set(date[0], date[1], date[2], startTime[0], startTime[1]);
+        calendarStartTime.set(date[2], date[1], date[0], startTime[0], startTime[1]);
 
         Calendar calendarEndTime = Calendar.getInstance();
         int[] endTime = event.getEndTime();
-        calendarEndTime.set(date[0], date[1], date[2], endTime[0], endTime[1]);
+        calendarEndTime.set(date[2], date[1], date[0], endTime[0], endTime[1]);
 
 
         Intent intent = new Intent(Intent.ACTION_INSERT)
@@ -103,6 +114,9 @@ public class ICalDetailsDialogFragment extends BaseDialogFragment
                 .putExtra(CalendarContract.Events.TITLE, event.getTitle())
                 .putExtra(CalendarContract.Events.EVENT_LOCATION, event.getLocation())
                 .putExtra(CalendarContract.Events.DESCRIPTION, event.getDescription());
+
+        if(event.isAllday())
+            intent.putExtra(CalendarContract.Events.ALL_DAY, event.isAllday());
 
         startActivity(intent);
     }

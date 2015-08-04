@@ -11,8 +11,11 @@ import android.provider.CalendarContract;
 import android.net.Uri;
 
 import java.security.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
 import javax.inject.Inject;
@@ -20,22 +23,32 @@ import javax.inject.Inject;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.greenrobot.event.EventBus;
 
+
 public class ICalDetailsDialogFragmentViewModel {
     public static final String KEY_TITLE = "key_title";
     public static final String KEY_DATE = "key_date";
-    public static final String KEY_TIME = "key_time";
+    public static final String KEY_START_TIME = "key_start_time";
+    public static final String KEY_END_TIME = "key_end_time";
     public static final String KEY_LOCATION = "key_location";
     public static final String KEY_DESCRIPTION = "key_description";
+    public static final String KEY_ALLDAY = "key_allday";
+//    public static final String KEY_DESCRIPTION = "key_description";
 
 
     Listener mListener;
 
     private String mTitle;
-    private String mDate;
-    private String mTime;
+    private int[] mDate;
+    private int[] mStartTime;
+    private int[] mEndTime;
     private String mLocation;
     private String mDescription;
+    private boolean mIsAllday;
 
+
+    /**
+     * Commands for the two dialog buttons
+     */
     private Command<Void> dismissDialogCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
@@ -45,48 +58,13 @@ public class ICalDetailsDialogFragmentViewModel {
         }
     };
 
-    private Command<Intent> addToCalendarCommand = new Command<Intent>()
+    private Command<Void> addToCalendarCommand = new Command<Void>()
     {
         @Override
-        public void execute(Intent parameter)
+        public void execute(Void parameter)
         {
-            String[] date = mDate.split("\\.");
-            String[] time = mTime.split(" - ");
-            String[] startTime = null;
-            String[] stopTime = null;
-            if(time.length == 2)
-            {
-                startTime = time[0].split(":");
-                stopTime = time[1].split(":");
-            }
-
-            Calendar beginTime = Calendar.getInstance();
-            if(date.length == 3 && startTime.length == 2 && stopTime.length==2)
-            {
-                beginTime.set(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]), Integer.parseInt(startTime[0]), Integer.parseInt(startTime[1]));
-            }
-            else
-                beginTime.set(2000, 1, 1, 12, 0);
-            Calendar endTime = Calendar.getInstance();
-            if(date.length == 3 && startTime.length == 2 && stopTime.length==2)
-            {
-                endTime.set(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]), Integer.parseInt(stopTime[0]), Integer.parseInt(stopTime[1]));
-            }
-            else
-                endTime.set(2000, 1, 1, 12, 0);
-
-            Intent intent = new Intent(Intent.ACTION_INSERT)
-                    .setData(CalendarContract.Events.CONTENT_URI)
-                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
-                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
-                    .putExtra(CalendarContract.Events.TITLE, mTitle)
-                    .putExtra(CalendarContract.Events.EVENT_LOCATION, mLocation)
-                    .putExtra(CalendarContract.Events.DESCRIPTION, mDescription);
-
-            if(mTime == "ganzt\u00E4gig")
-                intent.putExtra(CalendarContract.Events.ALL_DAY, true);
-
-            mListener.startCalendar(intent);
+            EventBus.getDefault().post(new AddToCalendarEvent(mTitle, mDate, mStartTime, mEndTime,
+                    mLocation, mDescription, mIsAllday));
         }
     };
 
@@ -104,7 +82,8 @@ public class ICalDetailsDialogFragmentViewModel {
         return dismissDialogCommand;
     }
 
-    public Command<Intent> getAddToCalendarCommand() {  return addToCalendarCommand; }
+    public Command<Void> getAddToCalendarCommand(){ return addToCalendarCommand; }
+
 
     public String getTitle() {
         return mTitle;
@@ -112,12 +91,29 @@ public class ICalDetailsDialogFragmentViewModel {
 
     public String getDate()
     {
-        return mDate;
+        //month+1, because Calendar is zero-based (eg january = 0 and not 1)
+        Calendar currentCal = Calendar.getInstance();
+
+        // check if ical date is current date
+        if (mDate[0] == currentCal.get(Calendar.DAY_OF_MONTH) &&
+                mDate[1] == currentCal.get(Calendar.MONTH) &&
+                mDate[2] == currentCal.get(Calendar.YEAR))
+            return "Heute";
+        else
+            return Integer.toString(mDate[0]) + "." + Integer.toString((mDate[1]) + 1) + "." + Integer.toString(mDate[2]);
     }
 
     public String getTime() {
-        return mTime;
+
+        if (mIsAllday)
+            return "ganzt\\u00E4gig";
+        else
+            return Integer.toString(mStartTime[0]) + ":" + Integer.toString((mStartTime[1]) + 100).substring(1) + " - "
+                    + Integer.toString(mEndTime[0]) + ":" + Integer.toString((mEndTime[1]) + 100).substring(1);
+        // Minute + 100 to display HH::mm instead of H:m
+
     }
+
 
     public String getLocation() {
         return mLocation;
@@ -129,15 +125,16 @@ public class ICalDetailsDialogFragmentViewModel {
 
     public void initialize(Bundle args) {
         mTitle = args.getString(KEY_TITLE);
-        mDate = args.getString(KEY_DATE);
-        mTime = args.getString(KEY_TIME);
+        mDate = args.getIntArray(KEY_DATE);
+        mStartTime = args.getIntArray(KEY_START_TIME);
+        mEndTime = args.getIntArray(KEY_END_TIME);
         mLocation = args.getString(KEY_LOCATION);
         mDescription = args.getString(KEY_DESCRIPTION);
+        mIsAllday = args.getBoolean(KEY_ALLDAY);
     }
 
     public interface Listener {
         void onDismiss();
-        void startCalendar(Intent intent);
     }
 
 
