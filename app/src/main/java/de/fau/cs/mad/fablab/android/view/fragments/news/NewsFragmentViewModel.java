@@ -4,12 +4,13 @@ import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.NewsModel;
-import de.fau.cs.mad.fablab.android.view.fragments.icalandnews.NewsListScrollingEvent;
 import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewDeltaCommandBinding;
+import de.fau.cs.mad.fablab.android.view.fragments.icalandnews.NewsListScrollingEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.News;
@@ -71,6 +72,17 @@ public class NewsFragmentViewModel extends BaseViewModel<News> {
         }
     }
 
+    @Override
+    public void onAllItemsRemoved(List<News> removedItems) {
+
+        int count = mNewsViewModelCollection.size();
+        mNewsViewModelCollection.clear();
+
+        if (mListener != null) {
+            mListener.onAllDataRemoved(count);
+        }
+    }
+
     public AdapteeCollection<NewsViewModel> getNewsViewModelCollection() {
         return mNewsViewModelCollection;
     }
@@ -81,5 +93,7 @@ public class NewsFragmentViewModel extends BaseViewModel<News> {
 
     public interface Listener {
         void onDataInserted(int positionStart, int itemCount);
+
+        void onAllDataRemoved(int itemCount);
     }
 }

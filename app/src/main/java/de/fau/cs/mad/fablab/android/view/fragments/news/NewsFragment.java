@@ -76,6 +76,11 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
         mAdapter.notifyItemRangeInserted(positionStart, itemCount);
     }
 
+    @Override
+    public void onAllDataRemoved(int itemCount) {
+        mAdapter.notifyItemRangeRemoved(0, itemCount);
+    }
+
     @SuppressWarnings("unused")
     public void onEvent(NewsClickedEvent event) {
         NewsDetailsDialogFragment dialog = new NewsDetailsDialogFragment();
