@@ -19,6 +19,8 @@ import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 public class AboutFragment extends BaseFragment {
     @InjectView(R.id.about_version)
     TextView version_tv;
+    @InjectView(R.id.about_own_license)
+    TextView own_license_tv;
     @InjectView(R.id.about_content)
     TextView content_tv;
     @InjectView(R.id.about_used_libraries)
@@ -42,7 +44,7 @@ public class AboutFragment extends BaseFragment {
             throw new RuntimeException(e);
         }
         version_tv.setText(version);
-
+        own_license_tv.setText(Html.fromHtml(getString(R.string.about_license)));
         content_tv.setText(Html.fromHtml(getString(R.string.about_content)));
         content_tv.setMovementMethod(LinkMovementMethod.getInstance());
 
