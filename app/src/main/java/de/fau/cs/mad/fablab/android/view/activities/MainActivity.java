@@ -239,15 +239,7 @@ public class MainActivity extends AppCompatActivity {
             case Alert:
                 if(!TAG_ALERT_FRAGMENT.equals(currentFragmentTag))
                 {
-                    AlertDialogFragment alertDialogFragment =
-                            (AlertDialogFragment) getSupportFragmentManager().findFragmentByTag(
-                                    TAG_ALERT_FRAGMENT
-                            );
-                    if(alertDialogFragment == null)
-                    {
-                        alertDialogFragment = new AlertDialogFragment();
-                    }
-                    fragmentTransaction.replace(R.id.fragment_container, alertDialogFragment,
+                    fragmentTransaction.replace(R.id.fragment_container, new AlertDialogFragment(),
                             TAG_ALERT_FRAGMENT).addToBackStack(null).commit();
                 }
                 break;
