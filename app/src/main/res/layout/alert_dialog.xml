@@ -15,6 +15,7 @@
         android:textSize="@dimen/abc_text_size_large_material"
         android:fontFamily="sans-serif-medium"
         android:text="@string/alert_dialog_title"
+        android:textColor="@color/colorPrimary"
         android:gravity="center_horizontal"/>
 
 
@@ -23,6 +24,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/abc_text_size_title_material"
         android:fontFamily="sans-serif-medium"
+        android:textColor="@color/colorPrimary"
         android:text="@string/alert_dialog_tool"/>
 
 
@@ -39,6 +41,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/abc_text_size_title_material"
         android:fontFamily="sans-serif-medium"
+        android:textColor="@color/colorPrimary"
         android:text="@string/alert_dialog_problem"/>
 
     <ScrollView
