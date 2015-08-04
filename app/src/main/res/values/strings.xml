@@ -55,6 +55,9 @@
     <string name="outOfStock_messaging_subject">Ausgegangenes Produkt</string>
     <string name="outOfStock_messaging_chooser_title">Sende Meldung mit:</string>
 
+    <string name="alert_messaging_subject">Störmeldung</string>
+    <string name="alert_messaging_chooser_title">Sende Meldung mit:</string>
+
     <string name="alert_dialog_title">Störmeldung</string>
     <string name="alert_dialog_tool">Gerät:</string>
     <string name="alert_dialog_problem">Problem:</string>

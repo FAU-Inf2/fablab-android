@@ -37,6 +37,8 @@
     <dimen name="product_dialog_margin_lr">20dp</dimen>
     <dimen name="product_dialog_margin_tb">5dp</dimen>
 
+    <dimen name="alert_dialog_margin">15dp</dimen>
+
     <dimen name="zero">0dp</dimen>
     <dimen name="one">1dp</dimen>
 

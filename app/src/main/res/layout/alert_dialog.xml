@@ -4,10 +4,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingRight="@dimen/product_dialog_margin"
-    android:paddingLeft="@dimen/product_dialog_margin"
-    android:paddingTop="@dimen/product_dialog_margin"
-    android:paddingBottom="@dimen/product_dialog_margin"
+    android:paddingRight="@dimen/alert_dialog_margin"
+    android:paddingLeft="@dimen/alert_dialog_margin"
+    android:paddingTop="@dimen/alert_dialog_margin"
     >
 
     <TextView
@@ -16,21 +15,22 @@
         android:textSize="@dimen/abc_text_size_large_material"
         android:fontFamily="sans-serif-medium"
         android:text="@string/alert_dialog_title"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/product_dialog_text_margin_bottom" />
+        android:gravity="center_horizontal"/>
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/abc_text_size_title_material"
         android:fontFamily="sans-serif-medium"
-        android:text="@string/alert_dialog_tool"
-        android:layout_marginBottom="@dimen/product_dialog_text_margin_bottom" />
+        android:text="@string/alert_dialog_tool"/>
+
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/alert_dialog_tool_spinner"
+        android:layout_marginBottom="@dimen/card_vertical_margin"
         >
     </Spinner>
 
@@ -39,16 +39,23 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/abc_text_size_title_material"
         android:fontFamily="sans-serif-medium"
-        android:text="@string/alert_dialog_problem"
-        android:layout_marginBottom="@dimen/product_dialog_text_margin_bottom" />
+        android:text="@string/alert_dialog_problem"/>
 
-    <EditText
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/alert_dialog_edit_text"
-        android:gravity="top"
         android:layout_marginBottom="@dimen/alert_dialog_edittext_bottom_margin"
-        />
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/alert_dialog_edit_text"
+            android:gravity="top"
+            android:textSize="@dimen/abc_text_size_medium_material"
+            />
+
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
