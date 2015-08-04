@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationDrawer mNavigationDrawer;
     private FloatingFablabButton mFablabButton;
     private CartSlidingUpPanel mCartSlidingUpPanel;
+    private StorageFragment mStorageFragment;
 
     private ObjectGraph mObjectGraph;
     private EventBus mEventBus = EventBus.getDefault();
@@ -69,16 +70,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
-        StorageFragment storageFragment = (StorageFragment) getSupportFragmentManager()
+        mStorageFragment = (StorageFragment) getSupportFragmentManager()
                 .findFragmentByTag(TAG_STORAGE_FRAGMENT);
-        if (storageFragment == null) {
-            storageFragment = new StorageFragment();
-            getSupportFragmentManager().beginTransaction().add(storageFragment,
+        if (mStorageFragment == null) {
+            mStorageFragment = new StorageFragment();
+            getSupportFragmentManager().beginTransaction().add(mStorageFragment,
                     TAG_STORAGE_FRAGMENT).commit();
             getSupportFragmentManager().executePendingTransactions();
         }
 
-        mObjectGraph = ObjectGraph.create(new ModelModule(storageFragment));
+        mObjectGraph = ObjectGraph.create(new ModelModule(mStorageFragment));
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
@@ -135,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         mEventBus.register(this);
         mActionBar.resume();
         mCartSlidingUpPanel.resume();
+        mStorageFragment.update();
     }
 
     @Override
