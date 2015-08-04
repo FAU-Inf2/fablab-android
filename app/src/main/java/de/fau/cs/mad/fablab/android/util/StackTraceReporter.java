@@ -65,7 +65,6 @@ public class StackTraceReporter {
 
 
     public static void reportStackTraceIfAvailable(final Activity activity) {
-        System.out.println("REPORT STACKTRACE IF AVAILABLE REACHED");
         mActivity = activity;
         // see if stracktrace file is available
         String line;
