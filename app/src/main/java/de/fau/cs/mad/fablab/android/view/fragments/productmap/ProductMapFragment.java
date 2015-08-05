@@ -23,8 +23,11 @@ public class ProductMapFragment extends BaseDialogFragment {
 
         String locationId = getArguments().getString(KEY_LOCATION);
         //Todo: activate when server method is finished
-        String testurl = "http://52.28.16.59/productMap/index.html";
-        String url = testurl + "?id=" + locationId;
+        String testurl = "https://52.28.16.59:4433/productMap/index.html";
+        String url = "";
+        if(locationId != "")
+            url = testurl + "?id=" + locationId;
+        else url = testurl;
         webview.getSettings().setJavaScriptEnabled(true);
         webview.loadUrl(url);
     }

@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.FablabMailModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
+import de.fau.cs.mad.fablab.rest.core.Category;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class ProductDialogFragmentViewModel {
@@ -75,14 +76,23 @@ public class ProductDialogFragmentViewModel {
     }
 
     public boolean hasLocation() {
-        return true;
-        //Todo: activate when server method is finished
-        //return mProduct.hasLocation();
+        if(mProduct.getLocation().equals("unknown location"))
+            return false;
+        else
+            return true;
     }
 
     public String getProductLocation() {
         //Todo: choose correct getLocation method
-        return "0820/0815";
+        //long categoryloc = mProduct.getCategory().getLocation_id();
+        //String cat = mProduct.getCategoryString();
+        // id = mProduct.getCategoryId();
+        //long locId = mProduct.getLocation_id();
+        String loc = mProduct.getLocation();
+        loc = loc.replace(" / ", "" );
+        loc = loc.replace(" ", "_");
+
+        return loc;
     }
 
     public void initialize(Bundle arguments) {
