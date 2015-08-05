@@ -2,9 +2,9 @@
 <resources>
     <color name="colorPrimary">#384F54</color>
     <color name="colorPrimaryDark">#2D3F43</color>
-    <color name="colorAccent">#FF6800</color>
+    <color name="colorAccent">#384F54</color>
     <color name="colorTextPrimary">#000000</color>
-    <color name="colorTextSecondary">#FF6800</color>
+    <color name="colorTextSecondary">#384F54</color>
     <color name="AppBarTextColor">#FFFFFF</color>
     <color name="windowBackground">#E0E0E0</color>
     <color name="card_openlab">#788F94</color>
