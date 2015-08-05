@@ -1,7 +1,11 @@
 package de.fau.cs.mad.fablab.android.model;
 
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.QueryBuilder;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
@@ -22,7 +26,8 @@ public class NewsModel {
     private NewsApi mNewsApi;
     private boolean mNewsRequested;
     private RuntimeExceptionDao<News, Long> mNewsDao;
-    private long timeStampLastUpdate = 0;
+    private long mTimeStampLastUpdate;
+    private Date mDateLastDisplayedNews;
 
     private Callback<List<News>> mNewsApiCallback = new Callback<List<News>>() {
         @Override
@@ -34,6 +39,8 @@ public class NewsModel {
             {
                 createIfNotExists(mNewsDao, n);
             }
+
+            mDateLastDisplayedNews = mNews.get(mNews.size()-1).getPubDate();
 
         }
 
@@ -54,8 +61,9 @@ public class NewsModel {
             }
 
             mNews.clear();
+            mDateLastDisplayedNews = new Date(System.currentTimeMillis());
             fetchNextNews();
-            timeStampLastUpdate = System.currentTimeMillis();
+            mTimeStampLastUpdate = System.currentTimeMillis();
         }
 
         @Override
@@ -69,19 +77,35 @@ public class NewsModel {
         mNewsDao = newsDao;
         mNews = new ObservableArrayList<>();
         mNewsRequested = false;
+        mTimeStampLastUpdate = 0;
+        mDateLastDisplayedNews = new Date(System.currentTimeMillis());
         fetchNextNews();
     }
 
     public void fetchNextNews() {
         //check whether to get news from database or server
-        if (!mNewsRequested)// && mNews.size() + ELEMENT_COUNT > mNewsDao.countOf())
+        if (!mNewsRequested && mNews.size() + ELEMENT_COUNT > mNewsDao.countOf())
         {
             mNewsRequested = true;
             mNewsApi.find(mNews.size(), ELEMENT_COUNT, mNewsApiCallback);
         }
-        else
+        else if (!mNewsRequested)
         {
+            List<News> fetchedNews = new ArrayList<>();
             //get next Element_count elements from database
+            QueryBuilder<News, Long> queryBuilder = mNewsDao.queryBuilder();
+            //sort elements in descending order according to pubdate and only return
+            //ELEMENT_COUNT news
+            queryBuilder.orderBy("pubDate", false).limit(ELEMENT_COUNT);
+            try {
+                queryBuilder.where().lt("pubDate", mDateLastDisplayedNews);
+                fetchedNews = mNewsDao.query(queryBuilder.prepare());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            mNews.addAll(fetchedNews);
+
+            mDateLastDisplayedNews = mNews.get(mNews.size()-1).getPubDate();
         }
     }
 
@@ -91,7 +115,7 @@ public class NewsModel {
 
     public void newsModelUpdate()
     {
-        mNewsApi.findNewsSince(timeStampLastUpdate, mNewsApiCallbackUpdate);
+        mNewsApi.findNewsSince(mTimeStampLastUpdate, mNewsApiCallbackUpdate);
     }
 
     private void createIfNotExists(RuntimeExceptionDao<News, Long> newsDao, News news)
