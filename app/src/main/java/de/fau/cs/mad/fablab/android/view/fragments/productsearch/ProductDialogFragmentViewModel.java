@@ -89,7 +89,7 @@ public class ProductDialogFragmentViewModel {
         // id = mProduct.getCategoryId();
         //long locId = mProduct.getLocation_id();
         String loc = mProduct.getLocation();
-        loc = loc.replace(" / ", "" );
+        loc = loc.replace(" / ", "/" );
         loc = loc.replace(" ", "_");
 
         return loc;
