@@ -28,6 +28,7 @@ public class NewsModel {
     private RuntimeExceptionDao<News, Long> mNewsDao;
     private long mTimeStampLastUpdate;
     private Date mDateLastDisplayedNews;
+    private boolean mEndReached;
 
     private Callback<List<News>> mNewsApiCallback = new Callback<List<News>>() {
         @Override
@@ -47,6 +48,10 @@ public class NewsModel {
         @Override
         public void failure(RetrofitError error) {
             mNewsRequested = false;
+            if(error.getMessage().equals("404 Not Found"))
+            {
+                mEndReached = true;
+            }
         }
     };
 
@@ -62,6 +67,7 @@ public class NewsModel {
 
             mNews.clear();
             mDateLastDisplayedNews = new Date(System.currentTimeMillis());
+            mEndReached = false;
             fetchNextNews();
             mTimeStampLastUpdate = System.currentTimeMillis();
         }
@@ -79,18 +85,20 @@ public class NewsModel {
         mNewsRequested = false;
         mTimeStampLastUpdate = 0;
         mDateLastDisplayedNews = new Date(System.currentTimeMillis());
+        mEndReached = false;
         fetchNextNews();
     }
 
     public void fetchNextNews() {
         //check whether to get news from database or server
-        if (!mNewsRequested && mNews.size() + ELEMENT_COUNT > mNewsDao.countOf())
+        if (!mNewsRequested && mNews.size() + ELEMENT_COUNT > mNewsDao.countOf() && !mEndReached)
         {
             mNewsRequested = true;
             mNewsApi.find(mNews.size(), ELEMENT_COUNT, mNewsApiCallback);
         }
-        else if (!mNewsRequested)
+        else if (!mNewsRequested && !mEndReached)
         {
+            mNewsRequested = true;
             List<News> fetchedNews = new ArrayList<>();
             //get next Element_count elements from database
             QueryBuilder<News, Long> queryBuilder = mNewsDao.queryBuilder();
@@ -106,6 +114,7 @@ public class NewsModel {
             mNews.addAll(fetchedNews);
 
             mDateLastDisplayedNews = mNews.get(mNews.size()-1).getPubDate();
+            mNewsRequested = false;
         }
     }
 
