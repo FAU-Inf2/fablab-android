@@ -1,5 +1,7 @@
 package de.fau.cs.mad.fablab.android.view.fragments.icalandnews;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +21,13 @@ public class ICalAndNewsFragment extends BaseFragment {
 
     @InjectView(R.id.fragment_ical)
     FrameLayout ical_fl;
+    float mTranslationY;
+
 
     private EventBus mEventBus = EventBus.getDefault();
 
     @Inject
     public ICalAndNewsFragment() {
-
     }
 
     @Override
@@ -38,6 +41,8 @@ public class ICalAndNewsFragment extends BaseFragment {
         super.onResume();
         mEventBus.register(this);
         setDisplayOptions(R.id.drawer_item_news, true, true);
+        ical_fl.setTranslationY(mTranslationY);
+
     }
 
     @Override
@@ -53,12 +58,18 @@ public class ICalAndNewsFragment extends BaseFragment {
         final String TAG_ICAL_FRAGMENT = "tag_ical_fragment";
         final String TAG_NEWS_FRAGMENT = "tag_news_fragment";
 
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        mTranslationY = sharedPref.getFloat("saved_translation_y", 0);
+
         ICalFragment iCalFragment = (ICalFragment) getChildFragmentManager().findFragmentByTag(
                 TAG_ICAL_FRAGMENT);
         if (iCalFragment == null) {
             getChildFragmentManager().beginTransaction().add(R.id.fragment_ical, new ICalFragment(),
                     TAG_ICAL_FRAGMENT).commit();
         }
+
+        if(mTranslationY > 0) mTranslationY = 0;
+        ical_fl.setTranslationY(mTranslationY);
 
         NewsFragment newsFragment = (NewsFragment) getChildFragmentManager().findFragmentByTag(
                 TAG_NEWS_FRAGMENT);
@@ -69,6 +80,11 @@ public class ICalAndNewsFragment extends BaseFragment {
     }
 
     public void onEvent(NewsListScrollingEvent event){
-        ical_fl.setTranslationY(ical_fl.getTranslationY() - event.getDelta().getDy());
+        mTranslationY = ical_fl.getTranslationY() - event.getDelta().getDy();
+        ical_fl.setTranslationY(mTranslationY);
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putFloat("saved_translation_y", mTranslationY);
+        editor.commit();
     }
 }
