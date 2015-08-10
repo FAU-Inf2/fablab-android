@@ -122,16 +122,19 @@ public class ICalViewModel {
         Date now = new Date();
         int offsetFromUTC = timeZone.getOffset(now.getTime());
 
-        if (mICal.isAllday()) {
+        Calendar calStart = Calendar.getInstance();
+        calStart.setTime(mICal.getDtstartAsDate());
+        calStart.add(Calendar.MILLISECOND, offsetFromUTC);
+
+        Calendar calEnd = Calendar.getInstance();
+        calEnd.setTime(mICal.getEndAsDate());
+        calEnd.add(Calendar.MILLISECOND, offsetFromUTC);
+
+        // TODO Move to server if 00:00 and 23:xx to trigger also allday
+        if (mICal.isAllday() || (calStart.get(Calendar.HOUR_OF_DAY) == 0 && calStart.get(Calendar.MINUTE) == 0 && calEnd.get(Calendar.HOUR_OF_DAY) == 23)) {
             return "ganzt\u00E4gig";
         } else {
-            Calendar calStart = Calendar.getInstance();
-            calStart.setTime(mICal.getDtstartAsDate());
-            calStart.add(Calendar.MILLISECOND, offsetFromUTC);
 
-            Calendar calEnd = Calendar.getInstance();
-            calEnd.setTime(mICal.getEndAsDate());
-            calEnd.add(Calendar.MILLISECOND, offsetFromUTC);
             // Minute + 100 to display HH:mm instead of HH:m
             return Integer.toString(calStart.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(calStart.get(Calendar.MINUTE) + 100).substring(1)
                     + " - " + Integer.toString(calEnd.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(calEnd.get(Calendar.MINUTE) + 100).substring(1);
