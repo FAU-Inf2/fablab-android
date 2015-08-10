@@ -43,9 +43,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal"
             android:paddingBottom="@dimen/card_vertical_margin"
-            android:paddingLeft="@dimen/card_horizontal_margin"
+            android:paddingLeft="8dp"
             android:paddingRight="@dimen/card_horizontal_margin"
             android:paddingTop="@dimen/card_vertical_margin">
 
@@ -65,7 +64,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/icon_dates_entry"
                 android:layout_toRightOf="@+id/icon_dates_entry"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:alpha=".68">
 
                 <TextView
                     android:id="@+id/date_dates_entry"

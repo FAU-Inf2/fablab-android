@@ -1,104 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/product_card_view"
-        android:layout_gravity="center"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/product_card_height"
-        android:layout_marginRight="@dimen/product_card_margin"
-        android:layout_marginLeft="@dimen/product_card_margin"
-        android:layout_marginTop="@dimen/product_card_margin"
-        android:layout_marginBottom="@dimen/product_card_margin"
-        android:foreground="?android:attr/selectableItemBackground">
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/product_card_view"
+    android:layout_gravity="center"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/product_card_height"
+    android:layout_marginRight="@dimen/product_card_margin"
+    android:layout_marginLeft="@dimen/product_card_margin"
+    android:layout_marginTop="@dimen/product_card_margin"
+    android:layout_marginBottom="@dimen/product_card_margin"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <!--
+        <ImageView
+            android:id="@+id/product_photo"
+            android:layout_width="@dimen/product_card_height"
+            android:layout_height="@dimen/product_card_height"
+            android:scaleType="centerCrop"
+            android:src="@drawable/no_image_avl" />
+        -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <!--
-            <ImageView
-                android:id="@+id/product_photo"
-                android:layout_width="@dimen/product_card_height"
-                android:layout_height="@dimen/product_card_height"
-                android:scaleType="centerCrop"
-                android:src="@drawable/no_image_avl" />
-            -->
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/product_name"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/product_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:textSize="@dimen/product_name_size"
-                        android:fontFamily="sans-serif-medium"
-                        android:textStyle="bold"
-                        android:textColor="#333333"
-                        android:background="#EEEEEE"
-                        android:maxLines="2"
-                        android:text="Product Name" />
-                    <TextView
-                        android:id="@+id/product_detail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="5dp"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="8dp"
-                        android:textSize="@dimen/product_detail_size"
-                        android:maxLines="3"
-                        android:fontFamily="sans-serif-medium"
-                        android:text="Product Detail" />
-                </LinearLayout>
+                    android:padding="10dp"
+                    android:textSize="@dimen/product_name_size"
+                    android:fontFamily="sans-serif-medium"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
+                    android:background="#EEEEEE"
+                    android:maxLines="2"
+                    android:text="Product Name" />
+                <TextView
+                    android:id="@+id/product_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="8dp"
+                    android:textSize="@dimen/product_detail_size"
+                    android:maxLines="3"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Product Detail" />
+            </LinearLayout>
 
-                <View
-                    android:layout_height="match_parent"
-                    android:layout_width="1dp"
-                    android:background="#CCCCCC" />
+            <View
+                android:layout_height="match_parent"
+                android:layout_width="1dp"
+                android:background="#CCCCCC" />
 
-                <LinearLayout
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp">
+
+                <TextView
+                    android:id="@+id/product_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp">
+                    android:layout_gravity="end"
+                    android:textSize="@dimen/product_price_size"
+                    android:textStyle="bold"
+                    android:text="Price"/>
 
-                    <TextView
-                        android:id="@+id/product_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:textSize="@dimen/product_price_size"
-                        android:textStyle="bold"
-                        android:text="Price"/>
+                <TextView
+                    android:id="@+id/product_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="@dimen/product_name_size"
+                    android:text="Unit"/>
 
-                    <TextView
-                        android:id="@+id/product_unit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:textSize="@dimen/product_name_size"
-                        android:text="Unit"/>
-
-                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+    </LinearLayout>
 
-    </android.support.v7.widget.CardView>
-
-</LinearLayout>
+</android.support.v7.widget.CardView>
