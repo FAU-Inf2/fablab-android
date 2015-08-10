@@ -15,11 +15,14 @@ import javax.inject.Inject;
 
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.model.events.AppBarShowDoorStateEvent;
+import de.fau.cs.mad.fablab.android.model.events.AppBarShowTitleEvent;
 import de.fau.cs.mad.fablab.android.util.Formatter;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.NumberPickerCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import de.fau.cs.mad.fablab.rest.core.Product;
+import de.greenrobot.event.EventBus;
 
 public class AddToCartDialogFragment extends BaseDialogFragment
         implements AddToCartDialogFragmentViewModel.Listener {
@@ -35,6 +38,8 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     @Inject
     AddToCartDialogFragmentViewModel mViewModel;
 
+    private EventBus mEventBus = EventBus.getDefault();
+
     public static AddToCartDialogFragment newInstance(Product product) {
         AddToCartDialogFragment dialogFragment = new AddToCartDialogFragment();
         Bundle bundle = new Bundle();
@@ -46,6 +51,9 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        mEventBus.post(new AppBarShowDoorStateEvent(false));
+        mEventBus.post(new AppBarShowTitleEvent(false));
 
         mViewModel.restoreState(getArguments(), savedInstanceState);
 
@@ -73,6 +81,7 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
         inflater.inflate(R.menu.menu_add_to_cart, menu);
         new MenuItemCommandBinding().bind(menu.findItem(R.id.action_add_to_cart),
                 mViewModel.getAddToCartCommand());
@@ -93,6 +102,8 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     @Override
     public void onDismiss() {
         getFragmentManager().popBackStack();
+        mEventBus.post(new AppBarShowDoorStateEvent(true));
+        mEventBus.post(new AppBarShowTitleEvent(true));
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -24,6 +25,13 @@ public class ActionBar implements ActionBarViewModel.Listener {
     DrawerLayout drawer;
     @InjectView(R.id.appbar_time)
     TextView time_tv;
+
+    @InjectView(R.id.appbar_fau)
+    TextView appbar_fau;
+    @InjectView(R.id.appbar_fablab)
+    TextView appbar_fablab;
+    @InjectView(R.id.icon_fablab)
+    ImageView icon_fablab;
 
     private MenuItem mOpenStateMenuItem;
 
@@ -104,6 +112,30 @@ public class ActionBar implements ActionBarViewModel.Listener {
                 time_tv.setTextColor(time_tv.getResources().getColor(R.color.appbar_color_closed));
             }
             time_tv.setText(time);
+        }
+    }
+
+    @Override
+    public void onShowDoorState(boolean state) {
+        if (mOpenStateMenuItem != null) {
+            if(state) {
+                time_tv.setVisibility(View.VISIBLE);
+            } else {
+                time_tv.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    @Override
+    public void onShowTitle(boolean state) {
+        if(state) {
+            appbar_fablab.setVisibility(View.VISIBLE);
+            appbar_fau.setVisibility(View.VISIBLE);
+            icon_fablab.setVisibility(View.VISIBLE);
+        } else {
+            appbar_fablab.setVisibility(View.GONE);
+            appbar_fau.setVisibility(View.GONE);
+            icon_fablab.setVisibility(View.GONE);
         }
     }
 }
