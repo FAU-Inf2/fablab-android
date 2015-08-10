@@ -6,7 +6,6 @@ import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,7 +29,7 @@ public class ICalModel {
     private boolean mICalsRequested;
     private RuntimeExceptionDao<ICal, Long> mICalDao;
     private long mTimeStampLastUpdate;
-    private Date mDateLastDisplayedICals;
+    private String mDateLastDisplayedICalsString;
     private boolean mEndReached;
 
     private Callback<List<ICal>> mICalApiCallback = new Callback<List<ICal>>() {
@@ -43,7 +42,8 @@ public class ICalModel {
             {
                 createIfNotExists(mICalDao, i);
             }
-            mDateLastDisplayedICals = mICals.get(mICals.size()-1).getStartAsDate();
+            mDateLastDisplayedICalsString = mICals.get(mICals.size()-1).getStart();
+
         }
 
         @Override
@@ -83,7 +83,7 @@ public class ICalModel {
         mICalsRequested = false;
         mTimeStampLastUpdate = 0;
         mEndReached = false;
-        mDateLastDisplayedICals = new Date(System.currentTimeMillis());
+        mDateLastDisplayedICalsString = "";
         fetchNextICals();
     }
 
@@ -105,13 +105,14 @@ public class ICalModel {
             //ELEMENT_COUNT iCals
             queryBuilder.orderBy("start", true).limit(ELEMENT_COUNT);
             try {
-                queryBuilder.where().gt("start", mDateLastDisplayedICals.toString());
+                queryBuilder.where().gt("start", mDateLastDisplayedICalsString);
                 fetchedICals = mICalDao.query(queryBuilder.prepare());
+                mICals.addAll(fetchedICals);
+                mDateLastDisplayedICalsString = mICals.get(mICals.size()-1).getStart();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            mICals.addAll(fetchedICals);
-            mDateLastDisplayedICals = mICals.get(mICals.size()-1).getStartAsDate();
+
             mICalsRequested = false;
         }
 
@@ -147,7 +148,6 @@ public class ICalModel {
 
     private void deleteOldICals(RuntimeExceptionDao<ICal, Long> iCalDao)
     {
-        List<ICal> retrievedICals = new ArrayList<>();
         DeleteBuilder<ICal, Long> deleteBuilder = iCalDao.deleteBuilder();
         try {
             deleteBuilder.where().lt("end", System.currentTimeMillis());
