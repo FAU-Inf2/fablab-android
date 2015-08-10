@@ -14,19 +14,21 @@ import java.sql.SQLException;
 import de.fau.cs.mad.fablab.android.model.entities.AutoCompleteWords;
 import de.fau.cs.mad.fablab.android.model.entities.Cart;
 import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
+import de.fau.cs.mad.fablab.rest.core.ICal;
 import de.fau.cs.mad.fablab.rest.core.News;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
     private static final String DATABASE_NAME = "fablab.db";
-    private static final int DATABASE_VERSION = 28;
+    private static final int DATABASE_VERSION = 29;
 
     private static DatabaseHelper instance;
     private RuntimeExceptionDao<Cart, Long> mCartDao;
     private RuntimeExceptionDao<Product, String> mProductDao;
     private RuntimeExceptionDao<AutoCompleteWords, Long> mAutoCompleteWordsDao;
     private RuntimeExceptionDao<News, Long> mNewsDao;
+    private RuntimeExceptionDao<ICal, Long> mICalDao;
 
     private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -47,6 +49,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Product.class);
             TableUtils.createTable(connectionSource, AutoCompleteWords.class);
             TableUtils.createTable(connectionSource, News.class);
+            TableUtils.createTable(connectionSource, ICal.class);
         } catch (SQLException e) {
             Log.e(TAG, "Can't create database", e);
             throw new RuntimeException(e);
@@ -62,6 +65,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, Product.class, true);
             TableUtils.dropTable(connectionSource, AutoCompleteWords.class, true);
             TableUtils.dropTable(connectionSource, News.class, true);
+            TableUtils.dropTable(connectionSource, ICal.class, true);
             onCreate(db, connectionSource);
         } catch (SQLException e) {
             Log.e(TAG, "Can't drop database", e);
@@ -99,6 +103,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return mNewsDao;
     }
 
+    public RuntimeExceptionDao<ICal, Long> getICalDao()
+    {
+        if(mICalDao == null)
+        {
+            mICalDao = getRuntimeExceptionDao(ICal.class);
+        }
+        return mICalDao;
+    }
+
     @Override
     public void close() {
         super.close();
@@ -106,5 +119,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         mCartDao = null;
         mProductDao = null;
         mNewsDao = null;
+        mICalDao = null;
     }
 }
