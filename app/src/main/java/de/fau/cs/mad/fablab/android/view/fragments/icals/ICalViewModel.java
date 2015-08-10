@@ -30,17 +30,19 @@ public class ICalViewModel
     };
 
 
-
-    public ICalViewModel(ICal iCal) {
+    public ICalViewModel(ICal iCal)
+    {
         mICal = iCal;
     }
 
-    public Command<Void> getShowDialogCommand() {
+    public Command<Void> getShowDialogCommand()
+    {
         return mShowDialogCommand;
     }
 
 
-    public String getTitle() {
+    public String getTitle()
+    {
         return mICal.getSummery();
     }
 
@@ -148,9 +150,8 @@ public class ICalViewModel
         int offsetFromUTC = timeZone.getOffset(now.getTime());
 
         if (mICal.isAllday())
-        {
             return "ganzt\u00E4gig";
-        } else
+        else
         {
             Calendar calStart = Calendar.getInstance();
             calStart.setTime(mICal.getDtstartAsDate());
@@ -160,6 +161,8 @@ public class ICalViewModel
             calEnd.setTime(mICal.getEndAsDate());
             calEnd.add(Calendar.MILLISECOND, offsetFromUTC);
 
+            if(CalendarHelper.isSameTime(calStart, calEnd))
+                return "ab " + CalendarHelper.buildTimeString(calStart);
             return CalendarHelper.buildTimeString(calStart) +
                     " - " +
                     CalendarHelper.buildTimeString(calEnd);
@@ -170,8 +173,6 @@ public class ICalViewModel
     {
         return mICal.getLocation();
     }
-
-
 
 
 }

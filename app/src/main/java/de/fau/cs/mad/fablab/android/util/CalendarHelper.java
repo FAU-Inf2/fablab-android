@@ -29,6 +29,15 @@ public class CalendarHelper
             return false;
     }
 
+    public static boolean isSameTime(Calendar startTime, Calendar endTime)
+    {
+        if(startTime.get(Calendar.HOUR) == endTime.get(Calendar.HOUR) &&
+                startTime.get(Calendar.MINUTE) == endTime.get(Calendar.MINUTE))
+            return true;
+        else
+            return false;
+    }
+
     public static boolean isCurrentDay(int[] date)
     {
         Calendar currentCal = Calendar.getInstance();
