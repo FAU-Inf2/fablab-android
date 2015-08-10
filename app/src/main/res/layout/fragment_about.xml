@@ -25,6 +25,7 @@
             android:gravity="center"
             android:layout_margin="10dp"
             android:textColor="@color/colorPrimary"
+            android:clickable="true"
             android:textSize="25sp" />
 
         <TextView
@@ -41,12 +42,15 @@
         <include layout="@layout/divider" />
 
         <TextView
+            android:id="@+id/about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_margin="10dp"
             android:text="@string/about"
             android:textColor="@color/colorPrimary"
+            android:clickable="true"
+            android:onClick="toggle_contents"
             android:textSize="25sp" />
 
         <TextView
@@ -60,12 +64,15 @@
         <include layout="@layout/divider" />
 
         <TextView
+            android:id="@+id/about_open_source_licenses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_margin="10dp"
             android:text="@string/about_open_source_licenses"
             android:textColor="@color/colorPrimary"
+            android:clickable="true"
+            android:onClick="toggle_contents"
             android:textSize="25sp" />
 
         <TextView
