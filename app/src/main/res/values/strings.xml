@@ -87,7 +87,7 @@
         You may obtain a copy of the License at
         <br>
         <br>
-        http://www.apache.org/licenses/LICENSE-2.0
+        <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
         <br>
         <br>
         Unless required by applicable law or agreed to in writing, software
@@ -122,43 +122,68 @@
     <string name="about_open_source_licenses">Open Source Lizenzen</string>
     <string name="about_used_libraries">
         <![CDATA[
-        <b>jackson-databind</b> (Apache License 2.0)<br>
-        <a href="https://github.com/FasterXML/jackson-databind/">Projektseite</a><br>
+        <b>jackson-databind</b> (Apache License 2.0)
         <br>
-        <b>retrofit</b> (Apache License 2.0)<br>
-        <a href="https://github.com/square/retrofit">Projektseite</a><br>
+        <a href="https://github.com/FasterXML/jackson-databind/">Projektseite</a>
         <br>
-        <b>okhttp</b> (Apache License 2.0)<br>
-        <a href="https://github.com/square/okhttp">Projektseite</a><br>
         <br>
-        <b>okio</b> (Apache License 2.0)<br>
-        <a href="https://github.com/square/okio">Projektseite</a><br
-        ><br>
-        <b>ormlite</b> (ISC license)<br>
-        <a href="http://ormlite.com/">Projektseite</a><br>
+        <b>retrofit</b> (Apache License 2.0)
         <br>
-        <b>zxing</b> (Apache License 2.0)<br>
-        <a href="https://github.com/dm77/barcodescanner">Projektseite</a><br>
+        <a href="https://github.com/square/retrofit">Projektseite</a>
         <br>
-        <b>AndroidSlidingUpPanel</b> (Apache License 2.0)<br>
-        <a href="https://github.com/umano/AndroidSlidingUpPanel">Projektseite</a><br>
         <br>
-        <b>SwipeableRecyclerView</b> (Apache License 2.0)<br>
-        <a href="https://github.com/brnunes/Swiabout_acknowledgementspeableRecyclerView">Projektseite</a><br>
+        <b>okhttp</b> (Apache License 2.0)
         <br>
-        <b>CircleImageView</b> (Apache License 2.0)<br>
-        <a href="https://github.com/hdodenhof/CircleImageView">Projektseite</a><br>
+        <a href="https://github.com/square/okhttp">Projektseite</a>
         <br>
-        <b>FloatingActionButton</b> (Apache License 2.0)<br>
-        <a href="https://github.com/Clans/FloatingActionButton">Projektseite</a><br>
         <br>
-        <b>EventBus</b> (Apache License 2.0)<br>
-        <a href="https://github.com/greenrobot/EventBus">Projektseite</a><br>
+        <b>okio</b> (Apache License 2.0)
         <br>
-        <b>Picasso</b> (Apache License 2.0)<br>
-        <a href="https://github.com/square/picasso">Projektseite</a><br>
+        <a href="https://github.com/square/okio">Projektseite</a>
         <br>
-        <b>Renderers</b> (Apache License 2.0)<br>
+        <br>
+        <b>ormlite</b> (ISC license)
+        <br>
+        <a href="http://ormlite.com/">Projektseite</a>
+        <br>
+        <br>
+        <b>zxing</b> (Apache License 2.0)
+        <br>
+        <a href="https://github.com/dm77/barcodescanner">Projektseite</a>
+        <br>
+        <br>
+        <b>AndroidSlidingUpPanel</b> (Apache License 2.0)
+        <br>
+        <a href="https://github.com/umano/AndroidSlidingUpPanel">Projektseite</a>
+        <br>
+        <br>
+        <b>SwipeableRecyclerView</b> (Apache License 2.0)
+        <br>
+        <a href="https://github.com/brnunes/Swiabout_acknowledgementspeableRecyclerView">Projektseite</a>
+        <br>
+        <br>
+        <b>CircleImageView</b> (Apache License 2.0
+        )<br>
+        <a href="https://github.com/hdodenhof/CircleImageView">Projektseite</a>
+        <br>
+        <br>
+        <b>FloatingActionButton</b> (Apache License 2.0)
+        <br>
+        <a href="https://github.com/Clans/FloatingActionButton">Projektseite</a>
+        <br>
+        <br>
+        <b>EventBus</b> (Apache License 2.0)
+        <br>
+        <a href="https://github.com/greenrobot/EventBus">Projektseite</a>
+        <br>
+        <br>
+        <b>Picasso</b> (Apache License 2.0)
+        <br>
+        <a href="https://github.com/square/picasso">Projektseite</a>
+        <br>
+        <br>
+        <b>Renderers</b> (Apache License 2.0)
+        <br>
         <a href="https://github.com/pedrovgs/Renderers">Projektseite</a>
         ]]>
     </string>
