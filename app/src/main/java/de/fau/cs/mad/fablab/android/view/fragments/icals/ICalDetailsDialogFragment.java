@@ -96,15 +96,16 @@ public class ICalDetailsDialogFragment extends BaseDialogFragment
 
     public void onEvent(AddToCalendarEvent event)
     {
-        int[] date = event.getDate();
+        int[] startDate = event.getStartDate();
+        int[] endDate = event.getEndDate();
 
         Calendar calendarStartTime = Calendar.getInstance();
         int[] startTime = event.getStartTime();
-        calendarStartTime.set(date[2], date[1], date[0], startTime[0], startTime[1]);
+        calendarStartTime.set(startDate[2], startDate[1], startDate[0], startTime[0], startTime[1]);
 
         Calendar calendarEndTime = Calendar.getInstance();
         int[] endTime = event.getEndTime();
-        calendarEndTime.set(date[2], date[1], date[0], endTime[0], endTime[1]);
+        calendarEndTime.set(endDate[2], endDate[1], endDate[0], endTime[0], endTime[1]);
 
 
         Intent intent = new Intent(Intent.ACTION_INSERT)

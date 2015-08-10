@@ -20,13 +20,15 @@ import java.util.TimeZone;
 
 import javax.inject.Inject;
 
+import de.fau.cs.mad.fablab.android.util.CalendarHelper;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.greenrobot.event.EventBus;
 
 
 public class ICalDetailsDialogFragmentViewModel {
     public static final String KEY_TITLE = "key_title";
-    public static final String KEY_DATE = "key_date";
+    public static final String KEY_START_DATE = "key_start_date";
+    public static final String KEY_END_DATE = "key_end_date";
     public static final String KEY_START_TIME = "key_start_time";
     public static final String KEY_END_TIME = "key_end_time";
     public static final String KEY_LOCATION = "key_location";
@@ -38,7 +40,8 @@ public class ICalDetailsDialogFragmentViewModel {
     Listener mListener;
 
     private String mTitle;
-    private int[] mDate;
+    private int[] mStartDate;
+    private int[] mEndDate;
     private int[] mStartTime;
     private int[] mEndTime;
     private String mLocation;
@@ -63,7 +66,7 @@ public class ICalDetailsDialogFragmentViewModel {
         @Override
         public void execute(Void parameter)
         {
-            EventBus.getDefault().post(new AddToCalendarEvent(mTitle, mDate, mStartTime, mEndTime,
+            EventBus.getDefault().post(new AddToCalendarEvent(mTitle, mStartDate, mEndDate, mStartTime, mEndTime,
                     mLocation, mDescription, mIsAllday));
         }
     };
@@ -89,18 +92,21 @@ public class ICalDetailsDialogFragmentViewModel {
         return mTitle;
     }
 
+
     public String getDate()
     {
-        //month+1, because Calendar is zero-based (eg january = 0 and not 1)
-        Calendar currentCal = Calendar.getInstance();
+        String result = "";
 
-        // check if ical date is current date
-        if (mDate[0] == currentCal.get(Calendar.DAY_OF_MONTH) &&
-                mDate[1] == currentCal.get(Calendar.MONTH) &&
-                mDate[2] == currentCal.get(Calendar.YEAR))
-            return "Heute";
+        //check if event goes more than one day
+        if(CalendarHelper.isSameDay(mStartDate, mEndDate))
+            result = CalendarHelper.buildDateString(mStartDate);
         else
-            return Integer.toString(mDate[0]) + "." + Integer.toString((mDate[1]) + 1) + "." + Integer.toString(mDate[2]);
+            result = CalendarHelper.buildDateString(mStartDate) +
+                    " - " +
+                    CalendarHelper.buildDateString(mEndDate);
+
+        return  result;
+
     }
 
     public String getTime() {
@@ -108,9 +114,9 @@ public class ICalDetailsDialogFragmentViewModel {
         if (mIsAllday)
             return "ganzt\\u00E4gig";
         else
-            return Integer.toString(mStartTime[0]) + ":" + Integer.toString((mStartTime[1]) + 100).substring(1) + " - "
-                    + Integer.toString(mEndTime[0]) + ":" + Integer.toString((mEndTime[1]) + 100).substring(1);
-        // Minute + 100 to display HH::mm instead of H:m
+            return CalendarHelper.buildTimeString(mStartTime) +
+                    " - " +
+                    CalendarHelper.buildTimeString(mEndTime);
 
     }
 
@@ -125,7 +131,8 @@ public class ICalDetailsDialogFragmentViewModel {
 
     public void initialize(Bundle args) {
         mTitle = args.getString(KEY_TITLE);
-        mDate = args.getIntArray(KEY_DATE);
+        mStartDate = args.getIntArray(KEY_START_DATE);
+        mEndDate = args.getIntArray(KEY_END_DATE);
         mStartTime = args.getIntArray(KEY_START_TIME);
         mEndTime = args.getIntArray(KEY_END_TIME);
         mLocation = args.getString(KEY_LOCATION);

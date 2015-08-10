@@ -19,12 +19,21 @@ public class ICalViewModelRendererBuilder extends RendererBuilder<ICalViewModel>
     @Override
     protected Class getPrototypeClass(ICalViewModel iCalViewModel) {
         String title = iCalViewModel.getTitle().trim();
-        if (title.equalsIgnoreCase("openlab")) {
+        if (splitString(title).equalsIgnoreCase("openlab")) {
             return OpenLabICalViewModelRenderer.class;
-        } else if (title.equalsIgnoreCase("selflab")) {
+        } else if (splitString(title).equalsIgnoreCase("selflab")) {
             return SelfLabICalViewModelRenderer.class;
         } else {
             return ICalViewModelRenderer.class;
         }
+
+
     }
+    private String splitString(String completeString)
+    {
+        // because of: e.g. OpenLab OHNE Lasercutter
+        return completeString.split(" ")[0];
+    }
+
+
 }

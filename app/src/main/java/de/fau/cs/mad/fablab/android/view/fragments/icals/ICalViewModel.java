@@ -8,19 +8,23 @@ import de.fau.cs.mad.fablab.android.model.ICalModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.ICal;
 import de.greenrobot.event.EventBus;
+import de.fau.cs.mad.fablab.android.util.CalendarHelper;
 
 /***
  * Is the ViewModel of a single Ical
  */
 
-public class ICalViewModel {
+public class ICalViewModel
+{
     private ICal mICal;
     private ICalModel model;
 
-    private Command<Void> mShowDialogCommand = new Command<Void>() {
+    private Command<Void> mShowDialogCommand = new Command<Void>()
+    {
         @Override
-        public void execute(Void parameter) {
-            EventBus.getDefault().post(new ICalClickedEvent(getTitle(), getCalendarDate(), getCalendarStartTime(), getCalendarEndTime(),
+        public void execute(Void parameter)
+        {
+            EventBus.getDefault().post(new ICalClickedEvent(getTitle(), getCalendarStartDate(), getCalendarEndDate(), getCalendarStartTime(), getCalendarEndTime(),
                     getLocation(), mICal.getDescription(), mICal.isAllday()));
         }
     };
@@ -42,29 +46,49 @@ public class ICalViewModel {
 
     public String getDate()
     {
-        //month+1, because Calendar is zero-based (eg january = 0 and not 1)
-        Calendar cal = Calendar.getInstance();
-        Calendar currentCal = Calendar.getInstance();
-        cal.setTime(mICal.getDtstartAsDate());
+        Calendar calStart = Calendar.getInstance();
+        calStart.setTime(mICal.getDtstartAsDate());
 
-        // check if ical date is current date
-        if (cal.get(Calendar.DAY_OF_YEAR) == currentCal.get(Calendar.DAY_OF_YEAR) && cal.get(Calendar.YEAR) == currentCal.get(Calendar.YEAR))
-            return "Heute";
+        Calendar calEnd = Calendar.getInstance();
+        calEnd.setTime(mICal.getEndAsDate());
+
+        String result;
+
+        // event goes longer than a day
+        if (CalendarHelper.isSameDay(calStart, calEnd))
+            result = CalendarHelper.buildDateString(calStart);
         else
-            return Integer.toString(cal.get(Calendar.DAY_OF_MONTH)) + "." + Integer.toString(cal.get(Calendar.MONTH) + 1) + "." + Integer.toString(cal.get(Calendar.YEAR));
+            result = CalendarHelper.buildDateString(calStart) +
+                    " - " +
+                    CalendarHelper.buildDateString(calEnd);
+
+        return result;
     }
 
-    public int[] getCalendarDate()
+    public int[] getCalendarStartDate()
     {
         //Calendar is zero-based (eg january = 0 and not 1)
         // don't increase month + 1 because number will be put in Calendar object again
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(mICal.getDtstartAsDate());
+        Calendar startCal = Calendar.getInstance();
+        startCal.setTime(mICal.getDtstartAsDate());
 
         int[] date = {0, 0, 0};
-        date[0] = cal.get(Calendar.DAY_OF_MONTH);
-        date[1] = cal.get(Calendar.MONTH) ;
-        date[2] = cal.get(Calendar.YEAR);
+        date[0] = startCal.get(Calendar.DAY_OF_MONTH);
+        date[1] = startCal.get(Calendar.MONTH);
+        date[2] = startCal.get(Calendar.YEAR);
+        return date;
+
+    }
+
+    public int[] getCalendarEndDate()
+    {
+        Calendar calEnd = Calendar.getInstance();
+        calEnd.setTime(mICal.getEndAsDate());
+
+        int[] date = {0, 0, 0};
+        date[0] = calEnd.get(Calendar.DAY_OF_MONTH);
+        date[1] = calEnd.get(Calendar.MONTH);
+        date[2] = calEnd.get(Calendar.YEAR);
 
         return date;
     }
@@ -116,41 +140,34 @@ public class ICalViewModel {
     }
 
 
-    public String getTime() {
+    public String getTime()
+    {
         //add the difference to utc time to correct calendar time
         TimeZone timeZone = TimeZone.getDefault();
         Date now = new Date();
         int offsetFromUTC = timeZone.getOffset(now.getTime());
 
-        Calendar calStart = Calendar.getInstance();
-        calStart.setTime(mICal.getDtstartAsDate());
-        calStart.add(Calendar.MILLISECOND, offsetFromUTC);
-
-        Calendar calEnd = Calendar.getInstance();
-        calEnd.setTime(mICal.getEndAsDate());
-        calEnd.add(Calendar.MILLISECOND, offsetFromUTC);
-
-        int startHour = calStart.get(Calendar.HOUR_OF_DAY);
-        int startMinute = calStart.get(Calendar.MINUTE);
-        int endHour = calEnd.get(Calendar.HOUR_OF_DAY);
-        int endMinute = calEnd.get(Calendar.MINUTE);
-
-        // TODO Move to server if 00:00 and 23:xx to trigger also allday
-        if (mICal.isAllday() || (startHour == 0 && startMinute == 0 && endHour == 23)) {
+        if (mICal.isAllday())
+        {
             return "ganzt\u00E4gig";
-        } else {
+        } else
+        {
+            Calendar calStart = Calendar.getInstance();
+            calStart.setTime(mICal.getDtstartAsDate());
+            calStart.add(Calendar.MILLISECOND, offsetFromUTC);
 
-            // Minute + 100 to display HH:mm instead of HH:m
-            if(calStart.equals(calEnd)) {
-                return "ab " + Integer.toString(startHour) + ":" + Integer.toString(startMinute + 100).substring(1);
-            } else {
-                return Integer.toString(startHour) + ":" + Integer.toString(startMinute + 100).substring(1)
-                        + " - " + Integer.toString(endHour) + ":" + Integer.toString(endMinute + 100).substring(1);
-            }
+            Calendar calEnd = Calendar.getInstance();
+            calEnd.setTime(mICal.getEndAsDate());
+            calEnd.add(Calendar.MILLISECOND, offsetFromUTC);
+
+            return CalendarHelper.buildTimeString(calStart) +
+                    " - " +
+                    CalendarHelper.buildTimeString(calEnd);
         }
     }
 
-    public String getLocation() {
+    public String getLocation()
+    {
         return mICal.getLocation();
     }
 

@@ -86,7 +86,8 @@ public class ICalFragment extends BaseFragment implements ICalFragmentViewModel.
         ICalDetailsDialogFragment fragment = new ICalDetailsDialogFragment();
         Bundle args = new Bundle();
         args.putString(ICalDetailsDialogFragmentViewModel.KEY_TITLE, event.getTitle());
-        args.putIntArray(ICalDetailsDialogFragmentViewModel.KEY_DATE, event.getDate());
+        args.putIntArray(ICalDetailsDialogFragmentViewModel.KEY_START_DATE, event.getStartDate());
+        args.putIntArray(ICalDetailsDialogFragmentViewModel.KEY_END_DATE, event.getEndDate());
         args.putIntArray(ICalDetailsDialogFragmentViewModel.KEY_START_TIME, event.getStartTime());
         args.putIntArray(ICalDetailsDialogFragmentViewModel.KEY_END_TIME, event.getEndTime());
         args.putString(ICalDetailsDialogFragmentViewModel.KEY_LOCATION, event.getLocation());

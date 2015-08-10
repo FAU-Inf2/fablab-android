@@ -5,17 +5,20 @@ public class ICalClickedEvent {
     private final String mLocation;
     private final String mDescription;
 
-    private final int[] mDate;
+    private final int[] mStartDate;
+    private final int[] mEndDate;
+
     private final int[] mStartTime;
     private final int[] mEndTime;
 
     private final boolean mIsAllday;
 
 
-    public ICalClickedEvent(String title, int[] date, int[] startTime, int[] endTime, String location,
+    public ICalClickedEvent(String title, int[] startDate, int[] endDate, int[] startTime, int[] endTime, String location,
                             String description, boolean isAllday) {
         mTitle = title;
-        mDate = date;
+        mStartDate = startDate;
+        mEndDate = endDate;
         mStartTime = startTime;
         mEndTime = endTime;
         mLocation = location;
@@ -25,9 +28,14 @@ public class ICalClickedEvent {
 
     public String getTitle() { return mTitle; }
 
-    public int[] getDate() {
-        return mDate;
+    public int[] getStartDate() {
+        return mStartDate;
     }
+
+    public int[] getEndDate() {
+        return mEndDate;
+    }
+
 
     public int[] getStartTime() {
         return mStartTime;
