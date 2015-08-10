@@ -130,14 +130,23 @@ public class ICalViewModel {
         calEnd.setTime(mICal.getEndAsDate());
         calEnd.add(Calendar.MILLISECOND, offsetFromUTC);
 
+        int startHour = calStart.get(Calendar.HOUR_OF_DAY);
+        int startMinute = calStart.get(Calendar.MINUTE);
+        int endHour = calEnd.get(Calendar.HOUR_OF_DAY);
+        int endMinute = calEnd.get(Calendar.MINUTE);
+
         // TODO Move to server if 00:00 and 23:xx to trigger also allday
-        if (mICal.isAllday() || (calStart.get(Calendar.HOUR_OF_DAY) == 0 && calStart.get(Calendar.MINUTE) == 0 && calEnd.get(Calendar.HOUR_OF_DAY) == 23)) {
+        if (mICal.isAllday() || (startHour == 0 && startMinute == 0 && endHour == 23)) {
             return "ganzt\u00E4gig";
         } else {
 
             // Minute + 100 to display HH:mm instead of HH:m
-            return Integer.toString(calStart.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(calStart.get(Calendar.MINUTE) + 100).substring(1)
-                    + " - " + Integer.toString(calEnd.get(Calendar.HOUR_OF_DAY)) + ":" + Integer.toString(calEnd.get(Calendar.MINUTE) + 100).substring(1);
+            if(calStart.equals(calEnd)) {
+                return "ab " + Integer.toString(startHour) + ":" + Integer.toString(startMinute + 100).substring(1);
+            } else {
+                return Integer.toString(startHour) + ":" + Integer.toString(startMinute + 100).substring(1)
+                        + " - " + Integer.toString(endHour) + ":" + Integer.toString(endMinute + 100).substring(1);
+            }
         }
     }
 
