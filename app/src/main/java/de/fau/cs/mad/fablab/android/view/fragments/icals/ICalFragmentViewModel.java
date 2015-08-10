@@ -4,6 +4,7 @@ import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -60,6 +61,17 @@ public class ICalFragmentViewModel extends BaseViewModel<ICal> {
         }
     }
 
+    @Override
+    public void onAllItemsRemoved(List<ICal> removedItems) {
+
+        int count = mICalViewModelCollection.size();
+        mICalViewModelCollection.clear();
+
+        if (mListener != null) {
+            mListener.onAllDataRemoved(count);
+        }
+    }
+
     public AdapteeCollection<ICalViewModel> getICalViewModelCollection() {
         return mICalViewModelCollection;
     }
@@ -70,5 +82,7 @@ public class ICalFragmentViewModel extends BaseViewModel<ICal> {
 
     public interface Listener {
         void onDataInserted(int positionStart, int itemCount);
+
+        void onAllDataRemoved(int itemCount);
     }
 }

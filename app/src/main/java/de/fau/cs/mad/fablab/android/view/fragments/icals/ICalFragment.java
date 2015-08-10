@@ -75,6 +75,10 @@ public class ICalFragment extends BaseFragment implements ICalFragmentViewModel.
         mAdapter.notifyItemRangeInserted(positionStart, itemCount);
     }
 
+    @Override
+    public void onAllDataRemoved(int itemCount) {
+        mAdapter.notifyItemRangeRemoved(0, itemCount);
+    }
 
     //new
     public void onEvent(ICalClickedEvent event)
