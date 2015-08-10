@@ -1,6 +1,7 @@
 package de.fau.cs.mad.fablab.android.model;
 
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.DeleteBuilder;
 import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
@@ -55,21 +56,17 @@ public class ICalModel {
         }
     };
 
-    private Callback<List<ICal>> mICalApiCallbackUpdate = new Callback<List<ICal>>() {
+    private Callback<Long> mICalApiCallbackUpdate = new Callback<Long>() {
         @Override
-        public void success(List<ICal> iCals, Response response) {
-            mICalsRequested = false;
-
-            for(ICal i : iCals)
+        public void success(Long lastUpdate, Response response) {
+            if(lastUpdate > mTimeStampLastUpdate)
             {
-                createIfNotExists(mICalDao, i);
+                mEndReached = false;
+                mTimeStampLastUpdate = lastUpdate;
+                clearDao(mICalDao);
+                mICals.clear();
+                fetchNextICals();
             }
-
-            mICals.clear();
-            mDateLastDisplayedICals = new Date(System.currentTimeMillis());
-            mEndReached = false;
-            fetchNextICals();
-            mTimeStampLastUpdate = System.currentTimeMillis();
         }
 
         @Override
@@ -92,12 +89,12 @@ public class ICalModel {
 
     public void fetchNextICals() {
         //check whether to get news from database or server
-        if (!mICalsRequested)// && mICals.size() + ELEMENT_COUNT > mICalDao.countOf() && !mEndReached)
+        if (!mICalsRequested && mICals.size() + ELEMENT_COUNT > mICalDao.countOf() && !mEndReached)
         {
             mICalsRequested = true;
             mICalApi.find(mICals.size(), ELEMENT_COUNT, mICalApiCallback);
         }
-        /*
+
         else if (!mICalsRequested && !mEndReached)
         {
             mICalsRequested = true;
@@ -114,11 +111,10 @@ public class ICalModel {
                 e.printStackTrace();
             }
             mICals.addAll(fetchedICals);
-
             mDateLastDisplayedICals = mICals.get(mICals.size()-1).getStartAsDate();
             mICalsRequested = false;
         }
-        */
+
     }
 
 
@@ -128,7 +124,8 @@ public class ICalModel {
 
     public void iCalModelUpdate()
     {
-        //mICalApi.f
+        mICalApi.lastUpdate(mICalApiCallbackUpdate);
+        deleteOldICals(mICalDao);
     }
 
     private void createIfNotExists(RuntimeExceptionDao<ICal, Long> iCalDao, ICal iCal)
@@ -145,6 +142,27 @@ public class ICalModel {
         if(retrievedICals.size() == 0)
         {
             iCalDao.create(iCal);
+        }
+    }
+
+    private void deleteOldICals(RuntimeExceptionDao<ICal, Long> iCalDao)
+    {
+        List<ICal> retrievedICals = new ArrayList<>();
+        DeleteBuilder<ICal, Long> deleteBuilder = iCalDao.deleteBuilder();
+        try {
+            deleteBuilder.where().lt("end", System.currentTimeMillis());
+            iCalDao.delete(deleteBuilder.prepare());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void clearDao(RuntimeExceptionDao<ICal, Long> iCalDao)
+    {
+        List<ICal> retrievedICals = iCalDao.queryForAll();
+        for(ICal i : retrievedICals)
+        {
+            iCalDao.delete(i);
         }
     }
 }
