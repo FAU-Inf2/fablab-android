@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import de.fau.cs.mad.fablab.rest.core.FabTool;
@@ -64,6 +65,16 @@ public class AlertDialogFragment extends BaseDialogFragment
 
         new ViewCommandBinding().bind(mOKButton, mViewModel.getOKCommand());
         new ViewCommandBinding().bind(mCancelButton, mViewModel.getCancelCommand());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MainActivity activity = (MainActivity) getActivity();
+        activity.enableNavigationDrawer(true);
+        activity.setNavigationDrawerSelection(R.id.drawer_item_settings);
+        activity.showFloatingActionButton(false);
+        activity.showCartSlidingUpPanel(false);
     }
 
     @Override
