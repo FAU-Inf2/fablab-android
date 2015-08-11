@@ -9,8 +9,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.NewsModel;
-import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewDeltaCommandBinding;
-import de.fau.cs.mad.fablab.android.view.fragments.icalandnews.NewsListScrollingEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.News;
@@ -29,12 +27,6 @@ public class NewsFragmentViewModel extends BaseViewModel<News> {
             mModel.fetchNextNews();
         }
     };
-    private Command<RecyclerViewDeltaCommandBinding.RecyclerViewDelta> mNewsScrollingCommand = new Command<RecyclerViewDeltaCommandBinding.RecyclerViewDelta>() {
-        @Override
-        public void execute(RecyclerViewDeltaCommandBinding.RecyclerViewDelta parameter) {
-            mEventBus.post(new NewsListScrollingEvent(parameter));
-        }
-    };
 
     @Inject
     public NewsFragmentViewModel(NewsModel model) {
@@ -49,10 +41,6 @@ public class NewsFragmentViewModel extends BaseViewModel<News> {
 
     public Command<Void> getGetNewsCommand() {
         return mCommandGetNews;
-    }
-
-    public Command<RecyclerViewDeltaCommandBinding.RecyclerViewDelta> getNewsScrollingCommand() {
-        return mNewsScrollingCommand;
     }
 
     @Override
