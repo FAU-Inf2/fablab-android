@@ -30,6 +30,8 @@ public class AlertDialogFragment extends BaseDialogFragment
 
     @InjectView(R.id.alert_dialog_tool_spinner)
     Spinner mToolSpinner;
+    @InjectView(R.id.alert_dialog_edit_text_tools)
+    EditText mEditTextTools;
     @InjectView(R.id.alert_dialog_edit_text)
     EditText mEditText;
     @InjectView(R.id.alert_dialog_ok_button)
@@ -39,6 +41,8 @@ public class AlertDialogFragment extends BaseDialogFragment
 
     @Inject
     AlertDialogFragmentViewModel mViewModel;
+
+    private boolean mBoolSpinner = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,16 +56,26 @@ public class AlertDialogFragment extends BaseDialogFragment
         mViewModel.setListener(this);
         mEditText.setText("");
 
-        //set spinner items
-        List<String> mToolNames = new ArrayList<>();
+        //check if tools are available
         List<FabTool> mTools = mViewModel.getTools();
-        for(FabTool f : mTools)
+        if(mTools.isEmpty())
         {
-            mToolNames.add(f.getTitle());
+            mBoolSpinner = false;
+            mEditTextTools.setVisibility(View.VISIBLE);
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                R.layout.spinner_item, mToolNames);
-        mToolSpinner.setAdapter(adapter);
+        else
+        {
+            //set spinner items
+            List<String> mToolNames = new ArrayList<>();
+            for(FabTool f : mTools)
+            {
+                mToolNames.add(f.getTitle());
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                    R.layout.spinner_item, mToolNames);
+            mToolSpinner.setAdapter(adapter);
+            mToolSpinner.setVisibility(View.VISIBLE);
+        }
 
         new ViewCommandBinding().bind(mOKButton, mViewModel.getOKCommand());
         new ViewCommandBinding().bind(mCancelButton, mViewModel.getCancelCommand());
@@ -79,10 +93,20 @@ public class AlertDialogFragment extends BaseDialogFragment
 
     @Override
     public void onOK() {
+        String text = "";
+        if(mBoolSpinner)
+        {
+            text = mToolSpinner.getSelectedItem().toString();
+        }
+        else
+        {
+            text = mEditTextTools.getText().toString();
+        }
+
         Intent sendIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                 "mailto", mViewModel.getMailAddress(), null));
         String subject = getActivity().getString(R.string.alert_messaging_subject);
-        String body = "tool name: \n" + mToolSpinner.getSelectedItem() + "\n";
+        String body = "tool name: \n" + text + "\n";
         body += "problem: \n" + mEditText.getText() + "\n";
 
         sendIntent.putExtra(Intent.EXTRA_TEXT, body);

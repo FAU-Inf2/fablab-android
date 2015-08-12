@@ -32,9 +32,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/alert_dialog_tool_spinner"
+        android:visibility="gone"
         android:layout_marginBottom="@dimen/card_vertical_margin"
         >
     </Spinner>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/alert_dialog_edit_text_tools"
+        android:layout_marginBottom="@dimen/card_vertical_margin"
+        />
 
     <TextView
         android:layout_width="match_parent"
