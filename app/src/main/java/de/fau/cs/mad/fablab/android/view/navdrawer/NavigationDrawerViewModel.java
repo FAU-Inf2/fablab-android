@@ -2,10 +2,14 @@ package de.fau.cs.mad.fablab.android.view.navdrawer;
 
 import android.os.Bundle;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
+import de.fau.cs.mad.fablab.rest.core.Roles;
+import de.fau.cs.mad.fablab.rest.core.User;
 import de.greenrobot.event.EventBus;
 
 public class NavigationDrawerViewModel {
@@ -67,7 +71,10 @@ public class NavigationDrawerViewModel {
 
             // get userinformation from server
             // TODO give user to listener
-            mListener.loggedIn();
+            ArrayList<Roles> roles = new ArrayList();
+            roles.add(Roles.INVENTORY);
+            User user = new User("inventory", roles);
+            mListener.loggedIn(user);
         }
     };
 
@@ -150,7 +157,7 @@ public class NavigationDrawerViewModel {
 
         String getPassword();
 
-        void loggedIn();
+        void loggedIn(User user);
 
         void loggedOut();
     }

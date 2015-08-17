@@ -20,6 +20,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
+import de.fau.cs.mad.fablab.rest.core.User;
 
 public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
     @InjectView(R.id.drawer_layout)
@@ -121,14 +122,14 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
     }
 
     @Override
-    public void loggedIn() {
+    public void loggedIn(User user) {
         Menu menu = mNavigationView.getMenu();
         menu.findItem(R.id.drawer_item_logout).setVisible(true);
 
         mHeaderLogin.setVisibility(View.GONE);
         mHeaderLoggedIn.setVisibility(View.VISIBLE);
 
-        mUsernameLoggedIn.setText("Inventur");
+        mUsernameLoggedIn.setText(user.getUsername());
     }
 
     @Override
