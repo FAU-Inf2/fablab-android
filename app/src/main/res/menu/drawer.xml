@@ -26,5 +26,8 @@
             android:id="@+id/drawer_item_about"
             android:icon="@drawable/ic_nav_about"
             android:title="@string/about" />
+        <item
+            android:id="@+id/drawer_item_logout"
+            android:title="Logout" />
     </group>
 </menu>

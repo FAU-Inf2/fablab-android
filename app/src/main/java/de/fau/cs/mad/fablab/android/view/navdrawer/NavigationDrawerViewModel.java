@@ -58,6 +58,27 @@ public class NavigationDrawerViewModel {
         }
     };
 
+    private final Command<Void> mLoginCommand = new Command<Void>()
+    {
+        @Override
+        public void execute(Void parameter) {
+            String password = mListener.getPassword();
+            String username = mListener.getUsername();
+
+            // get userinformation from server
+            // TODO give user to listener
+            mListener.loggedIn();
+        }
+    };
+
+    private final Command<Integer> mLogoutCommand = new Command<Integer>()
+    {
+        @Override
+        public void execute(Integer parameter) {
+            mListener.loggedOut();
+        }
+    };
+
     @Inject
     public NavigationDrawerViewModel() {
 
@@ -92,6 +113,16 @@ public class NavigationDrawerViewModel {
         return mNavigateToAlertCommand;
     }
 
+    public Command<Void> getLoginCommand()
+    {
+        return mLoginCommand;
+    }
+
+    public Command<Integer> getLogoutCommand()
+    {
+        return mLogoutCommand;
+    }
+
     public void setSelection(int itemId) {
         mSelectedItem = itemId;
         if (mListener != null) {
@@ -114,5 +145,13 @@ public class NavigationDrawerViewModel {
 
     public interface Listener {
         void onNavigationDrawerItemSelected(int itemId);
+
+        String getUsername();
+
+        String getPassword();
+
+        void loggedIn();
+
+        void loggedOut();
     }
 }

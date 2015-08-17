@@ -7,6 +7,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -15,12 +19,30 @@ import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
+import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 
 public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
     @InjectView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
     @InjectView(R.id.navigation)
     NavigationView mNavigationView;
+
+    // views for login
+    @InjectView(R.id.navdrawer_header_login)
+    LinearLayout mHeaderLogin;
+    @InjectView(R.id.drupal_login_button)
+    Button mLoginButton;
+    @InjectView(R.id.drupal_login_username)
+    EditText mUsernameET;
+    @InjectView(R.id.drupal_login_password)
+    EditText mPasswordET;
+
+    // views when logged in
+    @InjectView(R.id.navdrawer_header_loggedin)
+    LinearLayout mHeaderLoggedIn;
+    @InjectView(R.id.navdrawer_name)
+    TextView mUsernameLoggedIn;
+
 
     @Inject
     NavigationDrawerViewModel mViewModel;
@@ -44,6 +66,12 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
                 mViewModel.getNavigateToAboutCommand());
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_settings),
                 mViewModel.getNavigateToSettingsCommand());
+        new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_logout),
+                mViewModel.getLogoutCommand());
+        menu.findItem(R.id.drawer_item_logout).setVisible(false);
+
+        new ViewCommandBinding().bind(mLoginButton, mViewModel.getLoginCommand());
+
     }
 
     @Override
@@ -70,5 +98,45 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
 
     public void saveState(Bundle outState) {
         mViewModel.saveState(outState);
+    }
+
+    @Override
+    public String getUsername()
+    {
+        if(mUsernameET != null)
+        {
+            return mUsernameET.getText().toString();
+        }
+        return null;
+    }
+
+    @Override
+    public String getPassword()
+    {
+        if(mPasswordET != null)
+        {
+            return mPasswordET.getText().toString();
+        }
+        return null;
+    }
+
+    @Override
+    public void loggedIn() {
+        Menu menu = mNavigationView.getMenu();
+        menu.findItem(R.id.drawer_item_logout).setVisible(true);
+
+        mHeaderLogin.setVisibility(View.GONE);
+        mHeaderLoggedIn.setVisibility(View.VISIBLE);
+
+        mUsernameLoggedIn.setText("Inventur");
+    }
+
+    @Override
+    public void loggedOut() {
+        Menu menu = mNavigationView.getMenu();
+        menu.findItem(R.id.drawer_item_logout).setVisible(false);
+
+        mHeaderLogin.setVisibility(View.VISIBLE);
+        mHeaderLoggedIn.setVisibility(View.GONE);
     }
 }
