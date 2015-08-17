@@ -20,6 +20,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
+import de.fau.cs.mad.fablab.rest.core.Roles;
 import de.fau.cs.mad.fablab.rest.core.User;
 
 public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
@@ -48,6 +49,8 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
     @Inject
     NavigationDrawerViewModel mViewModel;
 
+    private User mUser;
+
     public NavigationDrawer(MainActivity activity, View view) {
         ButterKnife.inject(this, view);
         activity.inject(this);
@@ -61,6 +64,8 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
                 mViewModel.getNavigateToProductSearchCommand());
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_scanner),
                 mViewModel.getNavigateToBarcodeScannerCommand());
+        new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_inventory),
+                mViewModel.getInventoryCommand());
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_alert),
                 mViewModel.getNavigateToAlertCommand());
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_about),
@@ -69,10 +74,10 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
                 mViewModel.getNavigateToSettingsCommand());
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_logout),
                 mViewModel.getLogoutCommand());
-        menu.findItem(R.id.drawer_item_logout).setVisible(false);
-
         new ViewCommandBinding().bind(mLoginButton, mViewModel.getLoginCommand());
 
+        menu.findItem(R.id.drawer_item_logout).setVisible(false);
+        menu.findItem(R.id.drawer_item_inventory).setVisible(false);
     }
 
     @Override
@@ -123,8 +128,14 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
 
     @Override
     public void loggedIn(User user) {
+        mUser = user;
         Menu menu = mNavigationView.getMenu();
         menu.findItem(R.id.drawer_item_logout).setVisible(true);
+
+        if(user.getRoles().contains(Roles.INVENTORY))
+        {
+            menu.findItem(R.id.drawer_item_inventory).setVisible(true);
+        }
 
         mHeaderLogin.setVisibility(View.GONE);
         mHeaderLoggedIn.setVisibility(View.VISIBLE);
@@ -136,6 +147,11 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
     public void loggedOut() {
         Menu menu = mNavigationView.getMenu();
         menu.findItem(R.id.drawer_item_logout).setVisible(false);
+
+        if(mUser.getRoles().contains(Roles.INVENTORY))
+        {
+            menu.findItem(R.id.drawer_item_inventory).setVisible(false);
+        }
 
         mHeaderLogin.setVisibility(View.VISIBLE);
         mHeaderLoggedIn.setVisibility(View.GONE);

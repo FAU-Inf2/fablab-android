@@ -86,6 +86,15 @@ public class NavigationDrawerViewModel {
         }
     };
 
+    private final Command<Integer> mInventoryCommand = new Command<Integer>()
+    {
+
+        @Override
+        public void execute(Integer parameter) {
+
+        }
+    };
+
     @Inject
     public NavigationDrawerViewModel() {
 
@@ -128,6 +137,11 @@ public class NavigationDrawerViewModel {
     public Command<Integer> getLogoutCommand()
     {
         return mLogoutCommand;
+    }
+
+    public Command<Integer> getInventoryCommand()
+    {
+        return mInventoryCommand;
     }
 
     public void setSelection(int itemId) {
