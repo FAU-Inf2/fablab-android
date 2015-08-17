@@ -28,6 +28,7 @@
             android:title="@string/about" />
         <item
             android:id="@+id/drawer_item_logout"
-            android:title="Logout" />
+            android:icon="@drawable/ic_nav_logout"
+            android:title="@string/logout" />
     </group>
 </menu>
