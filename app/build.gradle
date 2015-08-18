@@ -1,12 +1,17 @@
 apply plugin: 'com.android.application'
 apply plugin: 'de.bitdroid.jaxrs2retrofit'
 
+import de.bitdroid.jaxrs2retrofit.converter.IgnoreConverter
+import com.squareup.javapoet.ClassName
+import io.dropwizard.auth.Auth
+
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
         classpath 'de.bitdroid.jaxrs2retrofit:plugin:0.4.1'
+        classpath 'io.dropwizard:dropwizard-auth:0.8.1'
     }
 }
 
@@ -152,6 +157,8 @@ afterEvaluate {
         it.generateSynchronousMethods = false
         it.generateCallbackMethods = true
         it.generateRxJavaMethods = false
+        it.paramConverterManager.registerConverter(ClassName.get(Auth.class), new IgnoreConverter());
+
     }
 }
 
