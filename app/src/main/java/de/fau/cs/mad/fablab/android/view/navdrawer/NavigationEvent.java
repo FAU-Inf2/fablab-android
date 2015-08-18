@@ -7,5 +7,7 @@ public enum NavigationEvent {
     About,
     Settings,
     Alert,
-    Inventory
+    Inventory,
+    BarcodeScannerInventory,
+    ProductSearchInventory
 }

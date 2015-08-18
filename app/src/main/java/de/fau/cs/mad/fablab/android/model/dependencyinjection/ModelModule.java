@@ -24,7 +24,10 @@ import de.fau.cs.mad.fablab.android.view.fragments.checkout.QrCodeScannerFragmen
 import de.fau.cs.mad.fablab.android.view.fragments.icalandnews.ICalAndNewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.icals.ICalDetailsDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.icals.ICalFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.inventory.AddToInventoryDialogFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryBarcodeScannerFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsDetailsDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productmap.ProductMapFragment;
@@ -41,7 +44,8 @@ import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
                 ICalDetailsDialogFragment.class, ICalFragment.class, NavigationDrawer.class,
                 NewsDetailsDialogFragment.class, NewsFragment.class, ProductDialogFragment.class,
                 ProductMapFragment.class, ProductSearchFragment.class, QrCodeScannerFragment.class,
-                AlertDialogFragment.class, InventoryFragment.class
+                AlertDialogFragment.class, InventoryFragment.class, InventoryBarcodeScannerFragment.class,
+                InventoryProductSearchFragment.class, AddToInventoryDialogFragment.class
         })
 public class ModelModule {
     private final StorageFragment mStorageFragment;

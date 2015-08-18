@@ -12,6 +12,8 @@ import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
+import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationEvent;
+import de.greenrobot.event.EventBus;
 
 public class InventoryFragment extends BaseFragment implements InventoryFragmentViewModel.Listener{
 
@@ -22,6 +24,8 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
 
     @Inject
     InventoryFragmentViewModel mViewModel;
+
+    EventBus mEventBus = EventBus.getDefault();
 
     @Inject
     public InventoryFragment(){
@@ -52,11 +56,11 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
 
     @Override
     public void onScanButtonClicked() {
-
+        mEventBus.post(NavigationEvent.BarcodeScannerInventory);
     }
 
     @Override
     public void onSearchButtonClicked() {
-
+        mEventBus.post(NavigationEvent.ProductSearchInventory);
     }
 }
