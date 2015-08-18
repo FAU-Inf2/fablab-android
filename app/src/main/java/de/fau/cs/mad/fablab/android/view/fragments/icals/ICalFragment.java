@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.fragments.icals;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,7 +37,12 @@ public class ICalFragment extends BaseFragment implements ICalFragmentViewModel.
         super.onActivityCreated(savedInstanceState);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        } else {
+            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        }
+
         ical_rv.setLayoutManager(layoutManager);
 
         mAdapter = new RVRendererAdapter<>(getLayoutInflater(savedInstanceState),

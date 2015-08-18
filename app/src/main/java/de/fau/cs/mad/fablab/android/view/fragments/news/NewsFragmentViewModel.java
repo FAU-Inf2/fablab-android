@@ -9,6 +9,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.NewsModel;
+import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewDeltaCommandBinding;
+import de.fau.cs.mad.fablab.android.view.fragments.icalandnews.NewsListScrollingEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.News;
@@ -18,6 +20,7 @@ public class NewsFragmentViewModel extends BaseViewModel<News> {
     private NewsModel mModel;
     private Listener mListener;
     private EventBus mEventBus = EventBus.getDefault();
+    private int maxPixelHeight;
 
     private ListAdapteeCollection<NewsViewModel> mNewsViewModelCollection;
 
@@ -25,6 +28,12 @@ public class NewsFragmentViewModel extends BaseViewModel<News> {
         @Override
         public void execute(Void parameter) {
             mModel.fetchNextNews();
+        }
+    };
+    private Command<RecyclerViewDeltaCommandBinding.RecyclerViewDelta> mNewsScrollingCommand = new Command<RecyclerViewDeltaCommandBinding.RecyclerViewDelta>() {
+        @Override
+        public void execute(RecyclerViewDeltaCommandBinding.RecyclerViewDelta parameter) {
+            mEventBus.post(new NewsListScrollingEvent(parameter, getMaxPixelHeight()));
         }
     };
 
@@ -41,6 +50,10 @@ public class NewsFragmentViewModel extends BaseViewModel<News> {
 
     public Command<Void> getGetNewsCommand() {
         return mCommandGetNews;
+    }
+
+    public Command<RecyclerViewDeltaCommandBinding.RecyclerViewDelta> getNewsScrollingCommand() {
+        return mNewsScrollingCommand;
     }
 
     @Override
@@ -69,6 +82,10 @@ public class NewsFragmentViewModel extends BaseViewModel<News> {
         if (mListener != null) {
             mListener.onAllDataRemoved(count);
         }
+    }
+
+    public int getMaxPixelHeight() {
+        return mNewsViewModelCollection.size();
     }
 
     public AdapteeCollection<NewsViewModel> getNewsViewModelCollection() {

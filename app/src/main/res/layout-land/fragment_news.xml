@@ -5,7 +5,7 @@
     android:scrollbars="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/news_activity_news_padding_top"
+    android:paddingTop="@dimen/card_vertical_margin"
     android:clipToPadding="false"
     tools:context="de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment" />
 
