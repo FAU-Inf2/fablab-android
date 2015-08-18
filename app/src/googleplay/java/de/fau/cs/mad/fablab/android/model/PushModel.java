@@ -13,6 +13,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
 
+import de.fau.cs.mad.fablab.rest.api.DeviceType;
 import de.fau.cs.mad.fablab.rest.core.RegistrationId;
 import de.fau.cs.mad.fablab.rest.myapi.PushApi;
 import retrofit.Callback;
@@ -126,7 +127,7 @@ public class PushModel {
     }
 
     private void sendRegistrationIdToBackend(String regId) {
-        mPushApi.addRegistrationId(new RegistrationId(regId), new Callback<Response>() {
+        mPushApi.addRegistrationId(new RegistrationId(regId, DeviceType.Android), new Callback<Response>() {
             @Override
             public void success(Response response, Response response2) {
                 Log.i(TAG,"Success: " + response.getStatus());
