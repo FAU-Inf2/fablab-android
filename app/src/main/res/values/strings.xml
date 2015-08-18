@@ -64,6 +64,10 @@
     <string name="alert_dialog_ok_button">Ok</string>
     <string name="alert_dialog_cancel_button">Cancel</string>
 
+    <string name="inventory_fragment_title">Inventur</string>
+    <string name="inventory_fragment_scan_product">Product scannen</string>
+    <string name="inventory_fragment_search_product">Product suchen</string>
+
     <!-- Strings for navigation drawer titles -->
     <string name="news">News</string>
     <string name="productsearch">Produkt suchen</string>

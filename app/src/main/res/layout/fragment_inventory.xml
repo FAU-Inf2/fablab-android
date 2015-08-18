@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingRight="@dimen/alert_dialog_margin"
+    android:paddingLeft="@dimen/alert_dialog_margin"
+    android:paddingTop="@dimen/alert_dialog_margin"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/abc_text_size_large_material"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/inventory_fragment_title"
+        android:textColor="@color/colorPrimary"
+        android:gravity="center_horizontal"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/inventory_fragment_scan_product"
+        android:id="@+id/button_scan_product_inventory"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/inventory_fragment_search_product"
+        android:id="@+id/button_search_product_inventory"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
