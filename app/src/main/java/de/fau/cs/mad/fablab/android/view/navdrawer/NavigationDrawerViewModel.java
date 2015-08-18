@@ -2,13 +2,11 @@ package de.fau.cs.mad.fablab.android.view.navdrawer;
 
 import android.os.Bundle;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.model.UserModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
-import de.fau.cs.mad.fablab.rest.core.Roles;
 import de.fau.cs.mad.fablab.rest.core.User;
 import de.greenrobot.event.EventBus;
 
@@ -17,6 +15,7 @@ public class NavigationDrawerViewModel {
 
     private Listener mListener;
     private EventBus mEventBus = EventBus.getDefault();
+    private UserModel mModel;
 
     private int mSelectedItem = R.id.drawer_item_news;
 
@@ -71,10 +70,10 @@ public class NavigationDrawerViewModel {
 
             // get userinformation from server
             // TODO give user to listener
-            ArrayList<Roles> roles = new ArrayList();
-            roles.add(Roles.INVENTORY);
-            User user = new User("inventory", roles);
-            mListener.loggedIn(user);
+            //ArrayList<Roles> roles = new ArrayList();
+            //roles.add(Roles.INVENTORY);
+            //User user = new User("inventory", roles);
+            mListener.loggedIn(mModel.getUser());
         }
     };
 
@@ -95,8 +94,8 @@ public class NavigationDrawerViewModel {
     };
 
     @Inject
-    public NavigationDrawerViewModel() {
-
+    public NavigationDrawerViewModel(UserModel userModel) {
+        mModel = userModel;
     }
 
     public void setListener(Listener listener) {

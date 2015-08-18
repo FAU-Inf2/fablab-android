@@ -11,6 +11,7 @@ import de.fau.cs.mad.fablab.android.model.ICalModel;
 import de.fau.cs.mad.fablab.android.model.NewsModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
+import de.fau.cs.mad.fablab.android.model.UserModel;
 import de.fau.cs.mad.fablab.android.model.util.StorageFragment;
 import de.fau.cs.mad.fablab.android.view.actionbar.ActionBar;
 import de.fau.cs.mad.fablab.android.view.cartpanel.CartSlidingUpPanel;
@@ -99,5 +100,11 @@ public class ModelModule {
     DrupalModel provideDrupalModel()
     {
         return mStorageFragment.getDrupalModel();
+    }
+
+    @Provides
+    UserModel provideUserModel()
+    {
+        return mStorageFragment.getUserModel();
     }
 }

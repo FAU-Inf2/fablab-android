@@ -1,6 +1,7 @@
 package de.fau.cs.mad.fablab.android.model.util;
 
 import android.content.Context;
+import android.util.Base64;
 import android.util.Log;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -26,6 +27,8 @@ import de.fau.cs.mad.fablab.rest.myapi.NewsApi;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
 import de.fau.cs.mad.fablab.rest.myapi.PushApi;
 import de.fau.cs.mad.fablab.rest.myapi.SpaceApi;
+import de.fau.cs.mad.fablab.rest.myapi.UserApi;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 import retrofit.converter.JacksonConverter;
@@ -43,6 +46,8 @@ public class RestClient {
         OkHttpClient httpClient = new OkHttpClient();
         httpClient.setSslSocketFactory(getPinnedCertSslSocketFactory());
 
+        final String credentials = "inventory" + ":" + "secret";
+
         // extra converter for Strings needed
         if(!string) {
             ObjectMapper mapper = new ObjectMapper();
@@ -54,7 +59,16 @@ public class RestClient {
                     .setClient(new OkClient(httpClient))
                     .setConverter(new JacksonConverter(mapper))
                     .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL
-                            : RestAdapter.LogLevel.NONE);
+                            : RestAdapter.LogLevel.NONE)
+                    .setRequestInterceptor(new RequestInterceptor() {
+                        @Override
+                        public void intercept(RequestFacade request) {
+                            // create Base64 encodet string
+                            String string = "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+                            request.addHeader("Authorization", string);
+                            request.addHeader("Accept", "application/json");
+                        }
+                    });
 
             mRestAdapter = builder.build();
         }
@@ -65,7 +79,16 @@ public class RestClient {
                     .setClient(new OkClient(httpClient))
                     .setConverter(new StringConverter())
                     .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL
-                            : RestAdapter.LogLevel.NONE);
+                            : RestAdapter.LogLevel.NONE)
+                    .setRequestInterceptor(new RequestInterceptor() {
+                        @Override
+                        public void intercept(RequestFacade request) {
+                            // create Base64 encodet string
+                            String string = "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+                            request.addHeader("Authorization", string);
+                            request.addHeader("Accept", "application/json");
+                        }
+                    });
 
             mRestAdapter = builder.build();
         }
@@ -133,5 +156,10 @@ public class RestClient {
     public DrupalApi getDrupalApi()
     {
         return mRestAdapter.create(DrupalApi.class);
+    }
+
+    public UserApi getUserApi()
+    {
+        return mRestAdapter.create(UserApi.class);
     }
 }

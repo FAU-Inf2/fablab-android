@@ -101,4 +101,6 @@ public class NewsFragmentViewModel extends BaseViewModel<News> {
 
         void onAllDataRemoved(int itemCount);
     }
+
+
 }

@@ -14,6 +14,7 @@ import de.fau.cs.mad.fablab.android.model.NewsModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.model.PushModel;
 import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
+import de.fau.cs.mad.fablab.android.model.UserModel;
 
 /**
  * The main storage fragment which initializes all other storage parts
@@ -28,6 +29,7 @@ public class StorageFragment extends Fragment {
     private SpaceApiModel mSpaceApiModel;
     private FablabMailModel mFablabMailModel;
     private DrupalModel mDrupalModel;
+    private UserModel mUserModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class StorageFragment extends Fragment {
         mSpaceApiModel = new SpaceApiModel(restClient.getSpaceApi(), getString(R.string.space_name));
         mFablabMailModel = new FablabMailModel(restClientString.getDataApi());
         mDrupalModel = new DrupalModel(restClient.getDrupalApi());
+        mUserModel = new UserModel((restClient.getUserApi()));
     }
 
     public NewsModel getNewsModel(){
@@ -86,6 +89,11 @@ public class StorageFragment extends Fragment {
     public DrupalModel getDrupalModel()
     {
         return mDrupalModel;
+    }
+
+    public UserModel getUserModel()
+    {
+        return mUserModel;
     }
 
     public void update()
