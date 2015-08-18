@@ -55,6 +55,20 @@ public class CalendarHelper
         return isSameDay(currentDate, calendarDate);
     }
 
+    public static boolean isMoreDays(Calendar startTime, Calendar endTime)
+    {
+        return !isSameDay(startTime, endTime);
+    }
+
+    public static boolean isMoreDays(int[] date1, int[] date2)
+    {
+        if (date1[0] != date2[0] ||
+                date1[1] != date2[1] ||
+                date1[2] != date2[2])
+            return true;
+        else
+            return false;
+    }
 
     public static String buildDateString(Calendar calendarDate)
     {

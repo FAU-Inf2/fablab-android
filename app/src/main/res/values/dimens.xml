@@ -13,7 +13,7 @@
     <dimen name="news_dialog_horizontal_margin">20dp</dimen>
     <dimen name="news_dialog_vertical_margin">10dp</dimen>
     <dimen name="news_dialog_title_text_margin">30dp</dimen>
-    <dimen name="news_dialog_icon_size">0dp</dimen>
+    <dimen name="news_dialog_icon_size">50dp</dimen>
 
     <dimen name="news_entry_card_padding">15dp</dimen>
     <dimen name="news_entry_left_text_margin">14dp</dimen>

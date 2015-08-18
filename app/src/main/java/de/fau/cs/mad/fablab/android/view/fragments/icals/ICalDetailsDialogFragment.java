@@ -16,7 +16,6 @@ import javax.inject.Inject;
 
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.view.common.binding.CalendarCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import de.greenrobot.event.EventBus;
@@ -56,7 +55,12 @@ public class ICalDetailsDialogFragment extends BaseDialogFragment
 
         title_tv.setText(mViewModel.getTitle());
         date_tv.setText(getString(R.string.dates_date) + " " + mViewModel.getDate());
-        time_tv.setText(getString(R.string.dates_time) + " " + mViewModel.getTime());
+        if(mViewModel.getTime().equals(" - ")) {
+            time_tv.setVisibility(View.GONE);
+        } else {
+            time_tv.setText(getString(R.string.dates_time) + " " + mViewModel.getTime());
+        }
+
         if (mViewModel.getLocation() != null) {
             location_tv.setText(getString(R.string.dates_location) + " "
                     + mViewModel.getLocation());

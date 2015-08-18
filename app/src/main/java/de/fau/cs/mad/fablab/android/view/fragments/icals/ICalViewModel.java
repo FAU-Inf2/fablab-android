@@ -60,10 +60,14 @@ public class ICalViewModel
         if (CalendarHelper.isSameDay(calStart, calEnd))
             result = CalendarHelper.buildDateString(calStart);
         else
-            result = CalendarHelper.buildDateString(calStart) +
-                    " - " +
-                    CalendarHelper.buildDateString(calEnd);
-
+            if(CalendarHelper.isMoreDays(calStart, calEnd)) {
+                result = CalendarHelper.buildDateString(calStart) +
+                        " - ";
+            } else {
+                result = CalendarHelper.buildDateString(calStart) +
+                        " - " +
+                        CalendarHelper.buildDateString(calEnd);
+            }
         return result;
     }
 
@@ -163,6 +167,8 @@ public class ICalViewModel
 
             if(CalendarHelper.isSameTime(calStart, calEnd))
                 return "ab " + CalendarHelper.buildTimeString(calStart);
+            else if(CalendarHelper.isMoreDays(calStart, calEnd))
+                return CalendarHelper.buildDateString(calEnd);
             return CalendarHelper.buildTimeString(calStart) +
                     " - " +
                     CalendarHelper.buildTimeString(calEnd);

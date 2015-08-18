@@ -1,22 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.fragments.icals;
 
-import android.app.Activity;
-import android.app.Application;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.CalendarContract;
-import android.net.Uri;
-
-import java.security.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.SimpleTimeZone;
-import java.util.TimeZone;
 
 import javax.inject.Inject;
 
@@ -113,6 +97,10 @@ public class ICalDetailsDialogFragmentViewModel {
 
         if (mIsAllday)
             return "ganzt\\u00E4gig";
+        else if(CalendarHelper.isMoreDays(mStartDate, mEndDate))
+            return " - ";
+        else if(CalendarHelper.isSameDay(mStartDate, mEndDate))
+            return "ab " + CalendarHelper.buildTimeString(mStartTime);
         else
             return CalendarHelper.buildTimeString(mStartTime) +
                     " - " +
