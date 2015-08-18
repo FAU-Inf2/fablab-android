@@ -23,6 +23,7 @@ import de.fau.cs.mad.fablab.android.view.fragments.about.AboutFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.alert.AlertDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.icalandnews.ICalAndNewsFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String TAG_ABOUT_FRAGMENT = "tag_about_fragment";
     private final static String TAG_SETTINGS_FRAGMENT = "tag_settings_fragment";
     private final static String TAG_ALERT_FRAGMENT = "tag_alert_fragment";
+    private final static String TAG_INVENTORY_FRAGMENT = "tag_inventory_fragment";
 
     private ActionBar mActionBar;
     private NavigationDrawer mNavigationDrawer;
@@ -254,6 +256,21 @@ public class MainActivity extends AppCompatActivity {
                 {
                     fragmentTransaction.replace(R.id.fragment_container, new AlertDialogFragment(),
                             TAG_ALERT_FRAGMENT).addToBackStack(null).commit();
+                }
+                break;
+
+            case Inventory:
+                showFloatingActionButton(false);
+                showCartSlidingUpPanel(false);
+                if (!TAG_INVENTORY_FRAGMENT.equals(currentFragmentTag)) {
+                    InventoryFragment inventoryFragment =
+                            (InventoryFragment) getSupportFragmentManager().findFragmentByTag(
+                                    TAG_INVENTORY_FRAGMENT);
+                    if (inventoryFragment == null) {
+                        inventoryFragment = new InventoryFragment();
+                    }
+                    fragmentTransaction.replace(R.id.fragment_container, inventoryFragment,
+                            TAG_INVENTORY_FRAGMENT).addToBackStack(null).commit();
                 }
                 break;
         }

@@ -88,10 +88,9 @@ public class NavigationDrawerViewModel {
 
     private final Command<Integer> mInventoryCommand = new Command<Integer>()
     {
-
         @Override
         public void execute(Integer parameter) {
-
+            mEventBus.post(NavigationEvent.Inventory);
         }
     };
 
