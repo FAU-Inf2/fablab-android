@@ -96,7 +96,7 @@ public class ICalDetailsDialogFragmentViewModel {
     public String getTime() {
 
         if (mIsAllday)
-            return "ganzt\\u00E4gig";
+            return "ganzt\u00E4gig";
         else if(CalendarHelper.isMoreDays(mStartDate, mEndDate))
             return " - ";
         else if(CalendarHelper.isSameDay(mStartDate, mEndDate))
