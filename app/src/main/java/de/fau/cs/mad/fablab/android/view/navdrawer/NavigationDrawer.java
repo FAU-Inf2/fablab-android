@@ -83,6 +83,10 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
 
         menu.findItem(R.id.drawer_item_logout).setVisible(false);
         menu.findItem(R.id.drawer_item_inventory).setVisible(false);
+
+        //TODO comment following two lines for login
+        mHeaderLogin.setVisibility(View.GONE);
+        mHeaderLoggedIn.setVisibility(View.GONE);
     }
 
     @Override
