@@ -29,7 +29,7 @@ public class ProductMapFragment extends BaseDialogFragment {
 
         String locationId = getArguments().getString(KEY_LOCATION);
         //Todo: activate when server method is finished
-        String testurl = "https://52.28.16.59:4433/productMap/index.html";
+        String testurl = getString(R.string.api_url) + "/productMap/productMap.html";
         String url = "";
         if(locationId != "")
             url = testurl + "?id=" + locationId;
