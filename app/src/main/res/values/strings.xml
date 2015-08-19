@@ -147,7 +147,7 @@
         <a href="http://ormlite.com/">Projektseite</a>
         <br>
         <br>
-        <b>zxing</b> (Apache License 2.0)
+        <b>barcodescanner</b> (Apache License 2.0)
         <br>
         <a href="https://github.com/dm77/barcodescanner">Projektseite</a>
         <br>
@@ -159,7 +159,7 @@
         <br>
         <b>SwipeableRecyclerView</b> (Apache License 2.0)
         <br>
-        <a href="https://github.com/brnunes/Swiabout_acknowledgementspeableRecyclerView">Projektseite</a>
+        <a href="https://github.com/brnunes/SwipeableRecyclerView">Projektseite</a>
         <br>
         <br>
         <b>CircleImageView</b> (Apache License 2.0
@@ -185,6 +185,26 @@
         <b>Renderers</b> (Apache License 2.0)
         <br>
         <a href="https://github.com/pedrovgs/Renderers">Projektseite</a>
+        <br>
+        <br>
+        <b>Dagger</b> (Apache License 2.0)
+        <br>
+        <a href="https://github.com/square/dagger">Projektseite</a>
+        <br>
+        <br>
+        <b>Butterknife</b> (Apache License 2.0)
+        <br>
+        <a href="https://github.com/JakeWharton/butterknife">Projektseite</a>
+        <br>
+        <br>
+        <b>Support PreferenceFragment</b> (Apache License 2.0)
+        <br>
+        <a href="https://github.com/Machinarius/PreferenceFragment-Compat">Projektseite</a>
+        <br>
+        <br>
+        <b>RecyclerViewFastScroller</b> (Apache License 2.0)
+        <br>
+        <a href="https://github.com/danoz73/RecyclerViewFastScroller">Projektseite</a>
         ]]>
     </string>
 
