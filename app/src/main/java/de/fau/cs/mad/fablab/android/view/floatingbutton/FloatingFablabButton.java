@@ -7,8 +7,8 @@ import com.github.clans.fab.FloatingActionMenu;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
@@ -19,17 +19,17 @@ public class FloatingFablabButton implements FloatingFablabButtonViewModel.Liste
     @Inject
     FloatingFablabButtonViewModel viewModel;
 
-    @InjectView(R.id.shopping_cart_FAM)
+    @Bind(R.id.shopping_cart_FAM)
     FloatingActionMenu actionMenu;
 
-    @InjectView(R.id.scan_FAB)
+    @Bind(R.id.scan_FAB)
     FloatingActionButton scanButton;
-    @InjectView(R.id.search_FAB)
+    @Bind(R.id.search_FAB)
     FloatingActionButton searchButton;
 
     public FloatingFablabButton(MainActivity activity, View v){
         activity.inject(this);
-        ButterKnife.inject(this, v);
+        ButterKnife.bind(this, v);
 
         viewModel.setListener(this);
         new ViewCommandBinding().bind(scanButton, viewModel.getStartBarcodeScannerCommand());

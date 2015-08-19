@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         StackTraceReporter.reportStackTraceIfAvailable(this);
 
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         mStorageFragment = (StorageFragment) getSupportFragmentManager()
                 .findFragmentByTag(TAG_STORAGE_FRAGMENT);
@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
         mNavigationDrawer.restoreState(savedInstanceState);
         mFablabButton = new FloatingFablabButton(this, findViewById(android.R.id.content));
         mCartSlidingUpPanel = new CartSlidingUpPanel(this, findViewById(android.R.id.content));
-
 
     }
 
@@ -153,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
         mEventBus.register(this);
         mActionBar.resume();
         mCartSlidingUpPanel.resume();
-        mStorageFragment.update();
     }
 
     @Override

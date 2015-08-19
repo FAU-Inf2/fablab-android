@@ -123,7 +123,7 @@ public class ICalModel {
         return mICals;
     }
 
-    public void iCalModelUpdate()
+    public void checkForUpdates()
     {
         mICalApi.lastUpdate(mICalApiCallbackUpdate);
         deleteOldICals(mICalDao);

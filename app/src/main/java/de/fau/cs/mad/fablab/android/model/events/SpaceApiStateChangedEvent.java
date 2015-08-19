@@ -3,12 +3,10 @@ package de.fau.cs.mad.fablab.android.model.events;
 public class SpaceApiStateChangedEvent {
     private final boolean mOpen;
     private final long mTime;
-    private final String mMessage;
 
-    public SpaceApiStateChangedEvent(boolean open, long time, String message) {
+    public SpaceApiStateChangedEvent(boolean open, long time) {
         mOpen = open;
         mTime = time;
-        mMessage = message;
     }
 
     public boolean getOpen() {
@@ -17,9 +15,5 @@ public class SpaceApiStateChangedEvent {
 
     public long getTime() {
         return mTime;
-    }
-
-    public String getMessage() {
-        return mMessage;
     }
 }

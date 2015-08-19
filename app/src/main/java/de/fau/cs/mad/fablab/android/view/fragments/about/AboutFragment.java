@@ -12,23 +12,23 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 
 public class AboutFragment extends BaseFragment implements AboutFragmentViewModel.Listener {
-    @InjectView(R.id.about_version)
+    @Bind(R.id.about_version)
     TextView version_tv;
-    @InjectView(R.id.about_own_license)
+    @Bind(R.id.about_own_license)
     TextView own_license_tv;
-    @InjectView(R.id.about)
+    @Bind(R.id.about)
     TextView about_tv;
-    @InjectView(R.id.about_content)
+    @Bind(R.id.about_content)
     TextView content_tv;
-    @InjectView(R.id.about_open_source_licenses)
+    @Bind(R.id.about_open_source_licenses)
     TextView about_open_source_licenses_tv;
-    @InjectView(R.id.about_used_libraries)
+    @Bind(R.id.about_used_libraries)
     TextView used_libraries_tv;
 
     @Inject

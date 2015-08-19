@@ -11,7 +11,7 @@ import com.pedrogomez.renderers.RVRendererAdapter;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewDeltaCommandBinding;
@@ -21,7 +21,7 @@ import de.greenrobot.event.EventBus;
 
 public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.Listener {
 
-    @InjectView(R.id.news_recycler_view)
+    @Bind(R.id.news_recycler_view)
     RecyclerView news_rv;
 
     @Inject
@@ -70,6 +70,7 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
     public void onResume() {
         super.onResume();
         mEventBus.register(this);
+        mViewModel.resume();
     }
 
     @Override

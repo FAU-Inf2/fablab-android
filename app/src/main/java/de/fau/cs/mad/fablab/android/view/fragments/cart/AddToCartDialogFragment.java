@@ -13,11 +13,12 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.events.AppBarShowDoorStateEvent;
 import de.fau.cs.mad.fablab.android.model.events.AppBarShowTitleEvent;
 import de.fau.cs.mad.fablab.android.util.Formatter;
+import de.fau.cs.mad.fablab.android.view.activities.BackButtonPressedEvent;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.NumberPickerCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
@@ -26,13 +27,13 @@ import de.greenrobot.event.EventBus;
 
 public class AddToCartDialogFragment extends BaseDialogFragment
         implements AddToCartDialogFragmentViewModel.Listener {
-    @InjectView(R.id.add_to_cart_name)
+    @Bind(R.id.add_to_cart_name)
     TextView mNameTextView;
-    @InjectView(R.id.add_to_cart_price)
+    @Bind(R.id.add_to_cart_price)
     TextView mPriceTextView;
-    @InjectView(R.id.add_to_cart_numberPicker)
+    @Bind(R.id.add_to_cart_numberPicker)
     NumberPicker mNumberPicker;
-    @InjectView(R.id.add_to_cart_price_total)
+    @Bind(R.id.add_to_cart_price_total)
     TextView mPriceTotalTextView;
 
     @Inject
@@ -94,9 +95,21 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        mEventBus.unregister(this);
+    }
+
+    @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mViewModel.saveState(outState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mEventBus.register(this);
     }
 
     @Override
@@ -109,5 +122,11 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     @Override
     public void onUpdatePriceTotal(double priceTotal) {
         mPriceTotalTextView.setText(Html.fromHtml(Formatter.formatPrice(priceTotal)));
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(BackButtonPressedEvent event) {
+        mEventBus.post(new AppBarShowDoorStateEvent(true));
+        mEventBus.post(new AppBarShowTitleEvent(true));
     }
 }

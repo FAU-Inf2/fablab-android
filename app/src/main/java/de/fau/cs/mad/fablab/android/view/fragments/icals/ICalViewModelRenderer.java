@@ -10,26 +10,26 @@ import android.widget.TextView;
 
 import com.pedrogomez.renderers.Renderer;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 
 public class ICalViewModelRenderer extends Renderer<ICalViewModel> {
-    @InjectView(R.id.dates_card)
+    @Bind(R.id.dates_card)
     CardView dates_cv;
-    @InjectView(R.id.title_dates_entry)
+    @Bind(R.id.title_dates_entry)
     TextView title_tv;
-    @InjectView(R.id.date_dates_entry)
+    @Bind(R.id.date_dates_entry)
     TextView date_tv;
-    @InjectView(R.id.time_dates_entry)
+    @Bind(R.id.time_dates_entry)
     TextView time_tv;
-    @InjectView(R.id.location_dates_entry)
+    @Bind(R.id.location_dates_entry)
     TextView location_tv;
 
     @Override
     protected void setUpView(View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
     }
 
     @Override

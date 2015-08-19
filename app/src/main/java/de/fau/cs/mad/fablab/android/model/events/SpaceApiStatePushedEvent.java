@@ -1,15 +1,15 @@
 package de.fau.cs.mad.fablab.android.model.events;
 
-import net.spaceapi.State;
+import de.fau.cs.mad.fablab.rest.core.DoorState;
 
 public class SpaceApiStatePushedEvent {
-    private final State mState;
+    private final DoorState mDoorState;
 
-    public SpaceApiStatePushedEvent(State state){
-        mState = state;
+    public SpaceApiStatePushedEvent(DoorState doorState){
+        mDoorState = doorState;
     }
 
-    public State getState() {
-        return mState;
+    public DoorState getDoorState() {
+        return mDoorState;
     }
 }

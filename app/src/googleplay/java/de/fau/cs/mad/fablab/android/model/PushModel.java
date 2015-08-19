@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -22,33 +23,36 @@ import retrofit.client.Response;
 
 public class PushModel {
     private static final String TAG = "PushModel";
+    private static final String KEY_PREF_ENABLE_PUSH = "enable_push";
     private static final String PROPERTY_REG_ID = "reg_id";
     private static final String PROPERTY_APP_VERSION = "app_version";
-    private static final String SENDER_ID = "12124638422";
+    private static final String SENDER_ID = "605066933";
 
     private Context mContext;
     private PushApi mPushApi;
 
-    private String mPushId;
+    private String mPushId = "0";
 
     public PushModel(Context context, PushApi pushApi) {
         mContext = context;
         mPushApi = pushApi;
 
-        registerDeviceToGcm();
+        if (getPreferences().getBoolean(KEY_PREF_ENABLE_PUSH, true)) {
+            registerDeviceToGcm();
+        }
     }
 
     public String getPushId() {
         return mPushId;
     }
 
-    private void registerDeviceToGcm() {
-        if(!checkPlayServices()) {
+    public void registerDeviceToGcm() {
+        if (!checkPlayServices()) {
             return;
         }
 
-        if(isRegisteredToGcm()){
-            mPushId = getGCMPreferences().getString(PROPERTY_REG_ID, "");
+        if (isRegisteredToGcm()) {
+            mPushId = getPreferences().getString(PROPERTY_REG_ID, "");
         } else {
             registerInBackground();
         }
@@ -67,11 +71,11 @@ public class PushModel {
         return true;
     }
 
-    private boolean isRegisteredToGcm(){
-        SharedPreferences prefs = getGCMPreferences();
+    private boolean isRegisteredToGcm() {
+        SharedPreferences prefs = getPreferences();
 
         String registrationId = prefs.getString(PROPERTY_REG_ID, "");
-        if (registrationId != null && registrationId.isEmpty()) {
+        if (registrationId.isEmpty()) {
             Log.i(TAG, "Registration not found.");
             return false;
         }
@@ -86,8 +90,8 @@ public class PushModel {
         return true;
     }
 
-    private SharedPreferences getGCMPreferences() {
-        return mContext.getSharedPreferences("push", Context.MODE_PRIVATE);
+    private SharedPreferences getPreferences() {
+        return PreferenceManager.getDefaultSharedPreferences(mContext);
     }
 
     private int getAppVersion() {
@@ -119,24 +123,28 @@ public class PushModel {
             @Override
             protected void onPostExecute(String regId) {
                 super.onPostExecute(regId);
-                sendRegistrationIdToBackend(regId);
-                storeRegistrationId(regId);
-                mPushId = regId;
+                if (regId != null) {
+                    sendRegistrationIdToBackend(regId);
+                    storeRegistrationId(regId);
+                    mPushId = regId;
+                }
             }
         }.execute(mContext);
     }
 
     private void sendRegistrationIdToBackend(String regId) {
-        mPushApi.addRegistrationId(new RegistrationId(regId, DeviceType.Android), new Callback<Response>() {
-            @Override
-            public void success(Response response, Response response2) {
-                Log.i(TAG,"Success: " + response.getStatus());
-            }
-            @Override
-            public void failure(RetrofitError error) {
-                Log.i(TAG,"Failure: " + error.getMessage());
-            }
-        });
+        mPushApi.addRegistrationId(new RegistrationId(regId, DeviceType.Android),
+                new Callback<Response>() {
+                    @Override
+                    public void success(Response response, Response response2) {
+                        Log.i(TAG, "Success: " + response.getStatus());
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.i(TAG, "Failure: " + error.getMessage());
+                    }
+                });
     }
 
     private void storeRegistrationId(String regId) {
@@ -144,9 +152,62 @@ public class PushModel {
 
         Log.i(TAG, "Saving regId on app version " + appVersion);
 
-        SharedPreferences.Editor editor = getGCMPreferences().edit();
+        SharedPreferences.Editor editor = getPreferences().edit();
         editor.putString(PROPERTY_REG_ID, regId);
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
+        editor.apply();
+    }
+
+    public void unregisterDeviceFromGcm() {
+        if (!mPushId.equals("0")) {
+            unregisterInBackground();
+        }
+    }
+
+    private void unregisterInBackground() {
+        new AsyncTask<Context, Void, Void>() {
+            @Override
+            protected Void doInBackground(Context... params) {
+                try {
+                    GoogleCloudMessaging mGoogleCloudMessaging = GoogleCloudMessaging.getInstance(
+                            params[0]);
+                    mGoogleCloudMessaging.unregister();
+                    Log.i(TAG, "Device unregistered");
+                } catch (IOException e) {
+                    Log.i(TAG, "Error", e);
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void result) {
+                super.onPostExecute(result);
+                deleteRegistrationIdFromBackend();
+                deleteRegistrationId();
+                mPushId = "0";
+            }
+        }.execute(mContext);
+    }
+
+    private void deleteRegistrationIdFromBackend() {
+        mPushApi.removeRegistrationId(new RegistrationId(mPushId, DeviceType.Android),
+                new Callback<Response>() {
+                    @Override
+                    public void success(Response response, Response response2) {
+                        Log.i(TAG, "Success: " + response.getStatus());
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.i(TAG, "Failure: " + error.getMessage());
+                    }
+                });
+    }
+
+    private void deleteRegistrationId() {
+        SharedPreferences.Editor editor = getPreferences().edit();
+        editor.remove(PROPERTY_REG_ID);
+        editor.remove(PROPERTY_APP_VERSION);
         editor.apply();
     }
 }

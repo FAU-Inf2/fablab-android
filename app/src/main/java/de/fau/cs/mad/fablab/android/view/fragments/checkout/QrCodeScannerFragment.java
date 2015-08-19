@@ -9,29 +9,27 @@ import android.widget.Toast;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ScannerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
-import de.greenrobot.event.EventBus;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class QrCodeScannerFragment extends BaseDialogFragment
         implements QrCodeScannerFragmentViewModel.Listener {
-    @InjectView(R.id.scanner)
+    @Bind(R.id.scanner)
     ZXingScannerView mScannerView;
 
     @Inject
     QrCodeScannerFragmentViewModel mViewModel;
 
-    private EventBus mEventBus = EventBus.getDefault();
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         mViewModel.setListener(this);
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
         new ScannerViewCommandBinding().bind(mScannerView, mViewModel.getProcessQrCodeCommand());
     }
@@ -45,16 +43,12 @@ public class QrCodeScannerFragment extends BaseDialogFragment
     @Override
     public void onPause() {
         super.onPause();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-        mEventBus.unregister(this);
         mViewModel.pause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-        mEventBus.register(this);
         mViewModel.resume();
     }
 
@@ -64,9 +58,9 @@ public class QrCodeScannerFragment extends BaseDialogFragment
                 .show();
     }
 
-    @SuppressWarnings("unused")
-    public void onEvent(QrCodeScannedEvent event) {
+    @Override
+    public void onStartCheckout(String cartCode) {
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                CheckoutFragment.newInstance(event.getQrCodeText())).commit();
+                CheckoutFragment.newInstance(cartCode)).commit();
     }
 }

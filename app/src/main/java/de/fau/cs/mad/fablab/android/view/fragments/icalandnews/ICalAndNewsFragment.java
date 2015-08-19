@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.icals.ICalFragment;
@@ -21,14 +21,14 @@ import de.greenrobot.event.EventBus;
 
 public class ICalAndNewsFragment extends BaseFragment {
 
-    @InjectView(R.id.fragment_ical)
+    @Bind(R.id.fragment_ical)
     FrameLayout ical_fl;
 
     private float mTranslationY;
     private float mTranslationYReal;
     private float news_fl_height;
 
-    @InjectView(R.id.fragment_news)
+    @Bind(R.id.fragment_news)
     FrameLayout news_fl;
 
     private NewsFragment newsFragment;

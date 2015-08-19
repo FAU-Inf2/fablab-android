@@ -7,6 +7,7 @@ import net.spaceapi.State;
 
 import de.fau.cs.mad.fablab.android.model.events.SpaceApiStateChangedEvent;
 import de.fau.cs.mad.fablab.android.model.events.SpaceApiStatePushedEvent;
+import de.fau.cs.mad.fablab.rest.core.DoorState;
 import de.fau.cs.mad.fablab.rest.myapi.SpaceApi;
 import de.greenrobot.event.EventBus;
 import retrofit.Callback;
@@ -14,10 +15,9 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class SpaceApiModel {
-    private final long REFRESH_TIME_MILLIS = 3 * 60 * 1000; // 3 minutes
-
     private SpaceApi mSpaceApi;
     private String mSpaceName;
+    private long mPollingFrequency;
     private EventBus mEventBus = EventBus.getDefault();
     private Handler mSpaceApiHandler = new Handler();
     private Runnable mSpaceApiRunner = new SpaceApiRunner();
@@ -25,45 +25,42 @@ public class SpaceApiModel {
 
     private boolean mOpen;
     private long mTime;
-    private String mMessage;
 
     private Callback<HackerSpace> mSpaceApiCallback = new Callback<HackerSpace>() {
         @Override
         public void success(HackerSpace hackerSpace, Response response) {
-            updateState(hackerSpace.getState());
+            State state = hackerSpace.getState();
+            updateState(state.getOpen(), state.getLastchange());
 
-            mSpaceApiHandler.postDelayed(mSpaceApiRunner, REFRESH_TIME_MILLIS);
+            mSpaceApiHandler.postDelayed(mSpaceApiRunner, mPollingFrequency);
             mRefreshRequested = false;
         }
 
         @Override
         public void failure(RetrofitError error) {
-            mSpaceApiHandler.postDelayed(mSpaceApiRunner, REFRESH_TIME_MILLIS);
+            mSpaceApiHandler.postDelayed(mSpaceApiRunner, mPollingFrequency);
             mRefreshRequested = false;
         }
     };
 
-    public SpaceApiModel(SpaceApi spaceApi, String spaceName) {
+    public SpaceApiModel(SpaceApi spaceApi, String spaceName, long pollingFrequency) {
         mSpaceApi = spaceApi;
         mSpaceName = spaceName;
+        mPollingFrequency = pollingFrequency;
 
         mEventBus.register(this);
         mRefreshRequested = false;
         refreshState();
     }
 
-    private void updateState(State state) {
-        if (state != null) {
-            mOpen = state.getOpen();
+    private void updateState(boolean open, double lastChange) {
+        mOpen = open;
 
-            long currentTimeSeconds = System.currentTimeMillis() / 1000L;
-            double minutesSinceLastChange = (currentTimeSeconds - state.getLastchange()) / 60;
-            mTime = Double.valueOf(minutesSinceLastChange).longValue();
+        long currentTimeSeconds = System.currentTimeMillis() / 1000L;
+        double minutesSinceLastChange = (currentTimeSeconds - lastChange) / 60;
+        mTime = Double.valueOf(minutesSinceLastChange).longValue();
 
-            mMessage = state.getMessage();
-
-            mEventBus.post(new SpaceApiStateChangedEvent(mOpen, mTime, mMessage));
-        }
+        mEventBus.post(new SpaceApiStateChangedEvent(mOpen, mTime));
     }
 
     public void refreshState() {
@@ -82,8 +79,9 @@ public class SpaceApiModel {
         return mTime;
     }
 
-    public String getMessage() {
-        return mMessage;
+    public void setPollingFrequency(long pollingFrequency) {
+        mPollingFrequency = pollingFrequency;
+        refreshState();
     }
 
     private class SpaceApiRunner implements Runnable {
@@ -96,6 +94,8 @@ public class SpaceApiModel {
 
     @SuppressWarnings("unused")
     public void onEvent(SpaceApiStatePushedEvent event) {
-        updateState(event.getState());
+        DoorState doorState = event.getDoorState();
+        boolean open = doorState.state == DoorState.State.open;
+        updateState(open, doorState.time);
     }
 }

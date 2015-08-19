@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ScannerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
@@ -19,7 +19,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class BarcodeScannerFragment extends BaseFragment
         implements BarcodeScannerFragmentViewModel.Listener {
-    @InjectView(R.id.scanner)
+    @Bind(R.id.scanner)
     ZXingScannerView mScannerView;
 
     @Inject
@@ -29,8 +29,9 @@ public class BarcodeScannerFragment extends BaseFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         mViewModel.setListener(this);
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
         new ScannerViewCommandBinding().bind(mScannerView, mViewModel.getProcessBarcodeCommand());
     }
@@ -45,14 +46,12 @@ public class BarcodeScannerFragment extends BaseFragment
     @Override
     public void onPause() {
         super.onPause();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         mViewModel.pause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         mViewModel.resume();
 
         setDisplayOptions(R.id.drawer_item_scanner, false, false);

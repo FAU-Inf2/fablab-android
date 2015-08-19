@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <PreferenceCategory
-            android:title="Einstellungen">
+    <CheckBoxPreference
+        android:key="enable_push"
+        android:summary="Push aktivieren für schnellere Updates"
+        android:title="Google Push aktivieren" />
 
-            <CheckBoxPreference
-                android:key="enable_push"
-                android:title="Google Push aktivieren"
-                android:summary="Push aktivieren für schnellere Updates" />
+    <EditTextPreference
+        android:defaultValue="15"
+        android:key="spaceapi_polling_freq"
+        android:maxLength="4"
+        android:numeric="integer"
+        android:summary="Zeitraum in Minuten, zur regelmäßigen Abfrage des Türstatus"
+        android:title="Türstatus Update Interval" />
 
-            <EditTextPreference
-                android:defaultValue="15"
-                android:enabled="true"
-                android:key="spaceapi_polling_freq"
-                android:numeric="integer"
-                android:title="Türstatus Update Interval"
-                android:summary="Zeitraum in Minuten, zur regelmäßigen Abfrage des Türstatus"/>
+    <Preference
+        android:key="force_reload_autocompletion"
+        android:summary="Produktnamen zur Autovervollständigung neu laden"
+        android:title="Produktnamen neu laden" />
 
-        </PreferenceCategory>
-    </PreferenceScreen>
+</PreferenceScreen>

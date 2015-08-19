@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.common.fragments;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
@@ -12,12 +13,14 @@ public abstract class BaseDialogFragment extends DialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((MainActivity) getActivity()).inject(this);
+
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
     }
 
     @Override

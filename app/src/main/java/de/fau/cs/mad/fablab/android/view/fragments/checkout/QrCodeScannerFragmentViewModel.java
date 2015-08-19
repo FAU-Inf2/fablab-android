@@ -8,12 +8,9 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
-import de.greenrobot.event.EventBus;
 
 public class QrCodeScannerFragmentViewModel {
     private Listener mListener;
-
-    private EventBus mEventBus;
 
     private Pattern mQrCodePattern = Pattern.compile("(-)?\\d{1,19}");
     private final Command<Result> mProcessQrCodeCommand = new Command<Result>() {
@@ -26,7 +23,9 @@ public class QrCodeScannerFragmentViewModel {
             if (mQrCodePattern.matcher(qrCodeText).matches()
                     && BarcodeFormat.QR_CODE.equals(result.getBarcodeFormat())) {
                 mProcessQrCodeCommand.setIsExecutable(true);
-                mEventBus.post(new QrCodeScannedEvent(qrCodeText));
+                if (mListener != null) {
+                    mListener.onStartCheckout(qrCodeText);
+                }
             } else {
                 mProcessQrCodeCommand.setIsExecutable(true);
                 if (mListener != null) {
@@ -38,7 +37,7 @@ public class QrCodeScannerFragmentViewModel {
 
     @Inject
     public QrCodeScannerFragmentViewModel() {
-        mEventBus = EventBus.getDefault();
+
     }
 
     public void setListener(Listener listener) {
@@ -59,5 +58,7 @@ public class QrCodeScannerFragmentViewModel {
 
     public interface Listener {
         void onShowInvalidQrCodeMessage();
+
+        void onStartCheckout(String cartCode);
     }
 }

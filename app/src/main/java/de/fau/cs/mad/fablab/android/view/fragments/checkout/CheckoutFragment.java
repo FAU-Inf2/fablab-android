@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
@@ -18,13 +18,13 @@ import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 public class CheckoutFragment extends BaseDialogFragment implements CheckoutViewModel.Listener {
     static final String KEY_CART_CODE = "key_cart_code";
 
-    @InjectView(R.id.checkout_progress_bar)
+    @Bind(R.id.checkout_progress_bar)
     ProgressBar progress_bar;
-    @InjectView(R.id.checkout_status_description)
+    @Bind(R.id.checkout_status_description)
     TextView status_description_tv;
-    @InjectView(R.id.checkout_retry_button)
+    @Bind(R.id.checkout_retry_button)
     Button retry_button;
-    @InjectView(R.id.checkout_ok_button)
+    @Bind(R.id.checkout_ok_button)
     Button ok_button;
 
     @Inject

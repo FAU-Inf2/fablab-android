@@ -9,27 +9,27 @@ import android.widget.TextView;
 
 import com.pedrogomez.renderers.Renderer;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 
 public class ProductSearchViewModelRenderer extends Renderer<ProductSearchViewModel> {
 
-    @InjectView(R.id.product_card_view)
+    @Bind(R.id.product_card_view)
     CardView mProductCardView;
-    @InjectView(R.id.product_name)
+    @Bind(R.id.product_name)
     TextView mProductName;
-    @InjectView(R.id.product_detail)
+    @Bind(R.id.product_detail)
     TextView mProductDetail;
-    @InjectView(R.id.product_price)
+    @Bind(R.id.product_price)
     TextView mProductPrice;
-    @InjectView(R.id.product_unit)
+    @Bind(R.id.product_unit)
     TextView mProductUnit;
 
     @Override
     protected void setUpView(View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
     }
 
     @Override

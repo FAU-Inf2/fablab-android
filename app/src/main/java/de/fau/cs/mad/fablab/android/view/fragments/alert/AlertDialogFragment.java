@@ -16,7 +16,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
@@ -28,15 +28,15 @@ public class AlertDialogFragment extends BaseDialogFragment
     implements AlertDialogFragmentViewModel.Listener
 {
 
-    @InjectView(R.id.alert_dialog_tool_spinner)
+    @Bind(R.id.alert_dialog_tool_spinner)
     Spinner mToolSpinner;
-    @InjectView(R.id.alert_dialog_edit_text_tools)
+    @Bind(R.id.alert_dialog_edit_text_tools)
     EditText mEditTextTools;
-    @InjectView(R.id.alert_dialog_edit_text)
+    @Bind(R.id.alert_dialog_edit_text)
     EditText mEditText;
-    @InjectView(R.id.alert_dialog_ok_button)
+    @Bind(R.id.alert_dialog_ok_button)
     Button mOKButton;
-    @InjectView(R.id.alert_dialog_cancel_button)
+    @Bind(R.id.alert_dialog_cancel_button)
     Button mCancelButton;
 
     @Inject
@@ -86,7 +86,7 @@ public class AlertDialogFragment extends BaseDialogFragment
         super.onResume();
         MainActivity activity = (MainActivity) getActivity();
         activity.enableNavigationDrawer(true);
-        activity.setNavigationDrawerSelection(R.id.drawer_item_settings);
+        activity.setNavigationDrawerSelection(R.id.drawer_item_alert);
         activity.showFloatingActionButton(false);
         activity.showCartSlidingUpPanel(false);
     }

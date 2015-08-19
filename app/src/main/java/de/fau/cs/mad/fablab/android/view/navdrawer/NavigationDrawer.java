@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.events.UserRetrievedEvent;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
@@ -26,25 +26,25 @@ import de.fau.cs.mad.fablab.rest.core.User;
 import de.greenrobot.event.EventBus;
 
 public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
-    @InjectView(R.id.drawer_layout)
+    @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-    @InjectView(R.id.navigation)
+    @Bind(R.id.navigation)
     NavigationView mNavigationView;
 
     // views for login
-    @InjectView(R.id.navdrawer_header_login)
+    @Bind(R.id.navdrawer_header_login)
     LinearLayout mHeaderLogin;
-    @InjectView(R.id.drupal_login_button)
+    @Bind(R.id.drupal_login_button)
     Button mLoginButton;
-    @InjectView(R.id.drupal_login_username)
+    @Bind(R.id.drupal_login_username)
     EditText mUsernameET;
-    @InjectView(R.id.drupal_login_password)
+    @Bind(R.id.drupal_login_password)
     EditText mPasswordET;
 
     // views when logged in
-    @InjectView(R.id.navdrawer_header_loggedin)
+    @Bind(R.id.navdrawer_header_loggedin)
     LinearLayout mHeaderLoggedIn;
-    @InjectView(R.id.navdrawer_name)
+    @Bind(R.id.navdrawer_name)
     TextView mUsernameLoggedIn;
 
 
@@ -55,7 +55,7 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
     private EventBus mEventBus = EventBus.getDefault();
 
     public NavigationDrawer(MainActivity activity, View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         activity.inject(this);
 
         mViewModel.setListener(this);

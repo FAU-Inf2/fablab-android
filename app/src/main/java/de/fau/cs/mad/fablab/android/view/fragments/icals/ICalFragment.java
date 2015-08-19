@@ -12,7 +12,7 @@ import com.pedrogomez.renderers.RVRendererAdapter;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
@@ -22,7 +22,7 @@ import de.greenrobot.event.EventBus;
  * The view of all Icals
  */
 public class ICalFragment extends BaseFragment implements ICalFragmentViewModel.Listener {
-    @InjectView(R.id.ical_recycler_view)
+    @Bind(R.id.ical_recycler_view)
     RecyclerView ical_rv;
 
     @Inject
@@ -74,6 +74,7 @@ public class ICalFragment extends BaseFragment implements ICalFragmentViewModel.
     public void onResume() {
         super.onResume();
         mEventBus.register(this);
+        mViewModel.resume();
     }
 
     @Override

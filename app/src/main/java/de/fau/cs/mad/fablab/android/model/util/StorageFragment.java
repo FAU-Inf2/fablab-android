@@ -1,6 +1,7 @@
 package de.fau.cs.mad.fablab.android.model.util;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 
 import de.fau.cs.mad.fablab.android.R;
@@ -23,6 +24,7 @@ public class StorageFragment extends Fragment {
     private ICalModel mICalModel;
     private NewsModel mNewsModel;
     private CartModel mCartModel;
+    private PushModel mPushModel;
     private CheckoutModel mCheckoutModel;
     private ProductModel mProductModel;
     private AutoCompleteModel mAutoCompleteModel;
@@ -42,18 +44,21 @@ public class StorageFragment extends Fragment {
         mICalModel = new ICalModel(restClient.getICalApi(), databaseHelper.getICalDao());
         mNewsModel = new NewsModel(restClient.getNewsApi(), databaseHelper.getNewsDao());
         mCartModel = new CartModel(databaseHelper.getCartDao());
-        PushModel pushModel = new PushModel(getActivity().getApplication(), restClient.getPushApi());
-        mCheckoutModel = new CheckoutModel(mCartModel, restClient.getCartApi(), pushModel);
+        mPushModel = new PushModel(getActivity().getApplication(), restClient.getPushApi());
+        mCheckoutModel = new CheckoutModel(mCartModel, restClient.getCartApi(), mPushModel);
         mProductModel = new ProductModel(databaseHelper.getProductDao(), restClient.getProductApi());
         mAutoCompleteModel = new AutoCompleteModel(databaseHelper.getAutoCompleteWordsDao(),
                 restClient.getProductApi());
-        mSpaceApiModel = new SpaceApiModel(restClient.getSpaceApi(), getString(R.string.space_name));
+        long pollingFrequency = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(
+                getActivity()).getString("spaceapi_polling_freq", "15")) * 60 * 1000;
+        mSpaceApiModel = new SpaceApiModel(restClient.getSpaceApi(), getString(R.string.space_name),
+                pollingFrequency);
         mFablabMailModel = new FablabMailModel(restClientString.getDataApi());
         mDrupalModel = new DrupalModel(restClient.getDrupalApi());
         mUserModel = new UserModel(restClient.getRestAdapterBuilder());
     }
 
-    public NewsModel getNewsModel(){
+    public NewsModel getNewsModel() {
         return mNewsModel;
     }
 
@@ -63,6 +68,10 @@ public class StorageFragment extends Fragment {
 
     public CartModel getCartModel() {
         return mCartModel;
+    }
+
+    public PushModel getPushModel() {
+        return mPushModel;
     }
 
     public CheckoutModel getCheckoutModel() {
@@ -81,24 +90,16 @@ public class StorageFragment extends Fragment {
         return mSpaceApiModel;
     }
 
-    public FablabMailModel getFablabMailModel()
-    {
+    public FablabMailModel getFablabMailModel() {
         return mFablabMailModel;
     }
 
-    public DrupalModel getDrupalModel()
-    {
+    public DrupalModel getDrupalModel() {
         return mDrupalModel;
     }
 
     public UserModel getUserModel()
     {
         return mUserModel;
-    }
-
-    public void update()
-    {
-        mNewsModel.newsModelUpdate();
-        mICalModel.iCalModelUpdate();
     }
 }

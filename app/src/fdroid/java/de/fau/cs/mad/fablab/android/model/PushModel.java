@@ -13,4 +13,12 @@ public class PushModel {
     public String getPushId() {
         return "0";
     }
+
+    public void registerDeviceToGcm() {
+
+    }
+
+    public void unregisterDeviceFromGcm() {
+
+    }
 }

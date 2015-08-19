@@ -10,6 +10,7 @@ import de.fau.cs.mad.fablab.android.model.FablabMailModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
 import de.fau.cs.mad.fablab.android.model.NewsModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
+import de.fau.cs.mad.fablab.android.model.PushModel;
 import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
 import de.fau.cs.mad.fablab.android.model.UserModel;
 import de.fau.cs.mad.fablab.android.model.util.StorageFragment;
@@ -34,19 +35,21 @@ import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productmap.ProductMapFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 
 @SuppressWarnings("unused")
 @Module(
         injects = {
                 AboutFragment.class, ActionBar.class, AddToCartDialogFragment.class,
-                BarcodeScannerFragment.class, CartSlidingUpPanel.class, CheckoutFragment.class,
-                FloatingFablabButton.class, ICalAndNewsFragment.class,
+                AlertDialogFragment.class, BarcodeScannerFragment.class, CartSlidingUpPanel.class,
+                CheckoutFragment.class, FloatingFablabButton.class, ICalAndNewsFragment.class,
                 ICalDetailsDialogFragment.class, ICalFragment.class, NavigationDrawer.class,
                 NewsDetailsDialogFragment.class, NewsFragment.class, ProductDialogFragment.class,
                 ProductMapFragment.class, ProductSearchFragment.class, QrCodeScannerFragment.class,
                 AlertDialogFragment.class, InventoryFragment.class, InventoryBarcodeScannerFragment.class,
-                InventoryProductSearchFragment.class, AddToInventoryDialogFragment.class
+                InventoryProductSearchFragment.class, AddToInventoryDialogFragment.class,
+                SettingsFragment.class
         })
 public class ModelModule {
     private final StorageFragment mStorageFragment;
@@ -88,6 +91,11 @@ public class ModelModule {
     @Provides
     SpaceApiModel provideSpaceApiModel() {
         return mStorageFragment.getSpaceApiModel();
+    }
+
+    @Provides
+    PushModel providePushModel() {
+        return mStorageFragment.getPushModel();
     }
 
     @Provides

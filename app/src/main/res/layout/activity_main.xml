@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="bottom"
-                sothree:umanoPanelHeight="40dp"
+                sothree:umanoPanelHeight="@dimen/slidinguppanel_panel_height"
                 sothree:umanoShadowHeight="0dp"
                 sothree:umanoParalaxOffset="100dp"
                 sothree:umanoDragView="@+id/dragPart"

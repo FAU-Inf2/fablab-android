@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
@@ -17,9 +17,9 @@ import de.greenrobot.event.EventBus;
 
 public class InventoryFragment extends BaseFragment implements InventoryFragmentViewModel.Listener{
 
-    @InjectView(R.id.button_scan_product_inventory)
+    @Bind(R.id.button_scan_product_inventory)
     Button mScanButton;
-    @InjectView(R.id.button_search_product_inventory)
+    @Bind(R.id.button_search_product_inventory)
     Button mSearchButton;
 
     @Inject

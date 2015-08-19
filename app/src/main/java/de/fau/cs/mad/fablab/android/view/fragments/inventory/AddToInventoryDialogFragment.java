@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.events.AppBarShowDoorStateEvent;
 import de.fau.cs.mad.fablab.android.model.events.AppBarShowTitleEvent;
@@ -27,11 +27,11 @@ public class AddToInventoryDialogFragment extends BaseDialogFragment implements 
     @Inject
     AddToInventoryDialogFragmentViewModel mViewModel;
 
-    @InjectView(R.id.add_to_inventory_name)
+    @Bind(R.id.add_to_inventory_name)
     TextView mNameTextView;
-    @InjectView(R.id.button_send_inventory)
+    @Bind(R.id.button_send_inventory)
     Button mButtonSend;
-    @InjectView(R.id.add_to_inventory_numberPicker)
+    @Bind(R.id.add_to_inventory_numberPicker)
     NumberPicker mNumberPicker;
 
     private EventBus mEventBus = EventBus.getDefault();

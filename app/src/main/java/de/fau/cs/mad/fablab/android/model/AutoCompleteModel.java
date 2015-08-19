@@ -36,21 +36,21 @@ public class AutoCompleteModel {
     }
 
     public void loadProductNames(){
-        AutoCompleteWords autoCompleteWords = mAutoCompleteWordsDao.queryForId((long)0);
+        AutoCompleteWords autoCompleteWords = mAutoCompleteWordsDao.queryForId(0L);
         if(autoCompleteWords == null || autoCompleteWords.needsRefresh()){
             mProductApi.findAllNames(mProductNamesCallback);
         }
     }
 
     public void forceReloadProductNames() {
-        if(mAutoCompleteWordsDao.queryForId((long)0) != null) {
-            mAutoCompleteWordsDao.deleteById((long)0);
+        if(mAutoCompleteWordsDao.queryForId(0L) != null) {
+            mAutoCompleteWordsDao.deleteById(0L);
         }
         loadProductNames();
     }
 
     public String[] getAutoCompleteWords(){
-        AutoCompleteWords autoCompleteWords = mAutoCompleteWordsDao.queryForId((long)0);
+        AutoCompleteWords autoCompleteWords = mAutoCompleteWordsDao.queryForId(0L);
         if(autoCompleteWords != null) {
             return autoCompleteWords.getPossibleAutoCompleteWords();
         }
@@ -79,7 +79,7 @@ public class AutoCompleteModel {
                 }
             }
 
-            AutoCompleteWords autoCompleteWords = mAutoCompleteWordsDao.queryForId((long)0);
+            AutoCompleteWords autoCompleteWords = mAutoCompleteWordsDao.queryForId(0L);
             if(autoCompleteWords == null)
                 mAutoCompleteWordsDao.create(new AutoCompleteWords(tempList.toArray(
                         new String[tempList.size()])));
