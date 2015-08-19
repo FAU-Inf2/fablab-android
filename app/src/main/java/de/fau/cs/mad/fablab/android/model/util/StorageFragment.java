@@ -87,10 +87,4 @@ public class StorageFragment extends Fragment {
     {
         return mDrupalModel;
     }
-
-    public void update()
-    {
-        mNewsModel.newsModelUpdate();
-        mICalModel.iCalModelUpdate();
-    }
 }

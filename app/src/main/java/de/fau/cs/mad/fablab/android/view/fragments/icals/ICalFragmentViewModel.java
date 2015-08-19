@@ -80,6 +80,10 @@ public class ICalFragmentViewModel extends BaseViewModel<ICal> {
         addItems(mModel.getICalsList());
     }
 
+    public void resume() {
+        mModel.checkForUpdates();
+    }
+
     public interface Listener {
         void onDataInserted(int positionStart, int itemCount);
 

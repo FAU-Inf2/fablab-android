@@ -74,6 +74,7 @@ public class ICalFragment extends BaseFragment implements ICalFragmentViewModel.
     public void onResume() {
         super.onResume();
         mEventBus.register(this);
+        mViewModel.resume();
     }
 
     @Override

@@ -147,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
         mEventBus.register(this);
         mActionBar.resume();
         mCartSlidingUpPanel.resume();
-        mStorageFragment.update();
     }
 
     @Override

@@ -122,7 +122,7 @@ public class NewsModel {
         return mNews;
     }
 
-    public void newsModelUpdate()
+    public void checkForUpdates()
     {
         mNewsApi.findNewsSince(mTimeStampLastUpdate, mNewsApiCallbackUpdate);
     }

@@ -70,6 +70,7 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
     public void onResume() {
         super.onResume();
         mEventBus.register(this);
+        mViewModel.resume();
     }
 
     @Override

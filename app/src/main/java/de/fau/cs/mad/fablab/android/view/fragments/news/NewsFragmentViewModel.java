@@ -96,6 +96,10 @@ public class NewsFragmentViewModel extends BaseViewModel<News> {
         addItems(mModel.getNews());
     }
 
+    public void resume() {
+        mModel.checkForUpdates();
+    }
+
     public interface Listener {
         void onDataInserted(int positionStart, int itemCount);
 
