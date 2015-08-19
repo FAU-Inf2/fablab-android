@@ -18,6 +18,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.events.AppBarShowDoorStateEvent;
 import de.fau.cs.mad.fablab.android.model.events.AppBarShowTitleEvent;
 import de.fau.cs.mad.fablab.android.util.Formatter;
+import de.fau.cs.mad.fablab.android.view.activities.BackButtonPressedEvent;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.NumberPickerCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
@@ -94,9 +95,21 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        mEventBus.unregister(this);
+    }
+
+    @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mViewModel.saveState(outState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mEventBus.register(this);
     }
 
     @Override
@@ -109,5 +122,11 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     @Override
     public void onUpdatePriceTotal(double priceTotal) {
         mPriceTotalTextView.setText(Html.fromHtml(Formatter.formatPrice(priceTotal)));
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(BackButtonPressedEvent event) {
+        mEventBus.post(new AppBarShowDoorStateEvent(true));
+        mEventBus.post(new AppBarShowTitleEvent(true));
     }
 }
