@@ -71,7 +71,6 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
                 R.dimen.slidinguppanel_panel_height_opened);
         mDragBgStrokeMargin = (int) res.getDimension(R.dimen.slidinguppanel_drag_bg_stroke_margin);
 
-        sliding_up_pl.setPanelHeight(mPanelHeight);
         sliding_up_pl.setPanelSlideListener(new SlidingUpPanelLayout.SimplePanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
