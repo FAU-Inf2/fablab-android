@@ -1,6 +1,7 @@
 package de.fau.cs.mad.fablab.android.model.util;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 
 import de.fau.cs.mad.fablab.android.R;
@@ -45,7 +46,10 @@ public class StorageFragment extends Fragment {
         mProductModel = new ProductModel(databaseHelper.getProductDao(), restClient.getProductApi());
         mAutoCompleteModel = new AutoCompleteModel(databaseHelper.getAutoCompleteWordsDao(),
                 restClient.getProductApi());
-        mSpaceApiModel = new SpaceApiModel(restClient.getSpaceApi(), getString(R.string.space_name));
+        long pollingFrequency = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(
+                getActivity()).getString("spaceapi_polling_freq", "15")) * 60 * 1000;
+        mSpaceApiModel = new SpaceApiModel(restClient.getSpaceApi(), getString(R.string.space_name),
+                pollingFrequency);
         mFablabMailModel = new FablabMailModel(restClientString.getDataApi());
         mDrupalModel = new DrupalModel(restClient.getDrupalApi());
     }

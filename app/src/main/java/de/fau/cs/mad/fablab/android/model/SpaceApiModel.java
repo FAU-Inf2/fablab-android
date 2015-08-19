@@ -15,10 +15,9 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class SpaceApiModel {
-    private final long REFRESH_TIME_MILLIS = 3 * 60 * 1000; // 3 minutes
-
     private SpaceApi mSpaceApi;
     private String mSpaceName;
+    private long mPollingFrequency;
     private EventBus mEventBus = EventBus.getDefault();
     private Handler mSpaceApiHandler = new Handler();
     private Runnable mSpaceApiRunner = new SpaceApiRunner();
@@ -33,20 +32,21 @@ public class SpaceApiModel {
             State state = hackerSpace.getState();
             updateState(state.getOpen(), state.getLastchange());
 
-            mSpaceApiHandler.postDelayed(mSpaceApiRunner, REFRESH_TIME_MILLIS);
+            mSpaceApiHandler.postDelayed(mSpaceApiRunner, mPollingFrequency);
             mRefreshRequested = false;
         }
 
         @Override
         public void failure(RetrofitError error) {
-            mSpaceApiHandler.postDelayed(mSpaceApiRunner, REFRESH_TIME_MILLIS);
+            mSpaceApiHandler.postDelayed(mSpaceApiRunner, mPollingFrequency);
             mRefreshRequested = false;
         }
     };
 
-    public SpaceApiModel(SpaceApi spaceApi, String spaceName) {
+    public SpaceApiModel(SpaceApi spaceApi, String spaceName, long pollingFrequency) {
         mSpaceApi = spaceApi;
         mSpaceName = spaceName;
+        mPollingFrequency = pollingFrequency;
 
         mEventBus.register(this);
         mRefreshRequested = false;
@@ -77,6 +77,11 @@ public class SpaceApiModel {
 
     public long getTime() {
         return mTime;
+    }
+
+    public void setPollingFrequency(long pollingFrequency) {
+        mPollingFrequency = pollingFrequency;
+        refreshState();
     }
 
     private class SpaceApiRunner implements Runnable {
