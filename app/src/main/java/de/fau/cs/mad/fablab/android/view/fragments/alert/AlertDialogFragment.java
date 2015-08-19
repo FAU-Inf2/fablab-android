@@ -86,7 +86,7 @@ public class AlertDialogFragment extends BaseDialogFragment
         super.onResume();
         MainActivity activity = (MainActivity) getActivity();
         activity.enableNavigationDrawer(true);
-        activity.setNavigationDrawerSelection(R.id.drawer_item_settings);
+        activity.setNavigationDrawerSelection(R.id.drawer_item_alert);
         activity.showFloatingActionButton(false);
         activity.showCartSlidingUpPanel(false);
     }
