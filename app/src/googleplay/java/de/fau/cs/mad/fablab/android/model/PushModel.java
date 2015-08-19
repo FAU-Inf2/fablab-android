@@ -24,7 +24,7 @@ public class PushModel {
     private static final String TAG = "PushModel";
     private static final String PROPERTY_REG_ID = "reg_id";
     private static final String PROPERTY_APP_VERSION = "app_version";
-    private static final String SENDER_ID = "12124638422";
+    private static final String SENDER_ID = "605066933";
 
     private Context mContext;
     private PushApi mPushApi;
