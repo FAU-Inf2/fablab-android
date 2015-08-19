@@ -25,6 +25,8 @@ public class ProductMapFragment extends BaseDialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         String locationId = getArguments().getString(KEY_LOCATION);
         //Todo: activate when server method is finished
         String testurl = "https://52.28.16.59:4433/productMap/index.html";
@@ -82,12 +84,10 @@ public class ProductMapFragment extends BaseDialogFragment {
     @Override
     public void onPause() {
         super.onPause();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
     }
 }

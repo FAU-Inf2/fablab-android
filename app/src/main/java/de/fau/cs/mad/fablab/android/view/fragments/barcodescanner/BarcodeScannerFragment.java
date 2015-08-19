@@ -29,8 +29,9 @@ public class BarcodeScannerFragment extends BaseFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         mViewModel.setListener(this);
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
         new ScannerViewCommandBinding().bind(mScannerView, mViewModel.getProcessBarcodeCommand());
     }
@@ -45,14 +46,12 @@ public class BarcodeScannerFragment extends BaseFragment
     @Override
     public void onPause() {
         super.onPause();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         mViewModel.pause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         mViewModel.resume();
 
         setDisplayOptions(R.id.drawer_item_scanner, false, false);

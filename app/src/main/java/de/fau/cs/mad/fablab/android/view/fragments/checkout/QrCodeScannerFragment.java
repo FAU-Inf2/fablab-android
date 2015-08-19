@@ -30,8 +30,9 @@ public class QrCodeScannerFragment extends BaseDialogFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         mViewModel.setListener(this);
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
         new ScannerViewCommandBinding().bind(mScannerView, mViewModel.getProcessQrCodeCommand());
     }
@@ -45,7 +46,6 @@ public class QrCodeScannerFragment extends BaseDialogFragment
     @Override
     public void onPause() {
         super.onPause();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         mEventBus.unregister(this);
         mViewModel.pause();
     }
@@ -53,7 +53,6 @@ public class QrCodeScannerFragment extends BaseDialogFragment
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         mEventBus.register(this);
         mViewModel.resume();
     }
