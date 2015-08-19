@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.UserModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
-import de.fau.cs.mad.fablab.rest.core.User;
 import de.greenrobot.event.EventBus;
 
 public class NavigationDrawerViewModel {
@@ -65,15 +64,7 @@ public class NavigationDrawerViewModel {
     {
         @Override
         public void execute(Void parameter) {
-            String password = mListener.getPassword();
-            String username = mListener.getUsername();
-
-            // get userinformation from server
-            // TODO give user to listener
-            //ArrayList<Roles> roles = new ArrayList();
-            //roles.add(Roles.INVENTORY);
-            //User user = new User("inventory", roles);
-            mListener.loggedIn(mModel.getUser());
+            mModel.getUser(mListener.getUsername(), mListener.getPassword());
         }
     };
 
@@ -168,8 +159,6 @@ public class NavigationDrawerViewModel {
         String getUsername();
 
         String getPassword();
-
-        void loggedIn(User user);
 
         void loggedOut();
     }

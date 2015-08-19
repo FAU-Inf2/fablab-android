@@ -50,7 +50,7 @@ public class StorageFragment extends Fragment {
         mSpaceApiModel = new SpaceApiModel(restClient.getSpaceApi(), getString(R.string.space_name));
         mFablabMailModel = new FablabMailModel(restClientString.getDataApi());
         mDrupalModel = new DrupalModel(restClient.getDrupalApi());
-        mUserModel = new UserModel((restClient.getUserApi()));
+        mUserModel = new UserModel(restClient.getRestAdapterBuilder());
     }
 
     public NewsModel getNewsModel(){

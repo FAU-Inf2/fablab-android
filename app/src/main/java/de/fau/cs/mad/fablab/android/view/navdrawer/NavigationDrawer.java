@@ -17,11 +17,13 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.model.events.UserRetrievedEvent;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.rest.core.Roles;
 import de.fau.cs.mad.fablab.rest.core.User;
+import de.greenrobot.event.EventBus;
 
 public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
     @InjectView(R.id.drawer_layout)
@@ -50,12 +52,15 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
     NavigationDrawerViewModel mViewModel;
 
     private User mUser;
+    private EventBus mEventBus = EventBus.getDefault();
 
     public NavigationDrawer(MainActivity activity, View view) {
         ButterKnife.inject(this, view);
         activity.inject(this);
 
         mViewModel.setListener(this);
+
+        mEventBus.register(this);
 
         Menu menu = mNavigationView.getMenu();
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_news),
@@ -126,13 +131,13 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
         return null;
     }
 
-    @Override
-    public void loggedIn(User user) {
-        mUser = user;
+
+    public void onEvent(UserRetrievedEvent event) {
+        mUser = event.getUser();
         Menu menu = mNavigationView.getMenu();
         menu.findItem(R.id.drawer_item_logout).setVisible(true);
 
-        if(user.getRoles().contains(Roles.INVENTORY))
+        if(mUser.getRoles().contains(Roles.INVENTORY))
         {
             menu.findItem(R.id.drawer_item_inventory).setVisible(true);
         }
@@ -140,7 +145,7 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
         mHeaderLogin.setVisibility(View.GONE);
         mHeaderLoggedIn.setVisibility(View.VISIBLE);
 
-        mUsernameLoggedIn.setText(user.getUsername());
+        mUsernameLoggedIn.setText(mUser.getUsername());
     }
 
     @Override
