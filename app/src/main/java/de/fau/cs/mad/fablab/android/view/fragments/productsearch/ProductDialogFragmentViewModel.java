@@ -82,13 +82,10 @@ public class ProductDialogFragmentViewModel {
     }
 
     public String getProductLocation() {
-        //Todo: choose correct getLocation method
-        //long categoryloc = mProduct.getCategory().getLocation_id();
-        //String cat = mProduct.getCategoryString();
-        // id = mProduct.getCategoryId();
-        //long locId = mProduct.getLocation_id();
         String loc = mProduct.getLocation();
+        // delete spaces in location string around brackets  "fau fablab / Lagerort"
         loc = loc.replace(" / ", "/" );
+        // and replace the rest of the spaces to avoid errors on server side query string parsing
         loc = loc.replace(" ", "_");
 
         return loc;

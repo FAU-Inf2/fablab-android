@@ -16,7 +16,7 @@ import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 
 public class ProductMapFragment extends BaseDialogFragment {
     public static final String KEY_LOCATION = "key_location";
-    public static final String TRUSTSTORE_KEY = "gWWB5-P5eiVL6evqC cI274Kq-bjYc-P719gaYrp-1D_zRw4pA _7KsPsRFW4ivjib5i7bW3fvnXvwLgtkGPU88ob_C_0fvXV_RN";
+    //public static final String TRUSTSTORE_KEY = "gWWB5-P5eiVL6evqC cI274Kq-bjYc-P719gaYrp-1D_zRw4pA _7KsPsRFW4ivjib5i7bW3fvnXvwLgtkGPU88ob_C_0fvXV_RN";
 
     @Bind(R.id.location_webView)
     WebView webview;
@@ -27,13 +27,13 @@ public class ProductMapFragment extends BaseDialogFragment {
 
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        String locationId = getArguments().getString(KEY_LOCATION);
+        String locationString = getArguments().getString(KEY_LOCATION);
         //Todo: activate when server method is finished
-        String testurl = getString(R.string.api_url) + "/productMap/productMap.html";
+        String productMapUrl = getString(R.string.api_url) + "/productMap/productMap.html";
         String url = "";
-        if(locationId != "")
-            url = testurl + "?id=" + locationId;
-        else url = testurl;
+        if(locationString != "")
+            url = productMapUrl + "?id=" + locationString;
+        else url = productMapUrl;
 
 //        try
 //        {
@@ -84,10 +84,12 @@ public class ProductMapFragment extends BaseDialogFragment {
     @Override
     public void onPause() {
         super.onPause();
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
     }
 }
