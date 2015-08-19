@@ -61,8 +61,6 @@
     <string name="alert_dialog_title">Störmeldung</string>
     <string name="alert_dialog_tool">Gerät:</string>
     <string name="alert_dialog_problem">Problem:</string>
-    <string name="alert_dialog_ok_button">Ok</string>
-    <string name="alert_dialog_cancel_button">Cancel</string>
 
     <!-- Strings for navigation drawer titles -->
     <string name="news">News</string>
