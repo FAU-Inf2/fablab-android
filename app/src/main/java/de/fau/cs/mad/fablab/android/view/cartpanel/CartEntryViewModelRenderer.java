@@ -14,8 +14,8 @@ import com.pedrogomez.renderers.Renderer;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.Formatter;
 import de.fau.cs.mad.fablab.android.view.common.binding.SpinnerCommandBinding;
@@ -23,18 +23,18 @@ import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 
 public class CartEntryViewModelRenderer extends Renderer<CartEntryViewModel>
         implements CartEntryViewModel.Listener {
-    @InjectView(R.id.cart_product_name)
+    @Bind(R.id.cart_product_name)
     TextView product_name_tv;
-    @InjectView(R.id.cart_product_quantity)
+    @Bind(R.id.cart_product_quantity)
     TextView product_amount_tv;
-    @InjectView(R.id.cart_product_quantity_spinner)
+    @Bind(R.id.cart_product_quantity_spinner)
     Spinner product_amount_spinner;
-    @InjectView(R.id.cart_product_price)
+    @Bind(R.id.cart_product_price)
     TextView product_price_tv;
 
     @Override
     protected void setUpView(View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
     }
 
     @Override

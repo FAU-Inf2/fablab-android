@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
@@ -26,13 +26,13 @@ public class ProductDialogFragment extends BaseDialogFragment
     @Inject
     ProductDialogFragmentViewModel mViewModel;
 
-    @InjectView(R.id.product_dialog_title)
+    @Bind(R.id.product_dialog_title)
     TextView mDialogTitle;
-    @InjectView(R.id.product_dialog_cart)
+    @Bind(R.id.product_dialog_cart)
     Button mCartButton;
-    @InjectView(R.id.product_dialog_location)
+    @Bind(R.id.product_dialog_location)
     Button mLocationButton;
-    @InjectView(R.id.product_dialog_report)
+    @Bind(R.id.product_dialog_report)
     Button mReportButton;
 
     @Override

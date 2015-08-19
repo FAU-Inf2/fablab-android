@@ -9,22 +9,22 @@ import android.widget.TextView;
 import com.pedrogomez.renderers.Renderer;
 import com.squareup.picasso.Picasso;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 
 public class NewsViewModelRenderer extends Renderer<NewsViewModel> {
-    @InjectView(R.id.title_news_entry)
+    @Bind(R.id.title_news_entry)
     TextView title_tv;
-    @InjectView(R.id.text_news_entry)
+    @Bind(R.id.text_news_entry)
     TextView text_tv;
-    @InjectView(R.id.icon_news_entry)
+    @Bind(R.id.icon_news_entry)
     ImageView icon_iv;
 
     @Override
     protected void setUpView(View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
     }
 
     @Override

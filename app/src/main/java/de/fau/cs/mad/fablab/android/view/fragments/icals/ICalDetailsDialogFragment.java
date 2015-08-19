@@ -14,7 +14,7 @@ import java.util.Calendar;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
@@ -22,19 +22,19 @@ import de.greenrobot.event.EventBus;
 
 public class ICalDetailsDialogFragment extends BaseDialogFragment
         implements ICalDetailsDialogFragmentViewModel.Listener {
-    @InjectView(R.id.title_dates_dialog)
+    @Bind(R.id.title_dates_dialog)
     TextView title_tv;
-    @InjectView(R.id.date_dates_dialog)
+    @Bind(R.id.date_dates_dialog)
     TextView date_tv;
-    @InjectView(R.id.time_dates_dialog)
+    @Bind(R.id.time_dates_dialog)
     TextView time_tv;
-    @InjectView(R.id.location_dates_dialog)
+    @Bind(R.id.location_dates_dialog)
     TextView location_tv;
-    @InjectView(R.id.date_description_dates_dialog)
+    @Bind(R.id.date_description_dates_dialog)
     TextView description_tv;
-    @InjectView(R.id.ok_button_dates_dialog)
+    @Bind(R.id.ok_button_dates_dialog)
     Button dismiss_button;
-    @InjectView(R.id.calendar_button_dates_dialog)
+    @Bind(R.id.calendar_button_dates_dialog)
     Button calendar_button;
 
     @Inject

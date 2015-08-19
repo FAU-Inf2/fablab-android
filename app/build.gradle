@@ -86,49 +86,47 @@ preBuild.dependsOn(":../fablab-common:build")
 
 dependencies {
     compile files('../../fablab-common/build/libs/fablab-common-1.0.jar')
-    // jackson annotations are required for POJOs
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.1.4'
-    compile("com.android.support:support-v4:22.2.0")
-    compile("com.android.support:appcompat-v7:22.2.0")
-    compile("com.android.support:support-annotations:22.2.0")
-    compile("com.android.support:recyclerview-v7:22.2.0")
-    compile("com.android.support:design:22.2.0")
 
-    // Libraries for the REST Client (Retrofit)
-    compile 'com.squareup.retrofit:retrofit:1.6.1'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
-    compile 'com.squareup.okhttp:okhttp:2.0.0'
-    compile 'com.squareup.okio:okio:1.0.1'
+    // Android support library
+    compile "com.android.support:support-v4:22.2.1"
+    compile "com.android.support:appcompat-v7:22.2.1"
+    compile 'com.android.support:cardview-v7:22.2.1'
+    compile "com.android.support:recyclerview-v7:22.2.1"
+    compile "com.android.support:support-annotations:22.2.1"
+    compile "com.android.support:design:22.2.1"
+
+    // Dependency injection
+    compile 'com.squareup.dagger:dagger:1.2.2'
+    provided 'com.squareup.dagger:dagger-compiler:1.2.2'
+    compile 'com.jakewharton:butterknife:7.0.1'
+
+    // REST client
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.4.0'
+    compile 'com.squareup.okhttp:okhttp:2.4.0'
+    compile 'com.squareup.okio:okio:1.4.0'
     compile 'com.squareup.retrofit:converter-jackson:1.9.0'
+
+    // ORM
     compile 'com.j256.ormlite:ormlite-core:4.48'
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'javax.persistence:persistence-api:1.0'
-    compile 'me.dm7.barcodescanner:zxing:1.7.2'
 
-    // CartSingleton Sliding Up Panel
-    compile 'com.sothree.slidinguppanel:library:3.1.1'
-
-    // CartSingleton CardView and RecyclerView and Sqipe-To-Remove lib
-    compile 'com.android.support:cardview-v7:22.0.+'
-    compile 'com.github.brnunes:swipeablerecyclerview:1.0.1'
-
-    // Navigation Drawer Design
-
-    compile 'de.hdodenhof:circleimageview:1.2.1'
-    compile 'com.github.clans:fab:1.5.0'
-    compile 'de.greenrobot:eventbus:2.4.0'
-    googleplayCompile 'com.google.android.gms:play-services:3.1.+'
-    compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.github.pedrovgs:renderers:2.0.3'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'de.greenrobot:eventbus:2.4.0'
 
-    //Dagger
-    compile 'com.squareup.dagger:dagger:1.2.+'
-    provided 'com.squareup.dagger:dagger-compiler:1.2.+'
+    // Push
+    googleplayCompile 'com.google.android.gms:play-services:3.1.59'
+    googleplayCompile 'com.fasterxml.jackson.core:jackson-databind:2.6.1'
 
-    compile 'com.github.pedrovgs:renderers:2.0.1'
-
+    // UI
+    compile 'com.github.brnunes:swipeablerecyclerview:1.0.1'
+    compile 'com.github.clans:fab:1.5.5'
     compile 'com.github.machinarius:preferencefragment:0.1.1'
-
+    compile 'com.sothree.slidinguppanel:library:3.1.1'
+    compile 'de.hdodenhof:circleimageview:1.3.0'
+    compile 'me.dm7.barcodescanner:zxing:1.8.2'
     compile 'xyz.danoz:recyclerviewfastscroller:0.1.3'
 }
 

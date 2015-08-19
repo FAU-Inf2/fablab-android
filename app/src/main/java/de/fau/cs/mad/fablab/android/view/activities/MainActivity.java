@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         StackTraceReporter.reportStackTraceIfAvailable(this);
 
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         mStorageFragment = (StorageFragment) getSupportFragmentManager()
                 .findFragmentByTag(TAG_STORAGE_FRAGMENT);

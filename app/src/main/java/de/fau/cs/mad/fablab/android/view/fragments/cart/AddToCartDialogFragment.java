@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.events.AppBarShowDoorStateEvent;
 import de.fau.cs.mad.fablab.android.model.events.AppBarShowTitleEvent;
@@ -26,13 +26,13 @@ import de.greenrobot.event.EventBus;
 
 public class AddToCartDialogFragment extends BaseDialogFragment
         implements AddToCartDialogFragmentViewModel.Listener {
-    @InjectView(R.id.add_to_cart_name)
+    @Bind(R.id.add_to_cart_name)
     TextView mNameTextView;
-    @InjectView(R.id.add_to_cart_price)
+    @Bind(R.id.add_to_cart_price)
     TextView mPriceTextView;
-    @InjectView(R.id.add_to_cart_numberPicker)
+    @Bind(R.id.add_to_cart_numberPicker)
     NumberPicker mNumberPicker;
-    @InjectView(R.id.add_to_cart_price_total)
+    @Bind(R.id.add_to_cart_price_total)
     TextView mPriceTotalTextView;
 
     @Inject

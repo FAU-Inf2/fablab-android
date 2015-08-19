@@ -16,8 +16,8 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.Formatter;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
@@ -27,17 +27,17 @@ import de.fau.cs.mad.fablab.android.view.fragments.checkout.QrCodeScannerFragmen
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 
 public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener {
-    @InjectView(R.id.sliding_layout)
+    @Bind(R.id.sliding_layout)
     SlidingUpPanelLayout sliding_up_pl;
-    @InjectView(R.id.dragPart)
+    @Bind(R.id.dragPart)
     LinearLayout drag_part_ll;
-    @InjectView(R.id.cart_total_price_preview)
+    @Bind(R.id.cart_total_price_preview)
     TextView total_price_preview_tv;
-    @InjectView(R.id.cart_recycler_view)
+    @Bind(R.id.cart_recycler_view)
     RecyclerView cart_rv;
-    @InjectView(R.id.cart_total_price)
+    @Bind(R.id.cart_total_price)
     TextView total_price_tv;
-    @InjectView(R.id.cart_button_checkout)
+    @Bind(R.id.cart_button_checkout)
     Button checkout_button;
 
     @Inject
@@ -63,7 +63,7 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
         mActivity = activity;
 
         activity.inject(this);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         final Resources res = sliding_up_pl.getResources();
         mPanelHeight = (int) res.getDimension(R.dimen.slidinguppanel_panel_height);

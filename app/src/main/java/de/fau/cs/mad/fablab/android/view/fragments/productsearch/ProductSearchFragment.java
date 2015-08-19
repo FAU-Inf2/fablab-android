@@ -19,7 +19,8 @@ import android.widget.Toast;
 import com.pedrogomez.renderers.RVRendererAdapter;
 
 import javax.inject.Inject;
-import butterknife.InjectView;
+
+import butterknife.Bind;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
@@ -32,7 +33,6 @@ import de.greenrobot.event.EventBus;
 import xyz.danoz.recyclerviewfastscroller.sectionindicator.title.SectionTitleIndicator;
 import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller;
 
-
 public class ProductSearchFragment extends BaseFragment implements
         ProductSearchFragmentViewModel.Listener {
 
@@ -43,17 +43,17 @@ public class ProductSearchFragment extends BaseFragment implements
     @Inject
     ProductSearchFragmentViewModel mViewModel;
 
-    @InjectView(R.id.product_search_text_view)
+    @Bind(R.id.product_search_text_view)
     AutoCompleteTextView mProductSearchTextView;
-    @InjectView(R.id.product_recycler_view)
+    @Bind(R.id.product_recycler_view)
     RecyclerView mProductRecyclerView;
-    @InjectView(R.id.product_fast_scroller)
+    @Bind(R.id.product_fast_scroller)
     VerticalRecyclerViewFastScroller mProductFastScroller;
-    @InjectView(R.id.product_fast_scroller_section_title_indicator)
+    @Bind(R.id.product_fast_scroller_section_title_indicator)
     SectionTitleIndicator mProductSectionTitleIndicator;
-    @InjectView(R.id.product_recycler_view_container)
+    @Bind(R.id.product_recycler_view_container)
     RelativeLayout mProductRecyclerViewContainer;
-    @InjectView(R.id.product_progress_bar)
+    @Bind(R.id.product_progress_bar)
     ProgressBar mProductProgressBar;
 
     @Override

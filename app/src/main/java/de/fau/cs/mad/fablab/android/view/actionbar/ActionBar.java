@@ -11,26 +11,26 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 
 public class ActionBar implements ActionBarViewModel.Listener {
 
-    @InjectView(R.id.appbar)
+    @Bind(R.id.appbar)
     Toolbar toolbar;
-    @InjectView(R.id.drawer_layout)
+    @Bind(R.id.drawer_layout)
     DrawerLayout drawer;
-    @InjectView(R.id.appbar_time)
+    @Bind(R.id.appbar_time)
     TextView time_tv;
 
-    @InjectView(R.id.appbar_fau)
+    @Bind(R.id.appbar_fau)
     TextView appbar_fau;
-    @InjectView(R.id.appbar_fablab)
+    @Bind(R.id.appbar_fablab)
     TextView appbar_fablab;
-    @InjectView(R.id.icon_fablab)
+    @Bind(R.id.icon_fablab)
     ImageView icon_fablab;
 
     private MenuItem mOpenStateMenuItem;
@@ -41,7 +41,7 @@ public class ActionBar implements ActionBarViewModel.Listener {
     ActionBarViewModel mViewModel;
 
     public ActionBar(MainActivity activity, View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         activity.inject(this);
 
         mViewModel.setListener(this);

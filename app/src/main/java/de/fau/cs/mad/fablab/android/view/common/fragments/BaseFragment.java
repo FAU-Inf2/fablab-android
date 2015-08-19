@@ -23,7 +23,7 @@ public abstract class BaseFragment extends Fragment{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
     }
 
     public void setDisplayOptions(int menuItemId, boolean showFAB, boolean showCart) {

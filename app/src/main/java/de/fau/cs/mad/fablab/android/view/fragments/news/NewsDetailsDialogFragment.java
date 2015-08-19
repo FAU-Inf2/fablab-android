@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
-import butterknife.InjectView;
+import butterknife.Bind;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
@@ -24,13 +24,13 @@ import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 
 public class NewsDetailsDialogFragment extends BaseDialogFragment
         implements NewsDetailsDialogViewModel.Listener {
-    @InjectView(R.id.title_news_dialog)
+    @Bind(R.id.title_news_dialog)
     TextView title_tv;
-    @InjectView(R.id.news_text_news_dialog)
+    @Bind(R.id.news_text_news_dialog)
     TextView text_tv;
-    @InjectView(R.id.image_news_dialog)
+    @Bind(R.id.image_news_dialog)
     ImageView image_iv;
-    @InjectView(R.id.ok_button_news_dialog)
+    @Bind(R.id.ok_button_news_dialog)
     Button dismiss_button;
 
     @Inject

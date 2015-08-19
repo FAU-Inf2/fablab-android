@@ -10,23 +10,23 @@ import android.view.View;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 
 public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
-    @InjectView(R.id.drawer_layout)
+    @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-    @InjectView(R.id.navigation)
+    @Bind(R.id.navigation)
     NavigationView mNavigationView;
 
     @Inject
     NavigationDrawerViewModel mViewModel;
 
     public NavigationDrawer(MainActivity activity, View view) {
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         activity.inject(this);
 
         mViewModel.setListener(this);
