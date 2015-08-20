@@ -17,13 +17,11 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.model.events.UserRetrievedEvent;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.rest.core.Roles;
 import de.fau.cs.mad.fablab.rest.core.User;
-import de.greenrobot.event.EventBus;
 
 public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
     @Bind(R.id.drawer_layout)
@@ -51,16 +49,11 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
     @Inject
     NavigationDrawerViewModel mViewModel;
 
-    private User mUser;
-    private EventBus mEventBus = EventBus.getDefault();
-
     public NavigationDrawer(MainActivity activity, View view) {
         ButterKnife.bind(this, view);
         activity.inject(this);
 
         mViewModel.setListener(this);
-
-        mEventBus.register(this);
 
         Menu menu = mNavigationView.getMenu();
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_news),
@@ -135,13 +128,12 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
         return null;
     }
 
-
-    public void onEvent(UserRetrievedEvent event) {
-        mUser = event.getUser();
+    @Override
+    public void loggedIn(User user) {
         Menu menu = mNavigationView.getMenu();
         menu.findItem(R.id.drawer_item_logout).setVisible(true);
 
-        if(mUser.getRoles().contains(Roles.INVENTORY))
+        if(user.getRoles().contains(Roles.INVENTORY))
         {
             menu.findItem(R.id.drawer_item_inventory).setVisible(true);
         }
@@ -149,15 +141,15 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
         mHeaderLogin.setVisibility(View.GONE);
         mHeaderLoggedIn.setVisibility(View.VISIBLE);
 
-        mUsernameLoggedIn.setText(mUser.getUsername());
+        mUsernameLoggedIn.setText(user.getUsername());
     }
 
     @Override
-    public void loggedOut() {
+    public void loggedOut(User user) {
         Menu menu = mNavigationView.getMenu();
         menu.findItem(R.id.drawer_item_logout).setVisible(false);
 
-        if(mUser.getRoles().contains(Roles.INVENTORY))
+        if(user.getRoles().contains(Roles.INVENTORY))
         {
             menu.findItem(R.id.drawer_item_inventory).setVisible(false);
         }

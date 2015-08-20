@@ -22,6 +22,7 @@ import de.fau.cs.mad.fablab.rest.myapi.CartApi;
 import de.fau.cs.mad.fablab.rest.myapi.DataApi;
 import de.fau.cs.mad.fablab.rest.myapi.DrupalApi;
 import de.fau.cs.mad.fablab.rest.myapi.ICalApi;
+import de.fau.cs.mad.fablab.rest.myapi.InventoryApi;
 import de.fau.cs.mad.fablab.rest.myapi.NewsApi;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
 import de.fau.cs.mad.fablab.rest.myapi.PushApi;
@@ -134,6 +135,11 @@ public class RestClient {
     public DrupalApi getDrupalApi()
     {
         return mRestAdapter.create(DrupalApi.class);
+    }
+
+    public InventoryApi getInventoryApi()
+    {
+        return mRestAdapter.create(InventoryApi.class);
     }
 
     public RestAdapter.Builder getRestAdapterBuilder()

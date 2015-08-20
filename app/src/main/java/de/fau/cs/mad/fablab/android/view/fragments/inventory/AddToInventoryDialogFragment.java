@@ -1,6 +1,7 @@
 package de.fau.cs.mad.fablab.android.view.fragments.inventory;
 
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +16,12 @@ import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.events.AppBarShowDoorStateEvent;
 import de.fau.cs.mad.fablab.android.model.events.AppBarShowTitleEvent;
+import de.fau.cs.mad.fablab.android.model.events.NavigationEventInventory;
 import de.fau.cs.mad.fablab.android.view.common.binding.NumberPickerCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
-import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationEvent;
 import de.fau.cs.mad.fablab.rest.core.Product;
+import de.fau.cs.mad.fablab.rest.core.User;
 import de.greenrobot.event.EventBus;
 
 public class AddToInventoryDialogFragment extends BaseDialogFragment implements AddToInventoryDialogFragmentViewModel.Listener {
@@ -36,10 +38,11 @@ public class AddToInventoryDialogFragment extends BaseDialogFragment implements 
 
     private EventBus mEventBus = EventBus.getDefault();
 
-    public static AddToInventoryDialogFragment newInstance(Product product) {
+    public static AddToInventoryDialogFragment newInstance(Product product, User user) {
         AddToInventoryDialogFragment dialogFragment = new AddToInventoryDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(AddToInventoryDialogFragmentViewModel.KEY_PRODUCT, product);
+        bundle.putSerializable(AddToInventoryDialogFragmentViewModel.KEY_USER, user);
         dialogFragment.setArguments(bundle);
         return dialogFragment;
     }
@@ -81,8 +84,15 @@ public class AddToInventoryDialogFragment extends BaseDialogFragment implements 
     @Override
     public void onDismiss() {
         getFragmentManager().popBackStack();
-        mEventBus.post(NavigationEvent.Inventory);
+        mEventBus.post(new NavigationEventInventory(mViewModel.getUser()));
         mEventBus.post(new AppBarShowDoorStateEvent(true));
         mEventBus.post(new AppBarShowTitleEvent(true));
     }
+    @Override
+    public String getUUID()
+    {
+        return Settings.Secure.getString(getActivity().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+    }
+
 }

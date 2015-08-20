@@ -6,7 +6,10 @@ import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.UserModel;
+import de.fau.cs.mad.fablab.android.model.events.NavigationEventInventory;
+import de.fau.cs.mad.fablab.android.model.events.UserRetrievedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
+import de.fau.cs.mad.fablab.rest.core.User;
 import de.greenrobot.event.EventBus;
 
 public class NavigationDrawerViewModel {
@@ -14,6 +17,7 @@ public class NavigationDrawerViewModel {
 
     private Listener mListener;
     private EventBus mEventBus = EventBus.getDefault();
+    private User mLoggedInUser;
     private UserModel mModel;
 
     private int mSelectedItem = R.id.drawer_item_news;
@@ -72,7 +76,7 @@ public class NavigationDrawerViewModel {
     {
         @Override
         public void execute(Integer parameter) {
-            mListener.loggedOut();
+            mListener.loggedOut(getLoggedInUser());
         }
     };
 
@@ -80,13 +84,14 @@ public class NavigationDrawerViewModel {
     {
         @Override
         public void execute(Integer parameter) {
-            mEventBus.post(NavigationEvent.Inventory);
+            mEventBus.post(new NavigationEventInventory(getLoggedInUser()));
         }
     };
 
     @Inject
     public NavigationDrawerViewModel(UserModel userModel) {
         mModel = userModel;
+        mEventBus.register(this);
     }
 
     public void setListener(Listener listener) {
@@ -153,6 +158,16 @@ public class NavigationDrawerViewModel {
         outState.putInt(KEY_SELECTED_ITEM, mSelectedItem);
     }
 
+    public void onEvent(UserRetrievedEvent event) {
+        mLoggedInUser = event.getUser();
+        mListener.loggedIn(mLoggedInUser);
+    }
+
+    public User getLoggedInUser()
+    {
+        return mLoggedInUser;
+    }
+
     public interface Listener {
         void onNavigationDrawerItemSelected(int itemId);
 
@@ -160,6 +175,8 @@ public class NavigationDrawerViewModel {
 
         String getPassword();
 
-        void loggedOut();
+        void loggedIn(User user);
+
+        void loggedOut(User user);
     }
 }

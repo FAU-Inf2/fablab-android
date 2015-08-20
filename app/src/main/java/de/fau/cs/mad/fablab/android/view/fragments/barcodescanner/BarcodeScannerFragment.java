@@ -20,10 +20,10 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class BarcodeScannerFragment extends BaseFragment
         implements BarcodeScannerFragmentViewModel.Listener {
     @Bind(R.id.scanner)
-    ZXingScannerView mScannerView;
+    protected ZXingScannerView mScannerView;
 
     @Inject
-    BarcodeScannerFragmentViewModel mViewModel;
+    protected BarcodeScannerFragmentViewModel mViewModel;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
