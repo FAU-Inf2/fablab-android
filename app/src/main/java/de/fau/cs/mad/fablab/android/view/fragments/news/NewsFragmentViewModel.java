@@ -20,7 +20,6 @@ public class NewsFragmentViewModel extends BaseViewModel<News> {
     private NewsModel mModel;
     private Listener mListener;
     private EventBus mEventBus = EventBus.getDefault();
-    private int maxPixelHeight;
 
     private ListAdapteeCollection<NewsViewModel> mNewsViewModelCollection;
 
@@ -102,9 +101,6 @@ public class NewsFragmentViewModel extends BaseViewModel<News> {
 
     public interface Listener {
         void onDataInserted(int positionStart, int itemCount);
-
         void onAllDataRemoved(int itemCount);
     }
-
-
 }

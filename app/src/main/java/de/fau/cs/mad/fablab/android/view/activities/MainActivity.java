@@ -1,7 +1,5 @@
 package de.fau.cs.mad.fablab.android.view.activities;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -92,13 +90,6 @@ public class MainActivity extends AppCompatActivity {
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
                     new ICalAndNewsFragment(), TAG_ICAL_AND_NEWS_FRAGMENT).commit();
-
-            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putFloat("saved_translation_y", 0);
-            editor.putFloat("saved_translation_y_real", 0);
-            editor.putFloat("saved_news_fl_height", -1);
-            editor.commit();
         }
 
         mActionBar = new ActionBar(this, findViewById(android.R.id.content));

@@ -16,7 +16,6 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewDeltaCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.icalandnews.NewsListChangeEvent;
 import de.greenrobot.event.EventBus;
 
 public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.Listener {
@@ -76,21 +75,15 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
     @Override
     public void onDataInserted(int positionStart, int itemCount) {
         mAdapter.notifyItemRangeInserted(positionStart, itemCount);
-        mEventBus.post(new NewsListChangeEvent(mAdapter.getItemCount()));
     }
 
     @Override
     public void onAllDataRemoved(int itemCount) {
         mAdapter.notifyItemRangeRemoved(0, itemCount);
-        mEventBus.post(new NewsListChangeEvent(mAdapter.getItemCount()));
     }
 
     public void resetPointer() {
         news_rv.scrollToPosition(0);
-    }
-
-    public int getSize() {
-        return mAdapter.getItemCount();
     }
 
     @SuppressWarnings("unused")
