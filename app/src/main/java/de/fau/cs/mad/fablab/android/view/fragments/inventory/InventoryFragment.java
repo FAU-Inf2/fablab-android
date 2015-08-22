@@ -10,9 +10,11 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.model.events.NavigationEventBarcodeScannerInventory;
+import de.fau.cs.mad.fablab.android.model.events.NavigationEventProductSearchInventory;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
-import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationEvent;
+import de.fau.cs.mad.fablab.rest.core.User;
 import de.greenrobot.event.EventBus;
 
 public class InventoryFragment extends BaseFragment implements InventoryFragmentViewModel.Listener{
@@ -38,6 +40,9 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
 
         mViewModel.setListener(this);
 
+        User user = (User) getArguments().getSerializable("USER");
+        mViewModel.setUser(user);
+
         new ViewCommandBinding().bind(mScanButton, mViewModel.getOnScanButtonClickedCommand());
         new ViewCommandBinding().bind(mSearchButton, mViewModel.getOnSearchButtonClickedCommand());
     }
@@ -56,11 +61,11 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
 
     @Override
     public void onScanButtonClicked() {
-        mEventBus.post(NavigationEvent.BarcodeScannerInventory);
+        mEventBus.post(new NavigationEventBarcodeScannerInventory(mViewModel.getUser()));
     }
 
     @Override
     public void onSearchButtonClicked() {
-        mEventBus.post(NavigationEvent.ProductSearchInventory);
+        mEventBus.post(new NavigationEventProductSearchInventory(mViewModel.getUser()));
     }
 }

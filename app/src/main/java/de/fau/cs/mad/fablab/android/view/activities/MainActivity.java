@@ -11,6 +11,9 @@ import butterknife.ButterKnife;
 import dagger.ObjectGraph;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
+import de.fau.cs.mad.fablab.android.model.events.NavigationEventBarcodeScannerInventory;
+import de.fau.cs.mad.fablab.android.model.events.NavigationEventInventory;
+import de.fau.cs.mad.fablab.android.model.events.NavigationEventProductSearchInventory;
 import de.fau.cs.mad.fablab.android.model.util.StorageFragment;
 import de.fau.cs.mad.fablab.android.util.StackTraceReporter;
 import de.fau.cs.mad.fablab.android.util.TopExceptionHandler;
@@ -251,47 +254,61 @@ public class MainActivity extends AppCompatActivity {
                             TAG_ALERT_FRAGMENT).addToBackStack(null).commit();
                 }
                 break;
+        }
+    }
 
-            case Inventory:
-                showFloatingActionButton(false);
-                showCartSlidingUpPanel(false);
-                if (!TAG_INVENTORY_FRAGMENT.equals(currentFragmentTag)) {
-                    InventoryFragment inventoryFragment =
-                            (InventoryFragment) getSupportFragmentManager().findFragmentByTag(
-                                    TAG_INVENTORY_FRAGMENT);
-                    if (inventoryFragment == null) {
-                        inventoryFragment = new InventoryFragment();
-                    }
-                    fragmentTransaction.replace(R.id.fragment_container, inventoryFragment,
-                            TAG_INVENTORY_FRAGMENT).addToBackStack(null).commit();
-                }
-                break;
+    public void onEvent(NavigationEventInventory event)
+    {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        String currentFragmentTag = getSupportFragmentManager().findFragmentById(
+                R.id.fragment_container).getTag();
+        showFloatingActionButton(false);
+        showCartSlidingUpPanel(false);
+        if (!TAG_INVENTORY_FRAGMENT.equals(currentFragmentTag)) {
 
-            case BarcodeScannerInventory:
-                if (!TAG_BARCODE_INVENTORY_FRAGMENT.equals(currentFragmentTag)) {
-                    InventoryBarcodeScannerFragment barcodeScannerFragment =
-                            (InventoryBarcodeScannerFragment) getSupportFragmentManager().findFragmentByTag(
-                                    TAG_BARCODE_INVENTORY_FRAGMENT);
-                    if (barcodeScannerFragment == null) {
-                        barcodeScannerFragment = new InventoryBarcodeScannerFragment();
-                    }
-                    fragmentTransaction.replace(R.id.fragment_container, barcodeScannerFragment,
-                            TAG_BARCODE_INVENTORY_FRAGMENT).addToBackStack(null).commit();
-                }
-                break;
+            Bundle args = new Bundle();
+            args.putSerializable("USER", event.getUser());
+            InventoryFragment inventoryFragment = new InventoryFragment();
+            inventoryFragment.setArguments(args);
 
-            case ProductSearchInventory:
-                if (!TAG_PRODUCTSEARCH_INVENTORY_FRAGMENT.equals(currentFragmentTag)) {
-                    InventoryProductSearchFragment productSearchFragment =
-                            (InventoryProductSearchFragment) getSupportFragmentManager().findFragmentByTag(
-                                    TAG_PRODUCTSEARCH_INVENTORY_FRAGMENT);
-                    if (productSearchFragment == null) {
-                        productSearchFragment = new InventoryProductSearchFragment();
-                    }
-                    fragmentTransaction.replace(R.id.fragment_container, productSearchFragment,
-                            TAG_PRODUCTSEARCH_INVENTORY_FRAGMENT).addToBackStack(null).commit();
-                }
-                break;
+            fragmentTransaction.replace(R.id.fragment_container, inventoryFragment,
+                    TAG_INVENTORY_FRAGMENT).addToBackStack(null).commit();
+        }
+    }
+
+    public void onEvent(NavigationEventBarcodeScannerInventory event)
+    {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        String currentFragmentTag = getSupportFragmentManager().findFragmentById(
+                R.id.fragment_container).getTag();
+        if (!TAG_BARCODE_INVENTORY_FRAGMENT.equals(currentFragmentTag)) {
+
+            InventoryBarcodeScannerFragment barcodeScannerFragment = new InventoryBarcodeScannerFragment();
+
+            Bundle args = new Bundle();
+            args.putSerializable("USER", event.getUser());
+            barcodeScannerFragment.setArguments(args);
+
+            fragmentTransaction.replace(R.id.fragment_container, barcodeScannerFragment,
+                    TAG_BARCODE_INVENTORY_FRAGMENT).addToBackStack(null).commit();
+        }
+    }
+
+    public void onEvent(NavigationEventProductSearchInventory event)
+    {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        String currentFragmentTag = getSupportFragmentManager().findFragmentById(
+                R.id.fragment_container).getTag();
+        if (!TAG_PRODUCTSEARCH_INVENTORY_FRAGMENT.equals(currentFragmentTag)) {
+
+            InventoryProductSearchFragment productSearchFragment = new InventoryProductSearchFragment();
+
+            Bundle args = new Bundle();
+            args.putSerializable("USER", event.getUser());
+            productSearchFragment.setArguments(args);
+
+            fragmentTransaction.replace(R.id.fragment_container, productSearchFragment,
+                    TAG_PRODUCTSEARCH_INVENTORY_FRAGMENT).addToBackStack(null).commit();
         }
     }
 }

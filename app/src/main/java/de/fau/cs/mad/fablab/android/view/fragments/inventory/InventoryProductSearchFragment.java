@@ -7,13 +7,27 @@ import android.view.MenuInflater;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductClickedEvent;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
+import de.fau.cs.mad.fablab.rest.core.User;
 
 public class InventoryProductSearchFragment extends ProductSearchFragment {
+
+    private User mUser;
+
+    public void setUser(User user)
+    {
+        mUser = user;
+    }
+
+    public User getUser()
+    {
+        return mUser;
+    }
 
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(false);
+        mUser = (User) getArguments().getSerializable("USER");
     }
 
     @Override
@@ -31,7 +45,7 @@ public class InventoryProductSearchFragment extends ProductSearchFragment {
     @SuppressWarnings("unused")
     public void onEvent(ProductClickedEvent event) {
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                AddToInventoryDialogFragment.newInstance(event.getProduct())).addToBackStack(null)
+                AddToInventoryDialogFragment.newInstance(event.getProduct(), mUser)).addToBackStack(null)
                 .commit();
     }
 }

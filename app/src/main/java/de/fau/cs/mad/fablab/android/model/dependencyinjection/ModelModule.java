@@ -8,6 +8,7 @@ import de.fau.cs.mad.fablab.android.model.CheckoutModel;
 import de.fau.cs.mad.fablab.android.model.DrupalModel;
 import de.fau.cs.mad.fablab.android.model.FablabMailModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
+import de.fau.cs.mad.fablab.android.model.InventoryModel;
 import de.fau.cs.mad.fablab.android.model.NewsModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.model.PushModel;
@@ -114,5 +115,11 @@ public class ModelModule {
     UserModel provideUserModel()
     {
         return mStorageFragment.getUserModel();
+    }
+
+    @Provides
+    InventoryModel provideInventoryModel()
+    {
+        return mStorageFragment.getInventoryModel();
     }
 }

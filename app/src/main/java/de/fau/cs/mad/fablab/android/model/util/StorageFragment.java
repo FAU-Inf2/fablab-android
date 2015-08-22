@@ -11,6 +11,7 @@ import de.fau.cs.mad.fablab.android.model.CheckoutModel;
 import de.fau.cs.mad.fablab.android.model.DrupalModel;
 import de.fau.cs.mad.fablab.android.model.FablabMailModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
+import de.fau.cs.mad.fablab.android.model.InventoryModel;
 import de.fau.cs.mad.fablab.android.model.NewsModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.model.PushModel;
@@ -32,6 +33,7 @@ public class StorageFragment extends Fragment {
     private FablabMailModel mFablabMailModel;
     private DrupalModel mDrupalModel;
     private UserModel mUserModel;
+    private InventoryModel mInventoryModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class StorageFragment extends Fragment {
         mFablabMailModel = new FablabMailModel(restClientString.getDataApi());
         mDrupalModel = new DrupalModel(restClient.getDrupalApi());
         mUserModel = new UserModel(restClient.getRestAdapterBuilder());
+        mInventoryModel = new InventoryModel(restClient.getInventoryApi());
     }
 
     public NewsModel getNewsModel() {
@@ -101,5 +104,10 @@ public class StorageFragment extends Fragment {
     public UserModel getUserModel()
     {
         return mUserModel;
+    }
+
+    public InventoryModel getInventoryModel()
+    {
+        return mInventoryModel;
     }
 }
