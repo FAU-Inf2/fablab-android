@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.pedrogomez.renderers.RVRendererAdapter;
 
@@ -19,6 +20,8 @@ public class ShowInventoryFragment extends BaseFragment implements ShowInventory
 
     @Bind(R.id.inventory_recycler_view)
     RecyclerView mRecyclerView;
+    @Bind(R.id.inventory_progress_bar)
+    ProgressBar mInventoryProgressBar;
 
     @Inject
     ShowInventoryFragmentViewModel mViewModel;
@@ -39,6 +42,8 @@ public class ShowInventoryFragment extends BaseFragment implements ShowInventory
         mRecyclerView.setAdapter(mAdapter);
 
         mViewModel.setListener(this);
+        System.out.println("SHOW PROGRESS BAR");
+        mInventoryProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -51,6 +56,8 @@ public class ShowInventoryFragment extends BaseFragment implements ShowInventory
     @Override
     public void onDataInserted(int positionStart, int itemCount) {
         mAdapter.notifyItemRangeInserted(positionStart, itemCount);
+        System.out.println("HIDE PROGRESS BAR");
+        mInventoryProgressBar.setVisibility(View.GONE);
     }
 
     @Override
