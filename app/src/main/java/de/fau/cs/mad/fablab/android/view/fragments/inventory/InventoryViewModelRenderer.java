@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.pedrogomez.renderers.Renderer;
 
+import java.text.SimpleDateFormat;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.fau.cs.mad.fablab.android.R;
@@ -48,7 +50,7 @@ public class InventoryViewModelRenderer extends Renderer<InventoryViewModel> {
         product_name_tv.setText(viewModel.getName());
         product_amount_tv.setText(Double.toString(viewModel.getAmount()));
         user_name_tv.setText(viewModel.getUser());
-        updated_at_tv.setText(viewModel.getUpdatedAt().toString());
+        updated_at_tv.setText(new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(viewModel.getUpdatedAt()));
         product_id_tv.setText(viewModel.getID());
     }
 }
