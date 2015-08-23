@@ -66,6 +66,7 @@
     <string name="inventory_fragment_scan_product">Product scannen</string>
     <string name="inventory_fragment_search_product">Product suchen</string>
     <string name="inventory_fragment_delete_inventory">Inventar löschen</string>
+    <string name="inventory_fragment_show_inventory">Inventar anzeigen</string>
 
     <!-- Strings for navigation drawer titles -->
     <string name="news">News</string>

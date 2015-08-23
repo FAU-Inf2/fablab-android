@@ -40,6 +40,14 @@ public class InventoryFragmentViewModel {
         }
     };
 
+    private Command<Void> mOnShowInventoryClickedCommand = new Command<Void>()
+    {
+        @Override
+        public void execute(Void parameter) {
+
+        }
+    };
+
     @Inject
     public InventoryFragmentViewModel(InventoryModel model)
     {
@@ -74,6 +82,11 @@ public class InventoryFragmentViewModel {
     public Command<Void> getOnDeleteButtonClickedCommand()
     {
         return mOnDeleteButtonClickedCommand;
+    }
+
+    public Command<Void> getOnShowInventoryClickedCommand()
+    {
+        return mOnShowInventoryClickedCommand;
     }
 
     public interface Listener
