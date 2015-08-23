@@ -2,6 +2,7 @@ package de.fau.cs.mad.fablab.android.view.fragments.inventory;
 
 import javax.inject.Inject;
 
+import de.fau.cs.mad.fablab.android.model.InventoryModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.User;
 
@@ -9,6 +10,7 @@ public class InventoryFragmentViewModel {
 
     private Listener mListener;
     private User mUser;
+    private InventoryModel mModel;
 
     private Command<Void> mOnScanButtonClickedCommand = new Command<Void>()
     {
@@ -30,10 +32,18 @@ public class InventoryFragmentViewModel {
         }
     };
 
-    @Inject
-    public InventoryFragmentViewModel()
+    private Command<Void> mOnDeleteButtonClickedCommand = new Command<Void>()
     {
+        @Override
+        public void execute(Void parameter) {
+            mModel.deleteInventory();
+        }
+    };
 
+    @Inject
+    public InventoryFragmentViewModel(InventoryModel model)
+    {
+        mModel = model;
     }
 
     public void setListener(Listener listener)
@@ -59,6 +69,11 @@ public class InventoryFragmentViewModel {
     public Command<Void> getOnSearchButtonClickedCommand()
     {
         return mOnSearchButtonClickedCommand;
+    }
+
+    public Command<Void> getOnDeleteButtonClickedCommand()
+    {
+        return mOnDeleteButtonClickedCommand;
     }
 
     public interface Listener

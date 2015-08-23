@@ -32,4 +32,11 @@
         android:id="@+id/button_search_product_inventory"
         android:layout_gravity="center_horizontal" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/inventory_fragment_delete_inventory"
+        android:id="@+id/button_delete_inventory_inventory"
+        android:layout_gravity="center_horizontal" />
+
 </LinearLayout>

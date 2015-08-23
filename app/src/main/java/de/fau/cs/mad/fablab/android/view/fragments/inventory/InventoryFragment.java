@@ -5,11 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.model.events.InventoryDeletedEvent;
+import de.fau.cs.mad.fablab.android.model.events.InventoryNotDeletedEvent;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventBarcodeScannerInventory;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventProductSearchInventory;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
@@ -23,6 +26,9 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
     Button mScanButton;
     @Bind(R.id.button_search_product_inventory)
     Button mSearchButton;
+
+    @Bind(R.id.button_delete_inventory_inventory)
+    Button mDeleteButton;
 
     @Inject
     InventoryFragmentViewModel mViewModel;
@@ -39,12 +45,14 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
         super.onActivityCreated(savedInstanceState);
 
         mViewModel.setListener(this);
+        mEventBus.register(this);
 
         User user = (User) getArguments().getSerializable("USER");
         mViewModel.setUser(user);
 
         new ViewCommandBinding().bind(mScanButton, mViewModel.getOnScanButtonClickedCommand());
         new ViewCommandBinding().bind(mSearchButton, mViewModel.getOnSearchButtonClickedCommand());
+        new ViewCommandBinding().bind(mDeleteButton, mViewModel.getOnDeleteButtonClickedCommand());
     }
 
     @Override
@@ -68,4 +76,15 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
     public void onSearchButtonClicked() {
         mEventBus.post(new NavigationEventProductSearchInventory(mViewModel.getUser()));
     }
+
+    public void onEvent(InventoryDeletedEvent event)
+    {
+        Toast.makeText(getActivity(), "Inventar gelöscht", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onEvent(InventoryNotDeletedEvent event)
+    {
+        Toast.makeText(getActivity(), "Fehler beim Inventar löschen aufgetreten", Toast.LENGTH_SHORT).show();
+    }
+
 }
