@@ -15,6 +15,7 @@ import de.fau.cs.mad.fablab.android.model.events.InventoryDeletedEvent;
 import de.fau.cs.mad.fablab.android.model.events.InventoryNotDeletedEvent;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventBarcodeScannerInventory;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventProductSearchInventory;
+import de.fau.cs.mad.fablab.android.model.events.NavigationEventShowInventory;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.fau.cs.mad.fablab.rest.core.User;
@@ -46,7 +47,6 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
         super.onActivityCreated(savedInstanceState);
 
         mViewModel.setListener(this);
-        mEventBus.register(this);
 
         User user = (User) getArguments().getSerializable("USER");
         mViewModel.setUser(user);
@@ -66,7 +66,15 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
     @Override
     public void onResume() {
         super.onResume();
+        mEventBus.register(this);
         setDisplayOptions(R.id.drawer_item_inventory, false, false);
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        mEventBus.unregister(this);
     }
 
     @Override
@@ -77,6 +85,11 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
     @Override
     public void onSearchButtonClicked() {
         mEventBus.post(new NavigationEventProductSearchInventory(mViewModel.getUser()));
+    }
+
+    @Override
+    public void onShowButtonClicked() {
+        mEventBus.post(new NavigationEventShowInventory(mViewModel.getUser()));
     }
 
     public void onEvent(InventoryDeletedEvent event)

@@ -44,7 +44,10 @@ public class InventoryFragmentViewModel {
     {
         @Override
         public void execute(Void parameter) {
-
+            if(mListener != null)
+            {
+                mListener.onShowButtonClicked();
+            }
         }
     };
 
@@ -94,5 +97,7 @@ public class InventoryFragmentViewModel {
         void onScanButtonClicked();
 
         void onSearchButtonClicked();
+
+        void onShowButtonClicked();
     }
 }

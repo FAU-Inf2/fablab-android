@@ -14,6 +14,7 @@ import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventBarcodeScannerInventory;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventInventory;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventProductSearchInventory;
+import de.fau.cs.mad.fablab.android.model.events.NavigationEventShowInventory;
 import de.fau.cs.mad.fablab.android.model.util.StorageFragment;
 import de.fau.cs.mad.fablab.android.util.StackTraceReporter;
 import de.fau.cs.mad.fablab.android.util.TopExceptionHandler;
@@ -27,6 +28,7 @@ import de.fau.cs.mad.fablab.android.view.fragments.icalandnews.ICalAndNewsFragme
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryBarcodeScannerFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryProductSearchFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.inventory.ShowInventoryFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String TAG_INVENTORY_FRAGMENT = "tag_inventory_fragment";
     private final static String TAG_BARCODE_INVENTORY_FRAGMENT = "tag_barcode_inventory_fragment";
     private final static String TAG_PRODUCTSEARCH_INVENTORY_FRAGMENT = "tag_productsearch_inventory_fragment";
+    private final static String TAG_SHOWINVENTORY_INVENTORY_FRAGMENT = "tag_showinventory_inventory_fragment";
 
     private ActionBar mActionBar;
     private NavigationDrawer mNavigationDrawer;
@@ -309,6 +312,24 @@ public class MainActivity extends AppCompatActivity {
 
             fragmentTransaction.replace(R.id.fragment_container, productSearchFragment,
                     TAG_PRODUCTSEARCH_INVENTORY_FRAGMENT).addToBackStack(null).commit();
+        }
+    }
+
+    public void onEvent(NavigationEventShowInventory event)
+    {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        String currentFragmentTag = getSupportFragmentManager().findFragmentById(
+                R.id.fragment_container).getTag();
+        if (!TAG_SHOWINVENTORY_INVENTORY_FRAGMENT.equals(currentFragmentTag)) {
+
+            ShowInventoryFragment showInventoryFragment = new ShowInventoryFragment();
+
+            Bundle args = new Bundle();
+            args.putSerializable("USER", event.getUser());
+            showInventoryFragment.setArguments(args);
+
+            fragmentTransaction.replace(R.id.fragment_container, showInventoryFragment,
+                    TAG_SHOWINVENTORY_INVENTORY_FRAGMENT).addToBackStack(null).commit();
         }
     }
 }

@@ -31,6 +31,7 @@ import de.fau.cs.mad.fablab.android.view.fragments.inventory.AddToInventoryDialo
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryBarcodeScannerFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryProductSearchFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.inventory.ShowInventoryFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsDetailsDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productmap.ProductMapFragment;
@@ -50,7 +51,7 @@ import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
                 ProductMapFragment.class, ProductSearchFragment.class, QrCodeScannerFragment.class,
                 AlertDialogFragment.class, InventoryFragment.class, InventoryBarcodeScannerFragment.class,
                 InventoryProductSearchFragment.class, AddToInventoryDialogFragment.class,
-                SettingsFragment.class
+                SettingsFragment.class, ShowInventoryFragment.class
         })
 public class ModelModule {
     private final StorageFragment mStorageFragment;
