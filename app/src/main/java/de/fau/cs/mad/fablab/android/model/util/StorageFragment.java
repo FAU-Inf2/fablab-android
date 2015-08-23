@@ -58,7 +58,7 @@ public class StorageFragment extends Fragment {
         mFablabMailModel = new FablabMailModel(restClientString.getDataApi());
         mDrupalModel = new DrupalModel(restClient.getDrupalApi());
         mUserModel = new UserModel(restClient.getRestAdapterBuilder());
-        mInventoryModel = new InventoryModel(restClient.getInventoryApi());
+        mInventoryModel = new InventoryModel(restClient.getRestAdapterBuilder());
     }
 
     public NewsModel getNewsModel() {

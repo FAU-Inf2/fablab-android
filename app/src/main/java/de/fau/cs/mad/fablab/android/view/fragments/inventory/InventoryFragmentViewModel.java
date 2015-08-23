@@ -41,7 +41,7 @@ public class InventoryFragmentViewModel {
         @Override
         public void execute(Void parameter) {
             deleteResult = false;
-            mModel.deleteInventory();
+            mModel.deleteInventory(mUser.getUsername(), mUser.getPassword());
         }
     };
 

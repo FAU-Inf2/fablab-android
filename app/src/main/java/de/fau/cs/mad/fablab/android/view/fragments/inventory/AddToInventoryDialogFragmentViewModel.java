@@ -27,7 +27,7 @@ public class AddToInventoryDialogFragmentViewModel {
         @Override
         public void execute(Void parameter) {
 
-            mModel.sendInventoryItem(createInventoryItem());
+            mModel.sendInventoryItem(createInventoryItem(), mUser.getUsername(), mUser.getPassword());
 
             if (mListener != null) {
                 mListener.onDismiss();
