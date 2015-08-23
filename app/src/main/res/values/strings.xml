@@ -63,11 +63,14 @@
     <string name="alert_dialog_problem">Problem:</string>
 
     <string name="inventory_fragment_title">Inventur</string>
-    <string name="inventory_fragment_scan_product">Product scannen</string>
-    <string name="inventory_fragment_search_product">Product suchen</string>
+    <string name="inventory_fragment_scan_product">Produkt scannen</string>
+    <string name="inventory_fragment_search_product">Produkt suchen</string>
     <string name="inventory_fragment_delete_inventory">Inventar löschen</string>
     <string name="inventory_fragment_show_inventory">Inventar anzeigen</string>
     <string name="show_inventory_fragment_title">Inventar:</string>
+    <string name="inventory_card_product_id">Produkt ID:</string>
+    <string name="inventory_card_user_name">durch Benutzer:</string>
+    <string name="inventory_card_updated_at">durchgeführt am:</string>
 
     <!-- Strings for navigation drawer titles -->
     <string name="news">News</string>

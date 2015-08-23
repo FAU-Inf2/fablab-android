@@ -7,65 +7,128 @@
     android:layout_marginLeft="@dimen/card_horizontal_margin"
     android:layout_marginTop="@dimen/card_vertical_margin"
     android:layout_marginBottom="@dimen/card_vertical_margin"
-    android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_margin="10dp"
         >
 
         <TextView
             android:id="@+id/product_name_inventory_item_entry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/news_entry_bottom_title_margin"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:text="Product Name"
+            android:textStyle="bold"
             />
 
-        <TextView
-            android:id="@+id/product_id_inventory_item_entry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/news_entry_bottom_title_margin"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:text="Product ID"
-            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorPrimaryDark" />
 
-        <TextView
-            android:id="@+id/user_name_inventory_item_entry"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/news_entry_bottom_title_margin"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:text="User Name"
-            />
+            android:layout_marginTop="@dimen/news_entry_bottom_title_margin"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/product_amount_inventory_item_entry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/news_entry_bottom_title_margin"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:text="Product Amount"
-            />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginRight="10dp"
+                >
 
-        <TextView
-            android:id="@+id/updated_at_inventory_item_entry"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/news_entry_bottom_title_margin"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:text="Updated at"
-            />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/news_entry_bottom_title_margin"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp"
+                    android:text="@string/inventory_card_product_id"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/news_entry_bottom_title_margin"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp"
+                    android:text="@string/inventory_card_user_name"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/news_entry_bottom_title_margin"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp"
+                    android:text="@string/inventory_card_updated_at"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/product_id_inventory_item_entry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/news_entry_bottom_title_margin"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp"
+                    android:text="Product ID"
+                    />
+
+                <TextView
+                    android:id="@+id/user_name_inventory_item_entry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/news_entry_bottom_title_margin"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp"
+                    android:text="User Name"
+                    />
+
+                <TextView
+                    android:id="@+id/updated_at_inventory_item_entry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/news_entry_bottom_title_margin"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp"
+                    android:text="Updated at"
+                    />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/product_amount_inventory_item_entry"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="right|center_vertical"
+                android:layout_marginBottom="@dimen/news_entry_bottom_title_margin"
+                android:textColor="@android:color/black"
+                android:textSize="22sp"
+                android:text="Product Amount"
+                />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
