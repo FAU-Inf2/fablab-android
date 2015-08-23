@@ -11,11 +11,6 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.model.events.InventoryDeletedEvent;
-import de.fau.cs.mad.fablab.android.model.events.InventoryNotDeletedEvent;
-import de.fau.cs.mad.fablab.android.model.events.NavigationEventBarcodeScannerInventory;
-import de.fau.cs.mad.fablab.android.model.events.NavigationEventProductSearchInventory;
-import de.fau.cs.mad.fablab.android.model.events.NavigationEventShowInventory;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.fau.cs.mad.fablab.rest.core.User;
@@ -66,38 +61,17 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
     @Override
     public void onResume() {
         super.onResume();
-        mEventBus.register(this);
         setDisplayOptions(R.id.drawer_item_inventory, false, false);
     }
 
     @Override
-    public void onPause()
-    {
-        super.onPause();
-        mEventBus.unregister(this);
-    }
-
-    @Override
-    public void onScanButtonClicked() {
-        mEventBus.post(new NavigationEventBarcodeScannerInventory(mViewModel.getUser()));
-    }
-
-    @Override
-    public void onSearchButtonClicked() {
-        mEventBus.post(new NavigationEventProductSearchInventory(mViewModel.getUser()));
-    }
-
-    @Override
-    public void onShowButtonClicked() {
-        mEventBus.post(new NavigationEventShowInventory(mViewModel.getUser()));
-    }
-
-    public void onEvent(InventoryDeletedEvent event)
+    public void deletedSuccess()
     {
         Toast.makeText(getActivity(), "Inventar gelöscht", Toast.LENGTH_SHORT).show();
     }
 
-    public void onEvent(InventoryNotDeletedEvent event)
+    @Override
+    public void deletedFail()
     {
         Toast.makeText(getActivity(), "Fehler beim Inventar löschen aufgetreten", Toast.LENGTH_SHORT).show();
     }
