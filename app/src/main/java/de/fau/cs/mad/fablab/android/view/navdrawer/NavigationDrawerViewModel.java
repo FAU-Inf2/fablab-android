@@ -76,6 +76,7 @@ public class NavigationDrawerViewModel {
     {
         @Override
         public void execute(Integer parameter) {
+            mEventBus.post(NavigationEvent.News);
             mListener.loggedOut(getLoggedInUser());
         }
     };
