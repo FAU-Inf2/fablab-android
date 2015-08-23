@@ -11,10 +11,10 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.util.UiUtils;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.fau.cs.mad.fablab.rest.core.User;
-import de.greenrobot.event.EventBus;
 
 public class InventoryFragment extends BaseFragment implements InventoryFragmentViewModel.Listener{
 
@@ -30,8 +30,6 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
     @Inject
     InventoryFragmentViewModel mViewModel;
 
-    EventBus mEventBus = EventBus.getDefault();
-
     @Inject
     public InventoryFragment(){
 
@@ -40,6 +38,8 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        UiUtils.hideKeyboard(getActivity());
 
         mViewModel.setListener(this);
 
