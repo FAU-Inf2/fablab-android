@@ -15,11 +15,17 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
+import xyz.danoz.recyclerviewfastscroller.sectionindicator.title.SectionTitleIndicator;
+import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller;
 
 public class ShowInventoryFragment extends BaseFragment implements ShowInventoryFragmentViewModel.Listener{
 
     @Bind(R.id.inventory_recycler_view)
     RecyclerView mRecyclerView;
+    @Bind(R.id.inventory_fast_scroller)
+    VerticalRecyclerViewFastScroller mInventoryFastScroller;
+    @Bind(R.id.inventory_fast_scroller_section_title_indicator)
+    SectionTitleIndicator mInventorySectionTitleIndicator;
     @Bind(R.id.inventory_progress_bar)
     ProgressBar mInventoryProgressBar;
 
@@ -27,6 +33,7 @@ public class ShowInventoryFragment extends BaseFragment implements ShowInventory
     ShowInventoryFragmentViewModel mViewModel;
 
     private RVRendererAdapter<InventoryViewModel> mAdapter;
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -37,9 +44,19 @@ public class ShowInventoryFragment extends BaseFragment implements ShowInventory
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
 
+        /*
         mAdapter = new RVRendererAdapter<>(getLayoutInflater(savedInstanceState),
                 new InventoryViewModelRendererBuilder(), mViewModel.getInventoryViewModelCollection());
+                */
+        mAdapter = new InventoryItemRVRendererAdapter(getLayoutInflater(savedInstanceState),
+                new InventoryViewModelRendererBuilder(),
+                mViewModel.getInventoryViewModelCollection());
         mRecyclerView.setAdapter(mAdapter);
+
+        mInventoryFastScroller.setRecyclerView(mRecyclerView);
+        mRecyclerView.addOnScrollListener(mInventoryFastScroller.getOnScrollListener());
+        mInventoryFastScroller.setSectionIndicator(mInventorySectionTitleIndicator);
+        mInventorySectionTitleIndicator.setVisibility(View.VISIBLE);
 
         mViewModel.setListener(this);
         mInventoryProgressBar.setVisibility(View.VISIBLE);
