@@ -69,7 +69,7 @@
     <string name="inventory_fragment_show_inventory">Inventar anzeigen</string>
     <string name="show_inventory_fragment_title">Inventar:</string>
     <string name="inventory_card_product_id">Produkt ID:</string>
-    <string name="inventory_card_user_name">durch Benutzer:</string>
+    <string name="inventory_card_user_name">durchgeführt von:</string>
     <string name="inventory_card_updated_at">durchgeführt am:</string>
 
     <!-- Strings for navigation drawer titles -->
