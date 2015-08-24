@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_marginLeft="-50dp"
+            android:layout_toRightOf="@+id/image_dates_dialog"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:textColor="@android:color/black"
@@ -102,14 +102,14 @@
             <Button
                 android:id="@+id/calendar_button_dates_dialog"
                 android:layout_width="wrap_content"
-                android:layout_height="58dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:text="@string/add_to_calendar"/>
 
             <Button
                 android:id="@+id/ok_button_dates_dialog"
                 android:layout_width="wrap_content"
-                android:layout_height="58dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="right"
                 android:text="@android:string/ok" />
 
