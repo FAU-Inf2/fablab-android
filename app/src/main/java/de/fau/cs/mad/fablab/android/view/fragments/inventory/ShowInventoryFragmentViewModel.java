@@ -3,8 +3,12 @@ package de.fau.cs.mad.fablab.android.view.fragments.inventory;
 import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
 
+import java.text.Collator;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -33,17 +37,30 @@ public class ShowInventoryFragmentViewModel extends BaseViewModel<InventoryItem>
     @Override
     public void onAllItemsAdded(Collection<? extends InventoryItem> collection) {
         addItems(collection);
+        sortByName();
     }
 
     private void addItems(Collection<? extends InventoryItem> items) {
-        int positionStart = mShowInventoryViewModelCollection.size();
-        int count = 0;
         for (InventoryItem newItem : items) {
             mShowInventoryViewModelCollection.add(new InventoryViewModel(newItem));
-            count++;
         }
-        if (mListener != null && count > 0) {
-            mListener.onDataInserted(positionStart, count);
+        if (mListener != null) {
+            mListener.onDataChanged();
+        }
+    }
+
+    private void sortByName() {
+        Collections.sort(mShowInventoryViewModelCollection, new Comparator<InventoryViewModel>()
+        {
+            @Override
+            public int compare(InventoryViewModel lhs, InventoryViewModel rhs) {
+                Collator collator = Collator.getInstance(Locale.GERMAN);
+                collator.setStrength(Collator.SECONDARY);
+                return collator.compare(lhs.getName(), rhs.getName());
+            }
+        });
+        if(mListener != null) {
+            mListener.onDataChanged();
         }
     }
 
@@ -63,7 +80,7 @@ public class ShowInventoryFragmentViewModel extends BaseViewModel<InventoryItem>
     }
 
     public interface Listener {
-        void onDataInserted(int positionStart, int itemCount);
         void onAllDataRemoved(int itemCount);
+        void onDataChanged();
     }
 }

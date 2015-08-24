@@ -42,7 +42,6 @@ public class ShowInventoryFragment extends BaseFragment implements ShowInventory
         mRecyclerView.setAdapter(mAdapter);
 
         mViewModel.setListener(this);
-        System.out.println("SHOW PROGRESS BAR");
         mInventoryProgressBar.setVisibility(View.VISIBLE);
     }
 
@@ -54,14 +53,15 @@ public class ShowInventoryFragment extends BaseFragment implements ShowInventory
     }
 
     @Override
-    public void onDataInserted(int positionStart, int itemCount) {
-        mAdapter.notifyItemRangeInserted(positionStart, itemCount);
-        System.out.println("HIDE PROGRESS BAR");
-        mInventoryProgressBar.setVisibility(View.GONE);
+    public void onAllDataRemoved(int itemCount)
+    {
+        mAdapter.notifyItemRangeRemoved(0, itemCount);
     }
 
     @Override
-    public void onAllDataRemoved(int itemCount) {
-        mAdapter.notifyItemRangeRemoved(0, itemCount);
+    public void onDataChanged()
+    {
+        mAdapter.notifyDataSetChanged();
+        mInventoryProgressBar.setVisibility(View.GONE);
     }
 }
