@@ -156,5 +156,7 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
 
         mHeaderLogin.setVisibility(View.VISIBLE);
         mHeaderLoggedIn.setVisibility(View.GONE);
+        mPasswordET.setText("");
+        mUsernameET.setText("");
     }
 }
