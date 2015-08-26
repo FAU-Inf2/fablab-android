@@ -6,9 +6,9 @@ import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
 import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.model.CheckoutModel;
 import de.fau.cs.mad.fablab.android.model.DrupalModel;
-import de.fau.cs.mad.fablab.android.model.FablabMailModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
 import de.fau.cs.mad.fablab.android.model.InventoryModel;
+import de.fau.cs.mad.fablab.android.model.MailModel;
 import de.fau.cs.mad.fablab.android.model.NewsModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.model.PushModel;
@@ -38,6 +38,7 @@ import de.fau.cs.mad.fablab.android.view.fragments.productmap.ProductMapFragment
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.stacktrace.StackTraceDialogFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 
 @SuppressWarnings("unused")
@@ -49,6 +50,7 @@ import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
                 ICalDetailsDialogFragment.class, ICalFragment.class, NavigationDrawer.class,
                 NewsDetailsDialogFragment.class, NewsFragment.class, ProductDialogFragment.class,
                 ProductMapFragment.class, ProductSearchFragment.class, QrCodeScannerFragment.class,
+                StackTraceDialogFragment.class,
                 AlertDialogFragment.class, InventoryFragment.class, InventoryBarcodeScannerFragment.class,
                 InventoryProductSearchFragment.class, AddToInventoryDialogFragment.class,
                 SettingsFragment.class, ShowInventoryFragment.class
@@ -101,26 +103,22 @@ public class ModelModule {
     }
 
     @Provides
-    FablabMailModel provideFablabMailModel()
-    {
+    MailModel provideMailModel() {
         return mStorageFragment.getFablabMailModel();
     }
 
     @Provides
-    DrupalModel provideDrupalModel()
-    {
+    DrupalModel provideDrupalModel() {
         return mStorageFragment.getDrupalModel();
     }
 
     @Provides
-    UserModel provideUserModel()
-    {
+    UserModel provideUserModel() {
         return mStorageFragment.getUserModel();
     }
 
     @Provides
-    InventoryModel provideInventoryModel()
-    {
+    InventoryModel provideInventoryModel() {
         return mStorageFragment.getInventoryModel();
     }
 }

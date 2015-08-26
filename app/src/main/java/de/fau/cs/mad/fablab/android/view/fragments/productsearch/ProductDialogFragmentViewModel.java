@@ -4,9 +4,8 @@ import android.os.Bundle;
 
 import javax.inject.Inject;
 
-import de.fau.cs.mad.fablab.android.model.FablabMailModel;
+import de.fau.cs.mad.fablab.android.model.MailModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
-import de.fau.cs.mad.fablab.rest.core.Category;
 import de.fau.cs.mad.fablab.rest.core.Product;
 
 public class ProductDialogFragmentViewModel {
@@ -15,7 +14,7 @@ public class ProductDialogFragmentViewModel {
 
     private Listener mListener;
     private Product mProduct;
-    private FablabMailModel mFablabMailModel;
+    private MailModel mMailModel;
 
     private Command<Void> mAddToCartCommand = new Command<Void>() {
         @Override
@@ -43,8 +42,8 @@ public class ProductDialogFragmentViewModel {
     };
 
     @Inject
-    public ProductDialogFragmentViewModel(FablabMailModel fablabMailModel) {
-        mFablabMailModel = fablabMailModel;
+    public ProductDialogFragmentViewModel(MailModel mailModel) {
+        mMailModel = mailModel;
     }
 
     public Command<Void> getAddToCartCommand() {
@@ -99,9 +98,8 @@ public class ProductDialogFragmentViewModel {
         mProduct = (Product) arguments.getSerializable(KEY_PRODUCT);
     }
 
-    public String getMailAddress()
-    {
-        return mFablabMailModel.getMailAddress();
+    public String getMailAddress() {
+        return mMailModel.getFeedbackMailAddress();
     }
 
     public interface Listener {

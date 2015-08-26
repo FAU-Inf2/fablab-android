@@ -5,14 +5,14 @@ import java.util.List;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.DrupalModel;
-import de.fau.cs.mad.fablab.android.model.FablabMailModel;
+import de.fau.cs.mad.fablab.android.model.MailModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.FabTool;
 
 public class AlertDialogFragmentViewModel {
 
     private DrupalModel mDrupalModel;
-    private FablabMailModel mFablablMailModel;
+    private MailModel mMailModel;
     private Listener mListener;
 
     private Command<Void> mOKCommand = new Command<Void>() {
@@ -25,9 +25,9 @@ public class AlertDialogFragmentViewModel {
     };
 
     @Inject
-    public AlertDialogFragmentViewModel(DrupalModel drupalModel, FablabMailModel fablabMailModel) {
+    public AlertDialogFragmentViewModel(DrupalModel drupalModel, MailModel mailModel) {
         mDrupalModel = drupalModel;
-        mFablablMailModel = fablabMailModel;
+        mMailModel = mailModel;
     }
 
     public void setListener(Listener listener) {
@@ -43,7 +43,7 @@ public class AlertDialogFragmentViewModel {
     }
 
     public String getMailAddress() {
-        return mFablablMailModel.getMailAddress();
+        return mMailModel.getFeedbackMailAddress();
     }
 
     public interface Listener {

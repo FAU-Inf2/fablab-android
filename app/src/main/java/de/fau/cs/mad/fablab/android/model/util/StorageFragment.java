@@ -9,7 +9,7 @@ import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
 import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.model.CheckoutModel;
 import de.fau.cs.mad.fablab.android.model.DrupalModel;
-import de.fau.cs.mad.fablab.android.model.FablabMailModel;
+import de.fau.cs.mad.fablab.android.model.MailModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
 import de.fau.cs.mad.fablab.android.model.InventoryModel;
 import de.fau.cs.mad.fablab.android.model.NewsModel;
@@ -30,7 +30,7 @@ public class StorageFragment extends Fragment {
     private ProductModel mProductModel;
     private AutoCompleteModel mAutoCompleteModel;
     private SpaceApiModel mSpaceApiModel;
-    private FablabMailModel mFablabMailModel;
+    private MailModel mMailModel;
     private DrupalModel mDrupalModel;
     private UserModel mUserModel;
     private InventoryModel mInventoryModel;
@@ -40,8 +40,7 @@ public class StorageFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
 
-        RestClient restClient = new RestClient(getActivity().getApplicationContext(), false);
-        RestClient restClientString = new RestClient(getActivity().getApplicationContext(), true);
+        RestClient restClient = new RestClient(getActivity().getApplicationContext());
         DatabaseHelper databaseHelper = DatabaseHelper.getHelper(getActivity().getApplicationContext());
         mICalModel = new ICalModel(restClient.getICalApi(), databaseHelper.getICalDao());
         mNewsModel = new NewsModel(restClient.getNewsApi(), databaseHelper.getNewsDao());
@@ -56,7 +55,7 @@ public class StorageFragment extends Fragment {
                 getActivity()).getString("spaceapi_polling_freq", "15")) * 60 * 1000;
         mSpaceApiModel = new SpaceApiModel(restClient.getSpaceApi(), getString(R.string.space_name),
                 pollingFrequency);
-        mFablabMailModel = new FablabMailModel(restClientString.getDataApi());
+        mMailModel = new MailModel(restClient.getDataApi());
         mDrupalModel = new DrupalModel(restClient.getDrupalApi());
         mUserModel = new UserModel(restClient.getRestAdapterBuilder());
         mInventoryModel = new InventoryModel(restClient.getRestAdapterBuilder());
@@ -94,8 +93,8 @@ public class StorageFragment extends Fragment {
         return mSpaceApiModel;
     }
 
-    public FablabMailModel getFablabMailModel() {
-        return mFablabMailModel;
+    public MailModel getFablabMailModel() {
+        return mMailModel;
     }
 
     public DrupalModel getDrupalModel() {

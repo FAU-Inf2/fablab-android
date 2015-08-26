@@ -38,39 +38,25 @@ public class RestClient {
     private Context mContext;
     private RestAdapter.Builder mRestAdapterBuilder;
 
-    public RestClient(Context context, boolean string) {
+    public RestClient(Context context) {
         mContext = context;
         final String API_URL = mContext.getString(R.string.api_url);
 
         OkHttpClient httpClient = new OkHttpClient();
         httpClient.setSslSocketFactory(getPinnedCertSslSocketFactory());
 
-        // extra converter for Strings needed
-        if(!string) {
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-            mapper.setDateFormat(new SimpleDateFormat(Format.DATE_FORMAT));
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        mapper.setDateFormat(new SimpleDateFormat(Format.DATE_FORMAT));
 
-            mRestAdapterBuilder = new RestAdapter.Builder()
-                    .setEndpoint(API_URL)
-                    .setClient(new OkClient(httpClient))
-                    .setConverter(new JacksonConverter(mapper))
-                    .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL
-                            : RestAdapter.LogLevel.NONE);
+        mRestAdapterBuilder = new RestAdapter.Builder()
+                .setEndpoint(API_URL)
+                .setClient(new OkClient(httpClient))
+                .setConverter(new JacksonConverter(mapper))
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL
+                        : RestAdapter.LogLevel.NONE);
 
-            mRestAdapter = mRestAdapterBuilder.build();
-        }
-        else
-        {
-            mRestAdapterBuilder = new RestAdapter.Builder()
-                    .setEndpoint(API_URL)
-                    .setClient(new OkClient(httpClient))
-                    .setConverter(new StringConverter())
-                    .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL
-                            : RestAdapter.LogLevel.NONE);
-
-            mRestAdapter = mRestAdapterBuilder.build();
-        }
+        mRestAdapter = mRestAdapterBuilder.build();
     }
 
     /**
@@ -128,22 +114,19 @@ public class RestClient {
         return mRestAdapter.create(SpaceApi.class);
     }
 
-    public DataApi getDataApi(){
+    public DataApi getDataApi() {
         return mRestAdapter.create(DataApi.class);
     }
 
-    public DrupalApi getDrupalApi()
-    {
+    public DrupalApi getDrupalApi() {
         return mRestAdapter.create(DrupalApi.class);
     }
 
-    public InventoryApi getInventoryApi()
-    {
+    public InventoryApi getInventoryApi() {
         return mRestAdapter.create(InventoryApi.class);
     }
 
-    public RestAdapter.Builder getRestAdapterBuilder()
-    {
+    public RestAdapter.Builder getRestAdapterBuilder() {
         return mRestAdapterBuilder;
     }
 }

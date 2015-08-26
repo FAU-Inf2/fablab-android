@@ -46,8 +46,6 @@
 
     <string name="search_all_hint">Alle Produkte</string>
 
-    <string name="stacktrace_messaging_yes">Ja</string>
-    <string name="stacktrace_messaging_no">Nein</string>
     <string name="stacktrace_messaging_subject">Fehlermeldung FAU FabLab</string>
     <string name="stacktrace_messaging_chooser_title">Sende Fehlermeldung mit:</string>
     <string name="stacktrace_messaging_dialog_title">Fehlermeldung</string>
