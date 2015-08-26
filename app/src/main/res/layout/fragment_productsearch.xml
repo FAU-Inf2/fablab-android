@@ -7,21 +7,22 @@
 
     <AutoCompleteTextView
         android:id="@+id/product_search_text_view"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
         android:width="250dip"
         android:hint="@string/search_all_hint"
         android:imeOptions="actionSend"
+        android:inputType="textPhonetic"
         android:singleLine="true"
         android:textStyle="bold" />
 
     <RelativeLayout
+        android:id="@+id/product_recycler_view_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/product_search_text_view"
-        android:id="@+id/product_recycler_view_container">
+        android:layout_below="@id/product_search_text_view">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/product_recycler_view"
