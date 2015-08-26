@@ -25,8 +25,7 @@ import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import de.fau.cs.mad.fablab.rest.core.FabTool;
 
 public class AlertDialogFragment extends BaseDialogFragment
-    implements AlertDialogFragmentViewModel.Listener
-{
+        implements AlertDialogFragmentViewModel.Listener {
 
     @Bind(R.id.alert_dialog_tool_spinner)
     Spinner mToolSpinner;
@@ -36,8 +35,6 @@ public class AlertDialogFragment extends BaseDialogFragment
     EditText mEditText;
     @Bind(R.id.alert_dialog_ok_button)
     Button mOKButton;
-    @Bind(R.id.alert_dialog_cancel_button)
-    Button mCancelButton;
 
     @Inject
     AlertDialogFragmentViewModel mViewModel;
@@ -58,17 +55,13 @@ public class AlertDialogFragment extends BaseDialogFragment
 
         //check if tools are available
         List<FabTool> mTools = mViewModel.getTools();
-        if(mTools.isEmpty())
-        {
+        if (mTools.isEmpty()) {
             mBoolSpinner = false;
             mEditTextTools.setVisibility(View.VISIBLE);
-        }
-        else
-        {
+        } else {
             //set spinner items
             List<String> mToolNames = new ArrayList<>();
-            for(FabTool f : mTools)
-            {
+            for (FabTool f : mTools) {
                 mToolNames.add(f.getTitle());
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
@@ -78,7 +71,6 @@ public class AlertDialogFragment extends BaseDialogFragment
         }
 
         new ViewCommandBinding().bind(mOKButton, mViewModel.getOKCommand());
-        new ViewCommandBinding().bind(mCancelButton, mViewModel.getCancelCommand());
     }
 
     @Override
@@ -94,12 +86,9 @@ public class AlertDialogFragment extends BaseDialogFragment
     @Override
     public void onOK() {
         String text = "";
-        if(mBoolSpinner)
-        {
+        if (mBoolSpinner) {
             text = mToolSpinner.getSelectedItem().toString();
-        }
-        else
-        {
+        } else {
             text = mEditTextTools.getText().toString();
         }
 
@@ -115,13 +104,6 @@ public class AlertDialogFragment extends BaseDialogFragment
         getActivity().startActivity(Intent.createChooser(sendIntent, getActivity().getString(
                 R.string.alert_messaging_chooser_title)));
 
-        dismiss();
-        UiUtils.hideKeyboard(getActivity());
-        getFragmentManager().popBackStack();
-    }
-
-    @Override
-    public void onCancel() {
         dismiss();
         UiUtils.hideKeyboard(getActivity());
         getFragmentManager().popBackStack();

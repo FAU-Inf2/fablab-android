@@ -1,96 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingRight="@dimen/alert_dialog_margin"
+    android:orientation="vertical"
     android:paddingLeft="@dimen/alert_dialog_margin"
+    android:paddingRight="@dimen/alert_dialog_margin"
     android:paddingTop="@dimen/alert_dialog_margin"
-    >
+    android:weightSum="1">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/abc_text_size_large_material"
         android:fontFamily="sans-serif-medium"
+        android:gravity="center_horizontal"
         android:text="@string/alert_dialog_title"
         android:textColor="@color/colorPrimary"
-        android:gravity="center_horizontal"/>
+        android:textSize="@dimen/abc_text_size_large_material" />
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/abc_text_size_title_material"
         android:fontFamily="sans-serif-medium"
+        android:text="@string/alert_dialog_tool"
         android:textColor="@color/colorPrimary"
-        android:text="@string/alert_dialog_tool"/>
+        android:textSize="@dimen/abc_text_size_title_material" />
 
 
     <Spinner
+        android:id="@+id/alert_dialog_tool_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/alert_dialog_tool_spinner"
-        android:visibility="gone"
         android:layout_marginBottom="@dimen/card_vertical_margin"
-        >
-    </Spinner>
+        android:visibility="gone" />
 
     <EditText
+        android:id="@+id/alert_dialog_edit_text_tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:id="@+id/alert_dialog_edit_text_tools"
         android:layout_marginBottom="@dimen/card_vertical_margin"
-        />
+        android:inputType="textPhonetic"
+        android:visibility="gone" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/abc_text_size_title_material"
         android:fontFamily="sans-serif-medium"
+        android:text="@string/alert_dialog_problem"
         android:textColor="@color/colorPrimary"
-        android:text="@string/alert_dialog_problem"/>
+        android:textSize="@dimen/abc_text_size_title_material" />
 
-    <ScrollView
+    <EditText
+        android:id="@+id/alert_dialog_edit_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/alert_dialog_edittext_bottom_margin"
-        >
+        android:layout_weight="1.14"
+        android:gravity="start|top"
+        android:inputType="textPhonetic|textMultiLine"
+        android:scrollbars="vertical"
+        android:textSize="@dimen/abc_text_size_medium_material" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/alert_dialog_edit_text"
-            android:gravity="top"
-            android:textSize="@dimen/abc_text_size_medium_material"
-            />
-
-    </ScrollView>
-
-    <LinearLayout
+    <Button
+        android:id="@+id/alert_dialog_ok_button"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/news_entry_button_margin"
-        >
-
-        <Button
-            android:id="@+id/alert_dialog_cancel_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@android:string/cancel"
-            />
-
-        <Button
-            android:id="@+id/alert_dialog_ok_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@android:string/ok"
-            />
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:text="@android:string/ok" />
 
 </LinearLayout>
