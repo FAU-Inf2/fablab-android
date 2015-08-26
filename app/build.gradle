@@ -157,7 +157,7 @@ afterEvaluate {
         it.outputDir = generatedSourcesDir
         it.packageName = 'de.fau.cs.mad.fablab.rest.myapi'
         it.excludedClassNamesRegex = "MyHiddenResource"
-        it.generateSynchronousMethods = false
+        it.generateSynchronousMethods = true
         it.generateCallbackMethods = true
         it.generateRxJavaMethods = false
         it.paramConverterManager.registerConverter(ClassName.get(Auth.class), new IgnoreConverter());

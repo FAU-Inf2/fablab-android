@@ -48,7 +48,8 @@ public class StorageFragment extends Fragment {
         mCartModel = new CartModel(databaseHelper.getCartDao());
         mPushModel = new PushModel(getActivity().getApplication(), restClient.getPushApi());
         mCheckoutModel = new CheckoutModel(mCartModel, restClient.getCartApi(), mPushModel);
-        mProductModel = new ProductModel(databaseHelper.getProductDao(), restClient.getProductApi());
+        mProductModel = new ProductModel(databaseHelper.getProductDao(), restClient.getProductApi(),
+                getActivity().getApplicationContext());
         mAutoCompleteModel = new AutoCompleteModel(databaseHelper.getAutoCompleteWordsDao(),
                 restClient.getProductApi());
         long pollingFrequency = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(

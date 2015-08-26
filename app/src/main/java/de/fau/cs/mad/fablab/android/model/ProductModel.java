@@ -1,78 +1,175 @@
 package de.fau.cs.mad.fablab.android.model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.PreparedQuery;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
 
+import de.fau.cs.mad.fablab.android.model.events.NoProductsFoundEvent;
 import de.fau.cs.mad.fablab.android.model.events.ProductFoundEvent;
 import de.fau.cs.mad.fablab.android.model.events.ProductNotFoundEvent;
-import de.fau.cs.mad.fablab.android.model.util.CancellableCallback;
-import de.fau.cs.mad.fablab.android.model.events.NoProductsFoundEvent;
 import de.fau.cs.mad.fablab.android.model.events.ProductSearchRetrofitErrorEvent;
+import de.fau.cs.mad.fablab.android.model.events.ProductsChangedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.rest.core.Product;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-
 import de.greenrobot.event.EventBus;
+import retrofit.RetrofitError;
 
 public class ProductModel {
+    private static final String TAG = "ProductModel";
+    private final String KEY_LAST_PRODUCT_UPDATE = "key_last_product_update";
+
+    private final CountDownLatch mCountDownLatch;
     private RuntimeExceptionDao<Product, String> mProductDao;
     private ProductApi mProductApi;
     private EventBus mEventBus = EventBus.getDefault();
-
+    private SharedPreferences mPreferences;
     private ObservableArrayList<Product> mProducts;
 
-    private CancellableCallback<List<Product>> mProductSearchCallback;
-
-    private Callback<Product> mProductIdSearch = new Callback<Product>() {
-        @Override
-        public void success(Product product, Response response) {
-            mEventBus.post(new ProductFoundEvent(product));
-        }
-
-        @Override
-        public void failure(RetrofitError error) {
-            mEventBus.post(new ProductNotFoundEvent());
-        }
-    };
-
-    public ProductModel(RuntimeExceptionDao<Product, String> productDao, ProductApi productApi) {
+    public ProductModel(RuntimeExceptionDao<Product, String> productDao, ProductApi productApi,
+                        Context context) {
+        mCountDownLatch = new CountDownLatch(1);
         mProductDao = productDao;
         mProductApi = productApi;
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         mProducts = new ObservableArrayList<>();
+        long timeSinceUpdate = (System.currentTimeMillis() - mPreferences.getLong(
+                KEY_LAST_PRODUCT_UPDATE, 0)) / 1000;
+        if (timeSinceUpdate > 86400) {
+            fetchProducts();
+        } else {
+            mCountDownLatch.countDown();
+        }
     }
 
-    public void searchForProduct(String searchString) {
-        if (mProductSearchCallback != null) {
-            mProductSearchCallback.cancel();
-        }
-        mProducts.clear();
-        mProductSearchCallback = new CancellableCallback<List<Product>>() {
-            @Override
-            public void success(List<Product> products, Response response) {
-                if (!isCancelled()) {
-                    if (products.isEmpty()) {
-                        EventBus.getDefault().post(new NoProductsFoundEvent());
-                    }
-                    mProducts.addAll(products);
-                }
-            }
+    private void fetchProducts() {
+        new AsyncTask<Void, Void, Void>() {
 
             @Override
-            public void failure(RetrofitError error) {
-                if (!isCancelled()) {
-                    mEventBus.post(new ProductSearchRetrofitErrorEvent());
+            protected Void doInBackground(Void... params) {
+                List<Product> products = null;
+                try {
+                    products = mProductApi.findAllSynchronously(0, 0);
+                } catch (RetrofitError error) {
+                    Log.e(TAG, "Failed to get product list", error);
+                    if (mProductDao.countOf() == 0) {
+                        long backoff = 1000;
+                        while (products == null) {
+                            try {
+                                Thread.sleep(backoff);
+                                products = mProductApi.findAllSynchronously(0, 0);
+                            } catch (InterruptedException e) {
+                                Log.e(TAG, "Interrupt", e);
+                            } catch (RetrofitError e) {
+                                Log.e(TAG, "Failed to get product list", e);
+                                backoff *= 2;
+                            }
+                        }
+                    } else {
+                        mCountDownLatch.countDown();
+                        return null;
+                    }
                 }
+
+                final List<Product> updatedProducts = new ArrayList<>(products);
+                updatedProducts.removeAll(mProductDao.queryForAll());
+                for (int i = 0; i < updatedProducts.size(); i++) {
+                    Product product = updatedProducts.get(i);
+                    if (product.getProductId() != null && !product.getProductId()
+                            .isEmpty()) {
+                        updatedProducts.remove(product);
+                    }
+                }
+                boolean productsUpdated = updatedProducts.size() > 0;
+                if (productsUpdated) {
+                    mProductDao.callBatchTasks(new Callable<Product>() {
+                        @Override
+                        public Product call() throws Exception {
+                            for (Product product : updatedProducts) {
+                                mProductDao.createOrUpdate(product);
+                            }
+                            return null;
+                        }
+                    });
+                }
+
+                final List<Product> removedProducts = mProductDao.queryForAll();
+                removedProducts.removeAll(products);
+                boolean productsRemoved = removedProducts.size() > 0;
+                if (productsRemoved) {
+                    mProductDao.callBatchTasks(new Callable<Product>() {
+                        @Override
+                        public Product call() throws Exception {
+                            for (Product product : removedProducts) {
+                                mProductDao.delete(product);
+                            }
+                            return null;
+                        }
+                    });
+                }
+
+                if (productsUpdated || productsRemoved) {
+                    mEventBus.post(new ProductsChangedEvent());
+                }
+
+                mPreferences.edit().putLong(KEY_LAST_PRODUCT_UPDATE, System.currentTimeMillis())
+                        .apply();
+                mCountDownLatch.countDown();
+                return null;
             }
-        };
-        mProductApi.findByName(searchString, 0, 0, mProductSearchCallback);
+        }.execute((Void) null);
     }
 
     public ObservableArrayList<Product> getProducts() {
         return mProducts;
+    }
+
+    public void searchForProduct(String searchString) {
+        mProducts.clear();
+
+        new AsyncTask<String, Void, List<Product>>() {
+
+            @Override
+            protected List<Product> doInBackground(String... params) {
+                try {
+                    mCountDownLatch.await();
+                } catch (InterruptedException e) {
+                    Log.e(TAG, "Interrupt", e);
+                }
+                List<Product> result = null;
+                try {
+                    PreparedQuery<Product> query = mProductDao.queryBuilder().where().like("name",
+                            "%" + params[0] + "%").prepare();
+                    result = mProductDao.query(query);
+                } catch (SQLException e) {
+                    Log.e(TAG, "Query failed", e);
+                }
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(List<Product> result) {
+                super.onPostExecute(result);
+                if (result == null) {
+                    mEventBus.post(new ProductSearchRetrofitErrorEvent());
+                } else if (result.isEmpty()) {
+                    mEventBus.post(new NoProductsFoundEvent());
+                } else {
+                    mProducts.addAll(result);
+                }
+            }
+        }.execute(searchString);
     }
 
     public void findProductById(String id) {
@@ -82,10 +179,27 @@ public class ProductModel {
             }
         }
 
-        mProductApi.findById(id, mProductIdSearch);
-    }
+        new AsyncTask<String, Void, Product>() {
 
-    public void persist(Product product) {
-        mProductDao.createOrUpdate(product);
+            @Override
+            protected Product doInBackground(String... params) {
+                try {
+                    mCountDownLatch.await();
+                } catch (InterruptedException e) {
+                    Log.e(TAG, "Interrupt", e);
+                }
+                return mProductDao.queryForId(params[0]);
+            }
+
+            @Override
+            protected void onPostExecute(Product result) {
+                super.onPostExecute(result);
+                if (result == null) {
+                    mEventBus.post(new ProductNotFoundEvent());
+                } else {
+                    mEventBus.post(new ProductFoundEvent(result));
+                }
+            }
+        }.execute(id);
     }
 }

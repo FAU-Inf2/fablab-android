@@ -9,9 +9,11 @@ import java.sql.SQLException;
 
 import de.fau.cs.mad.fablab.android.model.entities.Cart;
 import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
+import de.fau.cs.mad.fablab.android.model.events.ProductsChangedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.rest.core.CartStatus;
 import de.fau.cs.mad.fablab.rest.core.Product;
+import de.greenrobot.event.EventBus;
 
 public class CartModel {
     private static final String LOG_TAG = "CartModel";
@@ -38,6 +40,8 @@ public class CartModel {
         } else {
             createNewCart();
         }
+
+        EventBus.getDefault().register(this);
     }
 
     private void createNewCart() {
@@ -72,5 +76,16 @@ public class CartModel {
         mCart.setStatus(CartStatus.PAID);
         mCartDao.update(mCart);
         createNewCart();
+    }
+
+    @SuppressWarnings("unused")
+    public void onEventMainThread(ProductsChangedEvent event) {
+        for (CartEntry e : mCart.getEntries()) {
+            if (e.getProduct() == null) {
+                mCart.getEntries().remove(e);
+            }
+        }
+        mCartEntries.clear();
+        mCartEntries.addAll(mCart.getEntries());
     }
 }

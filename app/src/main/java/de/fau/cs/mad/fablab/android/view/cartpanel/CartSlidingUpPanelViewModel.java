@@ -3,6 +3,7 @@ package de.fau.cs.mad.fablab.android.view.cartpanel;
 import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -80,6 +81,16 @@ public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
         mCartEntryViewModelCollection.add(new CartEntryViewModel(newItem, mModel));
         if (mListener != null) {
             mListener.onItemAdded(getCartEntriesCount() - 1);
+        }
+    }
+
+    @Override
+    public void onAllItemsAdded(Collection<? extends CartEntry> collection) {
+        for (CartEntry cartEntry : collection) {
+            mCartEntryViewModelCollection.add(new CartEntryViewModel(cartEntry, mModel));
+        }
+        if (mListener != null) {
+            mListener.onDataPrepared();
         }
     }
 
