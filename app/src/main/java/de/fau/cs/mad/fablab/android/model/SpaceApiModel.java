@@ -63,7 +63,7 @@ public class SpaceApiModel {
         mEventBus.post(new SpaceApiStateChangedEvent(mOpen, mTime));
     }
 
-    public void refreshState() {
+    private void refreshState() {
         if (!mRefreshRequested) {
             mRefreshRequested = true;
             mSpaceApiHandler.removeCallbacks(mSpaceApiRunner);

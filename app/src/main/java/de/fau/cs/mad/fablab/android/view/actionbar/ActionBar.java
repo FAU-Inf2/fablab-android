@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.actionbar;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -34,13 +36,15 @@ public class ActionBar implements ActionBarViewModel.Listener {
     ImageView icon_fablab;
 
     private MenuItem mOpenStateMenuItem;
-
     private ActionBarDrawerToggle mDrawerToggle;
+    private Context mContext;
 
     @Inject
     ActionBarViewModel mViewModel;
 
     public ActionBar(MainActivity activity, View view) {
+        mContext = activity;
+
         ButterKnife.bind(this, view);
         activity.inject(this);
 
@@ -75,7 +79,7 @@ public class ActionBar implements ActionBarViewModel.Listener {
     public void bindMenuItems() {
         mOpenStateMenuItem = toolbar.getMenu().findItem(R.id.action_opened);
         new MenuItemCommandBinding().bind(mOpenStateMenuItem,
-                mViewModel.getRefreshOpenedStateCommand());
+                mViewModel.getShowDoorStateToastCommand());
         mViewModel.initialize();
     }
 
@@ -118,7 +122,7 @@ public class ActionBar implements ActionBarViewModel.Listener {
     @Override
     public void onShowDoorState(boolean state) {
         if (mOpenStateMenuItem != null) {
-            if(state) {
+            if (state) {
                 time_tv.setVisibility(View.VISIBLE);
             } else {
                 time_tv.setVisibility(View.GONE);
@@ -128,7 +132,7 @@ public class ActionBar implements ActionBarViewModel.Listener {
 
     @Override
     public void onShowTitle(boolean state) {
-        if(state) {
+        if (state) {
             appbar_fablab.setVisibility(View.VISIBLE);
             appbar_fau.setVisibility(View.VISIBLE);
             icon_fablab.setVisibility(View.VISIBLE);
@@ -137,5 +141,12 @@ public class ActionBar implements ActionBarViewModel.Listener {
             appbar_fau.setVisibility(View.GONE);
             icon_fablab.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onShowDoorStateToast(boolean state, String time) {
+        String text = mContext.getString(state ? R.string.appbar_opened : R.string.appbar_closed)
+                + " " + mContext.getString(R.string.appbar_opened_since) + " " + time;
+        Toast.makeText(mContext, text, Toast.LENGTH_LONG).show();
     }
 }

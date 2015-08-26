@@ -17,19 +17,22 @@ public class ActionBarViewModel {
     private Listener mListener;
     private EventBus mEventBus = EventBus.getDefault();
 
-    private final Command<Integer> refreshOpenedStateCommand = new Command<Integer>() {
+    private final Command<Integer> mShowDoorStateToastCommand = new Command<Integer>() {
         @Override
         public void execute(Integer parameter) {
-            mSpaceApiModel.refreshState();
+            if (mListener != null) {
+                mListener.onShowDoorStateToast(mSpaceApiModel.getOpen(), Formatter.formatTime(
+                        mSpaceApiModel.getTime()));
+            }
         }
     };
 
-    public void setListener(Listener listener){
+    public void setListener(Listener listener) {
         mListener = listener;
     }
 
-    public Command<Integer> getRefreshOpenedStateCommand () {
-        return refreshOpenedStateCommand;
+    public Command<Integer> getShowDoorStateToastCommand() {
+        return mShowDoorStateToastCommand;
     }
 
     public void initialize() {
@@ -68,7 +71,11 @@ public class ActionBarViewModel {
 
     public interface Listener {
         void onStateUpdated(boolean open, String time);
+
         void onShowDoorState(boolean state);
+
         void onShowTitle(boolean state);
+
+        void onShowDoorStateToast(boolean state, String time);
     }
 }
