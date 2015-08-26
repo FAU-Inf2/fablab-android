@@ -258,6 +258,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
+        mNavigationDrawer.closeDrawer();
     }
 
     public void onEvent(NavigationEventInventory event)
@@ -277,6 +278,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.fragment_container, inventoryFragment,
                     TAG_INVENTORY_FRAGMENT).addToBackStack(null).commit();
         }
+        mNavigationDrawer.closeDrawer();
     }
 
     public void onEvent(NavigationEventBarcodeScannerInventory event)
@@ -295,6 +297,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.fragment_container, barcodeScannerFragment,
                     TAG_BARCODE_INVENTORY_FRAGMENT).addToBackStack(null).commit();
         }
+        mNavigationDrawer.closeDrawer();
     }
 
     public void onEvent(NavigationEventProductSearchInventory event)
@@ -313,6 +316,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.fragment_container, productSearchFragment,
                     TAG_PRODUCTSEARCH_INVENTORY_FRAGMENT).addToBackStack(null).commit();
         }
+        mNavigationDrawer.closeDrawer();
     }
 
     public void onEvent(NavigationEventShowInventory event)
@@ -331,5 +335,6 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.fragment_container, showInventoryFragment,
                     TAG_SHOWINVENTORY_INVENTORY_FRAGMENT).addToBackStack(null).commit();
         }
+        mNavigationDrawer.closeDrawer();
     }
 }

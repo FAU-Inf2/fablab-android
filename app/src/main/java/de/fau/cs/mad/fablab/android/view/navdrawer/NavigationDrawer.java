@@ -88,7 +88,6 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
         if(item != null) {
             item.setChecked(true);
         }
-        mDrawerLayout.closeDrawer(GravityCompat.START);
     }
 
     public void setSelection(int itemId) {
@@ -98,6 +97,10 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
     public void enableDrawer(boolean enable) {
         mDrawerLayout.setDrawerLockMode(enable ? DrawerLayout.LOCK_MODE_UNLOCKED
                 : DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    public void closeDrawer() {
+        mDrawerLayout.closeDrawer(GravityCompat.START);
     }
 
     public void restoreState(Bundle savedInstanceState) {
