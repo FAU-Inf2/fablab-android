@@ -14,8 +14,8 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
 
-import de.fau.cs.mad.fablab.rest.api.DeviceType;
-import de.fau.cs.mad.fablab.rest.core.RegistrationId;
+import de.fau.cs.mad.fablab.rest.core.PlatformType;
+import de.fau.cs.mad.fablab.rest.core.PushToken;
 import de.fau.cs.mad.fablab.rest.myapi.PushApi;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -133,18 +133,20 @@ public class PushModel {
     }
 
     private void sendRegistrationIdToBackend(String regId) {
-        mPushApi.addRegistrationId(new RegistrationId(regId, DeviceType.Android),
-                new Callback<Response>() {
-                    @Override
-                    public void success(Response response, Response response2) {
-                        Log.i(TAG, "Success: " + response.getStatus());
-                    }
+        PushToken pushToken = new PushToken();
+        pushToken.setToken(regId);
+        pushToken.setPlatformType(PlatformType.ANDROID);
+        mPushApi.subscribeDoorOpensNextTime(pushToken, new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                Log.i(TAG, "Success: " + response.getStatus());
+            }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Log.i(TAG, "Failure: " + error.getMessage());
-                    }
-                });
+            @Override
+            public void failure(RetrofitError error) {
+                Log.i(TAG, "Failure: " + error.getMessage());
+            }
+        });
     }
 
     private void storeRegistrationId(String regId) {
@@ -190,18 +192,20 @@ public class PushModel {
     }
 
     private void deleteRegistrationIdFromBackend() {
-        mPushApi.removeRegistrationId(new RegistrationId(mPushId, DeviceType.Android),
-                new Callback<Response>() {
-                    @Override
-                    public void success(Response response, Response response2) {
-                        Log.i(TAG, "Success: " + response.getStatus());
-                    }
+        PushToken pushToken = new PushToken();
+        pushToken.setToken(mPushId);
+        pushToken.setPlatformType(PlatformType.ANDROID);
+        mPushApi.unsubscribeDoorOpensNextTime(pushToken, new Callback<Response>() {
+            @Override
+            public void success(Response response, Response response2) {
+                Log.i(TAG, "Success: " + response.getStatus());
+            }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Log.i(TAG, "Failure: " + error.getMessage());
-                    }
-                });
+            @Override
+            public void failure(RetrofitError error) {
+                Log.i(TAG, "Failure: " + error.getMessage());
+            }
+        });
     }
 
     private void deleteRegistrationId() {
