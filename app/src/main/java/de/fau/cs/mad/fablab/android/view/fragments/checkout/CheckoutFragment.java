@@ -47,7 +47,7 @@ public class CheckoutFragment extends BaseDialogFragment implements CheckoutView
         new ViewCommandBinding().bind(retry_button, mViewModel.getRetryCommand());
         new ViewCommandBinding().bind(ok_button, mViewModel.getOkCommand());
 
-        mViewModel.restoreState(getArguments(), savedInstanceState);
+        mViewModel.initialize(getArguments());
     }
 
     @Override
@@ -57,9 +57,15 @@ public class CheckoutFragment extends BaseDialogFragment implements CheckoutView
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mViewModel.saveState(outState);
+    public void onPause() {
+        super.onPause();
+        mViewModel.pause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mViewModel.resume();
     }
 
     @Override
@@ -96,6 +102,7 @@ public class CheckoutFragment extends BaseDialogFragment implements CheckoutView
 
     @Override
     public void onDismiss() {
+        dismiss();
         getFragmentManager().popBackStack();
     }
 }

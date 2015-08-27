@@ -11,15 +11,12 @@ import de.fau.cs.mad.fablab.rest.core.CartStatus;
 import de.greenrobot.event.EventBus;
 
 public class CheckoutViewModel {
-    private static final String KEY_CHECKOUT_STARTED = "key_checkout_started";
-
     @Inject
     CheckoutModel mModel;
     private Listener mListener;
     private EventBus mEventBus = EventBus.getDefault();
 
     private String mCartCode;
-    private boolean mCheckoutStarted = false;
 
     private final Command<Void> mRetryCommand = new Command<Void>() {
         @Override
@@ -28,6 +25,7 @@ public class CheckoutViewModel {
             if (mListener != null) {
                 mListener.onShowSpinner();
             }
+            mModel.cancelCheckout();
             mModel.startCheckout(mCartCode);
         }
     };
@@ -35,6 +33,7 @@ public class CheckoutViewModel {
     private final Command<Void> mOkCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
+            mModel.finishCheckout();
             if (mListener != null) {
                 mListener.onDismiss();
             }
@@ -53,24 +52,14 @@ public class CheckoutViewModel {
         return mOkCommand;
     }
 
-    public void cancelCheckout() {
-        mModel.cancelCheckout();
-    }
-
-    public void restoreState(Bundle args, Bundle savedInstanceState) {
+    public void initialize(Bundle args) {
         mRetryCommand.setIsAvailable(false);
         mOkCommand.setIsAvailable(false);
 
         mCartCode = args.getString(CheckoutFragment.KEY_CART_CODE);
-        if (savedInstanceState != null) {
-            mCheckoutStarted = savedInstanceState.getBoolean(KEY_CHECKOUT_STARTED, false);
-        }
 
-        mEventBus.register(this);
-
-        if (!mCheckoutStarted) {
+        if (mModel.getStatus() == CartStatus.SHOPPING) {
             mModel.startCheckout(mCartCode);
-            mCheckoutStarted = true;
         }
 
         updateState(mModel.getStatus());
@@ -79,7 +68,7 @@ public class CheckoutViewModel {
     private void updateState(CartStatus status) {
         if (mListener != null) {
             switch (status) {
-                case SHOPPING:
+                case WAITING:
                     mListener.onShowSpinner();
                     break;
                 case PENDING:
@@ -103,9 +92,12 @@ public class CheckoutViewModel {
         }
     }
 
-    public void saveState(Bundle outState) {
-        outState.putBoolean(KEY_CHECKOUT_STARTED, mCheckoutStarted);
+    public void pause() {
         mEventBus.unregister(this);
+    }
+
+    public void resume() {
+        mEventBus.register(this);
     }
 
     @SuppressWarnings("unused")
@@ -115,7 +107,10 @@ public class CheckoutViewModel {
 
     @SuppressWarnings("unused")
     public void onEvent(BackButtonPressedEvent event) {
-        cancelCheckout();
+        mModel.cancelCheckout();
+        if (mListener != null) {
+            mListener.onDismiss();
+        }
     }
 
     public interface Listener {

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
-import de.fau.cs.mad.fablab.android.model.events.CheckoutStatusChangedEvent;
 import de.fau.cs.mad.fablab.android.model.util.CancellableCallback;
 import de.fau.cs.mad.fablab.rest.core.CartEntryServer;
 import de.fau.cs.mad.fablab.rest.core.CartServer;
@@ -14,37 +13,39 @@ import de.fau.cs.mad.fablab.rest.core.CartStatus;
 import de.fau.cs.mad.fablab.rest.core.PlatformType;
 import de.fau.cs.mad.fablab.rest.myapi.CartApi;
 import de.greenrobot.event.EventBus;
-import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class CheckoutModel {
+    private static final long POLLING_FREQUENCY = 3 * 1000; // 3 seconds
+
     private CartModel mCartModel;
-    private CartApi mCartApi;
     private PushModel mPushModel;
+    private CartApi mCartApi;
     private EventBus mEventBus = EventBus.getDefault();
 
     private Handler mCartStatusHandler = new Handler();
-    private CartStatusRunner mCartStatusRunner;
+    private CartStatusRunnable mCartStatusRunnable = new CartStatusRunnable();
     private CancellableCallback<Response> mCartCreationCallback;
+    private CancellableCallback<CartStatus> mCartPollingCallback;
 
-    private CartStatus mCheckoutStatus;
-    private String mCartCode;
+    private CartStatus mCheckoutStatus = CartStatus.SHOPPING;
+    private String mCartCode = null;
 
     public CheckoutModel(CartModel cartModel, CartApi cartApi, PushModel pushModel) {
         mCartModel = cartModel;
         mCartApi = cartApi;
         mPushModel = pushModel;
-
-        mEventBus.register(this);
     }
 
     public CartStatus getStatus() {
         return mCheckoutStatus;
     }
 
-    public void startCheckout(final String cartCode) {
-        mCheckoutStatus = CartStatus.SHOPPING;
+    public void startCheckout(String cartCode) {
+        mCheckoutStatus = CartStatus.WAITING;
+        mEventBus.post(CartStatus.WAITING);
+        mCartCode = cartCode;
 
         CartServer cartServer = new CartServer();
         cartServer.setCartCode(cartCode);
@@ -59,117 +60,77 @@ public class CheckoutModel {
         cartServer.setItems(cartEntriesServer);
 
         mCartCreationCallback = new CancellableCallback<Response>() {
-
             @Override
             public void success(Response response, Response response2) {
                 if (!isCancelled()) {
+                    mCheckoutStatus = CartStatus.PENDING;
                     mEventBus.post(CartStatus.PENDING);
-                    startPollingCartStatus(cartCode);
+                    mCartStatusHandler.postDelayed(mCartStatusRunnable, POLLING_FREQUENCY);
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
                 if (!isCancelled()) {
+                    mCheckoutStatus = CartStatus.FAILED;
                     mEventBus.post(CartStatus.FAILED);
                 }
             }
         };
         mCartApi.create(cartServer, mCartCreationCallback);
-
-        mCartCode = cartCode;
     }
 
-    private void startPollingCartStatus(String cartCode) {
-        mCartStatusRunner = new CartStatusRunner(cartCode);
-        mCartStatusHandler.postDelayed(mCartStatusRunner, 5000);
-    }
-
-    private void stopPollingCartStatus() {
-        mCartStatusHandler.removeCallbacks(mCartStatusRunner);
-    }
-
-    private class CartStatusRunner implements Runnable {
-        private final long REFRESH_TIME_MILLIS = 3 * 1000; // 3 seconds
-
-        private String mCartCode;
-        private boolean mIsCancelled = false;
-
-        public CartStatusRunner(String cartCode) {
-            mCartCode = cartCode;
-        }
-
+    private class CartStatusRunnable implements Runnable {
         @Override
         public void run() {
-            mCartApi.getStatus(mCartCode, new Callback<CartStatus>() {
+            mCartPollingCallback = new CancellableCallback<CartStatus>() {
                 @Override
                 public void success(CartStatus cartStatus, Response response) {
-                    if (!mIsCancelled) {
+                    if (!isCancelled()) {
                         switch (cartStatus) {
                             case CANCELLED:
-                                CheckoutModel.this.cancel();
+                                mCheckoutStatus = CartStatus.CANCELLED;
+                                mEventBus.post(CartStatus.CANCELLED);
                                 break;
                             case PAID:
-                                finish();
+                                mCartModel.markCartAsPaid();
+                                mCheckoutStatus = CartStatus.PAID;
+                                mEventBus.post(CartStatus.PAID);
                                 break;
                             default:
-                                mCartStatusHandler.postDelayed(mCartStatusRunner,
-                                        REFRESH_TIME_MILLIS);
+                                mCartStatusHandler.postDelayed(mCartStatusRunnable,
+                                        POLLING_FREQUENCY);
                         }
                     }
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if (!mIsCancelled) {
+                    if (!isCancelled()) {
+                        mCheckoutStatus = CartStatus.FAILED;
                         mEventBus.post(CartStatus.FAILED);
                     }
                 }
-            });
+            };
+            mCartApi.getStatus(mCartCode, mCartPollingCallback);
         }
-
-        public void cancel() {
-            mIsCancelled = true;
-        }
-    }
-
-    private void cancel() {
-        mCartCode = null;
-        mEventBus.post(CartStatus.CANCELLED);
-        mCheckoutStatus = CartStatus.CANCELLED;
-        stopPollingCartStatus();
-    }
-
-    private void finish() {
-        mCartCode = null;
-        mCartModel.markCartAsPaid();
-        mEventBus.post(CartStatus.PAID);
-        mCheckoutStatus = CartStatus.PAID;
-        stopPollingCartStatus();
     }
 
     public void cancelCheckout() {
         if (mCartCreationCallback != null) {
             mCartCreationCallback.cancel();
         }
-        if (mCartStatusRunner != null) {
-            mCartStatusRunner.cancel();
+        if (mCartPollingCallback != null) {
+            mCartPollingCallback.cancel();
         }
-        mCartCode = null;
-        mCheckoutStatus = CartStatus.SHOPPING;
+        mCartStatusHandler.removeCallbacks(mCartStatusRunnable);
+        finishCheckout();
     }
 
-    @SuppressWarnings("unused")
-    public void onEvent(CheckoutStatusChangedEvent event) {
-        if (event.getCartCode().equals(mCartCode)) {
-            switch (event.getStatus()) {
-                case CANCELLED:
-                    cancel();
-                    break;
-                case PAID:
-                    finish();
-                    break;
-            }
-        }
+    public void finishCheckout() {
+        mCartCreationCallback = null;
+        mCartPollingCallback = null;
+        mCheckoutStatus = CartStatus.SHOPPING;
+        mCartCode = null;
     }
 }
