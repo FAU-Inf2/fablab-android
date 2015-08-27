@@ -11,6 +11,7 @@ import de.fau.cs.mad.fablab.android.model.util.CancellableCallback;
 import de.fau.cs.mad.fablab.rest.core.CartEntryServer;
 import de.fau.cs.mad.fablab.rest.core.CartServer;
 import de.fau.cs.mad.fablab.rest.core.CartStatus;
+import de.fau.cs.mad.fablab.rest.core.PlatformType;
 import de.fau.cs.mad.fablab.rest.myapi.CartApi;
 import de.greenrobot.event.EventBus;
 import retrofit.Callback;
@@ -48,7 +49,8 @@ public class CheckoutModel {
         CartServer cartServer = new CartServer();
         cartServer.setCartCode(cartCode);
         cartServer.setStatus(CartStatus.PENDING);
-        cartServer.setPushId(mPushModel.getPushId());
+        cartServer.setPushToken(mPushModel.getPushId());
+        cartServer.setPlatformType(PlatformType.ANDROID);
         List<CartEntryServer> cartEntriesServer = new ArrayList<>();
         for (CartEntry entry : mCartModel.getCartEntries()) {
             cartEntriesServer.add(new CartEntryServer(entry.getProduct().getProductId(),
