@@ -145,8 +145,13 @@ public class ActionBar implements ActionBarViewModel.Listener {
 
     @Override
     public void onShowDoorStateToast(boolean state, String time) {
-        String text = mContext.getString(state ? R.string.appbar_opened : R.string.appbar_closed)
-                + " " + mContext.getString(R.string.appbar_opened_since) + " " + time;
+        String text;
+        if (time.isEmpty()) {
+            text = mContext.getString(state ? R.string.appbar_opened : R.string.appbar_fablab_closed);
+        } else {
+            text = mContext.getString(state ? R.string.appbar_opened : R.string.appbar_closed)
+                    + " " + mContext.getString(R.string.appbar_opened_since) + " " + time;
+        }
         Toast.makeText(mContext, text, Toast.LENGTH_LONG).show();
     }
 }

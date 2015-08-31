@@ -6,6 +6,7 @@
     <string name="appbar_opened">Geöffnet</string>
     <string name="appbar_opened_since">seit</string>
     <string name="appbar_closed">Geschlossen</string>
+    <string name="appbar_fablab_closed">Das FabLab war heute noch nicht geöffnet</string>
     <string name="appbar_orderedby_name">Sortiert nach Name</string>
     <string name="appbar_orderedby_price">Sortiert nach Preis</string>
     <string name="appbar_orderby_name">Nach Name sortieren</string>
