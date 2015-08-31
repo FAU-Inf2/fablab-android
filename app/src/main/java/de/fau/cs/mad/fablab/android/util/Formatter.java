@@ -7,7 +7,7 @@ public class Formatter {
         return String.format("%.2f", price) + Html.fromHtml("&nbsp;€");
     }
 
-    public static String[] formatProductName(String productName){
+    public static String[] formatProductName(String productName) {
         String[] splitProductName = productName.split(" ");
         String formattedProductName = "";
         String formattedProductDetail = "";

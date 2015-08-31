@@ -21,6 +21,7 @@
     <string name="search_hint">Suche Produkt</string>
     <string name="title_scan_product">Produkt scannen</string>
     <string name="action_add_to_cart">In den Warenkorb</string>
+    <string name="action_update">Speichern</string>
     <string name="add_to_calendar"> Termin in Kalender\neintragen</string>
     <string name="add_to_cart_price_per_unit">pro</string>
     <string name="add_to_cart_amount">Menge:</string>

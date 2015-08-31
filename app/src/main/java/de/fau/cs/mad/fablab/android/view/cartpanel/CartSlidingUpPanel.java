@@ -23,8 +23,10 @@ import de.fau.cs.mad.fablab.android.util.Formatter;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.SwipeableRecyclerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
+import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.checkout.QrCodeScannerFragment;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
+import de.greenrobot.event.EventBus;
 
 public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener {
     @Bind(R.id.sliding_layout)
@@ -46,6 +48,7 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     private RVRendererAdapter<CartEntryViewModel> mAdapter;
 
     private MainActivity mActivity;
+    private EventBus mEventBus = EventBus.getDefault();
 
     private Handler mHandler = new Handler();
     private Runnable mUpdateVisibilityRunnable = new Runnable() {
@@ -75,10 +78,6 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
                 updatePanelHeaderSize(slideOffset);
-            }
-
-            public void onPanelAnchored(View panel) {
-                mHandler.postDelayed(mUpdateVisibilityRunnable, 1);
             }
         });
 
@@ -126,6 +125,7 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     public void onItemChanged(int position) {
         mAdapter.notifyItemChanged(position);
         refreshPrice();
+        sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
     }
 
     @Override
@@ -133,6 +133,14 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
         mAdapter.notifyDataSetChanged();
         refreshPrice();
         updateVisibility();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (sliding_up_pl.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED) {
+                    sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+                }
+            }
+        }, 250);
     }
 
     @Override
@@ -178,9 +186,14 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
             mHandler.postDelayed(mUpdateVisibilityRunnable, 1);
         } else {
             if (mViewModel.isVisible()) {
-                if (sliding_up_pl.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED) {
-                    sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-                }
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (sliding_up_pl.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED) {
+                            sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                        }
+                    }
+                }, 250);
             } else {
                 sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
             }
@@ -193,6 +206,7 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     }
 
     public void pause() {
+        mEventBus.unregister(this);
         mViewModel.pause();
     }
 
@@ -202,5 +216,13 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
             updatePanelHeaderSize(1);
         }
         mViewModel.resume();
+        mEventBus.register(this);
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(CartEntryClickedEvent event) {
+        mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                AddToCartDialogFragment.newInstance(event.getCartEntry())).addToBackStack(null)
+                .commit();
     }
 }

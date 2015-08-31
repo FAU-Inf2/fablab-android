@@ -2,12 +2,25 @@ package de.fau.cs.mad.fablab.android.view.cartpanel;
 
 import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
 import de.fau.cs.mad.fablab.android.util.Formatter;
+import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
+import de.greenrobot.event.EventBus;
 
 public class CartEntryViewModel {
     private CartEntry mCartEntry;
 
+    private final Command<Void> mShowDialogCommand = new Command<Void>() {
+        @Override
+        public void execute(Void parameter) {
+            EventBus.getDefault().post(new CartEntryClickedEvent(mCartEntry));
+        }
+    };
+
     public CartEntryViewModel(CartEntry cartEntry) {
         mCartEntry = cartEntry;
+    }
+
+    public Command<Void> getShowDialogCommand() {
+        return mShowDialogCommand;
     }
 
     public CartEntry getCartEntry() {

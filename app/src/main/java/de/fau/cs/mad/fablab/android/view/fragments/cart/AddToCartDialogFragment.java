@@ -17,6 +17,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
 import de.fau.cs.mad.fablab.android.model.events.AppBarShowDoorStateEvent;
 import de.fau.cs.mad.fablab.android.model.events.AppBarShowTitleEvent;
 import de.fau.cs.mad.fablab.android.util.Formatter;
@@ -32,27 +33,31 @@ import de.greenrobot.event.EventBus;
 public class AddToCartDialogFragment extends BaseDialogFragment
         implements AddToCartDialogFragmentViewModel.Listener {
     @Bind(R.id.add_to_cart_name)
-    TextView mNameTextView;
+    TextView name_tv;
     @Bind(R.id.add_to_cart_price)
-    TextView mPriceTextView;
+    TextView price_tv;
     @Bind(R.id.add_to_cart_amount)
-    EditText mAmountEditText;
+    EditText amount_et;
     @Bind(R.id.add_to_cart_amount_tv)
-    TextView mAmountTextView;
+    TextView amount_tv;
     @Bind(R.id.add_to_cart_price_total)
-    TextView mPriceTotalTextView;
+    TextView price_total_tv;
 
     @Inject
     AddToCartDialogFragmentViewModel mViewModel;
 
     private EventBus mEventBus = EventBus.getDefault();
 
-    public static AddToCartDialogFragment newInstance(Product product) {
+    public static AddToCartDialogFragment newInstance(CartEntry entry) {
         AddToCartDialogFragment dialogFragment = new AddToCartDialogFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(AddToCartDialogFragmentViewModel.KEY_PRODUCT, product);
+        bundle.putSerializable(AddToCartDialogFragmentViewModel.KEY_CART_ENTRY, entry);
         dialogFragment.setArguments(bundle);
         return dialogFragment;
+    }
+
+    public static AddToCartDialogFragment newInstance(Product product) {
+        return newInstance(new CartEntry(product, 0));
     }
 
     @Override
@@ -64,28 +69,36 @@ public class AddToCartDialogFragment extends BaseDialogFragment
 
         mViewModel.restoreState(getArguments(), savedInstanceState);
 
-        mNameTextView.setText(mViewModel.getName());
-        mPriceTextView.setText(Html.fromHtml(Formatter.formatPrice(mViewModel.getPrice())) + " "
+        name_tv.setText(mViewModel.getName());
+        price_tv.setText(Html.fromHtml(Formatter.formatPrice(mViewModel.getPrice())) + " "
                 + getString(R.string.add_to_cart_price_per_unit) + " " + mViewModel.getUnit());
 
         if (mViewModel.isDecimalAmount()) {
-            mAmountEditText.setInputType(InputType.TYPE_CLASS_NUMBER
+            amount_et.setInputType(InputType.TYPE_CLASS_NUMBER
                     | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         } else {
-            mAmountEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+            amount_et.setInputType(InputType.TYPE_CLASS_NUMBER);
         }
-        mAmountEditText.requestFocus();
+        if (amount_et.length() == 0 && mViewModel.isUpdate()) {
+            if (mViewModel.isDecimalAmount()) {
+                amount_et.setText("" + mViewModel.getAmount());
+            } else {
+                amount_et.setText("" + (int) mViewModel.getAmount());
+            }
+        }
+        amount_et.requestFocus();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                UiUtils.showKeyboard(getActivity(), mAmountEditText);
+                UiUtils.showKeyboard(getActivity(), amount_et);
             }
         }, 250);
 
-        new EditTextCommandBinding().bind(mAmountEditText, mViewModel.getChangeAmountCommand());
-        new EnterKeyCommandBinding().bind(mAmountEditText, mViewModel.getAddToCartCommand());
+        new EditTextCommandBinding().bind(amount_et, mViewModel.getChangeAmountCommand());
+        new EnterKeyCommandBinding().bind(amount_et, mViewModel.isUpdate() ?
+                mViewModel.getUpdateCartEntryCommand() : mViewModel.getAddToCartCommand());
 
-        mPriceTotalTextView.setText(Html.fromHtml(Formatter.formatPrice(
+        price_total_tv.setText(Html.fromHtml(Formatter.formatPrice(
                 mViewModel.getPriceTotal())));
 
         mViewModel.setListener(this);
@@ -101,9 +114,16 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
-        inflater.inflate(R.menu.menu_add_to_cart, menu);
-        new MenuItemCommandBinding().bind(menu.findItem(R.id.action_add_to_cart),
-                mViewModel.getAddToCartCommand());
+
+        if (mViewModel.isUpdate()) {
+            inflater.inflate(R.menu.menu_update, menu);
+            new MenuItemCommandBinding().bind(menu.findItem(R.id.action_update),
+                    mViewModel.getUpdateCartEntryCommand());
+        } else {
+            inflater.inflate(R.menu.menu_add_to_cart, menu);
+            new MenuItemCommandBinding().bind(menu.findItem(R.id.action_add_to_cart),
+                    mViewModel.getAddToCartCommand());
+        }
     }
 
     @Override
@@ -140,13 +160,13 @@ public class AddToCartDialogFragment extends BaseDialogFragment
 
     @Override
     public void onUpdatePriceAndAmount(double priceTotal, double amount) {
-        mPriceTotalTextView.setText(Html.fromHtml(Formatter.formatPrice(priceTotal)));
+        price_total_tv.setText(Html.fromHtml(Formatter.formatPrice(priceTotal)));
 
         if (amount > 0) {
-            mAmountTextView.setText(getString(R.string.add_to_cart_rounded_to) + " " + amount);
-            mAmountTextView.setVisibility(View.VISIBLE);
+            amount_tv.setText(getString(R.string.add_to_cart_rounded_to) + " " + amount);
+            amount_tv.setVisibility(View.VISIBLE);
         } else {
-            mAmountTextView.setVisibility(View.INVISIBLE);
+            amount_tv.setVisibility(View.INVISIBLE);
         }
     }
 

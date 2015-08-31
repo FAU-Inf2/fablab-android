@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.cartpanel;
 
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.Formatter;
+import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 
 public class CartEntryViewModelRenderer extends Renderer<CartEntryViewModel> {
+    @Bind(R.id.cart_product_card)
+    CardView product_cv;
     @Bind(R.id.cart_product_name)
     TextView product_name_tv;
     @Bind(R.id.cart_product_details)
@@ -51,5 +55,7 @@ public class CartEntryViewModelRenderer extends Renderer<CartEntryViewModel> {
         }
 
         product_price_tv.setText(Formatter.formatPrice(viewModel.getTotalPrice()));
+
+        new ViewCommandBinding().bind(product_cv, viewModel.getShowDialogCommand());
     }
 }

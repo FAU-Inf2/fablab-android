@@ -39,7 +39,9 @@ public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
     private final Command<Void> mUndoRemoveCartEntryCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            mModel.addEntry(mLastRemovedEntry.getProduct(), mLastRemovedEntry.getAmount());
+            CartEntry entry = new CartEntry(mLastRemovedEntry.getProduct(),
+                    mLastRemovedEntry.getAmount());
+            mModel.addEntry(entry);
         }
     };
 
@@ -91,6 +93,18 @@ public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
         }
         if (mListener != null) {
             mListener.onDataPrepared();
+        }
+    }
+
+    @Override
+    public void onItemRemoved(CartEntry removedItem) {
+        for (int i = 0; i < mCartEntryViewModelCollection.size(); i++) {
+            if (mCartEntryViewModelCollection.get(i).getCartEntry().equals(removedItem)) {
+                mCartEntryViewModelCollection.remove(i);
+            }
+        }
+        if (mListener != null) {
+            mListener.onItemRemoved();
         }
     }
 
@@ -147,7 +161,12 @@ public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
     @SuppressWarnings("unused")
     public void onEvent(CartEntryUpdatedEvent event) {
         if (mListener != null) {
-            mListener.onItemChanged(mCartEntryViewModelCollection.indexOf(event.getViewModel()));
+            for (int i = 0; i < mCartEntryViewModelCollection.size(); i++) {
+                if (mCartEntryViewModelCollection.get(i).getCartEntry().equals(
+                        event.getCartEntry())) {
+                    mListener.onItemChanged(i);
+                }
+            }
         }
     }
 

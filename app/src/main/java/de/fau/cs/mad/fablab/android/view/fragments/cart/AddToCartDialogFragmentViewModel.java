@@ -5,17 +5,19 @@ import android.os.Bundle;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.CartModel;
+import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
+import de.fau.cs.mad.fablab.android.view.cartpanel.CartEntryUpdatedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
-import de.fau.cs.mad.fablab.rest.core.Product;
+import de.greenrobot.event.EventBus;
 
 public class AddToCartDialogFragmentViewModel {
-    public static final String KEY_PRODUCT = "product";
+    public static final String KEY_CART_ENTRY = "cart_entry";
     private static final String KEY_AMOUNT = "amount";
 
     @Inject
     CartModel mCartModel;
 
-    private Product mProduct;
+    private CartEntry mCartEntry;
     private double mAmount;
 
     private Listener mListener;
@@ -24,7 +26,24 @@ public class AddToCartDialogFragmentViewModel {
         @Override
         public void execute(Void parameter) {
             if (mAmount != 0) {
-                mCartModel.addEntry(mProduct, mAmount);
+                mCartEntry.setAmount(mAmount);
+                mCartModel.addEntry(mCartEntry);
+            }
+            if (mListener != null) {
+                mListener.onDismiss();
+            }
+        }
+    };
+
+    private final Command<Void> mUpdateCommand = new Command<Void>() {
+        @Override
+        public void execute(Void parameter) {
+            if (mAmount != 0) {
+                mCartEntry.setAmount(mAmount);
+                mCartModel.updateEntry(mCartEntry);
+                EventBus.getDefault().post(new CartEntryUpdatedEvent(mCartEntry));
+            } else {
+                mCartModel.removeEntry(mCartEntry);
             }
             if (mListener != null) {
                 mListener.onDismiss();
@@ -36,7 +55,7 @@ public class AddToCartDialogFragmentViewModel {
         @Override
         public void execute(String parameter) {
             double value = "".equals(parameter) ? 0 : Double.parseDouble(parameter);
-            double rounding = mProduct.getUom().getRounding();
+            double rounding = mCartEntry.getProduct().getUom().getRounding();
             mAmount = rounding * Math.ceil(value / rounding);
             if (mListener != null) {
                 mListener.onUpdatePriceAndAmount(getPriceTotal(), (value != mAmount) ? mAmount : -1);
@@ -52,28 +71,40 @@ public class AddToCartDialogFragmentViewModel {
         return mAddToCartCommand;
     }
 
+    public Command<Void> getUpdateCartEntryCommand() {
+        return mUpdateCommand;
+    }
+
     public Command<String> getChangeAmountCommand() {
         return mChangeAmountCommand;
     }
 
     public String getName() {
-        return mProduct.getName();
+        return mCartEntry.getProduct().getName();
     }
 
     public double getPrice() {
-        return mProduct.getPrice();
+        return mCartEntry.getProduct().getPrice();
     }
 
     public String getUnit() {
-        return mProduct.getUnit();
+        return mCartEntry.getProduct().getUnit();
+    }
+
+    public boolean isDecimalAmount() {
+        return mCartEntry.getProduct().getUom().getRounding() != 1;
+    }
+
+    public double getAmount() {
+        return mAmount;
     }
 
     public double getPriceTotal() {
         return mAmount * getPrice();
     }
 
-    public boolean isDecimalAmount() {
-        return mProduct.getUom().getRounding() != 1;
+    public boolean isUpdate() {
+        return mCartEntry.getAmount() != 0;
     }
 
     public void saveState(Bundle outState) {
@@ -81,11 +112,11 @@ public class AddToCartDialogFragmentViewModel {
     }
 
     public void restoreState(Bundle arguments, Bundle savedInstanceState) {
-        mProduct = (Product) arguments.getSerializable(KEY_PRODUCT);
+        mCartEntry = (CartEntry) arguments.getSerializable(KEY_CART_ENTRY);
         if (savedInstanceState != null) {
             mAmount = savedInstanceState.getDouble(KEY_AMOUNT);
         } else {
-            mAmount = 0;
+            mAmount = mCartEntry != null ? mCartEntry.getAmount() : 0;
         }
     }
 

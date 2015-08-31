@@ -55,8 +55,8 @@ public class CartModel {
         return mCartEntries;
     }
 
-    public void addEntry(Product product, double amount) {
-        mCartEntries.add(mCart.addEntry(product, amount));
+    public void addEntry(CartEntry entry) {
+        mCartEntries.add(mCart.addEntry(entry));
     }
 
     public void removeEntry(CartEntry entry) {

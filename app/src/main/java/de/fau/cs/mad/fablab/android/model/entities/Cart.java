@@ -45,10 +45,9 @@ public class Cart implements Serializable {
         return entries;
     }
 
-    public CartEntry addEntry(Product product, double amount) {
-        CartEntry newEntry = new CartEntry(product, amount);
-        entries.add(newEntry);
-        return newEntry;
+    public CartEntry addEntry(CartEntry entry) {
+        entries.add(entry);
+        return entry;
     }
 
     public void removeEntry(CartEntry entry) {
