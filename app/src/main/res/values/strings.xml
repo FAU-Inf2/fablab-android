@@ -72,6 +72,10 @@
     <string name="inventory_card_user_name">durchgeführt von:</string>
     <string name="inventory_card_updated_at">durchgeführt am:</string>
 
+    <string name="version_check_update_optional">Optionales Update verfügbar</string>
+    <string name="version_check_update_required">Update verfügbar</string>
+    <string name="version_check_no_update_available">Kein Update verfügbar</string>
+
     <!-- Strings for navigation drawer titles -->
     <string name="news">News</string>
     <string name="productsearch">Produkt suchen</string>

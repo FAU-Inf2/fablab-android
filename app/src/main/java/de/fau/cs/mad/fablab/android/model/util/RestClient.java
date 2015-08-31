@@ -27,6 +27,7 @@ import de.fau.cs.mad.fablab.rest.myapi.NewsApi;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
 import de.fau.cs.mad.fablab.rest.myapi.PushApi;
 import de.fau.cs.mad.fablab.rest.myapi.SpaceApi;
+import de.fau.cs.mad.fablab.rest.myapi.VersionCheckApi;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
 import retrofit.converter.JacksonConverter;
@@ -124,6 +125,10 @@ public class RestClient {
 
     public InventoryApi getInventoryApi() {
         return mRestAdapter.create(InventoryApi.class);
+    }
+
+    public VersionCheckApi getVersionCheckApi() {
+        return mRestAdapter.create(VersionCheckApi.class);
     }
 
     public RestAdapter.Builder getRestAdapterBuilder() {

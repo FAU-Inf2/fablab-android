@@ -10,12 +10,14 @@ import de.fau.cs.mad.fablab.android.BuildConfig;
 import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
 import de.fau.cs.mad.fablab.android.model.PushModel;
 import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
+import de.fau.cs.mad.fablab.android.model.VersionCheckModel;
 
 public class SettingsFragmentViewModel implements SharedPreferences.OnSharedPreferenceChangeListener,
         Preference.OnPreferenceClickListener {
     private static final String KEY_PREF_ENABLE_PUSH = "enable_push";
     private static final String KEY_PREF_POLLING_FREQ = "spaceapi_polling_freq";
     private static final String KEY_PREF_FORCE_RELOAD_AUTOCOMPLETION = "force_reload_autocompletion";
+    private static final String KEY_PREF_CHECK_FOR_UPDATES = "check_for_updates";
 
     @Inject
     SpaceApiModel mSpaceApiModel;
@@ -23,10 +25,19 @@ public class SettingsFragmentViewModel implements SharedPreferences.OnSharedPref
     PushModel mPushModel;
     @Inject
     AutoCompleteModel mAutoCompleteModel;
+    @Inject
+    VersionCheckModel mVersionCheckModel;
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
-        mAutoCompleteModel.forceReloadProductNames();
+        switch (preference.getKey()) {
+            case KEY_PREF_FORCE_RELOAD_AUTOCOMPLETION:
+                mAutoCompleteModel.forceReloadProductNames();
+                break;
+            case KEY_PREF_CHECK_FOR_UPDATES:
+                mVersionCheckModel.checkVersion();
+                break;
+        }
         return true;
     }
 
@@ -59,6 +70,8 @@ public class SettingsFragmentViewModel implements SharedPreferences.OnSharedPref
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
 
         preferenceScreen.findPreference(KEY_PREF_FORCE_RELOAD_AUTOCOMPLETION)
+                .setOnPreferenceClickListener(this);
+        preferenceScreen.findPreference(KEY_PREF_CHECK_FOR_UPDATES)
                 .setOnPreferenceClickListener(this);
     }
 }

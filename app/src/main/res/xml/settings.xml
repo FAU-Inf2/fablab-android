@@ -19,4 +19,8 @@
         android:summary="Produktnamen zur Autovervollständigung neu laden"
         android:title="Produktnamen neu laden" />
 
+    <Preference
+        android:key="check_for_updates"
+        android:title="Nach Updates suchen" />
+
 </PreferenceScreen>

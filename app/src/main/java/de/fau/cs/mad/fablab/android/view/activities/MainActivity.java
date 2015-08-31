@@ -15,6 +15,7 @@ import de.fau.cs.mad.fablab.android.model.events.NavigationEventBarcodeScannerIn
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventInventory;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventProductSearchInventory;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventShowInventory;
+import de.fau.cs.mad.fablab.android.model.events.UpdateAvailableEvent;
 import de.fau.cs.mad.fablab.android.model.util.StorageFragment;
 import de.fau.cs.mad.fablab.android.util.StackTraceReporter;
 import de.fau.cs.mad.fablab.android.util.TopExceptionHandler;
@@ -31,6 +32,7 @@ import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryProductSea
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.ShowInventoryFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.versioncheck.VersionCheckDialogFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationEvent;
 import de.greenrobot.event.EventBus;
@@ -336,5 +338,10 @@ public class MainActivity extends AppCompatActivity {
                     TAG_SHOWINVENTORY_INVENTORY_FRAGMENT).addToBackStack(null).commit();
         }
         mNavigationDrawer.closeDrawer();
+    }
+
+    public void onEvent(UpdateAvailableEvent event) {
+        VersionCheckDialogFragment.newInstance(event.isRequired(), event.getMessage()).show(
+                getSupportFragmentManager(), "versioncheck");
     }
 }

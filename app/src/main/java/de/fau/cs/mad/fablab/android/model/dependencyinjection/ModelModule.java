@@ -14,6 +14,7 @@ import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.model.PushModel;
 import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
 import de.fau.cs.mad.fablab.android.model.UserModel;
+import de.fau.cs.mad.fablab.android.model.VersionCheckModel;
 import de.fau.cs.mad.fablab.android.model.util.StorageFragment;
 import de.fau.cs.mad.fablab.android.view.actionbar.ActionBar;
 import de.fau.cs.mad.fablab.android.view.cartpanel.CartSlidingUpPanel;
@@ -39,6 +40,7 @@ import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductDialogFr
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.stacktrace.StackTraceDialogFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.versioncheck.VersionCheckDialogFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
 
 @SuppressWarnings("unused")
@@ -50,7 +52,7 @@ import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
                 ICalDetailsDialogFragment.class, ICalFragment.class, NavigationDrawer.class,
                 NewsDetailsDialogFragment.class, NewsFragment.class, ProductDialogFragment.class,
                 ProductMapFragment.class, ProductSearchFragment.class, QrCodeScannerFragment.class,
-                StackTraceDialogFragment.class,
+                StackTraceDialogFragment.class, VersionCheckDialogFragment.class,
                 AlertDialogFragment.class, InventoryFragment.class, InventoryBarcodeScannerFragment.class,
                 InventoryProductSearchFragment.class, AddToInventoryDialogFragment.class,
                 SettingsFragment.class, ShowInventoryFragment.class
@@ -120,5 +122,10 @@ public class ModelModule {
     @Provides
     InventoryModel provideInventoryModel() {
         return mStorageFragment.getInventoryModel();
+    }
+
+    @Provides
+    VersionCheckModel provideVersionCheckModel() {
+        return mStorageFragment.getVersionCheckModel();
     }
 }

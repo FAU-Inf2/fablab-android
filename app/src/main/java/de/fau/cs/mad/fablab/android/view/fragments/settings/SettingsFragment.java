@@ -1,13 +1,16 @@
 package de.fau.cs.mad.fablab.android.view.fragments.settings;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.github.machinarius.preferencefragment.PreferenceFragment;
 
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.model.events.NoUpdateAvailableEvent;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
+import de.greenrobot.event.EventBus;
 
 /**
  * Simple Settings/Preferences Fragment to provide some user configurable options.
@@ -15,6 +18,8 @@ import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 public class SettingsFragment extends PreferenceFragment {
     @Inject
     SettingsFragmentViewModel mViewModel;
+
+    private EventBus mEventBus = EventBus.getDefault();
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -33,6 +38,12 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        mEventBus.unregister(this);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         MainActivity activity = (MainActivity) getActivity();
@@ -40,5 +51,13 @@ public class SettingsFragment extends PreferenceFragment {
         activity.setNavigationDrawerSelection(R.id.drawer_item_settings);
         activity.showFloatingActionButton(false);
         activity.showCartSlidingUpPanel(false);
+
+        mEventBus.register(this);
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(NoUpdateAvailableEvent event) {
+        Toast.makeText(getActivity(), R.string.version_check_no_update_available, Toast.LENGTH_LONG)
+                .show();
     }
 }
