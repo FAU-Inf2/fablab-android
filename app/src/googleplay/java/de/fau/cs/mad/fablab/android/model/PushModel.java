@@ -136,10 +136,10 @@ public class PushModel {
         PushToken pushToken = new PushToken();
         pushToken.setToken(regId);
         pushToken.setPlatformType(PlatformType.ANDROID);
-        mPushApi.subscribeDoorOpensNextTime(pushToken, new Callback<Response>() {
+        mPushApi.subscribeDoorOpensNextTime(pushToken, new Callback<Boolean>() {
             @Override
-            public void success(Response response, Response response2) {
-                Log.i(TAG, "Success: " + response.getStatus());
+            public void success(Boolean status, Response response) {
+                Log.i(TAG, "Success: " + status);
             }
 
             @Override
@@ -195,10 +195,10 @@ public class PushModel {
         PushToken pushToken = new PushToken();
         pushToken.setToken(mPushId);
         pushToken.setPlatformType(PlatformType.ANDROID);
-        mPushApi.unsubscribeDoorOpensNextTime(pushToken, new Callback<Response>() {
+        mPushApi.unsubscribeDoorOpensNextTime(pushToken, new Callback<Boolean>() {
             @Override
-            public void success(Response response, Response response2) {
-                Log.i(TAG, "Success: " + response.getStatus());
+            public void success(Boolean status, Response response) {
+                Log.i(TAG, "Success: " + status);
             }
 
             @Override
