@@ -16,4 +16,8 @@
         <item name="color">@android:color/white</item>
     </style>
 
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="actionModeBackground">@color/colorPrimary</item>
+    </style>
+
 </resources>

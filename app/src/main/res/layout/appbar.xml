@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
     android:minHeight="?attr/actionBarSize"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:theme="@style/ToolbarTheme"
     android:layout_margin="0dp"
     android:elevation="4dp"
     android:id="@+id/appbar">
