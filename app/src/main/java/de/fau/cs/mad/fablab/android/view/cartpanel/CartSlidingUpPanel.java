@@ -25,6 +25,7 @@ import de.fau.cs.mad.fablab.android.view.common.binding.SwipeableRecyclerViewCom
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.checkout.QrCodeScannerFragment;
+import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.greenrobot.event.EventBus;
 
@@ -224,5 +225,12 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
         mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 AddToCartDialogFragment.newInstance(event.getCartEntry())).addToBackStack(null)
                 .commit();
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(NavigationEvent event) {
+        if (sliding_up_pl.getPanelState().equals(SlidingUpPanelLayout.PanelState.EXPANDED)) {
+            sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        }
     }
 }
