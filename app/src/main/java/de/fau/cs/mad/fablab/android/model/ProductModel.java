@@ -46,7 +46,7 @@ public class ProductModel {
         mProducts = new ObservableArrayList<>();
         long timeSinceUpdate = (System.currentTimeMillis() - mPreferences.getLong(
                 KEY_LAST_PRODUCT_UPDATE, 0)) / 1000;
-        if (timeSinceUpdate > 86400) {
+        if (timeSinceUpdate > 86400 || mProductDao.countOf() == 0) {
             fetchProducts();
         } else {
             mCountDownLatch.countDown();
