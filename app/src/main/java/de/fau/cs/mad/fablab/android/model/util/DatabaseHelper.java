@@ -21,11 +21,11 @@ import de.fau.cs.mad.fablab.rest.core.Product;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
     private static final String DATABASE_NAME = "fablab.db";
-    private static final int DATABASE_VERSION = 31;
+    private static final int DATABASE_VERSION = 32;
 
     private static DatabaseHelper instance;
     private RuntimeExceptionDao<Cart, Long> mCartDao;
-    private RuntimeExceptionDao<Product, String> mProductDao;
+    private RuntimeExceptionDao<Product, Long> mProductDao;
     private RuntimeExceptionDao<AutoCompleteWords, Long> mAutoCompleteWordsDao;
     private RuntimeExceptionDao<News, Long> mNewsDao;
     private RuntimeExceptionDao<ICal, Long> mICalDao;
@@ -80,7 +80,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return mCartDao;
     }
 
-    public RuntimeExceptionDao<Product, String> getProductDao() {
+    public RuntimeExceptionDao<Product, Long> getProductDao() {
         if (mProductDao == null) {
             mProductDao = getRuntimeExceptionDao(Product.class);
         }

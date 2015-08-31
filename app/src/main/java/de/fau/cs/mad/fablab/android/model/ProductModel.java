@@ -31,13 +31,13 @@ public class ProductModel {
     private final String KEY_LAST_PRODUCT_UPDATE = "key_last_product_update";
 
     private final CountDownLatch mCountDownLatch;
-    private RuntimeExceptionDao<Product, String> mProductDao;
+    private RuntimeExceptionDao<Product, Long> mProductDao;
     private ProductApi mProductApi;
     private EventBus mEventBus = EventBus.getDefault();
     private SharedPreferences mPreferences;
     private ObservableArrayList<Product> mProducts;
 
-    public ProductModel(RuntimeExceptionDao<Product, String> productDao, ProductApi productApi,
+    public ProductModel(RuntimeExceptionDao<Product, Long> productDao, ProductApi productApi,
                         Context context) {
         mCountDownLatch = new CountDownLatch(1);
         mProductDao = productDao;
@@ -86,9 +86,9 @@ public class ProductModel {
                 updatedProducts.removeAll(mProductDao.queryForAll());
                 for (int i = 0; i < updatedProducts.size(); i++) {
                     Product product = updatedProducts.get(i);
-                    if (product.getProductId() != null && !product.getProductId()
-                            .isEmpty()) {
-                        updatedProducts.remove(product);
+                    if (product.getProductId().isEmpty()) {
+                        updatedProducts.remove(i);
+                        i--;
                     }
                 }
                 boolean productsUpdated = updatedProducts.size() > 0;
@@ -97,6 +97,7 @@ public class ProductModel {
                         @Override
                         public Product call() throws Exception {
                             for (Product product : updatedProducts) {
+                                product.setDatabaseId(Long.parseLong(product.getProductId()));
                                 mProductDao.createOrUpdate(product);
                             }
                             return null;
@@ -112,6 +113,7 @@ public class ProductModel {
                         @Override
                         public Product call() throws Exception {
                             for (Product product : removedProducts) {
+                                product.setDatabaseId(Long.parseLong(product.getProductId()));
                                 mProductDao.delete(product);
                             }
                             return null;
@@ -188,7 +190,15 @@ public class ProductModel {
                 } catch (InterruptedException e) {
                     Log.e(TAG, "Interrupt", e);
                 }
-                return mProductDao.queryForId(params[0]);
+                Product result = null;
+                try {
+                    PreparedQuery<Product> query = mProductDao.queryBuilder().where().eq("product_id",
+                            params[0]).prepare();
+                    result = mProductDao.queryForFirst(query);
+                } catch (SQLException e) {
+                    Log.e(TAG, "Query failed", e);
+                }
+                return result;
             }
 
             @Override
