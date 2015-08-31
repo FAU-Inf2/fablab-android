@@ -44,17 +44,17 @@ public class ProductSearchFragmentViewModel extends BaseViewModel<Product> {
         }
     };
 
-    private Command<Integer> orderProductsByNameCommand = new Command<Integer>() {
+    private Command<Void> orderProductsByNameCommand = new Command<Void>() {
         @Override
-        public void execute(Integer parameter) {
+        public void execute(Void parameter) {
             mIsOrderedByName = true;
             orderItemsByName();
         }
     };
 
-    private Command<Integer> orderProductsByPriceCommand = new Command<Integer>() {
+    private Command<Void> orderProductsByPriceCommand = new Command<Void>() {
         @Override
-        public void execute(Integer parameter) {
+        public void execute(Void parameter) {
             mIsOrderedByName = false;
             orderItemsByPrice();
         }
@@ -79,11 +79,11 @@ public class ProductSearchFragmentViewModel extends BaseViewModel<Product> {
     }
 
 
-    public Command<Integer> getOrderProductsByNameCommand() {
+    public Command<Void> getOrderProductsByNameCommand() {
         return orderProductsByNameCommand;
     }
 
-    public Command<Integer> getOrderProductsByPriceCommand() {
+    public Command<Void> getOrderProductsByPriceCommand() {
         return orderProductsByPriceCommand;
     }
 

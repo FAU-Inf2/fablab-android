@@ -5,13 +5,13 @@ import android.view.MenuItem;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.CommandListener;
 
-public class MenuItemCommandBinding implements Binding<MenuItem, Integer>, CommandListener,
+public class MenuItemCommandBinding implements Binding<MenuItem, Void>, CommandListener,
         MenuItem.OnMenuItemClickListener {
-    private Command<Integer> mCommand;
+    private Command<Void> mCommand;
     private MenuItem mMenuItem;
 
     @Override
-    public void bind(MenuItem menuItem, Command<Integer> command) {
+    public void bind(MenuItem menuItem, Command<Void> command) {
         mCommand = command;
         mMenuItem = menuItem;
 
@@ -32,7 +32,7 @@ public class MenuItemCommandBinding implements Binding<MenuItem, Integer>, Comma
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         if (mCommand.isExecutable()) {
-            mCommand.execute(item.getItemId());
+            mCommand.execute(null);
         }
         return true;
     }

@@ -17,9 +17,9 @@ public class ActionBarViewModel {
     private Listener mListener;
     private EventBus mEventBus = EventBus.getDefault();
 
-    private final Command<Integer> mShowDoorStateToastCommand = new Command<Integer>() {
+    private final Command<Void> mShowDoorStateToastCommand = new Command<Void>() {
         @Override
-        public void execute(Integer parameter) {
+        public void execute(Void parameter) {
             if (mListener != null) {
                 mListener.onShowDoorStateToast(mSpaceApiModel.getOpen(), Formatter.formatTime(
                         mSpaceApiModel.getTime()));
@@ -31,7 +31,7 @@ public class ActionBarViewModel {
         mListener = listener;
     }
 
-    public Command<Integer> getShowDoorStateToastCommand() {
+    public Command<Void> getShowDoorStateToastCommand() {
         return mShowDoorStateToastCommand;
     }
 

@@ -78,7 +78,7 @@ public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
 
     @Override
     public void onItemAdded(CartEntry newItem) {
-        mCartEntryViewModelCollection.add(new CartEntryViewModel(newItem, mModel));
+        mCartEntryViewModelCollection.add(new CartEntryViewModel(newItem));
         if (mListener != null) {
             mListener.onItemAdded(getCartEntriesCount() - 1);
         }
@@ -87,7 +87,7 @@ public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
     @Override
     public void onAllItemsAdded(Collection<? extends CartEntry> collection) {
         for (CartEntry cartEntry : collection) {
-            mCartEntryViewModelCollection.add(new CartEntryViewModel(cartEntry, mModel));
+            mCartEntryViewModelCollection.add(new CartEntryViewModel(cartEntry));
         }
         if (mListener != null) {
             mListener.onDataPrepared();
@@ -130,7 +130,7 @@ public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
     public void initialize() {
         if (mListener != null) {
             for (CartEntry cartEntry : mModel.getCartEntries()) {
-                mCartEntryViewModelCollection.add(new CartEntryViewModel(cartEntry, mModel));
+                mCartEntryViewModelCollection.add(new CartEntryViewModel(cartEntry));
             }
             mListener.onDataPrepared();
         }

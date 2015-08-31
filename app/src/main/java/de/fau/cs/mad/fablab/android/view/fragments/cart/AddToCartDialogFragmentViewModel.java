@@ -20,22 +20,26 @@ public class AddToCartDialogFragmentViewModel {
 
     private Listener mListener;
 
-    private final Command<Integer> mAddToCartCommand = new Command<Integer>() {
+    private final Command<Void> mAddToCartCommand = new Command<Void>() {
         @Override
-        public void execute(Integer parameter) {
-            mCartModel.addEntry(mProduct, mAmount);
+        public void execute(Void parameter) {
+            if (mAmount != 0) {
+                mCartModel.addEntry(mProduct, mAmount);
+            }
             if (mListener != null) {
                 mListener.onDismiss();
             }
         }
     };
 
-    private final Command<Integer> mChangeAmountCommand = new Command<Integer>() {
+    private final Command<String> mChangeAmountCommand = new Command<String>() {
         @Override
-        public void execute(Integer parameter) {
-            mAmount = parameter;
+        public void execute(String parameter) {
+            double value = "".equals(parameter) ? 0 : Double.parseDouble(parameter);
+            double rounding = mProduct.getUom().getRounding();
+            mAmount = rounding * Math.ceil(value / rounding);
             if (mListener != null) {
-                mListener.onUpdatePriceTotal(getPriceTotal());
+                mListener.onUpdatePriceAndAmount(getPriceTotal(), (value != mAmount) ? mAmount : -1);
             }
         }
     };
@@ -44,11 +48,11 @@ public class AddToCartDialogFragmentViewModel {
         mListener = listener;
     }
 
-    public Command<Integer> getAddToCartCommand() {
+    public Command<Void> getAddToCartCommand() {
         return mAddToCartCommand;
     }
 
-    public Command<Integer> getChangeAmountCommand() {
+    public Command<String> getChangeAmountCommand() {
         return mChangeAmountCommand;
     }
 
@@ -64,12 +68,12 @@ public class AddToCartDialogFragmentViewModel {
         return mProduct.getUnit();
     }
 
-    public double getAmount() {
-        return mAmount;
-    }
-
     public double getPriceTotal() {
         return mAmount * getPrice();
+    }
+
+    public boolean isDecimalAmount() {
+        return mProduct.getUom().getRounding() != 1;
     }
 
     public void saveState(Bundle outState) {
@@ -81,13 +85,13 @@ public class AddToCartDialogFragmentViewModel {
         if (savedInstanceState != null) {
             mAmount = savedInstanceState.getDouble(KEY_AMOUNT);
         } else {
-            mAmount = 1;
+            mAmount = 0;
         }
     }
 
     public interface Listener {
         void onDismiss();
 
-        void onUpdatePriceTotal(double priceTotal);
+        void onUpdatePriceAndAmount(double priceTotal, double amount);
     }
 }

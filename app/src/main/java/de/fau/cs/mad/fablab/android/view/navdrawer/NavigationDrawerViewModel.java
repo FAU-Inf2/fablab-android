@@ -22,44 +22,44 @@ public class NavigationDrawerViewModel {
 
     private int mSelectedItem = R.id.drawer_item_news;
 
-    private final Command<Integer> mNavigateToNewsCommand = new Command<Integer>() {
+    private final Command<Void> mNavigateToNewsCommand = new Command<Void>() {
         @Override
-        public void execute(Integer itemid) {
+        public void execute(Void parameter) {
             mEventBus.post(NavigationEvent.News);
         }
     };
 
-    private final Command<Integer> mNavigateToBarcodeScannerCommand = new Command<Integer>() {
+    private final Command<Void> mNavigateToBarcodeScannerCommand = new Command<Void>() {
         @Override
-        public void execute(Integer itemid) {
+        public void execute(Void parameter) {
             mEventBus.post(NavigationEvent.BarcodeScanner);
         }
     };
 
-    private final Command<Integer> mNavigateToProductSearchCommand = new Command<Integer>() {
+    private final Command<Void> mNavigateToProductSearchCommand = new Command<Void>() {
         @Override
-        public void execute(Integer itemid) {
+        public void execute(Void parameter) {
             mEventBus.post(NavigationEvent.ProductSearch);
         }
     };
 
-    private final Command<Integer> mNavigateToAboutCommand = new Command<Integer>() {
+    private final Command<Void> mNavigateToAboutCommand = new Command<Void>() {
         @Override
-        public void execute(Integer itemid) {
+        public void execute(Void parameter) {
             mEventBus.post(NavigationEvent.About);
         }
     };
 
-    private final Command<Integer> mNavigateToSettingsCommand = new Command<Integer>() {
+    private final Command<Void> mNavigateToSettingsCommand = new Command<Void>() {
         @Override
-        public void execute(Integer itemid) {
+        public void execute(Void parameter) {
             mEventBus.post(NavigationEvent.Settings);
         }
     };
 
-    private final Command<Integer> mNavigateToAlertCommand = new Command<Integer>() {
+    private final Command<Void> mNavigateToAlertCommand = new Command<Void>() {
         @Override
-        public void execute(Integer itemid) {
+        public void execute(Void parameter) {
             mEventBus.post(NavigationEvent.Alert);
         }
     };
@@ -72,19 +72,19 @@ public class NavigationDrawerViewModel {
         }
     };
 
-    private final Command<Integer> mLogoutCommand = new Command<Integer>()
+    private final Command<Void> mLogoutCommand = new Command<Void>()
     {
         @Override
-        public void execute(Integer parameter) {
+        public void execute(Void parameter) {
             mEventBus.post(NavigationEvent.News);
             mListener.loggedOut(getLoggedInUser());
         }
     };
 
-    private final Command<Integer> mInventoryCommand = new Command<Integer>()
+    private final Command<Void> mInventoryCommand = new Command<Void>()
     {
         @Override
-        public void execute(Integer parameter) {
+        public void execute(Void parameter) {
             mEventBus.post(new NavigationEventInventory(getLoggedInUser()));
         }
     };
@@ -99,27 +99,27 @@ public class NavigationDrawerViewModel {
         mListener = listener;
     }
 
-    public Command<Integer> getNavigateToBarcodeScannerCommand() {
+    public Command<Void> getNavigateToBarcodeScannerCommand() {
         return mNavigateToBarcodeScannerCommand;
     }
 
-    public Command<Integer> getNavigateToNewsCommand() {
+    public Command<Void> getNavigateToNewsCommand() {
         return mNavigateToNewsCommand;
     }
 
-    public Command<Integer> getNavigateToProductSearchCommand() {
+    public Command<Void> getNavigateToProductSearchCommand() {
         return mNavigateToProductSearchCommand;
     }
 
-    public Command<Integer> getNavigateToAboutCommand() {
+    public Command<Void> getNavigateToAboutCommand() {
         return mNavigateToAboutCommand;
     }
 
-    public Command<Integer> getNavigateToSettingsCommand() {
+    public Command<Void> getNavigateToSettingsCommand() {
         return mNavigateToSettingsCommand;
     }
 
-    public Command<Integer> getNavigateToAlertCommand()
+    public Command<Void> getNavigateToAlertCommand()
     {
         return mNavigateToAlertCommand;
     }
@@ -129,12 +129,12 @@ public class NavigationDrawerViewModel {
         return mLoginCommand;
     }
 
-    public Command<Integer> getLogoutCommand()
+    public Command<Void> getLogoutCommand()
     {
         return mLogoutCommand;
     }
 
-    public Command<Integer> getInventoryCommand()
+    public Command<Void> getInventoryCommand()
     {
         return mInventoryCommand;
     }

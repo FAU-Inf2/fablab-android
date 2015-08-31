@@ -1,54 +1,13 @@
 package de.fau.cs.mad.fablab.android.view.cartpanel;
 
-import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
-import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
-import de.greenrobot.event.EventBus;
+import de.fau.cs.mad.fablab.android.util.Formatter;
 
 public class CartEntryViewModel {
     private CartEntry mCartEntry;
-    private CartModel mModel;
-    private Listener mListener;
 
-    private final Command<Integer> mUpdateAmountCommand = new Command<Integer>() {
-        @Override
-        public void execute(Integer parameter) {
-            int newAmount = parameter + 1;
-            if (((int) mCartEntry.getAmount()) != newAmount) {
-                mCartEntry.setAmount(newAmount);
-                mModel.updateEntry(mCartEntry);
-                if (mListener != null) {
-                    mListener.onAmountChanged();
-                }
-                EventBus.getDefault().post(new CartEntryUpdatedEvent(CartEntryViewModel.this));
-            }
-        }
-    };
-
-    private final Command<Void> mTextViewClickedCommand = new Command<Void>(){
-        @Override
-        public void execute(Void parameter){
-            if (mListener != null){
-                mListener.onTextViewClicked();
-            }
-        }
-    };
-
-    public CartEntryViewModel(CartEntry cartEntry, CartModel model) {
+    public CartEntryViewModel(CartEntry cartEntry) {
         mCartEntry = cartEntry;
-        mModel = model;
-    }
-
-    public void setListener(Listener listener) {
-        mListener = listener;
-    }
-
-    public Command<Integer> getUpdateAmountCommand() {
-        return mUpdateAmountCommand;
-    }
-
-    public Command<Void> getTextViewClickedCommand(){
-        return mTextViewClickedCommand;
     }
 
     public CartEntry getCartEntry() {
@@ -56,11 +15,19 @@ public class CartEntryViewModel {
     }
 
     public String getProductName() {
-        return mCartEntry.getProduct().getName();
+        return Formatter.formatProductName(mCartEntry.getProduct().getName())[0];
+    }
+
+    public String getProductDetails() {
+        return Formatter.formatProductName(mCartEntry.getProduct().getName())[1];
     }
 
     public String getUnit() {
         return mCartEntry.getProduct().getUnit();
+    }
+
+    public boolean isDecimalAmount() {
+        return mCartEntry.getProduct().getUom().getRounding() != 1.0;
     }
 
     public double getAmount() {
@@ -69,11 +36,5 @@ public class CartEntryViewModel {
 
     public double getTotalPrice() {
         return mCartEntry.getTotalPrice();
-    }
-
-    public interface Listener {
-        void onAmountChanged();
-
-        void onTextViewClicked();
     }
 }

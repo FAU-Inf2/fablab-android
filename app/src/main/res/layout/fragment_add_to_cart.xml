@@ -28,11 +28,20 @@
             android:text="@string/add_to_cart_amount"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <NumberPicker
-            android:id="@+id/add_to_cart_numberPicker"
+        <EditText
+            android:id="@+id/add_to_cart_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:maxLength="5" />
+
+        <TextView
+            android:id="@+id/add_to_cart_amount_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:visibility="invisible" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -11,6 +11,12 @@ import de.fau.cs.mad.fablab.android.R;
 
 public class UiUtils {
 
+    public static void showKeyboard(Activity activity, View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+    }
+
     public static void hideKeyboard(Activity activity) {
         if (activity.getCurrentFocus() != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(
@@ -20,8 +26,7 @@ public class UiUtils {
         }
     }
 
-    public static void changeDialogTitleColor(Dialog dialog)
-    {
+    public static void changeDialogTitleColor(Dialog dialog) {
         int dividerId = dialog.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
         View divider = dialog.findViewById(dividerId);
         if (divider != null) {

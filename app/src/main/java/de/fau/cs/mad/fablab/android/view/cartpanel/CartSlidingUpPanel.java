@@ -76,6 +76,10 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
             public void onPanelSlide(View panel, float slideOffset) {
                 updatePanelHeaderSize(slideOffset);
             }
+
+            public void onPanelAnchored(View panel) {
+                mHandler.postDelayed(mUpdateVisibilityRunnable, 1);
+            }
         });
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
