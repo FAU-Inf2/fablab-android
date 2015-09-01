@@ -1,76 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:paddingRight="@dimen/news_dialog_vertical_margin"
-    android:paddingLeft="@dimen/news_dialog_vertical_margin"
-    android:paddingTop="@dimen/news_dialog_horizontal_margin"
-    android:paddingBottom="@dimen/news_dialog_horizontal_margin"
-    >
+    android:paddingTop="@dimen/news_dialog_padding_top">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/news_dialog_title_text_margin"
-        android:id="@+id/linearLayout"
-        android:layout_centerHorizontal="true">
-
-        <ImageView
-            android:layout_width="@dimen/news_dialog_icon_size"
-            android:layout_height="@dimen/news_dialog_icon_size"
-            android:layout_centerVertical="true"
-            android:id="@+id/image_news_dialog"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/title_news_dialog"
-            android:text="Title"
-            android:maxHeight="@dimen/news_entry_title_maxheight"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/abc_text_size_title_material"
-            android:layout_gravity="center"
-            android:gravity="center"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/linearLayout">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/news_dialog_image"
+        android:layout_width="@dimen/news_dialog_preview_image_size"
+        android:layout_height="@dimen/news_dialog_preview_image_size"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout"
-        android:layout_above="@+id/ok_button_news_dialog"
-        android:layout_marginBottom="@dimen/news_entry_scrollview_margin"
-        android:id="@+id/scrollView">
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="@dimen/news_dialog_preview_image_margin_right"
+        android:layout_marginLeft="@dimen/news_dialog_title_margin_left_right"
+        android:layout_marginRight="@dimen/news_dialog_preview_image_margin_right"
+        android:layout_marginStart="@dimen/news_dialog_title_margin_left_right"
+        android:contentDescription="@string/news_preview_image_content_description" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:id="@+id/news_text_news_dialog"
-            android:text="real news entry"
-            />
-    </ScrollView>
+    <TextView
+        android:id="@+id/news_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/news_dialog_image"
+        android:layout_alignTop="@+id/news_dialog_image"
+        android:layout_marginEnd="@dimen/news_dialog_title_margin_left_right"
+        android:layout_marginRight="@dimen/news_dialog_title_margin_left_right"
+        android:layout_toEndOf="@+id/news_dialog_image"
+        android:layout_toRightOf="@+id/news_dialog_image"
+        android:gravity="center"
+        android:maxHeight="@dimen/news_entry_title_maxheight"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/abc_text_size_title_material" />
 
-    <Button
+    <WebView
+        android:id="@+id/news_dialog_webview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ok"
-        android:id="@+id/ok_button_news_dialog"
-        android:layout_gravity="right"
-        android:layout_marginTop="@dimen/news_entry_button_margin"/>
-    </LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/news_dialog_image"
+        android:layout_marginTop="@dimen/news_dialog_webview_margin_top" />
 
 </RelativeLayout>

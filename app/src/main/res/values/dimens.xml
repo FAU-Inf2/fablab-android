@@ -13,7 +13,12 @@
     <dimen name="news_dialog_horizontal_margin">20dp</dimen>
     <dimen name="news_dialog_vertical_margin">10dp</dimen>
     <dimen name="news_dialog_title_text_margin">30dp</dimen>
-    <dimen name="news_dialog_icon_size">50dp</dimen>
+
+    <dimen name="news_dialog_padding_top">9dp</dimen>
+    <dimen name="news_dialog_preview_image_size">50dp</dimen>
+    <dimen name="news_dialog_preview_image_margin_right">3dp</dimen>
+    <dimen name="news_dialog_title_margin_left_right">6dp</dimen>
+    <dimen name="news_dialog_webview_margin_top">8dp</dimen>
 
     <dimen name="news_entry_card_padding">15dp</dimen>
     <dimen name="news_entry_left_text_margin">14dp</dimen>
@@ -23,7 +28,6 @@
     <dimen name="news_entry_title_maxheight">100dp</dimen>
 
     <dimen name="fab_padding">15dp</dimen>
-    <dimen name="news_activity_actionbar_recyclerview_margin">5dp</dimen>
     <dimen name="news_activity_dates_viewpager_height">130dp</dimen>
     <dimen name="news_activity_news_padding_top">122dp</dimen>
 

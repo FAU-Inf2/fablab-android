@@ -17,8 +17,8 @@
         <ImageView
             android:id="@+id/image_dates_dialog"
             android:src="@drawable/ic_nav_news"
-            android:layout_width="@dimen/news_dialog_icon_size"
-            android:layout_height="@dimen/news_dialog_icon_size"
+            android:layout_width="@dimen/news_dialog_preview_image_size"
+            android:layout_height="@dimen/news_dialog_preview_image_size"
             android:alpha=".22"
             android:layout_centerVertical="true"
         />

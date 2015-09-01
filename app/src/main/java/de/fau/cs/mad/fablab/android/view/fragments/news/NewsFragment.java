@@ -94,6 +94,7 @@ public class NewsFragment extends BaseFragment implements NewsFragmentViewModel.
         args.putString(NewsDetailsDialogViewModel.KEY_TEXT, event.getText());
         args.putString(NewsDetailsDialogViewModel.KEY_IMAGE_LINK, event.getImageLink());
         dialog.setArguments(args);
-        dialog.show(getFragmentManager(), "NewsDetailsDialogFragment");
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                dialog).addToBackStack(null).commit();
     }
 }
