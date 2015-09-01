@@ -34,14 +34,8 @@ public class AutoCompleteWords implements Serializable {
         this.lastRefresh = new Date();
     }
 
-
     public String[] getPossibleAutoCompleteWords() {
         return possibleAutoCompleteWords;
-    }
-
-    public void setPossibleAutoCompleteWords(String[] possibleAutoCompleteWords) {
-        this.lastRefresh = new Date();
-        this.possibleAutoCompleteWords = possibleAutoCompleteWords;
     }
 
     public boolean needsRefresh(){
