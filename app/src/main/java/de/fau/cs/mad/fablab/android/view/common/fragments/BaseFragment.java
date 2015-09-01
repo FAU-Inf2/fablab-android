@@ -29,6 +29,7 @@ public abstract class BaseFragment extends Fragment{
     public void setDisplayOptions(int menuItemId, boolean showFAB, boolean showCart) {
         MainActivity activity = (MainActivity) getActivity();
         activity.enableNavigationDrawer(true);
+        activity.showTitle(true);
         activity.setNavigationDrawerSelection(menuItemId);
         activity.showFloatingActionButton(showFAB);
         activity.showCartSlidingUpPanel(showCart);

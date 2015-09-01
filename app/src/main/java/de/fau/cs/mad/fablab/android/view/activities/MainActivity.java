@@ -172,6 +172,10 @@ public class MainActivity extends AppCompatActivity {
         mNavigationDrawer.setSelection(menuItemId);
     }
 
+    public void showTitle(boolean show) {
+        mActionBar.showTitle(show);
+    }
+
     public void showCartSlidingUpPanel(boolean show) {
         mCartSlidingUpPanel.setVisibility(show);
     }

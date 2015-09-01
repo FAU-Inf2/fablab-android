@@ -14,8 +14,6 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.model.events.AppBarShowDoorStateEvent;
-import de.fau.cs.mad.fablab.android.model.events.AppBarShowTitleEvent;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventInventory;
 import de.fau.cs.mad.fablab.android.view.common.binding.NumberPickerCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
@@ -51,9 +49,6 @@ public class AddToInventoryDialogFragment extends BaseDialogFragment implements 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mEventBus.post(new AppBarShowDoorStateEvent(false));
-        mEventBus.post(new AppBarShowTitleEvent(false));
-
         mViewModel.restoreState(getArguments(), savedInstanceState);
 
         mNameTextView.setText(mViewModel.getName());
@@ -85,8 +80,6 @@ public class AddToInventoryDialogFragment extends BaseDialogFragment implements 
     public void onDismiss() {
         getFragmentManager().popBackStack();
         mEventBus.post(new NavigationEventInventory(mViewModel.getUser()));
-        mEventBus.post(new AppBarShowDoorStateEvent(true));
-        mEventBus.post(new AppBarShowTitleEvent(true));
     }
     @Override
     public String getUUID()

@@ -29,6 +29,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
         if (!getShowsDialog()) {
             MainActivity activity = (MainActivity) getActivity();
             activity.enableNavigationDrawer(false);
+            activity.showTitle(true);
             activity.showFloatingActionButton(false);
             activity.showCartSlidingUpPanel(false);
         }

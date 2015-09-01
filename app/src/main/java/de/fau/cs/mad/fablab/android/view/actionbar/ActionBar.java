@@ -76,6 +76,20 @@ public class ActionBar implements ActionBarViewModel.Listener {
         mDrawerToggle.setDrawerIndicatorEnabled(show);
     }
 
+    public void showTitle(boolean show) {
+        if (show) {
+            appbar_fablab.setVisibility(View.VISIBLE);
+            appbar_fau.setVisibility(View.VISIBLE);
+            icon_fablab.setVisibility(View.VISIBLE);
+            time_tv.setVisibility(View.VISIBLE);
+        } else {
+            appbar_fablab.setVisibility(View.GONE);
+            appbar_fau.setVisibility(View.GONE);
+            icon_fablab.setVisibility(View.GONE);
+            time_tv.setVisibility(View.GONE);
+        }
+    }
+
     public void bindMenuItems() {
         mOpenStateMenuItem = toolbar.getMenu().findItem(R.id.action_opened);
         new MenuItemCommandBinding().bind(mOpenStateMenuItem,
@@ -116,30 +130,6 @@ public class ActionBar implements ActionBarViewModel.Listener {
                 time_tv.setTextColor(time_tv.getResources().getColor(R.color.appbar_color_closed));
             }
             time_tv.setText(time);
-        }
-    }
-
-    @Override
-    public void onShowDoorState(boolean state) {
-        if (mOpenStateMenuItem != null) {
-            if (state) {
-                time_tv.setVisibility(View.VISIBLE);
-            } else {
-                time_tv.setVisibility(View.GONE);
-            }
-        }
-    }
-
-    @Override
-    public void onShowTitle(boolean state) {
-        if (state) {
-            appbar_fablab.setVisibility(View.VISIBLE);
-            appbar_fau.setVisibility(View.VISIBLE);
-            icon_fablab.setVisibility(View.VISIBLE);
-        } else {
-            appbar_fablab.setVisibility(View.GONE);
-            appbar_fau.setVisibility(View.GONE);
-            icon_fablab.setVisibility(View.GONE);
         }
     }
 

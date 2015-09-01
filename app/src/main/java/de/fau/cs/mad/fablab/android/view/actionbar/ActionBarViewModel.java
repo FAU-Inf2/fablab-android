@@ -3,8 +3,6 @@ package de.fau.cs.mad.fablab.android.view.actionbar;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
-import de.fau.cs.mad.fablab.android.model.events.AppBarShowDoorStateEvent;
-import de.fau.cs.mad.fablab.android.model.events.AppBarShowTitleEvent;
 import de.fau.cs.mad.fablab.android.model.events.SpaceApiStateChangedEvent;
 import de.fau.cs.mad.fablab.android.util.Formatter;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
@@ -57,24 +55,8 @@ public class ActionBarViewModel {
         }
     }
 
-    public void onEvent(AppBarShowDoorStateEvent event) {
-        if (mListener != null) {
-            mListener.onShowDoorState(event.getState());
-        }
-    }
-
-    public void onEvent(AppBarShowTitleEvent event) {
-        if (mListener != null) {
-            mListener.onShowTitle(event.getState());
-        }
-    }
-
     public interface Listener {
         void onStateUpdated(boolean open, String time);
-
-        void onShowDoorState(boolean state);
-
-        void onShowTitle(boolean state);
 
         void onShowDoorStateToast(boolean state, String time);
     }

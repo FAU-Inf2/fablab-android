@@ -18,11 +18,10 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
-import de.fau.cs.mad.fablab.android.model.events.AppBarShowDoorStateEvent;
-import de.fau.cs.mad.fablab.android.model.events.AppBarShowTitleEvent;
 import de.fau.cs.mad.fablab.android.util.Formatter;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
 import de.fau.cs.mad.fablab.android.view.activities.BackButtonPressedEvent;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.EditTextCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.EnterKeyCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
@@ -63,9 +62,6 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mEventBus.post(new AppBarShowDoorStateEvent(false));
-        mEventBus.post(new AppBarShowTitleEvent(false));
 
         mViewModel.restoreState(getArguments(), savedInstanceState);
 
@@ -148,14 +144,13 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     public void onResume() {
         super.onResume();
         mEventBus.register(this);
+        ((MainActivity) getActivity()).showTitle(false);
     }
 
     @Override
     public void onDismiss() {
         UiUtils.hideKeyboard(getActivity());
         getFragmentManager().popBackStack();
-        mEventBus.post(new AppBarShowDoorStateEvent(true));
-        mEventBus.post(new AppBarShowTitleEvent(true));
     }
 
     @Override
@@ -173,7 +168,5 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     @SuppressWarnings("unused")
     public void onEvent(BackButtonPressedEvent event) {
         UiUtils.hideKeyboard(getActivity());
-        mEventBus.post(new AppBarShowDoorStateEvent(true));
-        mEventBus.post(new AppBarShowTitleEvent(true));
     }
 }
