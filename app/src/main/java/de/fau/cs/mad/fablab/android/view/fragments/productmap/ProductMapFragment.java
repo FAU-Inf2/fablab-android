@@ -53,7 +53,7 @@ public class ProductMapFragment extends BaseDialogFragment implements CallBackLi
         locationString = locationString.replace("ß", "ss");
 
         //test with local asset
-        //productMapUrl = "file:///android_asset/productMap.html?id=Werkbank";
+       // productMapUrl = "file:///android_asset/productMap.html?id=Werkbank";
 
         String url = "";
         if(locationString != "")
