@@ -48,7 +48,7 @@ public class ProductMapFragment extends BaseDialogFragment implements CallBackLi
         super.onActivityCreated(savedInstanceState);
 
 
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //Todo: activate when server method is finished
         String productMapUrl = getString(R.string.api_url) + "/productMap/productMap.html";
@@ -105,14 +105,14 @@ public class ProductMapFragment extends BaseDialogFragment implements CallBackLi
     public void onPause()
     {
         super.onPause();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        //getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
     }
 
     @Override
     public void onResume()
     {
         super.onResume();
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+        //getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 
     }
 

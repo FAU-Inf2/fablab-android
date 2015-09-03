@@ -27,7 +27,7 @@ public class InventoryBarcodeScannerFragment extends BarcodeScannerFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mViewModel.setListener(this);
         mUser = (User) getArguments().getSerializable("USER");

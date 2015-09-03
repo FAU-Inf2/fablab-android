@@ -17,7 +17,7 @@ public abstract class BaseFragment extends Fragment{
         super.onActivityCreated(savedInstanceState);
         ((MainActivity) getActivity()).inject(this);
 
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        //getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
     @Override
