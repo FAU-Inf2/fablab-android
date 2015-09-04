@@ -1,10 +1,10 @@
 package de.fau.cs.mad.fablab.android.view.fragments.checkout;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import javax.inject.Inject;
@@ -19,6 +19,8 @@ public class QrCodeScannerFragment extends BaseDialogFragment
         implements QrCodeScannerFragmentViewModel.Listener {
     @Bind(R.id.scanner)
     ZXingScannerView mScannerView;
+    @Bind(R.id.scanner_tv)
+    TextView mScannerTextView;
 
     @Inject
     QrCodeScannerFragmentViewModel mViewModel;
@@ -32,6 +34,9 @@ public class QrCodeScannerFragment extends BaseDialogFragment
         mViewModel.setListener(this);
 
         new ScannerViewCommandBinding().bind(mScannerView, mViewModel.getProcessQrCodeCommand());
+
+        mScannerTextView.setVisibility(View.VISIBLE);
+        mScannerTextView.setText(getResources().getText(R.string.checkout_request));
     }
 
     @Override

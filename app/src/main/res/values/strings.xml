@@ -39,6 +39,7 @@
     <string name="checkout_error">Fehler beim Übertragen des Warenkorbs</string>
     <string name="checkout_cancelled">Der Bezahlvorgang wurde abgebrochen</string>
     <string name="checkout_paid">Ihr Warenkorb wurde bezahlt</string>
+    <string name="checkout_request">Bitte am Kassenterminal \'Warenkorb aus App laden\' auswählen und den angezeigten Code scannen.</string>
     <string name="retry">Nochmal versuchen</string>
     <string name="qr_code_scanner_invalid_qr_code">Ungültiger QR-Code</string>
     <string name="invalid_location">Standort nicht verfügbar</string>
