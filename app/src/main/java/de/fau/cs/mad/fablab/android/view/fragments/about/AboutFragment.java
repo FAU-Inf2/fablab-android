@@ -8,6 +8,8 @@ import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -18,18 +20,26 @@ import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 
 public class AboutFragment extends BaseFragment implements AboutFragmentViewModel.Listener {
+    @Bind(R.id.about_version_rl)
+    RelativeLayout version_rl;
     @Bind(R.id.about_version)
     TextView version_tv;
     @Bind(R.id.about_own_license)
     TextView own_license_tv;
     @Bind(R.id.about)
-    TextView about_tv;
+    RelativeLayout about_tv;
     @Bind(R.id.about_content)
     TextView content_tv;
     @Bind(R.id.about_open_source_licenses)
-    TextView about_open_source_licenses_tv;
+    RelativeLayout about_open_source_licenses_tv;
     @Bind(R.id.about_used_libraries)
     TextView used_libraries_tv;
+    @Bind(R.id.image_down_about_version)
+    ImageView image_down_version;
+    @Bind(R.id.image_down_about)
+    ImageView image_down_about;
+    @Bind(R.id.image_down_about_open_source_licenses)
+    ImageView image_down_open_source_licenses;
 
     @Inject
     AboutFragmentViewModel mViewModel;
@@ -56,7 +66,7 @@ public class AboutFragment extends BaseFragment implements AboutFragmentViewMode
 
 
         version_tv.setText(version);
-        new ViewCommandBinding().bind(version_tv, mViewModel.getToggleVersionCommand());
+        new ViewCommandBinding().bind(version_rl, mViewModel.getToggleVersionCommand());
 
         own_license_tv.setText(Html.fromHtml(getString(R.string.about_license)));
         own_license_tv.setVisibility(View.GONE);
@@ -86,22 +96,30 @@ public class AboutFragment extends BaseFragment implements AboutFragmentViewMode
         setDisplayOptions(R.id.drawer_item_about, false, false);
     }
 
-    private void toogle(TextView tv){
+    private void toggle(TextView tv){
         tv.setVisibility(tv.isShown() ? View.GONE : View.VISIBLE);
+    }
+
+    private void rotateImageView(ImageView iv)
+    {
+        iv.setRotation(iv.getRotation()-180f);
     }
 
     @Override
     public void toggleVersion() {
-        toogle(own_license_tv);
+        toggle(own_license_tv);
+        rotateImageView(image_down_version);
     }
 
     @Override
     public void toggleAbout() {
-        toogle(content_tv);
+        toggle(content_tv);
+        rotateImageView(image_down_about);
     }
 
     @Override
     public void toggleOpenSourceLicenses() {
-        toogle(used_libraries_tv);
+        toggle(used_libraries_tv);
+        rotateImageView(image_down_open_source_licenses);
     }
 }

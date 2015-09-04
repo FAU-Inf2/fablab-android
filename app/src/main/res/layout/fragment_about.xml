@@ -6,27 +6,48 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="20dp"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_margin="20dp"
+            android:padding="20dp"
             android:text="@string/app_name"
             android:textColor="@color/colorPrimary"
             android:textSize="50sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/about_version"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            android:textColor="@color/colorPrimary"
-            android:clickable="true"
-            android:textSize="25sp" />
+            android:id="@+id/about_version_rl"
+            >
+
+            <TextView
+                android:id="@+id/about_version"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:clickable="false"
+                android:textSize="25sp"
+                android:padding="10dp"
+                android:layout_toLeftOf="@+id/image_down_about_version"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/image_down_about_version"
+                android:src="@drawable/ic_keyboard_arrow_down"
+                android:padding="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/about_own_license"
@@ -34,52 +55,84 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="10dp"
+            android:padding="10dp"
             android:gravity="center"
             android:textSize="13sp"
             />
 
         <include layout="@layout/divider" />
 
-        <TextView
-            android:id="@+id/about"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            android:text="@string/about"
-            android:textColor="@color/colorPrimary"
-            android:clickable="true"
-            android:onClick="toggle_contents"
-            android:textSize="25sp" />
+            android:id="@+id/about">
+
+            <TextView
+                android:text="@string/about"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:clickable="false"
+                android:textSize="25sp"
+                android:padding="10dp"
+                android:layout_toLeftOf="@+id/image_down_about"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/image_down_about"
+                android:src="@drawable/ic_keyboard_arrow_down"
+                android:padding="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/about_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:padding="10dp"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <include layout="@layout/divider" />
 
-        <TextView
-            android:id="@+id/about_open_source_licenses"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            android:text="@string/about_open_source_licenses"
-            android:textColor="@color/colorPrimary"
-            android:clickable="true"
-            android:onClick="toggle_contents"
-            android:textSize="25sp" />
+            android:id="@+id/about_open_source_licenses">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:clickable="false"
+                android:textSize="25sp"
+                android:padding="10dp"
+                android:text="@string/about_open_source_licenses"
+                android:layout_toLeftOf="@+id/image_down_about_open_source_licenses"
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/image_down_about_open_source_licenses"
+                android:src="@drawable/ic_keyboard_arrow_down"
+                android:padding="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/about_used_libraries"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:padding="10dp"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
