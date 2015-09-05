@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/inventory_title"
-        android:textSize="@dimen/abc_text_size_large_material"
+        android:textSize="@dimen/textsize_show_inventory_title"
         android:fontFamily="sans-serif-medium"
         android:text="@string/show_inventory_fragment_title"
         android:textColor="@color/colorPrimary"

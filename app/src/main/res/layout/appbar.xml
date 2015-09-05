@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="@string/appbar_fau"
         android:fontFamily="sans-serif-medium"
-        android:textSize="20sp"
+        android:textSize="@dimen/textsize_appbar_text"
         android:textColor="@color/AppBarTextColor"
         android:paddingRight="1dp"
         android:id="@+id/appbar_fau"/>
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:text="@string/appbar_fablab"
         android:fontFamily="sans-serif-medium"
-        android:textSize="20sp"
+        android:textSize="@dimen/textsize_appbar_text"
         android:textColor="@color/AppBarTextColor"
         android:id="@+id/appbar_fablab"/>
     <LinearLayout
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            android:textSize="15sp"
+            android:textSize="@dimen/textsize_appbar_time"
             android:textColor="#BBBBBB"
             android:id="@+id/appbar_time" />
 

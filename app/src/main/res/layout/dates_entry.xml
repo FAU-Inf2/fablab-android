@@ -32,7 +32,7 @@
             android:paddingTop="@dimen/card_vertical_padding"
             android:singleLine="true"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="@dimen/textsize_dates_entry_title" />
 
         <View
             android:layout_width="match_parent"
@@ -75,6 +75,7 @@
                     android:layout_toRightOf="@+id/icon_dates_entry"
                     android:paddingLeft="@dimen/dates_entry_icon_date_margin"
                     android:singleLine="true"
+                    android:textSize="@dimen/textsize_dates_entry_detail"
                     android:textColor="@android:color/white" />
 
                 <TextView
@@ -86,6 +87,7 @@
                     android:layout_toRightOf="@+id/icon_dates_entry"
                     android:paddingLeft="@dimen/dates_entry_icon_date_margin"
                     android:singleLine="true"
+                    android:textSize="@dimen/textsize_dates_entry_detail"
                     android:textColor="@android:color/white" />
 
                 <TextView
@@ -97,6 +99,7 @@
                     android:layout_toRightOf="@+id/icon_dates_entry"
                     android:paddingLeft="@dimen/dates_entry_icon_date_margin"
                     android:singleLine="true"
+                    android:textSize="@dimen/textsize_dates_entry_detail"
                     android:textColor="@android:color/white" />
 
             </LinearLayout>

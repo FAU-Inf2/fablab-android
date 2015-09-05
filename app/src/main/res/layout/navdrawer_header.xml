@@ -38,7 +38,7 @@
                 android:layout_marginLeft="16dp"
                 android:textColor="#ffffff"
                 android:text="@string/app_name"
-                android:textSize="14sp"
+                android:textSize="@dimen/textsize_navdrawer_header_text"
                 android:textStyle="bold"
 
                 />
@@ -51,7 +51,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="5dp"
                 android:text="@string/app_website"
-                android:textSize="14sp"
+                android:textSize="@dimen/textsize_navdrawer_header_text"
                 android:textStyle="normal"
 
                 />
@@ -78,6 +78,7 @@
             android:textColorHint="#ffffff"
             android:singleLine="true"
             android:imeOptions="actionNext"
+            android:textSize="@dimen/textsize_navdrawer_header_text"
             android:textColor="@android:color/white" />
 
         <EditText
@@ -92,12 +93,14 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:inputType="textPassword"
+            android:textSize="@dimen/textsize_navdrawer_header_text"
             android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/drupal_login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_button"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="@dimen/navdrawer_button_margin_lr"
             android:layout_marginRight="@dimen/navdrawer_button_margin_lr"

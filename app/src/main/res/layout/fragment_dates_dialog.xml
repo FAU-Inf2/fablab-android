@@ -32,7 +32,7 @@
             android:paddingRight="20dp"
             android:layout_centerVertical="true"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/abc_text_size_title_material" />
+            android:textSize="@dimen/textsize_dates_dialog_title" />
 
     </RelativeLayout>
 
@@ -50,6 +50,7 @@
             android:id="@+id/date_dates_dialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_dates_dialog_text"
             android:paddingBottom="@dimen/news_dialog_vertical_margin"
             android:textColor="@android:color/black" />
 
@@ -57,6 +58,7 @@
             android:id="@+id/time_dates_dialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_dates_dialog_text"
             android:paddingBottom="@dimen/news_dialog_vertical_margin"
             android:textColor="@android:color/black" />
 
@@ -64,6 +66,7 @@
             android:id="@+id/location_dates_dialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_dates_dialog_text"
             android:paddingBottom="@dimen/news_dialog_vertical_margin"
             android:textColor="@android:color/black" />
     </LinearLayout>
@@ -89,6 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
+                android:textSize="@dimen/textsize_dates_dialog_text"
                 android:textColor="@android:color/black" />
         </ScrollView>
 
@@ -105,6 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
+                android:textSize="@dimen/textsize_button"
                 android:text="@string/add_to_calendar"/>
 
             <Button
@@ -112,6 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
+                android:textSize="@dimen/textsize_button"
                 android:text="@android:string/ok" />
 
         </LinearLayout>

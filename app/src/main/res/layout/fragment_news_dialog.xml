@@ -31,7 +31,7 @@
         android:gravity="center"
         android:maxHeight="@dimen/news_entry_title_maxheight"
         android:textColor="@android:color/black"
-        android:textSize="@dimen/abc_text_size_title_material" />
+        android:textSize="@dimen/textsize_news_dialog_title" />
 
     <WebView
         android:id="@+id/news_dialog_webview"

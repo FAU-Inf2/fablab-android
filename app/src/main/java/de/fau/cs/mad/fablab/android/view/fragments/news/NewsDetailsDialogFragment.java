@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,7 +16,6 @@ import com.squareup.picasso.Picasso;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
@@ -42,6 +42,8 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment
         new ViewCommandBinding().bind(image_iv, mViewModel.getImageClickCommand());
 
         title_tv.setText(mViewModel.getTitle());
+        final WebSettings webSettings = webView.getSettings();
+        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
         webView.loadData(mViewModel.getText(), "text/html; charset=utf-8", "UTF-8");
         if (mViewModel.getImageLink() != null) {
             Picasso.with(image_iv.getContext()).load(mViewModel.getImageLink()).into(image_iv);

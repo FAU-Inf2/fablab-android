@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/news_entry_bottom_title_margin"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
+                android:textSize="@dimen/textsize_news_entry_title"
                 android:text="Title"
                 />
 
@@ -48,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
                 android:text="Subtitle"
+                android:textSize="@dimen/textsize_news_entry_subtitle"
                 android:singleLine="true"
                 />
 

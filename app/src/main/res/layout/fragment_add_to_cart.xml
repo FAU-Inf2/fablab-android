@@ -13,26 +13,33 @@
             android:id="@+id/add_to_cart_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:textSize="@dimen/textsize_add_to_cart_product" />
 
         <TextView
             android:id="@+id/add_to_cart_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textsize_add_to_cart_text" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_to_cart_amount"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textsize_add_to_cart_text" />
 
         <EditText
             android:id="@+id/add_to_cart_amount"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:textSize="@dimen/textsize_add_to_cart_text"
             android:maxLength="5" />
 
         <TextView
@@ -40,7 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textsize_add_to_cart_amount"
             android:visibility="invisible" />
 
         <TextView
@@ -48,14 +56,16 @@
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:text="@string/cart_total_price_title"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textsize_add_to_cart_text" />
 
         <TextView
             android:id="@+id/add_to_cart_price_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="@dimen/textsize_add_to_cart_price"
+            android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold" />
 
     </LinearLayout>

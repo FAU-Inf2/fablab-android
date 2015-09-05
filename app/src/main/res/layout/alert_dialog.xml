@@ -15,7 +15,7 @@
         android:gravity="center_horizontal"
         android:text="@string/alert_dialog_title"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/abc_text_size_large_material" />
+        android:textSize="@dimen/textsize_alert_title" />
 
 
     <TextView
@@ -24,7 +24,7 @@
         android:fontFamily="sans-serif-medium"
         android:text="@string/alert_dialog_tool"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/abc_text_size_title_material" />
+        android:textSize="@dimen/textsize_alert_subtitle" />
 
 
     <Spinner
@@ -40,6 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/card_vertical_margin"
         android:inputType="textPhonetic"
+        android:textSize="@dimen/textsize_alert_text"
         android:visibility="gone" />
 
     <TextView
@@ -48,7 +49,7 @@
         android:fontFamily="sans-serif-medium"
         android:text="@string/alert_dialog_problem"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/abc_text_size_title_material" />
+        android:textSize="@dimen/textsize_alert_subtitle" />
 
     <EditText
         android:id="@+id/alert_dialog_edit_text"
@@ -58,12 +59,13 @@
         android:gravity="start|top"
         android:inputType="textPhonetic|textMultiLine"
         android:scrollbars="vertical"
-        android:textSize="@dimen/abc_text_size_medium_material" />
+        android:textSize="@dimen/textsize_alert_text" />
 
     <Button
         android:id="@+id/alert_dialog_ok_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textsize_button"
         android:text="@android:string/ok" />
 
 </LinearLayout>

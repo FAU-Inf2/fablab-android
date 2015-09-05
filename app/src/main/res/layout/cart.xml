@@ -25,7 +25,7 @@
             android:layout_marginTop="@dimen/slidinguppanel_title_margin_top"
             android:text="@string/cart_title"
             android:textColor="@color/AppBarTextColor"
-            android:textSize="@dimen/slidinguppanel_textsize" />
+            android:textSize="@dimen/textsize_slidinguppanel_text" />
 
         <TextView
             android:id="@+id/cart_total_price_preview"
@@ -35,7 +35,7 @@
             android:layout_marginRight="@dimen/slidinguppanel_preview_margin_right"
             android:gravity="center"
             android:textColor="@color/AppBarTextColor"
-            android:textSize="@dimen/slidinguppanel_textsize"
+            android:textSize="@dimen/textsize_slidinguppanel_text"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -65,7 +65,7 @@
             android:layout_marginLeft="@dimen/slidinguppanel_title_margin_left"
             android:layout_marginTop="@dimen/slidinguppanel_title_margin_top"
             android:text="@string/cart_total_price_title"
-            android:textSize="@dimen/slidinguppanel_textsize" />
+            android:textSize="@dimen/textsize_slidinguppanel_text" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|center"
                     android:textColor="@color/slidingUpPanel_cart_text"
-                    android:textSize="@dimen/slidinguppanel_bottom_total_price_textsize"
+                    android:textSize="@dimen/textsize_slidinguppanel_bottom_total_price"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -108,7 +108,7 @@
                 android:paddingRight="@dimen/slidinguppanel_bottom_part_padding"
                 android:text="@string/cart_button_checkout"
                 android:textColor="@color/slidinguppanel_footer_bg_textcolor"
-                android:textSize="@dimen/slidinguppanel_btn_checkout_textsize" />
+                android:textSize="@dimen/textsize_button" />
 
         </LinearLayout>
     </LinearLayout>

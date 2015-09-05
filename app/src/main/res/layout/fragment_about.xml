@@ -16,7 +16,7 @@
             android:padding="20dp"
             android:text="@string/app_name"
             android:textColor="@color/colorPrimary"
-            android:textSize="50sp"
+            android:textSize="@dimen/textsize_about_title"
             android:textStyle="bold" />
 
         <RelativeLayout
@@ -32,7 +32,7 @@
                 android:gravity="center"
                 android:textColor="@color/colorPrimary"
                 android:clickable="false"
-                android:textSize="25sp"
+                android:textSize="@dimen/textsize_about_subtitle"
                 android:padding="10dp"
                 android:layout_toLeftOf="@+id/image_down_about_version"
                 />
@@ -57,7 +57,7 @@
             android:layout_gravity="center_horizontal"
             android:padding="10dp"
             android:gravity="center"
-            android:textSize="13sp"
+            android:textSize="@dimen/textsize_about_text"
             />
 
         <include layout="@layout/divider" />
@@ -74,7 +74,7 @@
                 android:gravity="center"
                 android:textColor="@color/colorPrimary"
                 android:clickable="false"
-                android:textSize="25sp"
+                android:textSize="@dimen/textsize_about_subtitle"
                 android:padding="10dp"
                 android:layout_toLeftOf="@+id/image_down_about"
                 />
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:gravity="center"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textSize="@dimen/textsize_about_text" />
 
         <include layout="@layout/divider" />
 
@@ -111,7 +111,7 @@
                 android:gravity="center"
                 android:textColor="@color/colorPrimary"
                 android:clickable="false"
-                android:textSize="25sp"
+                android:textSize="@dimen/textsize_about_subtitle"
                 android:padding="10dp"
                 android:text="@string/about_open_source_licenses"
                 android:layout_toLeftOf="@+id/image_down_about_open_source_licenses"
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:gravity="center"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textSize="@dimen/textsize_about_text"/>
 
     </LinearLayout>
 </ScrollView>

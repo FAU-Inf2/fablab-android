@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/abc_text_size_large_material"
+        android:textSize="@dimen/textsize_inventory_title"
         android:fontFamily="sans-serif-medium"
         android:text="@string/inventory_fragment_title"
         android:textColor="@color/colorPrimary"
@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/inventory_fragment_scan_product"
+        android:textSize="@dimen/textsize_button"
         android:id="@+id/button_scan_product_inventory"
         android:layout_gravity="center_horizontal" />
 
@@ -29,12 +30,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/inventory_fragment_search_product"
+        android:textSize="@dimen/textsize_button"
         android:id="@+id/button_search_product_inventory"
         android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textsize_button"
         android:text="@string/inventory_fragment_show_inventory"
         android:id="@+id/button_show_inventory_inventory"
         android:layout_gravity="center_horizontal" />
@@ -42,6 +45,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textsize_button"
         android:text="@string/inventory_fragment_delete_inventory"
         android:id="@+id/button_delete_inventory_inventory"
         android:layout_gravity="center_horizontal" />

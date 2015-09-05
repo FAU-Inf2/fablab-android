@@ -8,6 +8,8 @@
         android:id="@+id/checkout_status_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textsize_checkout_status"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 
@@ -15,6 +17,7 @@
         android:id="@+id/checkout_retry_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textsize_button"
         android:layout_below="@+id/checkout_status_description"
         android:layout_centerHorizontal="true"
         android:text="@string/retry" />
@@ -25,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkout_status_description"
         android:layout_centerHorizontal="true"
+        android:textSize="@dimen/textsize_button"
         android:text="@android:string/ok" />
 
     <ProgressBar

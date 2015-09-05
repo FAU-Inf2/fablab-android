@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
+        android:textSize="@dimen/textsize_productsearch"
         android:width="250dip"
         android:hint="@string/search_all_hint"
         android:imeOptions="actionSend"

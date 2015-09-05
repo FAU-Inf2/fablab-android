@@ -13,13 +13,13 @@
             android:id="@+id/add_to_inventory_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textSize="@dimen/textsize_add_to_inventory_product" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_to_cart_amount"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textSize="@dimen/textsize_add_to_inventory_text" />
 
         <NumberPicker
             android:id="@+id/add_to_inventory_numberPicker"
@@ -31,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Send"
+            android:textSize="@dimen/textsize_button"
             android:id="@+id/button_send_inventory"
             android:layout_gravity="right" />
 
