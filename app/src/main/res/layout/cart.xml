@@ -15,28 +15,63 @@
         android:layout_marginLeft="@dimen/slidinguppanel_drag_bg_stroke_margin"
         android:layout_marginRight="@dimen/slidinguppanel_drag_bg_stroke_margin"
         android:background="@drawable/slidinguppanel_drag_bg"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/cart_title_closed"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/slidinguppanel_title_margin_left"
-            android:layout_marginTop="@dimen/slidinguppanel_title_margin_top"
-            android:text="@string/cart_title"
-            android:textColor="@color/AppBarTextColor"
-            android:textSize="@dimen/textsize_slidinguppanel_text" />
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/slidinguppanel_preview_margin_top"
+            android:layout_marginLeft="@dimen/slidinguppanel_preview_margin_left"
+            >
 
-        <TextView
-            android:id="@+id/cart_total_price_preview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/slidinguppanel_preview_margin_bottom"
+            <TextView
+                android:id="@+id/cart_title_closed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cart_title"
+                android:textColor="@color/AppBarTextColor"
+                android:textSize="@dimen/textsize_slidinguppanel_text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cart_price"
+                android:textColor="@color/AppBarTextColor"
+                android:textSize="@dimen/textsize_slidinguppanel_text" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/slidinguppanel_preview_margin_top"
+            android:layout_marginLeft="@dimen/slidinguppanel_preview_margin_left"
             android:layout_marginRight="@dimen/slidinguppanel_preview_margin_right"
-            android:gravity="center"
-            android:textColor="@color/AppBarTextColor"
-            android:textSize="@dimen/textsize_slidinguppanel_text"
-            android:textStyle="bold" />
+            >
+
+            <TextView
+                android:id="@+id/cart_total_articles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/AppBarTextColor"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/textsize_slidinguppanel_text" />
+
+            <TextView
+                android:id="@+id/cart_total_price_preview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/AppBarTextColor"
+                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/textsize_slidinguppanel_text"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

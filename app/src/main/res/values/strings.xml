@@ -13,6 +13,7 @@
     <string name="appbar_orderby_price">Nach Preis sortieren</string>
 
     <string name="cart_title">Warenkorb:</string>
+    <string name="cart_price">Gesamtpreis:</string>
     <string name="cart_total_price_title">Gesamtpreis:</string>
     <string name="cart_button_checkout">Zur Kasse</string>
     <string name="cart_article_label">Artikel</string>

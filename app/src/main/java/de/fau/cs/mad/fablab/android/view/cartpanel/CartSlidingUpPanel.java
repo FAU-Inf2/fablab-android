@@ -37,6 +37,8 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     LinearLayout drag_part_ll;
     @Bind(R.id.cart_total_price_preview)
     TextView total_price_preview_tv;
+    @Bind(R.id.cart_total_articles)
+    TextView total_articles_tv;
     @Bind(R.id.cart_recycler_view)
     RecyclerView cart_rv;
     @Bind(R.id.cart_total_price)
@@ -176,11 +178,10 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     private void refreshPrice() {
         String totalPrice = Formatter.formatPrice(mViewModel.getTotalPrice());
 
-        total_price_preview_tv.setText(Html.fromHtml("<b>" + mViewModel.getCartEntriesCount()
-                + "&nbsp;" + total_price_preview_tv.getResources().getString(
-                R.string.cart_article_label) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;"
-                + "&nbsp;&nbsp;" + totalPrice + "</b>"));
-
+        total_price_preview_tv.setText(Html.fromHtml("<b>" + totalPrice + "</b>"));
+        total_articles_tv.setText(Html.fromHtml("<b>" + mViewModel.getCartEntriesCount()
+                        + "&nbsp;" + total_price_preview_tv.getResources().getString(
+                        R.string.cart_article_label)+ "</b>"));
         total_price_tv.setText(totalPrice);
     }
 

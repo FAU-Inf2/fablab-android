@@ -49,8 +49,10 @@
 
     <dimen name="slidinguppanel_corner_radius_top">10dp</dimen>
     <dimen name="slidinguppanel_stroke_width">3dp</dimen>
-    <dimen name="slidinguppanel_panel_height">100dp</dimen>
-    <dimen name="slidinguppanel_panel_height_opened">45dp</dimen>
+    <dimen name="slidinguppanel_panel_height">65dp</dimen>
+    <dimen name="slidinguppanel_panel_height_opened">35dp</dimen>
+    <dimen name="slidinguppanel_preview_margin_top">5dp</dimen>
+    <dimen name="slidinguppanel_preview_margin_left">10dp</dimen>
     <dimen name="slidinguppanel_elevation">7dp</dimen>
     <dimen name="slidinguppanel_drag_bg_stroke_margin">3dp</dimen>
     <dimen name="slidinguppanel_drag_bg_padding_right">26dp</dimen>
