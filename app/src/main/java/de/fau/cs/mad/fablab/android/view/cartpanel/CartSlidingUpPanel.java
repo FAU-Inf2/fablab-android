@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -42,6 +43,8 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     TextView total_price_tv;
     @Bind(R.id.cart_button_checkout)
     Button checkout_button;
+    @Bind(R.id.fragment_container)
+    FrameLayout container;
 
     @Inject
     CartSlidingUpPanelViewModel mViewModel;
@@ -191,12 +194,14 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
                     @Override
                     public void run() {
                         if (sliding_up_pl.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED) {
+                            container.setPadding(0,0,0,(int)mActivity.getResources().getDimension(R.dimen.slidinguppanel_panel_height));
                             sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                         }
                     }
                 }, 250);
             } else {
                 sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+                container.setPadding(0,0,0,0);
             }
             sliding_up_pl.setTouchEnabled(true);
         }
