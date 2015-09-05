@@ -39,6 +39,8 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     TextView total_price_preview_tv;
     @Bind(R.id.cart_total_articles)
     TextView total_articles_tv;
+    @Bind(R.id.cart_title_price)
+    TextView title_price_tv;
     @Bind(R.id.cart_recycler_view)
     RecyclerView cart_rv;
     @Bind(R.id.cart_total_price)
@@ -105,6 +107,7 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
 
     private void updatePanelHeaderSize(float slideOffset) {
         total_price_preview_tv.setAlpha(1 - slideOffset);
+        title_price_tv.setAlpha(1 - slideOffset);
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -195,14 +198,19 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
                     @Override
                     public void run() {
                         if (sliding_up_pl.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED) {
-                            container.setPadding(0,0,0,(int)mActivity.getResources().getDimension(R.dimen.slidinguppanel_panel_height));
+                            if(mActivity.getResources().getConfiguration().orientation == mActivity.getResources().getConfiguration().ORIENTATION_PORTRAIT) {
+                                container.setPadding(0, 0, 0, (int) mActivity.getResources().getDimension(R.dimen.slidinguppanel_panel_height));
+                            }
+                            else{
+                                container.setPadding(0, 0, 0, (int) mActivity.getResources().getDimension(R.dimen.slidinguppanel_panel_height_landscape));
+                            }
                             sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                         }
                     }
                 }, 250);
             } else {
                 sliding_up_pl.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
-                container.setPadding(0,0,0,0);
+                container.setPadding(0, 0, 0, 0);
             }
             sliding_up_pl.setTouchEnabled(true);
         }

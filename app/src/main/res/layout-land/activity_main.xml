@@ -1,0 +1,103 @@
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.fau.cs.mad.fablab.android.view.activities.MainActivity">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- Toolbar of V22 to overlay statusbar -->
+            <include
+                layout="@layout/appbar" />
+
+            <com.sothree.slidinguppanel.SlidingUpPanelLayout
+                xmlns:sothree="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/sliding_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
+                sothree:umanoPanelHeight="@dimen/slidinguppanel_panel_height_landscape"
+                sothree:umanoShadowHeight="0dp"
+                sothree:umanoParalaxOffset="100dp"
+                sothree:umanoDragView="@+id/dragPart"
+                sothree:umanoOverlay="true">
+
+                <!-- Container for main fragments to be replaced -->
+                <FrameLayout
+                    android:id="@+id/fragment_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:foreground="?android:windowContentOverlay" />
+
+                <!-- Cart Sliding Up Panel -->
+                <include
+                    android:id="@+id/cart"
+                    layout="@layout/cart" />
+
+            </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+        </LinearLayout>
+
+        <!-- Floating Action Button with 2 additionals on top -->
+        <com.github.clans.fab.FloatingActionMenu
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:fab="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/shopping_cart_FAM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="@dimen/fab_padding"
+            android:layout_marginBottom="@dimen/fab_padding"
+            fab:menu_colorNormal="@android:color/black"
+            fab:menu_colorPressed="@android:color/black"
+            fab:menu_icon="@drawable/ic_fab_shopping_cart"
+            >
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/scan_FAB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_size="mini"
+                fab:fab_colorNormal="@android:color/black"
+                fab:fab_colorPressed="@android:color/black"
+                android:src="@drawable/ic_fab_scan_product"
+                />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/search_FAB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_size="mini"
+                fab:fab_colorNormal="@android:color/black"
+                fab:fab_colorPressed="@android:color/black"
+                android:src="@drawable/ic_fab_search_product"
+                />
+
+        </com.github.clans.fab.FloatingActionMenu>
+    </android.support.design.widget.CoordinatorLayout>
+
+    <!-- Navigation drawer -->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@android:color/white"
+        app:headerLayout="@layout/navdrawer_header"
+        app:itemIconTint="#757575"
+        app:itemTextColor="@android:color/black"
+        app:menu="@menu/drawer" />
+
+</android.support.v4.widget.DrawerLayout>
