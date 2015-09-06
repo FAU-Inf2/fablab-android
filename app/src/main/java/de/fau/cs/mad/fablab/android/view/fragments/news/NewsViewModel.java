@@ -10,8 +10,7 @@ public class NewsViewModel {
     private Command<Void> mShowDialogCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            EventBus.getDefault().post(new NewsClickedEvent(mNews.getTitle(),
-                    mNews.getDescription(), mNews.getLinkToPreviewImage()));
+            EventBus.getDefault().post(new NewsClickedEvent(mNews));
         }
     };
 

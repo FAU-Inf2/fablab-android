@@ -5,22 +5,19 @@ import android.os.Bundle;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
+import de.fau.cs.mad.fablab.rest.core.News;
 
 public class NewsDetailsDialogViewModel {
-    public static final String KEY_TITLE = "title";
-    public static final String KEY_TEXT = "text";
-    public static final String KEY_IMAGE_LINK = "image_link";
+    public static final String KEY_NEWS = "news";
 
-    private String mTitle;
-    private String mText;
-    private String mImageLink;
+    private News mNews;
 
     private Listener mListener;
 
     private final Command<Void> mImageClickCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            if (mListener != null && mImageLink != null) {
+            if (mListener != null && mNews.getLinkToPreviewImage() != null) {
                 mListener.onImageClicked();
             }
         }
@@ -39,22 +36,13 @@ public class NewsDetailsDialogViewModel {
         return mImageClickCommand;
     }
 
-    public String getTitle() {
-        return mTitle;
-    }
-
-    public String getText() {
-        return mText;
-    }
-
-    public String getImageLink() {
-        return mImageLink;
+    public News getNews()
+    {
+        return mNews;
     }
 
     public void initialize(Bundle arguments) {
-        mTitle = arguments.getString(KEY_TITLE);
-        mText = arguments.getString(KEY_TEXT);
-        mImageLink = arguments.getString(KEY_IMAGE_LINK);
+        mNews = (News) arguments.getSerializable(KEY_NEWS);
     }
 
     public interface Listener {

@@ -28,6 +28,8 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment
     WebView webView;
     @Bind(R.id.news_dialog_image)
     ImageView image_iv;
+    @Bind(R.id.news_dialog_link_tv)
+    WebView link_tv;
 
     @Inject
     NewsDetailsDialogViewModel mViewModel;
@@ -41,15 +43,20 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment
 
         new ViewCommandBinding().bind(image_iv, mViewModel.getImageClickCommand());
 
-        title_tv.setText(mViewModel.getTitle());
+        title_tv.setText(mViewModel.getNews().getTitle());
         final WebSettings webSettings = webView.getSettings();
         webSettings.setTextSize(WebSettings.TextSize.NORMAL);
-        webView.loadData(mViewModel.getText(), "text/html; charset=utf-8", "UTF-8");
-        if (mViewModel.getImageLink() != null) {
-            Picasso.with(image_iv.getContext()).load(mViewModel.getImageLink()).into(image_iv);
+        webView.loadData(mViewModel.getNews().getDescription(), "text/html; charset=utf-8", "UTF-8");
+        if (mViewModel.getNews().getLinkToPreviewImage() != null) {
+            Picasso.with(image_iv.getContext()).load(mViewModel.getNews().getLinkToPreviewImage()).into(image_iv);
         } else {
             Picasso.with(image_iv.getContext()).load(R.drawable.news_nopicture).fit().into(image_iv);
         }
+
+        final WebSettings webSettingsLink = link_tv.getSettings();
+        webSettingsLink.setTextSize(WebSettings.TextSize.NORMAL);
+        String link = "<html><body><b>Link:</b> <a href=" +  mViewModel.getNews().getLink() + ">" + mViewModel.getNews().getLink() + "</a></body></html>";
+        link_tv.loadData(link, "text/html; charset=utf-8", "UTF-8");
     }
 
     @Override
@@ -61,7 +68,7 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment
     @Override
     public void onImageClicked() {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(mViewModel.getImageLink()));
+        intent.setData(Uri.parse(mViewModel.getNews().getLinkToPreviewImage()));
         getActivity().startActivity(intent);
     }
 }

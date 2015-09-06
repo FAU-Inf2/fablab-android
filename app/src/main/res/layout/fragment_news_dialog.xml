@@ -42,12 +42,20 @@
         android:id="@+id/news_dialog_webview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/news_dialog_title_ll"
-        android:layout_marginTop="@dimen/news_dialog_webview_margin_top" />
+        android:layout_marginTop="@dimen/news_dialog_webview_margin_top"
+        android:layout_above="@+id/news_dialog_link_tv" />
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/news_dialog_link_tv"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
