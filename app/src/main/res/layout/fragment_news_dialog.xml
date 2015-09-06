@@ -5,33 +5,38 @@
     android:background="@android:color/white"
     android:paddingTop="@dimen/news_dialog_padding_top">
 
-    <ImageView
-        android:id="@+id/news_dialog_image"
-        android:layout_width="@dimen/news_dialog_preview_image_size"
-        android:layout_height="@dimen/news_dialog_preview_image_size"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="@dimen/news_dialog_preview_image_margin_right"
-        android:layout_marginLeft="@dimen/news_dialog_title_margin_left_right"
-        android:layout_marginRight="@dimen/news_dialog_preview_image_margin_right"
-        android:layout_marginStart="@dimen/news_dialog_title_margin_left_right"
-        android:contentDescription="@string/news_preview_image_content_description" />
-
-    <TextView
-        android:id="@+id/news_dialog_title"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/news_dialog_image"
-        android:layout_alignTop="@+id/news_dialog_image"
-        android:layout_marginEnd="@dimen/news_dialog_title_margin_left_right"
-        android:layout_marginRight="@dimen/news_dialog_title_margin_left_right"
-        android:layout_toEndOf="@+id/news_dialog_image"
-        android:layout_toRightOf="@+id/news_dialog_image"
-        android:gravity="center"
-        android:maxHeight="@dimen/news_entry_title_maxheight"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/textsize_news_dialog_title" />
+        android:id="@+id/news_dialog_title_ll"
+        >
+
+        <ImageView
+            android:id="@+id/news_dialog_image"
+            android:layout_width="@dimen/news_dialog_preview_image_size"
+            android:layout_height="@dimen/news_dialog_preview_image_size"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/news_dialog_preview_image_margin_right"
+            android:layout_marginLeft="@dimen/news_dialog_title_margin_left_right"
+            android:layout_marginRight="@dimen/news_dialog_preview_image_margin_right"
+            android:layout_marginStart="@dimen/news_dialog_title_margin_left_right"
+            android:contentDescription="@string/news_preview_image_content_description" />
+
+        <TextView
+            android:id="@+id/news_dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/news_dialog_title_margin_left_right"
+            android:layout_marginRight="@dimen/news_dialog_title_margin_left_right"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/news_dialog_image"
+            android:layout_centerVertical="true"
+            android:maxHeight="@dimen/news_entry_title_maxheight"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textsize_news_dialog_title"
+            android:layout_alignParentTop="true" />
+
+    </RelativeLayout>
 
     <WebView
         android:id="@+id/news_dialog_webview"
@@ -42,7 +47,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/news_dialog_image"
+        android:layout_below="@+id/news_dialog_title_ll"
         android:layout_marginTop="@dimen/news_dialog_webview_margin_top" />
 
 </RelativeLayout>
