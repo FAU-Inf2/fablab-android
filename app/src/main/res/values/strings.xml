@@ -20,6 +20,7 @@
     <string name="cart_product_quantity">Menge in</string>
     <string name="cart_product_removed">Artikel entfernt</string>
     <string name="cart_product_undo">Rückgängig</string>
+    <string name="cart_entry_dialog_change_amount">Menge ändern</string>
     <string name="search_hint">Suche Produkt</string>
     <string name="title_scan_product">Produkt scannen</string>
     <string name="action_add_to_cart">In den Warenkorb</string>

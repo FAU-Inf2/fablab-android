@@ -1,6 +1,7 @@
 package de.fau.cs.mad.fablab.android.view.cartpanel;
 
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,7 +25,6 @@ import de.fau.cs.mad.fablab.android.util.Formatter;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.SwipeableRecyclerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
-import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.checkout.QrCodeScannerFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
@@ -236,9 +236,11 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
 
     @SuppressWarnings("unused")
     public void onEvent(CartEntryClickedEvent event) {
-        mActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                AddToCartDialogFragment.newInstance(event.getCartEntry())).addToBackStack(null)
-                .commit();
+        CartEntryDialogFragment dialogFragment = new CartEntryDialogFragment();
+        Bundle arguments = new Bundle();
+        arguments.putSerializable(CartEntryDialogFragmentViewModel.KEY_CARTENTRY, event.getCartEntry());
+        dialogFragment.setArguments(arguments);
+        dialogFragment.show(mActivity.getSupportFragmentManager(), "CartEntryDialogFragment");
     }
 
     @SuppressWarnings("unused")

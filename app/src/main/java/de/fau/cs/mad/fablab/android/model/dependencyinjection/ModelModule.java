@@ -17,6 +17,7 @@ import de.fau.cs.mad.fablab.android.model.UserModel;
 import de.fau.cs.mad.fablab.android.model.VersionCheckModel;
 import de.fau.cs.mad.fablab.android.model.util.StorageFragment;
 import de.fau.cs.mad.fablab.android.view.actionbar.ActionBar;
+import de.fau.cs.mad.fablab.android.view.cartpanel.CartEntryDialogFragment;
 import de.fau.cs.mad.fablab.android.view.cartpanel.CartSlidingUpPanel;
 import de.fau.cs.mad.fablab.android.view.floatingbutton.FloatingFablabButton;
 import de.fau.cs.mad.fablab.android.view.fragments.about.AboutFragment;
@@ -55,7 +56,7 @@ import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
                 StackTraceDialogFragment.class, VersionCheckDialogFragment.class,
                 AlertDialogFragment.class, InventoryFragment.class, InventoryBarcodeScannerFragment.class,
                 InventoryProductSearchFragment.class, AddToInventoryDialogFragment.class,
-                SettingsFragment.class, ShowInventoryFragment.class
+                SettingsFragment.class, ShowInventoryFragment.class, CartEntryDialogFragment.class
         })
 public class ModelModule {
     private final StorageFragment mStorageFragment;
