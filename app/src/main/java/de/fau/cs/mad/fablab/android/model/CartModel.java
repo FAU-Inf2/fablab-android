@@ -12,7 +12,6 @@ import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
 import de.fau.cs.mad.fablab.android.model.events.ProductsChangedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.rest.core.CartStatus;
-import de.fau.cs.mad.fablab.rest.core.Product;
 import de.greenrobot.event.EventBus;
 
 public class CartModel {
@@ -57,6 +56,11 @@ public class CartModel {
 
     public void addEntry(CartEntry entry) {
         mCartEntries.add(mCart.addEntry(entry));
+    }
+
+    public void addEntry(CartEntry entry, int position)
+    {
+        mCartEntries.add(position, mCart.addEntry(entry));
     }
 
     public void removeEntry(CartEntry entry) {

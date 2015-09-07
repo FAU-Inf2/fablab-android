@@ -21,11 +21,13 @@ public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
 
     private ListAdapteeCollection<CartEntryViewModel> mCartEntryViewModelCollection;
     private CartEntry mLastRemovedEntry;
+    private int mLastRemovedEntryPosition;
     private boolean mVisible = true;
 
     private final Command<Integer> mRemoveCartEntryCommand = new Command<Integer>() {
         @Override
         public void execute(Integer parameter) {
+            mLastRemovedEntryPosition = parameter;
             mLastRemovedEntry = mCartEntryViewModelCollection.get(parameter).getCartEntry();
             mCartEntryViewModelCollection.remove((int) parameter);
             mModel.removeEntry(mLastRemovedEntry);
@@ -41,7 +43,8 @@ public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
         public void execute(Void parameter) {
             CartEntry entry = new CartEntry(mLastRemovedEntry.getProduct(),
                     mLastRemovedEntry.getAmount());
-            mModel.addEntry(entry);
+            //mModel.addEntry(entry);
+            mModel.addEntry(entry, mLastRemovedEntryPosition);
         }
     };
 
@@ -80,9 +83,13 @@ public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
 
     @Override
     public void onItemAdded(CartEntry newItem) {
-        mCartEntryViewModelCollection.add(new CartEntryViewModel(newItem));
+        int position = mLastRemovedEntryPosition >= 0 ? mLastRemovedEntryPosition : getCartEntriesCount() - 1;
+
+        mCartEntryViewModelCollection.add(position, new CartEntryViewModel(newItem));
+        mLastRemovedEntryPosition = -1;
+
         if (mListener != null) {
-            mListener.onItemAdded(getCartEntriesCount() - 1);
+            mListener.onItemAdded(position);
         }
     }
 
@@ -148,6 +155,7 @@ public class CartSlidingUpPanelViewModel extends BaseViewModel<CartEntry> {
             }
             mListener.onDataPrepared();
         }
+        mLastRemovedEntryPosition = -1;
     }
 
     public void pause() {
