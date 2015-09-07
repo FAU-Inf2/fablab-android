@@ -49,6 +49,8 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
     Button checkout_button;
     @Bind(R.id.fragment_container)
     FrameLayout container;
+    @Bind(R.id.main_ll)
+    LinearLayout main_ll;
 
     @Inject
     CartSlidingUpPanelViewModel mViewModel;
@@ -154,7 +156,8 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
 
     @Override
     public void onShowUndoSnackbar() {
-        Snackbar.make(sliding_up_pl, R.string.cart_product_removed, Snackbar.LENGTH_LONG)
+
+        Snackbar snackbar = Snackbar.make(main_ll, R.string.cart_product_removed, Snackbar.LENGTH_LONG)
                 .setAction(R.string.cart_product_undo, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -163,7 +166,21 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
                             command.execute(null);
                         }
                     }
-                }).show();
+                });
+
+        snackbar.getView().addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View v) {
+                main_ll.setPadding(0, 0, 0, (int) mActivity.getResources().getDimension(R.dimen.snackbar_height));
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View v) {
+                main_ll.setPadding(0, 0, 0, 0);
+            }
+        });
+
+        snackbar.show();
     }
 
     @Override

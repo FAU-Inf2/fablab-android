@@ -7,86 +7,97 @@
     android:layout_height="match_parent"
     tools:context="de.fau.cs.mad.fablab.android.view.activities.MainActivity">
 
-    <android.support.design.widget.CoordinatorLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:id="@+id/main_ll"
+        >
 
-        <LinearLayout
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:fitsSystemWindows="true">
 
-            <!-- Toolbar of V22 to overlay statusbar -->
-            <include
-                layout="@layout/appbar" />
-
-            <com.sothree.slidinguppanel.SlidingUpPanelLayout
-                xmlns:sothree="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/sliding_layout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="bottom"
-                sothree:umanoPanelHeight="@dimen/slidinguppanel_panel_height"
-                sothree:umanoShadowHeight="0dp"
-                sothree:umanoParalaxOffset="100dp"
-                sothree:umanoDragView="@+id/dragPart"
-                sothree:umanoOverlay="true">
+                android:orientation="vertical">
 
-                <!-- Container for main fragments to be replaced -->
-                <FrameLayout
-                    android:id="@+id/fragment_container"
+                <!-- Toolbar of V22 to overlay statusbar -->
+                <include
+                    layout="@layout/appbar" />
+
+                <com.sothree.slidinguppanel.SlidingUpPanelLayout
+                    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/sliding_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:foreground="?android:windowContentOverlay" />
+                    android:gravity="bottom"
+                    sothree:umanoPanelHeight="@dimen/slidinguppanel_panel_height"
+                    sothree:umanoShadowHeight="0dp"
+                    sothree:umanoParalaxOffset="100dp"
+                    sothree:umanoDragView="@+id/dragPart"
+                    sothree:umanoOverlay="true">
 
-                <!-- Cart Sliding Up Panel -->
-                <include
-                    android:id="@+id/cart"
-                    layout="@layout/cart" />
+                    <!-- Container for main fragments to be replaced -->
+                    <FrameLayout
+                        android:id="@+id/fragment_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:foreground="?android:windowContentOverlay" />
 
-            </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+                    <!-- Cart Sliding Up Panel -->
+                    <include
+                        android:id="@+id/cart"
+                        layout="@layout/cart" />
 
-        </LinearLayout>
+                </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
-        <!-- Floating Action Button with 2 additionals on top -->
-        <com.github.clans.fab.FloatingActionMenu
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:fab="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/shopping_cart_FAM"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginRight="@dimen/fab_padding"
-            android:layout_marginBottom="@dimen/fab_padding"
-            fab:menu_colorNormal="@android:color/black"
-            fab:menu_colorPressed="@android:color/black"
-            fab:menu_icon="@drawable/ic_fab_shopping_cart"
-            >
+            </LinearLayout>
 
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/scan_FAB"
+            <!-- Floating Action Button with 2 additionals on top -->
+            <com.github.clans.fab.FloatingActionMenu
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:fab="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/shopping_cart_FAM"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                fab:fab_size="mini"
-                fab:fab_colorNormal="@android:color/black"
-                fab:fab_colorPressed="@android:color/black"
-                android:src="@drawable/ic_fab_scan_product"
-                />
+                android:layout_gravity="bottom|right"
+                android:layout_marginRight="@dimen/fab_padding"
+                android:layout_marginBottom="@dimen/fab_padding"
+                fab:menu_colorNormal="@android:color/black"
+                fab:menu_colorPressed="@android:color/black"
+                fab:menu_icon="@drawable/ic_fab_shopping_cart"
+                >
 
-            <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/search_FAB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fab:fab_size="mini"
-                fab:fab_colorNormal="@android:color/black"
-                fab:fab_colorPressed="@android:color/black"
-                android:src="@drawable/ic_fab_search_product"
-                />
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/scan_FAB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    fab:fab_size="mini"
+                    fab:fab_colorNormal="@android:color/black"
+                    fab:fab_colorPressed="@android:color/black"
+                    android:src="@drawable/ic_fab_scan_product"
+                    />
 
-        </com.github.clans.fab.FloatingActionMenu>
-    </android.support.design.widget.CoordinatorLayout>
+                <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/search_FAB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    fab:fab_size="mini"
+                    fab:fab_colorNormal="@android:color/black"
+                    fab:fab_colorPressed="@android:color/black"
+                    android:src="@drawable/ic_fab_search_product"
+                    />
+
+            </com.github.clans.fab.FloatingActionMenu>
+        </android.support.design.widget.CoordinatorLayout>
+
+
+    </LinearLayout>
+
 
     <!-- Navigation drawer -->
     <android.support.design.widget.NavigationView

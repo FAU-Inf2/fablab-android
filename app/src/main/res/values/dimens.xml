@@ -86,6 +86,8 @@
     <!-- <dimen name="navdrawer_header_padding_top">25dp</dimen> for statusbar overlay, not yet implemented to fit all APIs -->
     <dimen name="navdrawer_header_padding_top">0dp</dimen>
 
+    <dimen name="snackbar_height">48dp </dimen>
+
     <dimen name="textsize_button">15dp</dimen>
     <dimen name="textsize_about_title">50dp</dimen>
     <dimen name="textsize_about_subtitle">25dp</dimen>
