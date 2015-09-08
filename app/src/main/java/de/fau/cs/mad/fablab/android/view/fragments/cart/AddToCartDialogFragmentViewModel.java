@@ -54,7 +54,11 @@ public class AddToCartDialogFragmentViewModel {
     private final Command<String> mChangeAmountCommand = new Command<String>() {
         @Override
         public void execute(String parameter) {
-            double value = "".equals(parameter) ? 0 : Double.parseDouble(parameter);
+            double value = 0;
+            if(!(parameter.equals("") || parameter.equals(".")))
+            {
+                value = Double.parseDouble(parameter);
+            }
             double rounding = mCartEntry.getProduct().getUom().getRounding();
             mAmount = rounding * Math.ceil(value / rounding);
             if (mListener != null) {
