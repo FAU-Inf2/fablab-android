@@ -53,6 +53,7 @@
     <string name="dates_location">Ort:</string>
 
     <string name="search_all_hint">Alle Produkte</string>
+    <string name="per">pro</string>
 
     <string name="stacktrace_messaging_subject">Fehlermeldung FAU FabLab</string>
     <string name="stacktrace_messaging_chooser_title">Sende Fehlermeldung mit:</string>

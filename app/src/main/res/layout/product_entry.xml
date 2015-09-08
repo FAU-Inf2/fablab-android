@@ -86,6 +86,15 @@
                     android:text="Price"/>
 
                 <TextView
+                    android:id="@+id/product_per"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/textsize_product_entry_name"
+                    />
+
+                <TextView
                     android:id="@+id/product_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

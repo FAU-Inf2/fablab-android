@@ -4,7 +4,6 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pedrogomez.renderers.Renderer;
@@ -26,6 +25,8 @@ public class ProductSearchViewModelRenderer extends Renderer<ProductSearchViewMo
     TextView mProductPrice;
     @Bind(R.id.product_unit)
     TextView mProductUnit;
+    @Bind(R.id.product_per)
+    TextView mProductPer;
 
     @Override
     protected void setUpView(View view) {
@@ -51,6 +52,7 @@ public class ProductSearchViewModelRenderer extends Renderer<ProductSearchViewMo
         mProductName.setText(viewModel.getName());
         mProductDetail.setText(viewModel.getNameDetails());
         mProductPrice.setText(viewModel.getPrice());
+        mProductPer.setText(getRootView().getResources().getString(R.string.per));
         mProductUnit.setText(viewModel.getUnit());
 
         if(viewModel.isProductZeroPriced()){
