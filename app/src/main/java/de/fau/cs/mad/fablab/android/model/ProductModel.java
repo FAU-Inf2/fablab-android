@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.Where;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -151,9 +152,13 @@ public class ProductModel {
                 }
                 List<Product> result = null;
                 try {
-                    PreparedQuery<Product> query = mProductDao.queryBuilder().where().like("name",
-                            "%" + params[0] + "%").prepare();
-                    result = mProductDao.query(query);
+                    String[] searchTokens = params[0].split(" ");
+                    Where<Product, Long> query = mProductDao.queryBuilder().where().like("name",
+                            "%" + searchTokens[0] + "%");
+                    for (int i = 1; i < searchTokens.length; i++) {
+                        query.and().like("name", "%" + searchTokens[i] + "%");
+                    }
+                    result = mProductDao.query(query.prepare());
                 } catch (SQLException e) {
                     Log.e(TAG, "Query failed", e);
                 }
