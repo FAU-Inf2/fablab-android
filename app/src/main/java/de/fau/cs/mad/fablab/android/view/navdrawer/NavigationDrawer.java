@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.navdrawer;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.util.UiUtils;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
@@ -49,9 +51,13 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
     @Inject
     NavigationDrawerViewModel mViewModel;
 
+    private Activity mainActivity;
+
     public NavigationDrawer(MainActivity activity, View view) {
         ButterKnife.bind(this, view);
         activity.inject(this);
+
+        mainActivity = activity;
 
         mViewModel.setListener(this);
 
@@ -133,6 +139,9 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
 
     @Override
     public void loggedIn(User user) {
+
+        UiUtils.hideKeyboard(mainActivity);
+
         Menu menu = mNavigationView.getMenu();
         menu.findItem(R.id.drawer_item_logout).setVisible(true);
 
