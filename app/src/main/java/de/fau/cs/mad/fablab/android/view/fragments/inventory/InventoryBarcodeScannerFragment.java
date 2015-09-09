@@ -23,6 +23,12 @@ public class InventoryBarcodeScannerFragment extends BarcodeScannerFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        setDisplayOptions(R.id.drawer_item_inventory, true, false, false);
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 

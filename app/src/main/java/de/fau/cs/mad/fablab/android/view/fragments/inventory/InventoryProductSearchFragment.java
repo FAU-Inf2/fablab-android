@@ -30,7 +30,7 @@ public class InventoryProductSearchFragment extends ProductSearchFragment {
     @Override
     public void onResume() {
         super.onResume();
-        setDisplayOptions(R.id.drawer_item_productsearch, true, false, false);
+        setDisplayOptions(R.id.drawer_item_inventory, true, false, false);
     }
 
     @Override
