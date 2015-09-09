@@ -2,13 +2,15 @@ package de.fau.cs.mad.fablab.android.view.fragments.inventory;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.NumberPicker;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -16,7 +18,9 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventInventory;
-import de.fau.cs.mad.fablab.android.view.common.binding.NumberPickerCommandBinding;
+import de.fau.cs.mad.fablab.android.util.UiUtils;
+import de.fau.cs.mad.fablab.android.view.common.binding.EditTextCommandBinding;
+import de.fau.cs.mad.fablab.android.view.common.binding.EnterKeyCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import de.fau.cs.mad.fablab.rest.core.Product;
@@ -32,8 +36,8 @@ public class AddToInventoryDialogFragment extends BaseDialogFragment implements 
     TextView mNameTextView;
     @Bind(R.id.button_send_inventory)
     Button mButtonSend;
-    @Bind(R.id.add_to_inventory_numberPicker)
-    NumberPicker mNumberPicker;
+    @Bind(R.id.add_to_inventory_amount)
+    EditText mAmountET;
 
     private EventBus mEventBus = EventBus.getDefault();
 
@@ -54,14 +58,26 @@ public class AddToInventoryDialogFragment extends BaseDialogFragment implements 
 
         mNameTextView.setText(mViewModel.getName());
 
-        mNumberPicker.setMinValue(1);
-        mNumberPicker.setMaxValue(100);
-        mNumberPicker.setValue((int) mViewModel.getAmount());
-        mNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+        if (mViewModel.isDecimalAmount()) {
+            mAmountET.setInputType(InputType.TYPE_CLASS_NUMBER
+                    | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        } else {
+            mAmountET.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
+
+        mAmountET.requestFocus();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                UiUtils.showKeyboard(getActivity(), mAmountET);
+            }
+        }, 250);
+
+        new EditTextCommandBinding().bind(mAmountET, mViewModel.getChangeAmountCommand());
+        new EnterKeyCommandBinding().bind(mAmountET, mViewModel.getAddToInventoryCommand());
 
         mViewModel.setListener(this);
 
-        new NumberPickerCommandBinding().bind(mNumberPicker, mViewModel.getChangeAmountCommand());
         new ViewCommandBinding().bind(mButtonSend, mViewModel.getAddToInventoryCommand());
     }
 
@@ -80,6 +96,7 @@ public class AddToInventoryDialogFragment extends BaseDialogFragment implements 
 
     @Override
     public void onDismiss() {
+        UiUtils.hideKeyboard(getActivity());
         getFragmentManager().popBackStack();
         mEventBus.post(new NavigationEventInventory(mViewModel.getUser()));
     }

@@ -35,10 +35,16 @@ public class AddToInventoryDialogFragmentViewModel {
         }
     };
 
-    private final Command<Integer> mChangeAmountCommand = new Command<Integer>() {
+    private final Command<String> mChangeAmountCommand = new Command<String>() {
         @Override
-        public void execute(Integer parameter) {
-            mAmount = parameter;
+        public void execute(String parameter) {
+            double value = 0;
+            if(!(parameter.equals("") || parameter.equals(".")))
+            {
+                value = Double.parseDouble(parameter);
+            }
+            double rounding = mProduct.getUom().getRounding();
+            mAmount = rounding * Math.ceil(value / rounding);
         }
     };
 
@@ -70,12 +76,16 @@ public class AddToInventoryDialogFragmentViewModel {
         return mAmount;
     }
 
+    public boolean isDecimalAmount() {
+        return mProduct.getUom().getRounding() != 1;
+    }
+
     public Command<Void> getAddToInventoryCommand()
     {
         return mAddToInventoryCommand;
     }
 
-    public Command<Integer> getChangeAmountCommand() {
+    public Command<String> getChangeAmountCommand() {
         return mChangeAmountCommand;
     }
 
