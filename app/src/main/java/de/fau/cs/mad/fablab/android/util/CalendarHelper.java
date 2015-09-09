@@ -1,6 +1,7 @@
 package de.fau.cs.mad.fablab.android.util;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * helper class for
@@ -31,7 +32,7 @@ public class CalendarHelper
 
     public static boolean isSameTime(Calendar startTime, Calendar endTime)
     {
-        if(startTime.get(Calendar.HOUR) == endTime.get(Calendar.HOUR) &&
+        if (startTime.get(Calendar.HOUR) == endTime.get(Calendar.HOUR) &&
                 startTime.get(Calendar.MINUTE) == endTime.get(Calendar.MINUTE))
             return true;
         else
@@ -76,16 +77,27 @@ public class CalendarHelper
         if (isCurrentDay(calendarDate))
             return "Heute";
         else
-            return Integer.toString(calendarDate.get(Calendar.DAY_OF_MONTH)) + "." + (Integer.toString(calendarDate.get(Calendar.MONTH) + 1) + "." + Integer.toString(calendarDate.get(Calendar.YEAR)));
+        {
+            String result = Integer.toString(calendarDate.get(Calendar.DAY_OF_MONTH)) + "." + (Integer.toString(calendarDate.get(Calendar.MONTH) + 1) + "." + Integer.toString(calendarDate.get(Calendar.YEAR)));
+            result = calendarDate.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault()) + " " + result;
+            return result;
+        }
     }
 
     public static String buildDateString(int[] calendar)
     {
+        Calendar myCalendar = Calendar.getInstance();
+        myCalendar.set(calendar[2], calendar[1], calendar[0]);
         //month+1, because Calendar is zero-based (eg january = 0 and not 1)
         if (isCurrentDay(calendar))
             return "Heute";
         else
-            return Integer.toString(calendar[0]) + "." + Integer.toString((calendar[1]) + 1) + "." + Integer.toString(calendar[2]);
+        {
+
+            String result = Integer.toString(myCalendar.get(Calendar.DAY_OF_MONTH)) + "." + (Integer.toString(myCalendar.get(Calendar.MONTH) + 1) + "." + Integer.toString(myCalendar.get(Calendar.YEAR)));
+            result = myCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault()) + " " + result;
+            return result;
+        }
     }
 
     public static String buildTimeString(int[] time)
