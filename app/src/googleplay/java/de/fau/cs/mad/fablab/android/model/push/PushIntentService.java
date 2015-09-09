@@ -10,7 +10,9 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
 
+import de.fau.cs.mad.fablab.android.model.events.CartStatusPushedEvent;
 import de.fau.cs.mad.fablab.android.model.events.SpaceApiStatePushedEvent;
+import de.fau.cs.mad.fablab.rest.core.CartStatus;
 import de.fau.cs.mad.fablab.rest.core.DoorState;
 import de.greenrobot.event.EventBus;
 
@@ -34,6 +36,17 @@ public class PushIntentService extends IntentService {
                 try {
                     DoorState doorState = mapper.readValue(doorStateString, DoorState.class);
                     EventBus.getDefault().post(new SpaceApiStatePushedEvent(doorState));
+                } catch (IOException e) {
+                    Log.e("PushIntentService", "mapping failed", e);
+                }
+                return;
+            }
+            String cartStatusString = extras.getString("CartStatus");
+            if (cartStatusString != null) {
+                ObjectMapper mapper = new ObjectMapper();
+                try {
+                    CartStatus cartStatus = mapper.readValue(cartStatusString, CartStatus.class);
+                    EventBus.getDefault().post(new CartStatusPushedEvent(cartStatus));
                 } catch (IOException e) {
                     Log.e("PushIntentService", "mapping failed", e);
                 }

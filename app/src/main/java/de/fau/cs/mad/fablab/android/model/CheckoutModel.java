@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
+import de.fau.cs.mad.fablab.android.model.events.CartStatusPushedEvent;
 import de.fau.cs.mad.fablab.android.model.util.CancellableCallback;
 import de.fau.cs.mad.fablab.rest.core.CartEntryServer;
 import de.fau.cs.mad.fablab.rest.core.CartServer;
@@ -36,6 +37,7 @@ public class CheckoutModel {
         mCartModel = cartModel;
         mCartApi = cartApi;
         mPushModel = pushModel;
+        mEventBus.register(this);
     }
 
     public CartStatus getStatus() {
@@ -132,5 +134,26 @@ public class CheckoutModel {
         mCartPollingCallback = null;
         mCheckoutStatus = CartStatus.SHOPPING;
         mCartCode = null;
+    }
+
+    public void onEvent(CartStatusPushedEvent event) {
+        if (mCheckoutStatus == CartStatus.PENDING) {
+            if (mCartPollingCallback != null) {
+                mCartPollingCallback.cancel();
+            }
+            mCartStatusHandler.removeCallbacks(mCartStatusRunnable);
+
+            switch (event.getCartStatus()) {
+                case CANCELLED:
+                    mCheckoutStatus = CartStatus.CANCELLED;
+                    mEventBus.post(CartStatus.CANCELLED);
+                    break;
+                case PAID:
+                    mCartModel.markCartAsPaid();
+                    mCheckoutStatus = CartStatus.PAID;
+                    mEventBus.post(CartStatus.PAID);
+                    break;
+            }
+        }
     }
 }
