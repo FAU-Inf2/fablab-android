@@ -2,11 +2,13 @@ package de.fau.cs.mad.fablab.android.model;
 
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
-import de.fau.cs.mad.fablab.android.model.entities.AutoCompleteWords;
-import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
-
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import de.fau.cs.mad.fablab.android.model.entities.AutoCompleteWords;
+import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -54,7 +56,14 @@ public class AutoCompleteModel {
     public String[] getAutoCompleteWords(){
         AutoCompleteWords autoCompleteWords = mAutoCompleteWordsDao.queryForId(0L);
         if(autoCompleteWords != null) {
-            return autoCompleteWords.getPossibleAutoCompleteWords();
+            String[] words = autoCompleteWords.getPossibleAutoCompleteWords();
+            Collections.sort(Arrays.asList(words), new Comparator<String>() {
+                @Override
+                public int compare(String o1, String o2) {
+                    return o1.compareToIgnoreCase(o2);
+                }
+            });
+            return words;
         }
         return new String[0];
     }
