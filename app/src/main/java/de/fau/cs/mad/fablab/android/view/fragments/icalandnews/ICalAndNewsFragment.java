@@ -52,7 +52,7 @@ public class ICalAndNewsFragment extends BaseFragment {
             newsFragment.resetPointer();
 
         mTranslationY = 0;
-        setDisplayOptions(R.id.drawer_item_news, true, true);
+        setDisplayOptions(R.id.drawer_item_news, true, true, true);
     }
 
     @Override

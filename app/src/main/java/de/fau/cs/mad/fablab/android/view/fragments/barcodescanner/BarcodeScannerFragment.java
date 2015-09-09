@@ -54,7 +54,7 @@ public class BarcodeScannerFragment extends BaseFragment
         super.onResume();
         mViewModel.resume();
 
-        setDisplayOptions(R.id.drawer_item_scanner, false, false);
+        setDisplayOptions(R.id.drawer_item_scanner, true, false, false);
     }
 
     @Override

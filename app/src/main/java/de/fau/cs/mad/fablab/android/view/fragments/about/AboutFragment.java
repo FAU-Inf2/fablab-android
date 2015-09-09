@@ -93,7 +93,7 @@ public class AboutFragment extends BaseFragment implements AboutFragmentViewMode
     @Override
     public void onResume() {
         super.onResume();
-        setDisplayOptions(R.id.drawer_item_about, false, false);
+        setDisplayOptions(R.id.drawer_item_about, true, false, false);
     }
 
     private void toggle(TextView tv){

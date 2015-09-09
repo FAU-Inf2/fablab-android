@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#384F54</color>
     <color name="colorPrimaryDark">#2D3F43</color>
-    <color name="colorAccent">#384F54</color>
+    <color name="colorAccent">#607D8B</color>
     <color name="colorTextPrimary">#000000</color>
     <color name="colorTextSecondary">#384F54</color>
     <color name="AppBarTextColor">#FFFFFF</color>

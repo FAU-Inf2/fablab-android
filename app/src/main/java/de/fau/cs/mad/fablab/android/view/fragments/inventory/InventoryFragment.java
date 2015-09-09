@@ -61,7 +61,7 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
     @Override
     public void onResume() {
         super.onResume();
-        setDisplayOptions(R.id.drawer_item_inventory, false, false);
+        setDisplayOptions(R.id.drawer_item_inventory, true, false, false);
     }
 
     @Override

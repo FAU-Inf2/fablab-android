@@ -26,10 +26,11 @@ public abstract class BaseFragment extends Fragment{
         ButterKnife.bind(this, view);
     }
 
-    public void setDisplayOptions(int menuItemId, boolean showFAB, boolean showCart) {
+    public void setDisplayOptions(int menuItemId, boolean showTitle, boolean showFAB,
+                                  boolean showCart) {
         MainActivity activity = (MainActivity) getActivity();
         activity.enableNavigationDrawer(true);
-        activity.showTitle(true);
+        activity.showTitle(showTitle);
         activity.setNavigationDrawerSelection(menuItemId);
         activity.showFloatingActionButton(showFAB);
         activity.showCartSlidingUpPanel(showCart);

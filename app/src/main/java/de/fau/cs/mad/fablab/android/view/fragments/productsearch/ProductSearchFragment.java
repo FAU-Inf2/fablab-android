@@ -1,9 +1,9 @@
 package de.fau.cs.mad.fablab.android.view.fragments.productsearch;
 
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -24,7 +23,6 @@ import butterknife.Bind;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
-import de.fau.cs.mad.fablab.android.view.common.binding.AutoCompleteTextViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 
@@ -43,8 +41,6 @@ public class ProductSearchFragment extends BaseFragment implements
     @Inject
     ProductSearchFragmentViewModel mViewModel;
 
-    @Bind(R.id.product_search_text_view)
-    AutoCompleteTextView mProductSearchTextView;
     @Bind(R.id.product_recycler_view)
     RecyclerView mProductRecyclerView;
     @Bind(R.id.product_fast_scroller)
@@ -65,9 +61,21 @@ public class ProductSearchFragment extends BaseFragment implements
     @Override
     public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.menu_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        ProductSearchView searchView = (ProductSearchView) MenuItemCompat.getActionView(
+                searchItem);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_dropdown_item_1line, mViewModel.getAutoCompleteWords());
+        searchView.setAdapter(adapter);
+        searchView.setCommand(mViewModel.getSearchCommand());
+        searchView.setQueryHint(getString(R.string.search_all_hint));
+        searchItem.expandActionView();
+
         mOrderByItem = menu.findItem(R.id.action_orderby);
         if(mOrderByItem != null) {
-            mOrderByItem.setVisible(true);
             new MenuItemCommandBinding().bind(mOrderByItem.getSubMenu().getItem(0),
                     mViewModel.getOrderProductsByNameCommand());
             new MenuItemCommandBinding().bind(mOrderByItem.getSubMenu().getItem(1),
@@ -101,26 +109,6 @@ public class ProductSearchFragment extends BaseFragment implements
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mProductRecyclerView.setLayoutManager(layoutManager);
 
-        mProductSearchTextView.setThreshold(2);
-        ArrayAdapter<String> autoCompleteAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_dropdown_item_1line,
-                mViewModel.getAutoCompleteWords());
-        mProductSearchTextView.setAdapter(autoCompleteAdapter);
-
-        new AutoCompleteTextViewCommandBinding().bind(mProductSearchTextView,
-                mViewModel.getSearchCommand());
-
-        mProductSearchTextView.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                // If the event is a key-down event on the "enter" button
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    mViewModel.getSearchCommand().execute(mProductSearchTextView.getText().toString());
-                    return true;
-                }
-                return false;
-            }
-        });
-
         mViewModel.setListener(this);
         mViewModel.initialize();
     }
@@ -130,7 +118,7 @@ public class ProductSearchFragment extends BaseFragment implements
         super.onResume();
         mEventBus.register(this);
         mViewModel.resume();
-        setDisplayOptions(R.id.drawer_item_productsearch, true, true);
+        setDisplayOptions(R.id.drawer_item_productsearch, false, true, true);
     }
 
     @Override
@@ -149,8 +137,6 @@ public class ProductSearchFragment extends BaseFragment implements
     public void onSearchStateChanged() {
         if(mViewModel.getSearchState()){
             UiUtils.hideKeyboard(getActivity());
-            mProductSearchTextView.dismissDropDown();
-            mProductSearchTextView.clearFocus();
             mProductRecyclerViewContainer.setVisibility(View.GONE);
             mProductProgressBar.setVisibility(View.VISIBLE);
         }

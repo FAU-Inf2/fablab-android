@@ -48,6 +48,7 @@ public class SettingsFragment extends PreferenceFragment {
         super.onResume();
         MainActivity activity = (MainActivity) getActivity();
         activity.enableNavigationDrawer(true);
+        activity.showTitle(true);
         activity.setNavigationDrawerSelection(R.id.drawer_item_settings);
         activity.showFloatingActionButton(false);
         activity.showCartSlidingUpPanel(false);
