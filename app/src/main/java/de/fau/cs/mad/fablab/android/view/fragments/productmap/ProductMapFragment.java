@@ -1,17 +1,13 @@
 package de.fau.cs.mad.fablab.android.view.fragments.productmap;
 
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.net.http.SslError;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -28,7 +24,6 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
-//import butterknife.InjectView;
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
@@ -46,9 +41,6 @@ public class ProductMapFragment extends BaseDialogFragment implements CallBackLi
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-
-
-        //getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //Todo: activate when server method is finished
         String productMapUrl = getString(R.string.api_url) + "/productMap/productMap.html";
@@ -96,59 +88,37 @@ public class ProductMapFragment extends BaseDialogFragment implements CallBackLi
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         return inflater.inflate(R.layout.fragment_locationmap, container, false);
     }
 
     @Override
-    public void onPause()
-    {
-        super.onPause();
-        //getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        //getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-
-    }
-
-    @Override
-    public void callback(String htmlText)
-    {
-        try
-        {
+    public void callback(String htmlText) {
+        try {
             webview.loadData(htmlText, "text/html; charset=UTF-8", null);
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     // next release
-    private class ConnectionTask extends AsyncTask<String, Integer, String>
-    {
+    private class ConnectionTask extends AsyncTask<String, Integer, String> {
         private CallBackListener mListener;
 
 
-        public void setListener(CallBackListener listener)
-        {
+        public void setListener(CallBackListener listener) {
             mListener = listener;
         }
 
 
         @Override
-        protected String doInBackground(String... urls)
-        {
+        protected String doInBackground(String... urls) {
             BufferedReader bufferedReader;
             URL myUrl;
             HttpsURLConnection urlConnection;
-            try
-            {
+            try {
 
                 myUrl = new URL(urls[0]);
                 urlConnection = (HttpsURLConnection) myUrl.openConnection();
@@ -163,8 +133,7 @@ public class ProductMapFragment extends BaseDialogFragment implements CallBackLi
 
                 return htmlText;
 
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
@@ -185,10 +154,8 @@ public class ProductMapFragment extends BaseDialogFragment implements CallBackLi
      *
      * @return a SSLSocketFactory trusting our selfsigned certs.
      */
-    private SSLSocketFactory getPinnedCertSslSocketFactory()
-    {
-        try
-        {
+    private SSLSocketFactory getPinnedCertSslSocketFactory() {
+        try {
             //Default type is BKS on android
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             //our truststore containing the public certs
@@ -206,16 +173,14 @@ public class ProductMapFragment extends BaseDialogFragment implements CallBackLi
 
             return sslContext.getSocketFactory();
 
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             Log.e(LOG_TAG, e.getMessage());
         }
         return null;
     }
 }
 
-interface CallBackListener
-{
+interface CallBackListener {
     void callback(String htmlText);
 }
 

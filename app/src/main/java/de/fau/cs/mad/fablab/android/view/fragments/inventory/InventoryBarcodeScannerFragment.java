@@ -1,6 +1,5 @@
 package de.fau.cs.mad.fablab.android.view.fragments.inventory;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import de.fau.cs.mad.fablab.android.R;
@@ -26,8 +25,6 @@ public class InventoryBarcodeScannerFragment extends BarcodeScannerFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        //getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         mViewModel.setListener(this);
         mUser = (User) getArguments().getSerializable("USER");

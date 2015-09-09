@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.fragments.inventory;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +56,7 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         return inflater.inflate(R.layout.fragment_inventory, container, false);
     }
 

@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.fragments.icals;
 
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -59,6 +60,7 @@ public class ICalFragment extends BaseFragment implements ICalFragmentViewModel.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dates, container, false);
     }

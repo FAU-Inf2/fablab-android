@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.fragments.productsearch;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -86,6 +87,7 @@ public class ProductSearchFragment extends BaseFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_productsearch, container, false);
     }

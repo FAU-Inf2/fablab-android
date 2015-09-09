@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.fragments.about;
 
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -87,6 +88,7 @@ public class AboutFragment extends BaseFragment implements AboutFragmentViewMode
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         return inflater.inflate(R.layout.fragment_about, container, false);
     }
 

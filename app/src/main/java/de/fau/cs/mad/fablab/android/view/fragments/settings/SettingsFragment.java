@@ -1,6 +1,10 @@
 package de.fau.cs.mad.fablab.android.view.fragments.settings;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.github.machinarius.preferencefragment.PreferenceFragment;
@@ -35,6 +39,13 @@ public class SettingsFragment extends PreferenceFragment {
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.settings);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override

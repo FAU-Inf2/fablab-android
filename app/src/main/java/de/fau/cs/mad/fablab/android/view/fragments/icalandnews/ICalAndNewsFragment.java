@@ -1,7 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.fragments.icalandnews;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -40,6 +39,7 @@ public class ICalAndNewsFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         return inflater.inflate(R.layout.fragment_ical_and_news, container, false);
     }
 
@@ -68,8 +68,6 @@ public class ICalAndNewsFragment extends BaseFragment {
         final String TAG_ICAL_FRAGMENT = "tag_ical_fragment";
         final String TAG_NEWS_FRAGMENT = "tag_news_fragment";
 
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-
         ICalFragment iCalFragment = (ICalFragment) getChildFragmentManager().findFragmentByTag(
                 TAG_ICAL_FRAGMENT);
         if (iCalFragment == null) {
@@ -97,9 +95,6 @@ public class ICalAndNewsFragment extends BaseFragment {
     }
 
     public void onEvent(NewsListScrollingEvent event) {
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-
         if(!isLandscpape()) {
             mTranslationY = mTranslationY - event.getDelta().getDy();
             ical_fl.setTranslationY(mTranslationY);

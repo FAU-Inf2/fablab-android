@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.fragments.inventory;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -65,6 +66,7 @@ public class ShowInventoryFragment extends BaseFragment implements ShowInventory
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_show_inventory, container, false);
     }

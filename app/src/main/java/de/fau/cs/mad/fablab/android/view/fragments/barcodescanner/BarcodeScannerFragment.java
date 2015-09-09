@@ -29,8 +29,6 @@ public class BarcodeScannerFragment extends BaseFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         mViewModel.setListener(this);
 
         new ScannerViewCommandBinding().bind(mScannerView, mViewModel.getProcessBarcodeCommand());
@@ -39,6 +37,7 @@ public class BarcodeScannerFragment extends BaseFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         return inflater.inflate(R.layout.fragment_scanner, container, false);
 
     }

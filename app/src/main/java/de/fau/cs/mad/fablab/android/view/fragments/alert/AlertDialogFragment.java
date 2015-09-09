@@ -1,6 +1,7 @@
 package de.fau.cs.mad.fablab.android.view.fragments.alert;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -42,7 +43,9 @@ public class AlertDialogFragment extends BaseDialogFragment
     private boolean mBoolSpinner = true;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         return inflater.inflate(R.layout.alert_dialog, container, false);
     }
 
