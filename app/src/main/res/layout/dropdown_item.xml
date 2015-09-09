@@ -1,0 +1,11 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    style="?android:attr/dropDownItemStyle"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/autocomplete_item_margin_tb"
+    android:paddingTop="@dimen/autocomplete_item_margin_tb"
+    android:paddingLeft="@dimen/autocomplete_item_margin_lr"
+    android:paddingRight="@dimen/autocomplete_item_margin_lr"
+    android:textSize="@dimen/textsize_autocomplete_item"
+    android:textColor="@android:color/black" />

@@ -69,7 +69,7 @@ public class ProductSearchFragment extends BaseFragment implements
         ProductSearchView searchView = (ProductSearchView) MenuItemCompat.getActionView(
                 searchItem);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_dropdown_item_1line, mViewModel.getAutoCompleteWords());
+                R.layout.dropdown_item, mViewModel.getAutoCompleteWords());
         searchView.setAdapter(adapter);
         searchView.setCommand(mViewModel.getSearchCommand());
         searchView.setQueryHint(getString(R.string.search_all_hint));

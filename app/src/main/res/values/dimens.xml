@@ -88,6 +88,9 @@
 
     <dimen name="snackbar_height">48dp </dimen>
 
+    <dimen name="autocomplete_item_margin_lr">10dp</dimen>
+    <dimen name="autocomplete_item_margin_tb">20dp</dimen>
+
     <dimen name="textsize_button">15dp</dimen>
     <dimen name="textsize_about_title">50dp</dimen>
     <dimen name="textsize_about_subtitle">25dp</dimen>
@@ -131,4 +134,5 @@
     <dimen name="textsize_spinner_text">18dp</dimen>
     <dimen name="textsize_settings_title">20dp</dimen>
     <dimen name="textsize_settings_text">15dp</dimen>
+    <dimen name="textsize_autocomplete_item">18dp</dimen>
 </resources>
