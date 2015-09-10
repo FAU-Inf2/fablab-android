@@ -21,7 +21,7 @@ import de.greenrobot.event.EventBus;
 public class ShowInventoryFragmentViewModel extends BaseViewModel<InventoryItem> {
 
     private InventoryModel mModel;
-    private EventBus mEventBus = EventBus.getDefault();;
+    private EventBus mEventBus = EventBus.getDefault();
     private Listener mListener;
     private ListAdapteeCollection<InventoryViewModel> mShowInventoryViewModelCollection;
 
@@ -100,7 +100,7 @@ public class ShowInventoryFragmentViewModel extends BaseViewModel<InventoryItem>
                 mListener.getFail();
             }
         }
-        EventBus.getDefault().cancelEventDelivery(event);
+        mEventBus.unregister(this);
     }
 
     public interface Listener {

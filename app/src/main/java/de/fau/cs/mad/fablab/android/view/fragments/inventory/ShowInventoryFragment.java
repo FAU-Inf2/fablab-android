@@ -46,10 +46,6 @@ public class ShowInventoryFragment extends BaseFragment implements ShowInventory
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        /*
-        mAdapter = new RVRendererAdapter<>(getLayoutInflater(savedInstanceState),
-                new InventoryViewModelRendererBuilder(), mViewModel.getInventoryViewModelCollection());
-                */
         mAdapter = new InventoryItemRVRendererAdapter(getLayoutInflater(savedInstanceState),
                 new InventoryViewModelRendererBuilder(),
                 mViewModel.getInventoryViewModelCollection());
