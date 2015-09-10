@@ -81,6 +81,8 @@
     <string name="inventory_card_updated_at">durchgeführt am:</string>
     <string name="inventory_delete_inventory_fail">Fehler beim Inventar löschen aufgetreten</string>
     <string name="inventory_delete_inventory_success">Inventar gelöscht</string>
+    <string name="inventory_get_inventory_fail">Fehler bei der Abfrage des Inventars aufgetreten</string>
+    <string name="inventory_get_inventory_success">Es sind keine Objekte im Inventar vorhanden</string>
 
     <string name="version_check_update_optional">Optionales Update verfügbar</string>
     <string name="version_check_update_required">Update verfügbar</string>

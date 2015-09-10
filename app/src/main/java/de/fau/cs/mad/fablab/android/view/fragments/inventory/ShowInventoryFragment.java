@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.pedrogomez.renderers.RVRendererAdapter;
 
@@ -81,6 +82,21 @@ public class ShowInventoryFragment extends BaseFragment implements ShowInventory
     public void onDataChanged()
     {
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getSuccess()
+    {
         mInventoryProgressBar.setVisibility(View.GONE);
+        if(mAdapter.getItemCount() == 0) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.inventory_get_inventory_success), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void getFail()
+    {
+        mInventoryProgressBar.setVisibility(View.GONE);
+        Toast.makeText(getActivity(), getResources().getString(R.string.inventory_get_inventory_fail), Toast.LENGTH_SHORT).show();
     }
 }

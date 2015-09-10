@@ -13,12 +13,15 @@ import java.util.Locale;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.InventoryModel;
+import de.fau.cs.mad.fablab.android.model.events.InventoryGetInventoryEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.rest.core.InventoryItem;
+import de.greenrobot.event.EventBus;
 
 public class ShowInventoryFragmentViewModel extends BaseViewModel<InventoryItem> {
 
     private InventoryModel mModel;
+    private EventBus mEventBus = EventBus.getDefault();;
     private Listener mListener;
     private ListAdapteeCollection<InventoryViewModel> mShowInventoryViewModelCollection;
 
@@ -27,6 +30,7 @@ public class ShowInventoryFragmentViewModel extends BaseViewModel<InventoryItem>
         mModel = model;
         mModel.getInventoryItems().setListener(this);
         mModel.getInventory();
+        mEventBus.register(this);
         mShowInventoryViewModelCollection = new ListAdapteeCollection<>();
     }
 
@@ -79,8 +83,24 @@ public class ShowInventoryFragmentViewModel extends BaseViewModel<InventoryItem>
         return mShowInventoryViewModelCollection;
     }
 
+    public void onEvent(InventoryGetInventoryEvent event)
+    {
+        if(mListener != null)
+        {
+            if(event.getState()) {
+                mListener.getSuccess();
+            }
+            else
+            {
+                mListener.getFail();
+            }
+        }
+    }
+
     public interface Listener {
         void onAllDataRemoved(int itemCount);
         void onDataChanged();
+        void getSuccess();
+        void getFail();
     }
 }
