@@ -7,7 +7,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.events.InventoryDeletedEvent;
-import de.fau.cs.mad.fablab.android.model.events.InventoryNotDeletedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.rest.core.InventoryItem;
 import de.fau.cs.mad.fablab.rest.myapi.InventoryApi;
@@ -40,12 +39,12 @@ public class InventoryModel {
 
         @Override
         public void success(Boolean success, Response response) {
-            mEventBus.post(new InventoryDeletedEvent());
+            mEventBus.post(new InventoryDeletedEvent(true));
         }
 
         @Override
         public void failure(RetrofitError error) {
-            mEventBus.post(new InventoryNotDeletedEvent());
+            mEventBus.post(new InventoryDeletedEvent(false));
         }
     };
 

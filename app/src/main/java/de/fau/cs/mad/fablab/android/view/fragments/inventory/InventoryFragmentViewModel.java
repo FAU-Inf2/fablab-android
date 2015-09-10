@@ -4,7 +4,6 @@ import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.InventoryModel;
 import de.fau.cs.mad.fablab.android.model.events.InventoryDeletedEvent;
-import de.fau.cs.mad.fablab.android.model.events.InventoryNotDeletedEvent;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventBarcodeScannerInventory;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventProductSearchInventory;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventShowInventory;
@@ -100,16 +99,13 @@ public class InventoryFragmentViewModel {
         if(mListener != null && !deleteResult)
         {
             deleteResult = true;
-            mListener.deletedSuccess();
-        }
-    }
-
-    public void onEvent(InventoryNotDeletedEvent event)
-    {
-        if(mListener != null && !deleteResult)
-        {
-            deleteResult = true;
-            mListener.deletedFail();
+            if(event.getState()) {
+                mListener.deletedSuccess();
+            }
+            else
+            {
+                mListener.deletedFail();
+            }
         }
     }
 
