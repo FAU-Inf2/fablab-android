@@ -83,6 +83,11 @@ public class ShowInventoryFragmentViewModel extends BaseViewModel<InventoryItem>
         return mShowInventoryViewModelCollection;
     }
 
+    public int getCollectionSize()
+    {
+        return mModel.getInventoryItems().size();
+    }
+
     public void onEvent(InventoryGetInventoryEvent event)
     {
         if(mListener != null)

@@ -88,7 +88,7 @@ public class ShowInventoryFragment extends BaseFragment implements ShowInventory
     public void getSuccess()
     {
         mInventoryProgressBar.setVisibility(View.GONE);
-        if(mAdapter.getItemCount() == 0) {
+        if(mViewModel.getCollectionSize() == 0) {
             Toast.makeText(getActivity(), getResources().getString(R.string.inventory_get_inventory_success), Toast.LENGTH_SHORT).show();
         }
     }
