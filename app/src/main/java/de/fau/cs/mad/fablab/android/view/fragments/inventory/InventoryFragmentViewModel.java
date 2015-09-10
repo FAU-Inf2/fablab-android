@@ -3,6 +3,7 @@ package de.fau.cs.mad.fablab.android.view.fragments.inventory;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.InventoryModel;
+import de.fau.cs.mad.fablab.android.model.events.InventoryAddedEvent;
 import de.fau.cs.mad.fablab.android.model.events.InventoryDeletedEvent;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventBarcodeScannerInventory;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventProductSearchInventory;
@@ -109,10 +110,29 @@ public class InventoryFragmentViewModel {
         }
     }
 
+    public void onEvent(InventoryAddedEvent event)
+    {
+        if(mListener != null)
+        {
+            if(event.getState())
+            {
+                mListener.addedSuccess();
+            }
+            else
+            {
+                mListener.addedFail();
+            }
+        }
+    }
+
     public interface Listener
     {
         void deletedSuccess();
 
         void deletedFail();
+
+        void addedSuccess();
+
+        void addedFail();
     }
 }

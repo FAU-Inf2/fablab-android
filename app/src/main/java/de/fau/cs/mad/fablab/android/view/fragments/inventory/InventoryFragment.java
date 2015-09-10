@@ -78,4 +78,16 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
         Toast.makeText(getActivity(), getResources().getString(R.string.inventory_delete_inventory_fail), Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void addedSuccess()
+    {
+        Toast.makeText(getActivity(), getResources().getString(R.string.inventory_add_inventory_success), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void addedFail()
+    {
+        Toast.makeText(getActivity(), getResources().getString(R.string.inventory_add_inventory_fail), Toast.LENGTH_SHORT).show();
+    }
+
 }

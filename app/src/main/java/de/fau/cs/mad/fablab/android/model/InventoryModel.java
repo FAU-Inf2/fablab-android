@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import de.fau.cs.mad.fablab.android.model.events.InventoryAddedEvent;
 import de.fau.cs.mad.fablab.android.model.events.InventoryDeletedEvent;
 import de.fau.cs.mad.fablab.android.model.events.InventoryGetInventoryEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
@@ -28,11 +29,12 @@ public class InventoryModel {
     private Callback<InventoryItem> mAddCallback = new Callback<InventoryItem>() {
         @Override
         public void success(InventoryItem item, Response response) {
+            mEventBus.post(new InventoryAddedEvent(true));
         }
 
         @Override
         public void failure(RetrofitError error) {
-
+            mEventBus.post(new InventoryAddedEvent(false));
         }
     };
 
