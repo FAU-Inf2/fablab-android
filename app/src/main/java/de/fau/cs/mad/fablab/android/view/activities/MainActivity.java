@@ -227,7 +227,10 @@ public class MainActivity extends AppCompatActivity {
                             (ProductSearchFragment) getSupportFragmentManager().findFragmentByTag(
                                     TAG_PRODUCTSEARCH_FRAGMENT);
                     if (productSearchFragment == null) {
+                        Bundle args = new Bundle();
+                        args.putSerializable(getResources().getString(R.string.key_show_cart_fab), true);
                         productSearchFragment = new ProductSearchFragment();
+                        productSearchFragment.setArguments(args);
                     }
                     fragmentTransaction.replace(R.id.fragment_container, productSearchFragment,
                             TAG_PRODUCTSEARCH_FRAGMENT).addToBackStack(null).commit();
@@ -319,6 +322,7 @@ public class MainActivity extends AppCompatActivity {
 
             Bundle args = new Bundle();
             args.putSerializable("USER", event.getUser());
+            args.putSerializable(getResources().getString(R.string.key_show_cart_fab), false);
             productSearchFragment.setArguments(args);
 
             fragmentTransaction.replace(R.id.fragment_container, productSearchFragment,

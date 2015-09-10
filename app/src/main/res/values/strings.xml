@@ -84,6 +84,8 @@
     <string name="version_check_update_required">Update verfügbar</string>
     <string name="version_check_no_update_available">Kein Update verfügbar</string>
 
+    <string name="key_show_cart_fab">showcartfab</string>
+
     <!-- Strings for navigation drawer titles -->
     <string name="news">News</string>
     <string name="productsearch">Produkt suchen</string>

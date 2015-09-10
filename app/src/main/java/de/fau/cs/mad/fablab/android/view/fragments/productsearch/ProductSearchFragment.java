@@ -32,12 +32,13 @@ import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScrol
 public class ProductSearchFragment extends BaseFragment implements
         ProductSearchFragmentViewModel.Listener {
 
-    protected RVRendererAdapter<ProductSearchViewModel> mAdapter;
-    protected EventBus mEventBus = EventBus.getDefault();
-    protected MenuItem mOrderByItem;
+    private RVRendererAdapter<ProductSearchViewModel> mAdapter;
+    private EventBus mEventBus = EventBus.getDefault();
+    private MenuItem mOrderByItem;
+    private boolean mShowCartFAB;
 
     @Inject
-    protected ProductSearchFragmentViewModel mViewModel;
+    ProductSearchFragmentViewModel mViewModel;
 
     @Bind(R.id.product_recycler_view)
     RecyclerView mProductRecyclerView;
@@ -53,6 +54,8 @@ public class ProductSearchFragment extends BaseFragment implements
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        mShowCartFAB = args.getBoolean(getResources().getString(R.string.key_show_cart_fab));
         setHasOptionsMenu(true);
     }
 
@@ -118,7 +121,7 @@ public class ProductSearchFragment extends BaseFragment implements
         super.onResume();
         mEventBus.register(this);
         mViewModel.resume();
-        setDisplayOptions(R.id.drawer_item_productsearch, false, true, true);
+        setDisplayOptions(R.id.drawer_item_productsearch, false, mShowCartFAB, mShowCartFAB);
     }
 
     @Override
