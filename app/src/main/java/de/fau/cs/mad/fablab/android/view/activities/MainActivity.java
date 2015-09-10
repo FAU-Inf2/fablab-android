@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("MAINACTIVITY ONCREATE");
         super.onCreate(savedInstanceState);
 
         //uiUtils = new UiUtils();
@@ -134,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        System.out.println("MAINACTIVITY ONPAUSE");
         super.onPause();
         mEventBus.unregister(this);
         mActionBar.pause();
@@ -149,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        System.out.println("MAINACTIVITY ONRESUME");
         super.onResume();
         mEventBus.register(this);
         mActionBar.resume();
@@ -180,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showCartSlidingUpPanel(boolean show) {
-        System.out.println("SHOW CART MAIN ACTIVITY: " + show);
         mCartSlidingUpPanel.setVisibility(show);
     }
 
