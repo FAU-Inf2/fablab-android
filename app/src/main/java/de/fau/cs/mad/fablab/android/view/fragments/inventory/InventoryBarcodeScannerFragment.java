@@ -33,7 +33,7 @@ public class InventoryBarcodeScannerFragment extends BarcodeScannerFragment {
         super.onActivityCreated(savedInstanceState);
 
         mViewModel.setListener(this);
-        mUser = (User) getArguments().getSerializable("USER");
+        mUser = (User) getArguments().getSerializable(getResources().getString(R.string.key_user));
 
         new ScannerViewCommandBinding().bind(mScannerView, mViewModel.getProcessBarcodeCommand());
     }

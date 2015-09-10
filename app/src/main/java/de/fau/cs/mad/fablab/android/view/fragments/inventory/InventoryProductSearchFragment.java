@@ -24,7 +24,7 @@ public class InventoryProductSearchFragment extends ProductSearchFragment {
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUser = (User) getArguments().getSerializable("USER");
+        mUser = (User) getArguments().getSerializable(getResources().getString(R.string.key_user));
     }
 
     @Override

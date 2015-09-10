@@ -278,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
         if (!TAG_INVENTORY_FRAGMENT.equals(currentFragmentTag)) {
 
             Bundle args = new Bundle();
-            args.putSerializable("USER", event.getUser());
+            args.putSerializable(getResources().getString(R.string.key_user), event.getUser());
             InventoryFragment inventoryFragment = new InventoryFragment();
             inventoryFragment.setArguments(args);
 
@@ -298,7 +298,7 @@ public class MainActivity extends AppCompatActivity {
             InventoryBarcodeScannerFragment barcodeScannerFragment = new InventoryBarcodeScannerFragment();
 
             Bundle args = new Bundle();
-            args.putSerializable("USER", event.getUser());
+            args.putSerializable(getResources().getString(R.string.key_user), event.getUser());
             barcodeScannerFragment.setArguments(args);
 
             fragmentTransaction.replace(R.id.fragment_container, barcodeScannerFragment,
@@ -317,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
             InventoryProductSearchFragment productSearchFragment = new InventoryProductSearchFragment();
 
             Bundle args = new Bundle();
-            args.putSerializable("USER", event.getUser());
+            args.putSerializable(getResources().getString(R.string.key_user), event.getUser());
             args.putSerializable(getResources().getString(R.string.key_show_cart_fab), false);
             productSearchFragment.setArguments(args);
 
@@ -337,7 +337,7 @@ public class MainActivity extends AppCompatActivity {
             ShowInventoryFragment showInventoryFragment = new ShowInventoryFragment();
 
             Bundle args = new Bundle();
-            args.putSerializable("USER", event.getUser());
+            args.putSerializable(getResources().getString(R.string.key_user), event.getUser());
             showInventoryFragment.setArguments(args);
 
             fragmentTransaction.replace(R.id.fragment_container, showInventoryFragment,

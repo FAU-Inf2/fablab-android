@@ -44,7 +44,7 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
 
         mViewModel.setListener(this);
 
-        User user = (User) getArguments().getSerializable("USER");
+        User user = (User) getArguments().getSerializable(getResources().getString(R.string.key_user));
         mViewModel.setUser(user);
 
         new ViewCommandBinding().bind(mScanButton, mViewModel.getOnScanButtonClickedCommand());
@@ -69,13 +69,13 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
     @Override
     public void deletedSuccess()
     {
-        Toast.makeText(getActivity(), "Inventar gelöscht", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getResources().getString(R.string.inventory_delete_inventory_success), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void deletedFail()
     {
-        Toast.makeText(getActivity(), "Fehler beim Inventar löschen aufgetreten", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getResources().getString(R.string.inventory_delete_inventory_fail), Toast.LENGTH_SHORT).show();
     }
 
 }
