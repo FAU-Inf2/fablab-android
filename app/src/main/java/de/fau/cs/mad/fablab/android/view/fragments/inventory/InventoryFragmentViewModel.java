@@ -18,7 +18,6 @@ public class InventoryFragmentViewModel {
     private User mUser;
     private InventoryModel mModel;
     EventBus mEventBus = EventBus.getDefault();
-    boolean deleteResult = false;
 
     private Command<Void> mOnScanButtonClickedCommand = new Command<Void>()
     {
@@ -40,7 +39,6 @@ public class InventoryFragmentViewModel {
     {
         @Override
         public void execute(Void parameter) {
-            deleteResult = false;
             mModel.deleteInventory(mUser.getUsername(), mUser.getPassword());
         }
     };
@@ -97,9 +95,8 @@ public class InventoryFragmentViewModel {
 
     public void onEvent(InventoryDeletedEvent event)
     {
-        if(mListener != null && !deleteResult)
+        if(mListener != null)
         {
-            deleteResult = true;
             if(event.getState()) {
                 mListener.deletedSuccess();
             }
@@ -108,6 +105,7 @@ public class InventoryFragmentViewModel {
                 mListener.deletedFail();
             }
         }
+        EventBus.getDefault().cancelEventDelivery(event);
     }
 
     public void onEvent(InventoryAddedEvent event)
@@ -123,6 +121,7 @@ public class InventoryFragmentViewModel {
                 mListener.addedFail();
             }
         }
+        EventBus.getDefault().cancelEventDelivery(event);
     }
 
     public interface Listener

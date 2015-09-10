@@ -100,6 +100,7 @@ public class ShowInventoryFragmentViewModel extends BaseViewModel<InventoryItem>
                 mListener.getFail();
             }
         }
+        EventBus.getDefault().cancelEventDelivery(event);
     }
 
     public interface Listener {
