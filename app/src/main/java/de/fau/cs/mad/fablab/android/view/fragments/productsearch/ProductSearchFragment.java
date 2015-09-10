@@ -21,26 +21,23 @@ import com.pedrogomez.renderers.RVRendererAdapter;
 import javax.inject.Inject;
 
 import butterknife.Bind;
-
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
-
 import de.greenrobot.event.EventBus;
-
 import xyz.danoz.recyclerviewfastscroller.sectionindicator.title.SectionTitleIndicator;
 import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller;
 
 public class ProductSearchFragment extends BaseFragment implements
         ProductSearchFragmentViewModel.Listener {
 
-    private RVRendererAdapter<ProductSearchViewModel> mAdapter;
-    private EventBus mEventBus = EventBus.getDefault();
-    private MenuItem mOrderByItem;
+    protected RVRendererAdapter<ProductSearchViewModel> mAdapter;
+    protected EventBus mEventBus = EventBus.getDefault();
+    protected MenuItem mOrderByItem;
 
     @Inject
-    ProductSearchFragmentViewModel mViewModel;
+    protected ProductSearchFragmentViewModel mViewModel;
 
     @Bind(R.id.product_recycler_view)
     RecyclerView mProductRecyclerView;
@@ -74,6 +71,7 @@ public class ProductSearchFragment extends BaseFragment implements
         searchView.setCommand(mViewModel.getSearchCommand());
         searchView.setQueryHint(getString(R.string.search_all_hint));
         searchItem.expandActionView();
+        searchView.clearFocus();
 
         mOrderByItem = menu.findItem(R.id.action_orderby);
         if(mOrderByItem != null) {
