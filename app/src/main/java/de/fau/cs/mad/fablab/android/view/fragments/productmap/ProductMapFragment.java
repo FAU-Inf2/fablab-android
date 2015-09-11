@@ -42,17 +42,9 @@ public class ProductMapFragment extends BaseDialogFragment implements CallBackLi
     {
         super.onActivityCreated(savedInstanceState);
 
-        //Todo: activate when server method is finished
+
         String productMapUrl = getString(R.string.api_url) + "/productMap/productMap.html";
         String locationString = getArguments().getString(KEY_LOCATION); //something like "fau fablab / werkstadt / ..."
-
-        locationString = locationString.replace("_/", "/");
-        locationString = locationString.replace(",_", "_");
-        locationString = locationString.replace("ä", "ae");
-        locationString = locationString.replace("ö", "oe");
-        locationString = locationString.replace("ü", "ue");
-        locationString = locationString.replace("ß", "ss");
-
 
         String url = "";
         if (locationString != "")

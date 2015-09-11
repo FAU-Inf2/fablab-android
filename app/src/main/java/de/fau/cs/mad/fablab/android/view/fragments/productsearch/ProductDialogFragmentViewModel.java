@@ -82,13 +82,7 @@ public class ProductDialogFragmentViewModel {
     }
 
     public String getProductLocation() {
-        String loc = mProduct.getLocation();
-        // delete spaces in location string around brackets  "fau fablab / Lagerort"
-        loc = loc.replace(" / ", "/" );
-        // and replace the rest of the spaces to avoid errors on server side query string parsing
-        loc = loc.replace(" ", "_");
-
-        return loc;
+        return mProduct.getLocationForProductMap();
     }
 
     public void initialize(Bundle arguments) {
