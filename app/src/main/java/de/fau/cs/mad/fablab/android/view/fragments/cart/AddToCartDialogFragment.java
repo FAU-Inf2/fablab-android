@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import de.fau.cs.mad.fablab.android.view.activities.BackButtonPressedEvent;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.EditTextCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.EnterKeyCommandBinding;
+import de.fau.cs.mad.fablab.android.view.common.binding.ChangeAmountByOneCommand;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import de.fau.cs.mad.fablab.rest.core.Product;
@@ -42,6 +44,10 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     TextView amount_tv;
     @Bind(R.id.add_to_cart_price_total)
     TextView price_total_tv;
+    @Bind(R.id.add_to_cart_button_plus)
+    Button plus_btn;
+    @Bind(R.id.add_to_cart_button_minus)
+    Button minus_btn;
 
     @Inject
     AddToCartDialogFragmentViewModel mViewModel;
@@ -84,13 +90,17 @@ public class AddToCartDialogFragment extends BaseDialogFragment
             }
         }
         amount_et.requestFocus();
-        new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 UiUtils.showKeyboard(getActivity(), amount_et);
             }
         }, 250);
 
+        new ChangeAmountByOneCommand().bind(plus_btn, mViewModel.getIncreaseAmountByOneCommand());
+        new ChangeAmountByOneCommand().bind(minus_btn, mViewModel.getDecreaseAmountByOneCommand());
         new EditTextCommandBinding().bind(amount_et, mViewModel.getChangeAmountCommand());
         new EnterKeyCommandBinding().bind(amount_et, mViewModel.isUpdate() ?
                 mViewModel.getUpdateCartEntryCommand() : mViewModel.getAddToCartCommand());
@@ -155,6 +165,7 @@ public class AddToCartDialogFragment extends BaseDialogFragment
         getFragmentManager().popBackStack();
     }
 
+
     @Override
     public void onUpdatePriceAndAmount(double priceTotal, double amount) {
         price_total_tv.setText(Html.fromHtml(Formatter.formatPrice(priceTotal)));
@@ -165,6 +176,14 @@ public class AddToCartDialogFragment extends BaseDialogFragment
         } else {
             amount_tv.setVisibility(View.INVISIBLE);
         }
+    }
+    public void onChangeEditText(double amountNotRounded)
+    {
+        if(mViewModel.isDecimalAmount())
+            amount_et.setText(Double.toString(amountNotRounded));
+        else
+            amount_et.setText(Integer.toString((int)amountNotRounded));
+
     }
 
     @SuppressWarnings("unused")

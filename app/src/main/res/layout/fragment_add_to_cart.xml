@@ -68,6 +68,30 @@
             android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:padding="24dp">
+
+            <Button
+                android:id="@+id/add_to_cart_button_plus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_to_cart_plus"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/textsize_add_to_cart_price"/>
+
+            <Button
+                android:id="@+id/add_to_cart_button_minus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_to_cart_minus"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/textsize_add_to_cart_price"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 </ScrollView>
