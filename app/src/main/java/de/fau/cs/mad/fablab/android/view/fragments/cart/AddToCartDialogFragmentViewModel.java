@@ -73,8 +73,9 @@ public class AddToCartDialogFragmentViewModel
             {
                 value = Double.parseDouble(parameter);
             }
+            int tmp = 100;
             double rounding = mCartEntry.getProduct().getUom().getRounding();
-            mAmount = rounding * Math.ceil(value / rounding);
+            mAmount = ((rounding*tmp) * Math.ceil(Math.round(value/rounding)))/tmp;
             if (mListener != null)
             {
                 mListener.onUpdatePriceAndAmount(getPriceTotal(), (value != mAmount) ? mAmount : -1);
@@ -87,9 +88,10 @@ public class AddToCartDialogFragmentViewModel
         @Override
         public void execute(Void editText)
         {
+            int tmp = 100;
             double rounding = mCartEntry.getProduct().getUom().getRounding();
             mAmount = mAmount + rounding;
-            mAmount = rounding * Math.ceil(mAmount / rounding);
+            mAmount = ((rounding*tmp) * Math.ceil(Math.round(mAmount/rounding)))/tmp;
             mListener.onChangeEditText( mAmount);
         }
     };
@@ -99,11 +101,13 @@ public class AddToCartDialogFragmentViewModel
         @Override
         public void execute(Void editText)
         {
+            int tmp = 100;
             double rounding = mCartEntry.getProduct().getUom().getRounding();
 
             if((mAmount - rounding) >= 0)
             {
                 mAmount = mAmount - rounding;
+                mAmount = ((rounding*100) * Math.ceil(Math.round(mAmount/rounding)))/tmp;
                 mListener.onChangeEditText(mAmount);
             }
         }
