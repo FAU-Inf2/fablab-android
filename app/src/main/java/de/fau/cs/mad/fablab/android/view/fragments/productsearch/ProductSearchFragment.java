@@ -36,6 +36,7 @@ public class ProductSearchFragment extends BaseFragment implements
     private EventBus mEventBus = EventBus.getDefault();
     private MenuItem mOrderByItem;
     private boolean mShowCartFAB;
+    private boolean mProductSearch;
 
     @Inject
     ProductSearchFragmentViewModel mViewModel;
@@ -56,6 +57,7 @@ public class ProductSearchFragment extends BaseFragment implements
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         mShowCartFAB = args.getBoolean(getResources().getString(R.string.key_show_cart_fab));
+        mProductSearch = args.getBoolean(getResources().getString(R.string.key_product_search));
         setHasOptionsMenu(true);
     }
 
@@ -65,16 +67,24 @@ public class ProductSearchFragment extends BaseFragment implements
         menu.clear();
         inflater.inflate(R.menu.menu_search, menu);
 
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        ProductSearchView searchView = (ProductSearchView) MenuItemCompat.getActionView(
-                searchItem);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                R.layout.dropdown_item, mViewModel.getAutoCompleteWords());
-        searchView.setAdapter(adapter);
-        searchView.setCommand(mViewModel.getSearchCommand());
-        searchView.setQueryHint(getString(R.string.search_all_hint));
-        searchItem.expandActionView();
-        searchView.clearFocus();
+        if(mProductSearch) {
+            MenuItem searchItem = menu.findItem(R.id.action_search);
+            searchItem.setVisible(true);
+            ProductSearchView searchView = (ProductSearchView) MenuItemCompat.getActionView(
+                    searchItem);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                    R.layout.dropdown_item, mViewModel.getAutoCompleteWords());
+            searchView.setAdapter(adapter);
+            searchView.setCommand(mViewModel.getSearchCommand());
+            searchView.setQueryHint(getString(R.string.search_all_hint));
+            searchItem.expandActionView();
+            searchView.clearFocus();
+        }
+        else
+        {
+            MenuItem searchItem = menu.findItem(R.id.action_search_category);
+            searchItem.setVisible(true);
+        }
 
         mOrderByItem = menu.findItem(R.id.action_orderby);
         if(mOrderByItem != null) {
@@ -121,7 +131,14 @@ public class ProductSearchFragment extends BaseFragment implements
         super.onResume();
         mEventBus.register(this);
         mViewModel.resume();
-        setDisplayOptions(R.id.drawer_item_productsearch, false, mShowCartFAB, mShowCartFAB);
+        if(mProductSearch)
+        {
+            setDisplayOptions(R.id.drawer_item_productsearch, false, mShowCartFAB, mShowCartFAB);
+        }
+        else
+        {
+            setDisplayOptions(R.id.drawer_item_categorysearch, false, mShowCartFAB, mShowCartFAB);
+        }
     }
 
     @Override

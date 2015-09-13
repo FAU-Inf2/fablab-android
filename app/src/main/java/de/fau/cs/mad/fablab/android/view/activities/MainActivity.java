@@ -226,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
                     if (productSearchFragment == null) {
                         Bundle args = new Bundle();
                         args.putSerializable(getResources().getString(R.string.key_show_cart_fab), true);
+                        args.putSerializable(getResources().getString(R.string.key_product_search), true);
                         productSearchFragment = new ProductSearchFragment();
                         productSearchFragment.setArguments(args);
                     }
@@ -242,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
                     if (productSearchFragment == null) {
                         Bundle args = new Bundle();
                         args.putSerializable(getResources().getString(R.string.key_show_cart_fab), true);
+                        args.putSerializable(getResources().getString(R.string.key_product_search), false);
                         productSearchFragment = new ProductSearchFragment();
                         productSearchFragment.setArguments(args);
                     }
@@ -336,6 +338,7 @@ public class MainActivity extends AppCompatActivity {
             Bundle args = new Bundle();
             args.putSerializable(getResources().getString(R.string.key_user), event.getUser());
             args.putSerializable(getResources().getString(R.string.key_show_cart_fab), false);
+            args.putSerializable(getResources().getString(R.string.key_product_search), true);
             productSearchFragment.setArguments(args);
 
             fragmentTransaction.replace(R.id.fragment_container, productSearchFragment,

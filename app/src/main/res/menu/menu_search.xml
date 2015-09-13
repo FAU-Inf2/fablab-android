@@ -6,7 +6,16 @@
         android:icon="@drawable/ic_fab_search_product"
         android:orderInCategory="100"
         android:title="@string/action_search"
+        android:visible="false"
         app:actionViewClass="de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchView"
+        app:showAsAction="always|collapseActionView" />
+
+    <item
+        android:id="@+id/action_search_category"
+        android:icon="@drawable/ic_fab_search_category"
+        android:orderInCategory="100"
+        android:title="@string/action_search"
+        android:visible="false"
         app:showAsAction="always|collapseActionView" />
 
     <item
