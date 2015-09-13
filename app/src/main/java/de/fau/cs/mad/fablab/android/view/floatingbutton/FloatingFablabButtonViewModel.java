@@ -31,6 +31,14 @@ public class FloatingFablabButtonViewModel {
         }
     };
 
+    private Command<Void> startCategorySearchCommand = new Command<Void>(){
+        @Override
+        public void execute(Void parameter) {
+            mEventBus.post(NavigationEvent.CategorySearch);
+            mListener.onFloatingButtonClicked();
+        }
+    };
+
     public void setListener(Listener listener){
         mListener = listener;
     }
@@ -41,6 +49,11 @@ public class FloatingFablabButtonViewModel {
 
     public Command<Void> getStartBarcodeScannerCommand() {
         return startBarcodeScannerCommand;
+    }
+
+    public Command<Void> getStartCategorySearchCommand()
+    {
+        return startCategorySearchCommand;
     }
 
     public interface Listener {

@@ -26,6 +26,8 @@ public class FloatingFablabButton implements FloatingFablabButtonViewModel.Liste
     FloatingActionButton scanButton;
     @Bind(R.id.search_FAB)
     FloatingActionButton searchButton;
+    @Bind(R.id.search_category_FAB)
+    FloatingActionButton categorySearchButton;
 
     public FloatingFablabButton(MainActivity activity, View v){
         activity.inject(this);
@@ -34,6 +36,7 @@ public class FloatingFablabButton implements FloatingFablabButtonViewModel.Liste
         viewModel.setListener(this);
         new ViewCommandBinding().bind(scanButton, viewModel.getStartBarcodeScannerCommand());
         new ViewCommandBinding().bind(searchButton, viewModel.getStartProductSearchCommand());
+        new ViewCommandBinding().bind(categorySearchButton, viewModel.getStartCategorySearchCommand());
     }
 
     @Override
