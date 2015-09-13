@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String TAG_BARCODE_INVENTORY_FRAGMENT = "tag_barcode_inventory_fragment";
     private final static String TAG_PRODUCTSEARCH_INVENTORY_FRAGMENT = "tag_productsearch_inventory_fragment";
     private final static String TAG_SHOWINVENTORY_INVENTORY_FRAGMENT = "tag_showinventory_inventory_fragment";
+    private final static String TAG_CATEGORYSEARCH_FRAGMENT ="tag_categorysearch_fragment";
 
     private ActionBar mActionBar;
     private NavigationDrawer mNavigationDrawer;
@@ -230,6 +231,22 @@ public class MainActivity extends AppCompatActivity {
                     }
                     fragmentTransaction.replace(R.id.fragment_container, productSearchFragment,
                             TAG_PRODUCTSEARCH_FRAGMENT).addToBackStack(null).commit();
+                }
+                break;
+
+            case CategorySearch:
+                if (!TAG_CATEGORYSEARCH_FRAGMENT.equals(currentFragmentTag)) {
+                    ProductSearchFragment productSearchFragment =
+                            (ProductSearchFragment) getSupportFragmentManager().findFragmentByTag(
+                                    TAG_CATEGORYSEARCH_FRAGMENT);
+                    if (productSearchFragment == null) {
+                        Bundle args = new Bundle();
+                        args.putSerializable(getResources().getString(R.string.key_show_cart_fab), true);
+                        productSearchFragment = new ProductSearchFragment();
+                        productSearchFragment.setArguments(args);
+                    }
+                    fragmentTransaction.replace(R.id.fragment_container, productSearchFragment,
+                            TAG_CATEGORYSEARCH_FRAGMENT).addToBackStack(null).commit();
                 }
                 break;
 

@@ -43,6 +43,13 @@ public class NavigationDrawerViewModel {
         }
     };
 
+    private final Command<Void> mNavigateToCategorySearchCommand = new Command<Void>() {
+        @Override
+        public void execute(Void parameter) {
+            mEventBus.post(NavigationEvent.CategorySearch);
+        }
+    };
+
     private final Command<Void> mNavigateToAboutCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
@@ -109,6 +116,11 @@ public class NavigationDrawerViewModel {
 
     public Command<Void> getNavigateToProductSearchCommand() {
         return mNavigateToProductSearchCommand;
+    }
+
+    public Command<Void> getNavigateToCategorySearchCommand()
+    {
+        return mNavigateToCategorySearchCommand;
     }
 
     public Command<Void> getNavigateToAboutCommand() {

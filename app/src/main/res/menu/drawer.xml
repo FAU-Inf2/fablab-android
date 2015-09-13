@@ -11,6 +11,10 @@
             android:icon="@drawable/ic_nav_search_product"
             android:title="@string/productsearch"/>
         <item
+            android:id="@+id/drawer_item_categorysearch"
+            android:icon="@drawable/ic_nav_category_search"
+            android:title="@string/categorysearch"/>
+        <item
             android:id="@+id/drawer_item_scanner"
             android:icon="@drawable/ic_nav_scan_product"
             android:title="@string/scanner" />

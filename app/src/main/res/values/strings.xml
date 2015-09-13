@@ -98,6 +98,7 @@
     <!-- Strings for navigation drawer titles -->
     <string name="news">News</string>
     <string name="productsearch">Produkt suchen</string>
+    <string name="categorysearch">Kategoriesuche</string>
     <string name="scanner">Produkt scannen</string>
     <string name="about">Über</string>
     <string name="settings">Einstellungen</string>
