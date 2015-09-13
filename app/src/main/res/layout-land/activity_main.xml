@@ -82,6 +82,16 @@
                     />
 
                 <com.github.clans.fab.FloatingActionButton
+                    android:id="@+id/search_category_FAB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    fab:fab_size="mini"
+                    fab:fab_colorNormal="@android:color/black"
+                    fab:fab_colorPressed="@android:color/black"
+                    android:src="@drawable/ic_fab_search_category"
+                    />
+
+                <com.github.clans.fab.FloatingActionButton
                     android:id="@+id/search_FAB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
