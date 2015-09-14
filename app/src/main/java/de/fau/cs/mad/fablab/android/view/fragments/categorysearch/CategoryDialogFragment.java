@@ -77,7 +77,6 @@ public class CategoryDialogFragment extends BaseDialogFragment {
 
     private void depthFirstSearch(TreeNode node, Category category, HashMap<Long, Category> children)
     {
-        System.out.println(category.getName());
         List<Long> childrenID = category.getCategories();
         if(childrenID.isEmpty())
         {
