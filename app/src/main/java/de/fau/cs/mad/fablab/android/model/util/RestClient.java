@@ -17,6 +17,7 @@ import javax.net.ssl.TrustManagerFactory;
 
 import de.fau.cs.mad.fablab.android.BuildConfig;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.rest.myapi.CategoryApi;
 import de.fau.cs.mad.fablab.rest.core.Format;
 import de.fau.cs.mad.fablab.rest.myapi.CartApi;
 import de.fau.cs.mad.fablab.rest.myapi.DataApi;
@@ -133,5 +134,10 @@ public class RestClient {
 
     public RestAdapter.Builder getRestAdapterBuilder() {
         return mRestAdapterBuilder;
+    }
+
+    public CategoryApi getCategoryApi()
+    {
+        return mRestAdapter.create(CategoryApi.class);
     }
 }

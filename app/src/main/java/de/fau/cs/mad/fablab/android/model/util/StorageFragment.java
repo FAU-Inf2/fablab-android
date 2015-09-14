@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
 import de.fau.cs.mad.fablab.android.model.CartModel;
+import de.fau.cs.mad.fablab.android.model.CategoryModel;
 import de.fau.cs.mad.fablab.android.model.CheckoutModel;
 import de.fau.cs.mad.fablab.android.model.DrupalModel;
 import de.fau.cs.mad.fablab.android.model.MailModel;
@@ -36,6 +37,7 @@ public class StorageFragment extends Fragment {
     private UserModel mUserModel;
     private InventoryModel mInventoryModel;
     private VersionCheckModel mVersionCheckModel;
+    private CategoryModel mCategoryModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class StorageFragment extends Fragment {
         mInventoryModel = new InventoryModel(restClient.getRestAdapterBuilder());
         mVersionCheckModel = new VersionCheckModel(restClient.getVersionCheckApi(),
                 getActivity().getApplicationContext());
+        mCategoryModel = new CategoryModel(restClient.getCategoryApi());
     }
 
     public NewsModel getNewsModel() {
@@ -118,5 +121,10 @@ public class StorageFragment extends Fragment {
     public VersionCheckModel getVersionCheckModel()
     {
         return mVersionCheckModel;
+    }
+
+    public CategoryModel getCategoryModel()
+    {
+        return mCategoryModel;
     }
 }
