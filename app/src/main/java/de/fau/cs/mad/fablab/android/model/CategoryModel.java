@@ -4,20 +4,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.inject.Inject;
-
+import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.rest.core.Category;
+import de.fau.cs.mad.fablab.rest.core.Product;
 import de.fau.cs.mad.fablab.rest.myapi.CategoryApi;
+import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class CategoryModel {
 
-    private CategoryApi mApi;
+    private CategoryApi mCategoryApi;
+    private ProductApi mProductApi;
     private List<Category> mAllCategories;
     private List<Category> mRoots;
     private HashMap<Long, Category> mChildren;
+    private ObservableArrayList<Product> mProducts;
 
     private Callback<List<Category>> mGetAllCallback = new Callback<List<Category>>() {
         @Override
@@ -32,18 +35,31 @@ public class CategoryModel {
         }
     };
 
-    @Inject
-    public CategoryModel(CategoryApi api){
-        mApi = api;
+    private Callback<List<Product>> mCategoryProductsCallback = new Callback<List<Product>>() {
+        @Override
+        public void success(List<Product> products, Response response) {
+            mProducts.clear();
+            mProducts.addAll(products);
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+        }
+    };
+
+    public CategoryModel(CategoryApi categoryApi, ProductApi productApi){
+        mCategoryApi = categoryApi;
+        mProductApi = productApi;
         mAllCategories = new ArrayList<>();
         mRoots = new ArrayList<>();
         mChildren = new HashMap<>();
+        mProducts = new ObservableArrayList<>();
         update();
     }
 
     public void update()
     {
-        mApi.findAll(mGetAllCallback);
+        mCategoryApi.findAll(mGetAllCallback);
     }
 
     private void separateRootChildren(List<Category> list)
@@ -68,6 +84,11 @@ public class CategoryModel {
         return mAllCategories;
     }
 
+    public ObservableArrayList<Product> getCategoryProducts()
+    {
+        return mProducts;
+    }
+
     public List<Category> getRootCategories()
     {
         return mRoots;
@@ -76,5 +97,10 @@ public class CategoryModel {
     public HashMap<Long, Category> getChildrenCategories()
     {
         return mChildren;
+    }
+
+    public void getCategoryProducts(String category)
+    {
+        mProductApi.findByCategory(category, 0,0, mCategoryProductsCallback);
     }
 }

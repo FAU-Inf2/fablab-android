@@ -65,7 +65,7 @@ public class StorageFragment extends Fragment {
         mInventoryModel = new InventoryModel(restClient.getRestAdapterBuilder());
         mVersionCheckModel = new VersionCheckModel(restClient.getVersionCheckApi(),
                 getActivity().getApplicationContext());
-        mCategoryModel = new CategoryModel(restClient.getCategoryApi());
+        mCategoryModel = new CategoryModel(restClient.getCategoryApi(), restClient.getProductApi());
     }
 
     public NewsModel getNewsModel() {

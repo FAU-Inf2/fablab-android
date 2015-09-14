@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
@@ -19,18 +21,25 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import de.fau.cs.mad.fablab.rest.core.Category;
 
-public class CategoryDialogFragment extends BaseDialogFragment {
+public class CategoryDialogFragment extends BaseDialogFragment implements CategoryDialogFragmentViewModel.Listener {
 
     @Bind(R.id.container_tree_view)
     RelativeLayout treeViewContainer;
+    @Bind(R.id.status_bar_tv)
+    TextView statusBarTextView;
+    @Bind(R.id.button_categorysearch_get_products)
+    Button getProductsButton;
+
 
     @Inject
     CategoryDialogFragmentViewModel mViewModel;
 
     private AndroidTreeView mTreeView;
+    private String currentCategory;
 
 
     @Override
@@ -45,6 +54,8 @@ public class CategoryDialogFragment extends BaseDialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mViewModel.setListener(this);
+
         initializeCategoryTree();
 
         if (savedInstanceState != null) {
@@ -53,6 +64,8 @@ public class CategoryDialogFragment extends BaseDialogFragment {
                 mTreeView.restoreState(state);
             }
         }
+
+        new ViewCommandBinding().bind(getProductsButton, mViewModel.getOnGetProductsButtonClickedCommand());
     }
 
     private void initializeCategoryTree()
@@ -72,6 +85,14 @@ public class CategoryDialogFragment extends BaseDialogFragment {
         mTreeView.setDefaultViewHolder(TreeItemHolder.class);
         mTreeView.setDefaultAnimation(true);
         mTreeView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
+
+        mTreeView.setDefaultNodeClickListener(new TreeNode.TreeNodeClickListener() {
+            @Override
+            public void onClick(TreeNode treeNode, Object o) {
+                currentCategory = treeNode.getValue().toString();
+                statusBarTextView.setText(currentCategory);
+            }
+        });
         treeViewContainer.addView(mTreeView.getView());
     }
 
@@ -95,5 +116,15 @@ public class CategoryDialogFragment extends BaseDialogFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("tState", mTreeView.getSaveState());
+    }
+
+    @Override
+    public String getCategory() {
+        return currentCategory;
+    }
+
+    @Override
+    public void onGetProductsButtonClicked() {
+        this.dismiss();
     }
 }

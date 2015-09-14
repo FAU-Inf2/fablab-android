@@ -13,19 +13,20 @@ import java.util.Locale;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
+import de.fau.cs.mad.fablab.android.model.CategoryModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.model.events.NoProductsFoundEvent;
 import de.fau.cs.mad.fablab.android.model.events.ProductSearchRetrofitErrorEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Product;
-
 import de.greenrobot.event.EventBus;
 
 public class ProductSearchFragmentViewModel extends BaseViewModel<Product> {
 
     private ProductModel mProductModel;
     private AutoCompleteModel mAutoCompleteModel;
+    private CategoryModel mCategoryModel;
     private Listener mListener;
     private EventBus mEventBus;
     private boolean mSearchState = false;
@@ -70,12 +71,14 @@ public class ProductSearchFragmentViewModel extends BaseViewModel<Product> {
     };
 
     @Inject
-    public ProductSearchFragmentViewModel(ProductModel productModel, AutoCompleteModel
+    public ProductSearchFragmentViewModel(CategoryModel categoryModel, ProductModel productModel, AutoCompleteModel
             autoCompleteModel){
         mProductModel = productModel;
         mAutoCompleteModel = autoCompleteModel;
+        mCategoryModel = categoryModel;
         mEventBus = EventBus.getDefault();
         mProductModel.getProducts().setListener(this);
+        mCategoryModel.getCategoryProducts().setListener(this);
         mProductSearchViewModelCollection = new ListAdapteeCollection<>();
     }
 

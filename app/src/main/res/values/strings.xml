@@ -93,6 +93,7 @@
     <string name="version_check_no_update_available">Kein Update verfügbar</string>
 
     <string name="category_title">Kategorien:</string>
+    <string name="category_button">Produkte suchen</string>
 
     <string name="key_show_cart_fab">showcartfab</string>
     <string name="key_user">user</string>

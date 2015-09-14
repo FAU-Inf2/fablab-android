@@ -6,12 +6,40 @@ import java.util.List;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.CategoryModel;
+import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Category;
 
 public class CategoryDialogFragmentViewModel {
 
+    private CategoryModel mCategoryModel;
+    private Listener mListener;
+
+    private Command<Void> mOnGetProductsButtonClickedCommand = new Command<Void>() {
+        @Override
+        public void execute(Void parameter) {
+            if(mListener != null)
+            {
+                mCategoryModel.getCategoryProducts(mListener.getCategory());
+                mListener.onGetProductsButtonClicked();
+            }
+        }
+    };
+
     @Inject
-    CategoryModel mCategoryModel;
+    CategoryDialogFragmentViewModel(CategoryModel categoryModel)
+    {
+        mCategoryModel = categoryModel;
+    }
+
+    public void setListener(Listener listener)
+    {
+        mListener = listener;
+    }
+
+    public Command<Void> getOnGetProductsButtonClickedCommand()
+    {
+        return mOnGetProductsButtonClickedCommand;
+    }
 
     public List<Category> getAllCategories()
     {
@@ -26,5 +54,10 @@ public class CategoryDialogFragmentViewModel {
     public HashMap<Long, Category> getChildrenCategories()
     {
         return mCategoryModel.getChildrenCategories();
+    }
+
+    public interface Listener{
+        String getCategory();
+        void onGetProductsButtonClicked();
     }
 }

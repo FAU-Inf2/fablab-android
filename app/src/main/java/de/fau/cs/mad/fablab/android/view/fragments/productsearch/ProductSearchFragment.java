@@ -210,6 +210,7 @@ public class ProductSearchFragment extends BaseFragment implements
         Fragment fragment = getFragmentManager().findFragmentByTag("CategoryDialogFragment");
         if(fragment == null) {
             CategoryDialogFragment frag = new CategoryDialogFragment();
+            Bundle args = new Bundle();
             frag.show(getFragmentManager(), "CategoryDialogFragment");
         }
     }

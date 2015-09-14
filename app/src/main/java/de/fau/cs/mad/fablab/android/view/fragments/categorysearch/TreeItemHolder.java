@@ -50,5 +50,10 @@ public class TreeItemHolder extends TreeNode.BaseNodeViewHolder<TreeItemHolder.T
         {
             return mCategory;
         }
+
+        @Override
+        public String toString() {
+            return mCategory.getName();
+        }
     }
 }
