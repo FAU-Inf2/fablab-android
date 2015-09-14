@@ -17,7 +17,7 @@ public class CategoryModel {
     private CategoryApi mApi;
     private List<Category> mAllCategories;
     private List<Category> mRoots;
-    private HashMap<Integer, Category> mChildren;
+    private HashMap<Long, Category> mChildren;
 
     private Callback<List<Category>> mGetAllCallback = new Callback<List<Category>>() {
         @Override
@@ -58,7 +58,7 @@ public class CategoryModel {
             }
             else
             {
-                mChildren.put((int)c.getCategoryId(), c);
+                mChildren.put(c.getCategoryId(), c);
             }
         }
     }
@@ -73,7 +73,7 @@ public class CategoryModel {
         return mRoots;
     }
 
-    public HashMap<Integer, Category> getChildrenCategories()
+    public HashMap<Long, Category> getChildrenCategories()
     {
         return mChildren;
     }

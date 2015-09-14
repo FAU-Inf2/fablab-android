@@ -23,7 +23,7 @@ public class CategoryDialogFragmentViewModel {
         return mCategoryModel.getRootCategories();
     }
 
-    public HashMap<Integer, Category> getChildrenCategories()
+    public HashMap<Long, Category> getChildrenCategories()
     {
         return mCategoryModel.getChildrenCategories();
     }

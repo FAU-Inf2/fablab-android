@@ -8,11 +8,18 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
+import com.unnamed.b.atv.model.TreeNode;
+import com.unnamed.b.atv.view.AndroidTreeView;
+
+import java.util.HashMap;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
+import de.fau.cs.mad.fablab.rest.core.Category;
 
 public class CategoryDialogFragment extends BaseDialogFragment {
 
@@ -22,10 +29,6 @@ public class CategoryDialogFragment extends BaseDialogFragment {
     @Inject
     CategoryDialogFragmentViewModel mViewModel;
 
-    public CategoryDialogFragment()
-    {
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,5 +42,40 @@ public class CategoryDialogFragment extends BaseDialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        initializeCategoryTree();
+    }
+
+    private void initializeCategoryTree()
+    {
+        List<Category> roots = mViewModel.getRootCategories();
+        HashMap<Long, Category> children = mViewModel.getChildrenCategories();
+
+        TreeNode root = TreeNode.root();
+        for(Category c : roots)
+        {
+            TreeNode node = new TreeNode(c);
+            depthFirstSearch(node, c, children);
+            root.addChild(node);
+        }
+
+        AndroidTreeView tView = new AndroidTreeView(getActivity(), root);
+        treeViewContainer.addView(tView.getView());
+    }
+
+    private void depthFirstSearch(TreeNode node, Category category, HashMap<Long, Category> children)
+    {
+        System.out.println(category.getName());
+        List<Long> childrenID = category.getCategories();
+        if(childrenID.isEmpty())
+        {
+            return;
+        }
+        for(Long id : childrenID)
+        {
+            Category child = children.get(id);
+            TreeNode childNode = new TreeNode(child);
+            depthFirstSearch(childNode, child, children);
+            node.addChild(childNode);
+        }
     }
 }
