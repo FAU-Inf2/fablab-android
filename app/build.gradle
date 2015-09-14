@@ -133,6 +133,9 @@ dependencies {
 
     // InventoryItem
     compile 'joda-time:joda-time:2.2'
+
+    // CategorySearch
+    compile 'com.github.bmelnychuk:atv:1.2.+'
 }
 
 allprojects {

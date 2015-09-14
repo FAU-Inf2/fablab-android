@@ -4,6 +4,7 @@ import dagger.Module;
 import dagger.Provides;
 import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
 import de.fau.cs.mad.fablab.android.model.CartModel;
+import de.fau.cs.mad.fablab.android.model.CategoryModel;
 import de.fau.cs.mad.fablab.android.model.CheckoutModel;
 import de.fau.cs.mad.fablab.android.model.DrupalModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
@@ -24,6 +25,7 @@ import de.fau.cs.mad.fablab.android.view.fragments.about.AboutFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.alert.AlertDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.categorysearch.CategoryDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.checkout.CheckoutFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.checkout.QrCodeScannerFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.icalandnews.ICalAndNewsFragment;
@@ -56,7 +58,8 @@ import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
                 StackTraceDialogFragment.class, VersionCheckDialogFragment.class,
                 AlertDialogFragment.class, InventoryFragment.class, InventoryBarcodeScannerFragment.class,
                 InventoryProductSearchFragment.class, AddToInventoryDialogFragment.class,
-                SettingsFragment.class, ShowInventoryFragment.class, CartEntryDialogFragment.class
+                SettingsFragment.class, ShowInventoryFragment.class, CartEntryDialogFragment.class,
+                CategoryDialogFragment.class
         })
 public class ModelModule {
     private final StorageFragment mStorageFragment;
@@ -128,5 +131,11 @@ public class ModelModule {
     @Provides
     VersionCheckModel provideVersionCheckModel() {
         return mStorageFragment.getVersionCheckModel();
+    }
+
+    @Provides
+    CategoryModel provideCategoryModel()
+    {
+        return mStorageFragment.getCategoryModel();
     }
 }

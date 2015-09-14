@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/category_margin_tb"
+    android:paddingBottom="@dimen/category_margin_tb"
+    android:paddingLeft="@dimen/category_margin_lr"
+    android:paddingRight="@dimen/category_margin_lr"
+    >
+
+    <TextView
+        android:padding="8dp"
+        android:textSize="@dimen/textsize_category_title"
+        android:text="@string/category_title"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@android:color/white"
+        android:id="@+id/status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_below="@id/status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/container_tree_view">
+    </RelativeLayout>
+
+
+</RelativeLayout>

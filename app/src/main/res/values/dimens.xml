@@ -47,6 +47,9 @@
     <dimen name="zero">0dp</dimen>
     <dimen name="one">1dp</dimen>
 
+    <dimen name="category_margin_tb">5dp</dimen>
+    <dimen name="category_margin_lr">5dp</dimen>
+
     <dimen name="slidinguppanel_corner_radius_top">10dp</dimen>
     <dimen name="slidinguppanel_stroke_width">3dp</dimen>
     <dimen name="slidinguppanel_panel_height">65dp</dimen>
@@ -135,4 +138,5 @@
     <dimen name="textsize_settings_title">20dp</dimen>
     <dimen name="textsize_settings_text">15dp</dimen>
     <dimen name="textsize_autocomplete_item">18dp</dimen>
+    <dimen name="textsize_category_title">16dp</dimen>
 </resources>
