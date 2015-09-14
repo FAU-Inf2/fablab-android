@@ -27,6 +27,8 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
     Button mShowButton;
     @Bind(R.id.button_delete_inventory_inventory)
     Button mDeleteButton;
+    @Bind(R.id.button_search_category_inventory)
+    Button mSearchCategoryButton;
 
     @Inject
     InventoryFragmentViewModel mViewModel;
@@ -51,6 +53,7 @@ public class InventoryFragment extends BaseFragment implements InventoryFragment
         new ViewCommandBinding().bind(mSearchButton, mViewModel.getOnSearchButtonClickedCommand());
         new ViewCommandBinding().bind(mDeleteButton, mViewModel.getOnDeleteButtonClickedCommand());
         new ViewCommandBinding().bind(mShowButton, mViewModel.getOnShowInventoryClickedCommand());
+        new ViewCommandBinding().bind(mSearchCategoryButton, mViewModel.getOnCategorySearchButtonClickedCommand());
     }
 
     @Override

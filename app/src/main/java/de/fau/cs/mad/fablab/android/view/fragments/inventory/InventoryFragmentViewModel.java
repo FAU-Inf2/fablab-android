@@ -31,7 +31,7 @@ public class InventoryFragmentViewModel {
     {
         @Override
         public void execute(Void parameter) {
-            mEventBus.post(new NavigationEventProductSearchInventory(getUser()));
+            mEventBus.post(new NavigationEventProductSearchInventory(getUser(), true));
         }
     };
 
@@ -48,6 +48,14 @@ public class InventoryFragmentViewModel {
         @Override
         public void execute(Void parameter) {
             mEventBus.post(new NavigationEventShowInventory(getUser()));
+        }
+    };
+
+    private Command<Void> mOnCategorySearchButtonClickedCommand = new Command<Void>()
+    {
+        @Override
+        public void execute(Void parameter) {
+            mEventBus.post(new NavigationEventProductSearchInventory(getUser(), false));
         }
     };
 
@@ -86,6 +94,11 @@ public class InventoryFragmentViewModel {
     public Command<Void> getOnDeleteButtonClickedCommand()
     {
         return mOnDeleteButtonClickedCommand;
+    }
+
+    public Command<Void> getOnCategorySearchButtonClickedCommand()
+    {
+        return mOnCategorySearchButtonClickedCommand;
     }
 
     public Command<Void> getOnShowInventoryClickedCommand()

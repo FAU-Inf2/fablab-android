@@ -75,6 +75,7 @@
     <string name="inventory_fragment_title">Inventur</string>
     <string name="inventory_fragment_scan_product">Produkt scannen</string>
     <string name="inventory_fragment_search_product">Produkt suchen</string>
+    <string name="inventory_fragment_search_category">Kategorien suchen</string>
     <string name="inventory_fragment_delete_inventory">Inventar löschen</string>
     <string name="inventory_fragment_show_inventory">Inventar anzeigen</string>
     <string name="show_inventory_fragment_title">Inventar:</string>
