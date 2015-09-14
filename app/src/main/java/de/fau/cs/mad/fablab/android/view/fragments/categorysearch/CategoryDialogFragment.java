@@ -2,6 +2,7 @@ package de.fau.cs.mad.fablab.android.view.fragments.categorysearch;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ public class CategoryDialogFragment extends BaseDialogFragment {
     @Inject
     CategoryDialogFragmentViewModel mViewModel;
 
+    private AndroidTreeView mTreeView;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +46,13 @@ public class CategoryDialogFragment extends BaseDialogFragment {
         super.onActivityCreated(savedInstanceState);
 
         initializeCategoryTree();
+
+        if (savedInstanceState != null) {
+            String state = savedInstanceState.getString("tState");
+            if (!TextUtils.isEmpty(state)) {
+                mTreeView.restoreState(state);
+            }
+        }
     }
 
     private void initializeCategoryTree()
@@ -58,11 +68,11 @@ public class CategoryDialogFragment extends BaseDialogFragment {
             root.addChild(node);
         }
 
-        AndroidTreeView tView = new AndroidTreeView(getActivity(), root);
-        tView.setDefaultViewHolder(TreeItemHolder.class);
-        tView.setDefaultAnimation(true);
-        tView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
-        treeViewContainer.addView(tView.getView());
+        mTreeView = new AndroidTreeView(getActivity(), root);
+        mTreeView.setDefaultViewHolder(TreeItemHolder.class);
+        mTreeView.setDefaultAnimation(true);
+        mTreeView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
+        treeViewContainer.addView(mTreeView.getView());
     }
 
     private void depthFirstSearch(TreeNode node, Category category, HashMap<Long, Category> children)
@@ -80,5 +90,11 @@ public class CategoryDialogFragment extends BaseDialogFragment {
             depthFirstSearch(childNode, child, children);
             node.addChild(childNode);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("tState", mTreeView.getSaveState());
     }
 }
