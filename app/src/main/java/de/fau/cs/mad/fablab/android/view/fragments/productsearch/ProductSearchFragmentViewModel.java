@@ -44,6 +44,15 @@ public class ProductSearchFragmentViewModel extends BaseViewModel<Product> {
         }
     };
 
+    private Command<Void> searchCategoryCommand = new Command<Void>() {
+        @Override
+        public void execute(Void parameter) {
+            if(mListener != null) {
+                mListener.onCategorySearchClicked();
+            }
+        }
+    };
+
     private Command<Void> orderProductsByNameCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
@@ -85,6 +94,11 @@ public class ProductSearchFragmentViewModel extends BaseViewModel<Product> {
 
     public Command<Void> getOrderProductsByPriceCommand() {
         return orderProductsByPriceCommand;
+    }
+
+    public Command<Void> getSearchCategoryCommand()
+    {
+        return searchCategoryCommand;
     }
 
     private void orderItemsByName() {
@@ -224,6 +238,7 @@ public class ProductSearchFragmentViewModel extends BaseViewModel<Product> {
         void onRetrofitErrorOccurred();
         void onNoProductsFound();
         void onProductOrderChanged();
+        void onCategorySearchClicked();
     }
 
 }

@@ -25,6 +25,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.categorysearch.CategoryDialogFragment;
 import de.greenrobot.event.EventBus;
 import xyz.danoz.recyclerviewfastscroller.sectionindicator.title.SectionTitleIndicator;
 import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller;
@@ -84,6 +85,9 @@ public class ProductSearchFragment extends BaseFragment implements
         {
             MenuItem searchItem = menu.findItem(R.id.action_search_category);
             searchItem.setVisible(true);
+            searchItem.expandActionView();
+            new MenuItemCommandBinding().bind(searchItem, mViewModel.getSearchCategoryCommand());
+            onCategorySearchClicked();
         }
 
         mOrderByItem = menu.findItem(R.id.action_orderby);
@@ -197,6 +201,13 @@ public class ProductSearchFragment extends BaseFragment implements
         arguments.putSerializable(ProductDialogFragmentViewModel.KEY_PRODUCT, event.getProduct());
         dialogFragment.setArguments(arguments);
         dialogFragment.show(getFragmentManager(), "ProductDialogFragment");
+    }
+
+    @Override
+    public void onCategorySearchClicked()
+    {
+        CategoryDialogFragment frag = new CategoryDialogFragment();
+        frag.show(getFragmentManager(), "CategoryDialogFragment");
     }
 
 }
