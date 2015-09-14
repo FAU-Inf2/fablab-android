@@ -12,6 +12,8 @@ import com.github.machinarius.preferencefragment.PreferenceFragment;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.model.events.AddCalendarEvent;
+import de.fau.cs.mad.fablab.android.model.events.ExistingCalendarEvent;
 import de.fau.cs.mad.fablab.android.model.events.NoUpdateAvailableEvent;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.greenrobot.event.EventBus;
@@ -19,9 +21,10 @@ import de.greenrobot.event.EventBus;
 /**
  * Simple Settings/Preferences Fragment to provide some user configurable options.
  */
-public class SettingsFragment extends PreferenceFragment {
+public class SettingsFragment extends PreferenceFragment  {
     @Inject
     SettingsFragmentViewModel mViewModel;
+
 
     private EventBus mEventBus = EventBus.getDefault();
 
@@ -29,6 +32,7 @@ public class SettingsFragment extends PreferenceFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((MainActivity) getActivity()).inject(this);
+
 
         mViewModel.initialize(getPreferenceScreen(), getPreferenceManager().getSharedPreferences());
     }
@@ -72,4 +76,19 @@ public class SettingsFragment extends PreferenceFragment {
         Toast.makeText(getActivity(), R.string.version_check_no_update_available, Toast.LENGTH_LONG)
                 .show();
     }
+
+    @SuppressWarnings("unused")
+    public void onEvent(AddCalendarEvent event) {
+        Toast.makeText(getActivity(), R.string.add_calendar, Toast.LENGTH_LONG)
+                .show();
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(ExistingCalendarEvent event) {
+        Toast.makeText(getActivity(), R.string.existing_calendar, Toast.LENGTH_LONG)
+                .show();
+    }
+
+
+
 }

@@ -26,7 +26,7 @@ import de.fau.cs.mad.fablab.android.view.activities.BackButtonPressedEvent;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.EditTextCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.EnterKeyCommandBinding;
-import de.fau.cs.mad.fablab.android.view.common.binding.ChangeAmountByOneCommand;
+import de.fau.cs.mad.fablab.android.view.common.binding.ButtonCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import de.fau.cs.mad.fablab.rest.core.Product;
@@ -99,8 +99,8 @@ public class AddToCartDialogFragment extends BaseDialogFragment
             }
         }, 250);
 
-        new ChangeAmountByOneCommand().bind(plus_btn, mViewModel.getIncreaseAmountByOneCommand());
-        new ChangeAmountByOneCommand().bind(minus_btn, mViewModel.getDecreaseAmountByOneCommand());
+        new ButtonCommandBinding().bind(plus_btn, mViewModel.getIncreaseAmountByOneCommand());
+        new ButtonCommandBinding().bind(minus_btn, mViewModel.getDecreaseAmountByOneCommand());
         new EditTextCommandBinding().bind(amount_et, mViewModel.getChangeAmountCommand());
         new EnterKeyCommandBinding().bind(amount_et, mViewModel.isUpdate() ?
                 mViewModel.getUpdateCartEntryCommand() : mViewModel.getAddToCartCommand());

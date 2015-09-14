@@ -96,6 +96,9 @@
     <string name="category_title">Kategorien:</string>
     <string name="category_button">Produkte suchen</string>
 
+    <string name="add_calendar">FabLab Kalender hinzugefügt</string>
+    <string name="existing_calendar">FabLab Kalender existiert bereits</string>
+
     <string name="key_show_cart_fab">showcartfab</string>
     <string name="key_user">user</string>
     <string name="key_product_search">productsearch</string>

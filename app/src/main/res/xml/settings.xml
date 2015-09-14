@@ -27,5 +27,10 @@
         android:key="check_for_updates"
         android:layout="@layout/preference_layout"
         android:title="Nach Updates suchen" />
+    <Preference
+        android:id="@+id/add_complete_calendar"
+        android:key="add_calendar"
+        android:layout="@layout/preference_layout"
+        android:title="FabLab-Kalender hinzufügen" />
 
 </PreferenceScreen>

@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 
-public class ChangeAmountByOneCommand implements Binding<Button, Void>, View.OnClickListener
+public class ButtonCommandBinding implements Binding<Button, Void>, View.OnClickListener
 {
     private Command<Void> mCommand;
 
