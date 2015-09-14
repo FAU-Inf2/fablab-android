@@ -31,6 +31,7 @@
         android:id="@+id/add_complete_calendar"
         android:key="add_calendar"
         android:layout="@layout/preference_layout"
+        android:summary="Einen neuen Kalender mit den zehn aktuellsten Events im Android-Kalender erstellen"
         android:title="FabLab-Kalender hinzufügen" />
 
 </PreferenceScreen>

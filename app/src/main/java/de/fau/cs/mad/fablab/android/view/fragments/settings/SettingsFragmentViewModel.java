@@ -18,6 +18,7 @@ import java.util.TimeZone;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.BuildConfig;
+import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
 import de.fau.cs.mad.fablab.android.model.PushModel;
@@ -36,6 +37,9 @@ public class SettingsFragmentViewModel implements SharedPreferences.OnSharedPref
     private static final String KEY_PREF_FORCE_RELOAD_AUTOCOMPLETION = "force_reload_autocompletion";
     private static final String KEY_PREF_CHECK_FOR_UPDATES = "check_for_updates";
     private static final String KEY_PREF_ADD_CALENDAR = "add_calendar";
+
+    private static final String KEY_CALENDAR_NAME = "FabLab Kalender";
+    private static final String KEY_CALENDAR_ACCOUNT = "FabLab";
 
     @Inject
     SpaceApiModel mSpaceApiModel;
@@ -61,7 +65,7 @@ public class SettingsFragmentViewModel implements SharedPreferences.OnSharedPref
                 mVersionCheckModel.checkVersion();
                 break;
             case KEY_PREF_ADD_CALENDAR:
-                calendarCreator(context, "FabLab", "FabLab");
+                calendarCreator(context, KEY_CALENDAR_NAME, KEY_CALENDAR_ACCOUNT);
                 break;
         }
         return true;
@@ -107,21 +111,15 @@ public class SettingsFragmentViewModel implements SharedPreferences.OnSharedPref
     }
     public static final String[] EVENT_PROJECTION = new String[] {
             CalendarContract.Calendars._ID,                           // 0
-            CalendarContract.Calendars.ACCOUNT_NAME,                  // 1
-            CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,         // 2
-            CalendarContract.Calendars.OWNER_ACCOUNT                  // 3
     };
 
     private static final int PROJECTION_ID_INDEX = 0;
-    private static final int PROJECTION_ACCOUNT_NAME_INDEX = 1;
-    private static final int PROJECTION_DISPLAY_NAME_INDEX = 2;
-    private static final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
 
     private void calendarCreator(Context context, String name, String accountName)
     {
+        String[] params = {name, accountName};
         CalendarTask calendarTask = new CalendarTask();
-        calendarTask.execute("FabLab");
-
+        calendarTask.execute(params);
     }
 
     private long getCalID(String name, String accountName)
@@ -175,22 +173,21 @@ public class SettingsFragmentViewModel implements SharedPreferences.OnSharedPref
         values.put(CalendarContract.Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
         values.put(CalendarContract.Calendars.NAME, name);
         values.put(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, name);
-        values.put(CalendarContract.Calendars.CALENDAR_COLOR, 0x00FF00);
         values.put(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL, CalendarContract.Calendars.CAL_ACCESS_ROOT);
         values.put(CalendarContract.Calendars.OWNER_ACCOUNT, accountName);
         values.put(CalendarContract.Calendars.VISIBLE, 1);
-        values.put(CalendarContract.Calendars.SYNC_EVENTS, 1);
+        values.put(CalendarContract.Calendars.SYNC_EVENTS, 0);
         values.put(CalendarContract.Calendars.CALENDAR_TIME_ZONE, "Europe/Berlin");
 
         Uri newCalendar = context.getContentResolver().insert(target, values);
 
-        createCalendarEvents();
+        createCalendarEvents(name, accountName);
 
     }
 
-    private void createCalendarEvents()
+    private void createCalendarEvents(String name, String accountName)
     {
-        long calendarId = getCalID("FabLab", "FabLab");
+        long calendarId = getCalID(name, accountName);
         ObservableArrayList<ICal> iCals =  mIcalModel.getICalsList();
 
         for(ICal iCal: iCals)
@@ -205,6 +202,7 @@ public class SettingsFragmentViewModel implements SharedPreferences.OnSharedPref
         String name = "";
         String description = "";
         String location = "";
+        boolean isAllday = false;
 
         TimeZone timeZone = TimeZone.getDefault();
         Date now = new Date();
@@ -223,6 +221,7 @@ public class SettingsFragmentViewModel implements SharedPreferences.OnSharedPref
         name = iCal.getSummery();
         description = iCal.getDescription();
         location = iCal.getLocation();
+        isAllday = iCal.isAllday();
 
         ContentValues cv = new ContentValues();
         cv.put(CalendarContract.Events.TITLE, name);
@@ -232,6 +231,7 @@ public class SettingsFragmentViewModel implements SharedPreferences.OnSharedPref
         cv.put(CalendarContract.Events.DTEND, endMillis);
         cv.put(CalendarContract.Events.CALENDAR_ID, calendarId);
         cv.put(CalendarContract.Events.EVENT_TIMEZONE, "Europe/Berlin");
+        cv.put(CalendarContract.Events.ALL_DAY, isAllday);
 
         Uri newEvent = ctx.getContentResolver().insert(CalendarContract.Events.CONTENT_URI, cv);
     }
