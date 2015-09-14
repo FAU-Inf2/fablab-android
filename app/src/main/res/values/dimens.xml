@@ -138,5 +138,6 @@
     <dimen name="textsize_settings_title">20dp</dimen>
     <dimen name="textsize_settings_text">15dp</dimen>
     <dimen name="textsize_autocomplete_item">18dp</dimen>
-    <dimen name="textsize_category_title">16dp</dimen>
+    <dimen name="textsize_category_title">18dp</dimen>
+    <dimen name="textsize_category_text">16dp</dimen>
 </resources>

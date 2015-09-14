@@ -53,12 +53,15 @@ public class CategoryDialogFragment extends BaseDialogFragment {
         TreeNode root = TreeNode.root();
         for(Category c : roots)
         {
-            TreeNode node = new TreeNode(c);
+            TreeNode node = new TreeNode(new TreeItemHolder.TreeItem(c));
             depthFirstSearch(node, c, children);
             root.addChild(node);
         }
 
         AndroidTreeView tView = new AndroidTreeView(getActivity(), root);
+        tView.setDefaultViewHolder(TreeItemHolder.class);
+        tView.setDefaultAnimation(true);
+        tView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
         treeViewContainer.addView(tView.getView());
     }
 
@@ -73,7 +76,7 @@ public class CategoryDialogFragment extends BaseDialogFragment {
         for(Long id : childrenID)
         {
             Category child = children.get(id);
-            TreeNode childNode = new TreeNode(child);
+            TreeNode childNode = new TreeNode(new TreeItemHolder.TreeItem(child));
             depthFirstSearch(childNode, child, children);
             node.addChild(childNode);
         }
