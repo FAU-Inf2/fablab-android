@@ -2,6 +2,7 @@ package de.fau.cs.mad.fablab.android.view.fragments.productsearch;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -206,8 +207,11 @@ public class ProductSearchFragment extends BaseFragment implements
     @Override
     public void onCategorySearchClicked()
     {
-        CategoryDialogFragment frag = new CategoryDialogFragment();
-        frag.show(getFragmentManager(), "CategoryDialogFragment");
+        Fragment fragment = getFragmentManager().findFragmentByTag("CategoryDialogFragment");
+        if(fragment == null) {
+            CategoryDialogFragment frag = new CategoryDialogFragment();
+            frag.show(getFragmentManager(), "CategoryDialogFragment");
+        }
     }
 
 }
