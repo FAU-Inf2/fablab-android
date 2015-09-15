@@ -7,15 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
+import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 
-public class InventoryLoginFragment extends BaseFragment{
+public class InventoryLoginFragment extends BaseFragment implements InventoryLoginFragmentViewModel.Listener{
 
     @Bind(R.id.inventory_login_username)
     EditText usernameET;
@@ -40,6 +42,10 @@ public class InventoryLoginFragment extends BaseFragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        mViewModel.setListener(this);
+
+        new ViewCommandBinding().bind(loginButton, mViewModel.getLoginCommand());
     }
 
     @Override
@@ -47,5 +53,31 @@ public class InventoryLoginFragment extends BaseFragment{
         super.onResume();
         setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER);
         setNavigationDrawerSelection(R.id.drawer_item_inventory);
+    }
+
+    @Override
+    public String getUsername()
+    {
+        if(usernameET != null)
+        {
+             return usernameET.getText().toString();
+        }
+        return null;
+    }
+
+    @Override
+    public String getPassword()
+    {
+        if(passwordET != null)
+        {
+           return passwordET.getText().toString();
+        }
+        return null;
+    }
+
+    @Override
+    public void userUnauthorized() {
+        Toast.makeText(getActivity(), R.string.inventory_login_unauthorized_user, Toast.LENGTH_LONG)
+                .show();
     }
 }
