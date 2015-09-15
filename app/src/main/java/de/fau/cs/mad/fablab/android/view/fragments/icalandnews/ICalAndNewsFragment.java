@@ -13,6 +13,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.icals.ICalFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
@@ -52,7 +53,9 @@ public class ICalAndNewsFragment extends BaseFragment {
             newsFragment.resetPointer();
 
         mTranslationY = 0;
-        setDisplayOptions(R.id.drawer_item_news, true, true, true);
+        setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER
+                | MainActivity.DISPLAY_CART_PANEL | MainActivity.DISPLAY_FAB);
+        setNavigationDrawerSelection(R.id.drawer_item_news);
     }
 
     @Override

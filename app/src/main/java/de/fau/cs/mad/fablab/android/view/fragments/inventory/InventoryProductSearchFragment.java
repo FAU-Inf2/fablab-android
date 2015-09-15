@@ -3,6 +3,7 @@ package de.fau.cs.mad.fablab.android.view.fragments.inventory;
 import android.os.Bundle;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductClickedEvent;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
 import de.fau.cs.mad.fablab.rest.core.User;
@@ -33,7 +34,12 @@ public class InventoryProductSearchFragment extends ProductSearchFragment {
     @Override
     public void onResume() {
         super.onResume();
-        setDisplayOptions(R.id.drawer_item_inventory, true, mShowCartFAB, mShowCartFAB);
+        int displayOptions = MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER;
+        if (mShowCartFAB) {
+            displayOptions |= MainActivity.DISPLAY_CART_PANEL | MainActivity.DISPLAY_FAB;
+        }
+        setDisplayOptions(displayOptions);
+        setNavigationDrawerSelection(R.id.drawer_item_inventory);
     }
 
     @Override

@@ -3,6 +3,8 @@ package de.fau.cs.mad.fablab.android.view.fragments.checkout;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -12,6 +14,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.ScannerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -39,6 +42,18 @@ public class QrCodeScannerFragment extends BaseDialogFragment
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -55,6 +70,9 @@ public class QrCodeScannerFragment extends BaseDialogFragment
     public void onResume() {
         super.onResume();
         mViewModel.resume();
+
+        setDisplayOptions(MainActivity.DISPLAY_TITLE);
+        setTitle(getString(R.string.title_scan_qr_code));
     }
 
     @Override

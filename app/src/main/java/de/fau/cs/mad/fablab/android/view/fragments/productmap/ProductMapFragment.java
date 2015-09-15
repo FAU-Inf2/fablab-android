@@ -26,6 +26,7 @@ import javax.net.ssl.TrustManagerFactory;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 
 public class ProductMapFragment extends BaseDialogFragment implements CallBackListener
@@ -83,6 +84,12 @@ public class ProductMapFragment extends BaseDialogFragment implements CallBackLi
                              Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         return inflater.inflate(R.layout.fragment_locationmap, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setDisplayOptions(MainActivity.DISPLAY_LOGO);
     }
 
     @Override

@@ -3,6 +3,7 @@ package de.fau.cs.mad.fablab.android.view.fragments.inventory;
 import android.os.Bundle;
 
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.ScannerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
 import de.fau.cs.mad.fablab.rest.core.Product;
@@ -25,7 +26,8 @@ public class InventoryBarcodeScannerFragment extends BarcodeScannerFragment {
     @Override
     public void onResume() {
         super.onResume();
-        setDisplayOptions(R.id.drawer_item_inventory, true, false, false);
+        setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER);
+        setNavigationDrawerSelection(R.id.drawer_item_inventory);
     }
 
     @Override

@@ -17,6 +17,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 
@@ -95,7 +96,8 @@ public class AboutFragment extends BaseFragment implements AboutFragmentViewMode
     @Override
     public void onResume() {
         super.onResume();
-        setDisplayOptions(R.id.drawer_item_about, true, false, false);
+        setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER);
+        setNavigationDrawerSelection(R.id.drawer_item_about);
     }
 
     private void toggle(TextView tv){

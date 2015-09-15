@@ -28,6 +28,8 @@ public class ActionBar implements ActionBarViewModel.Listener {
     @Bind(R.id.appbar_time)
     TextView time_tv;
 
+    @Bind(R.id.appbar_title)
+    TextView appbar_title;
     @Bind(R.id.appbar_fau)
     TextView appbar_fau;
     @Bind(R.id.appbar_fablab)
@@ -76,7 +78,7 @@ public class ActionBar implements ActionBarViewModel.Listener {
         mDrawerToggle.setDrawerIndicatorEnabled(show);
     }
 
-    public void showTitle(boolean show) {
+    public void showLogo(boolean show) {
         if (show) {
             appbar_fablab.setVisibility(View.VISIBLE);
             appbar_fau.setVisibility(View.VISIBLE);
@@ -88,6 +90,19 @@ public class ActionBar implements ActionBarViewModel.Listener {
             icon_fablab.setVisibility(View.GONE);
             time_tv.setVisibility(View.GONE);
         }
+    }
+
+    public void showTitle(boolean show) {
+        if (show) {
+            appbar_title.setVisibility(View.VISIBLE);
+        } else {
+            appbar_title.setVisibility(View.GONE);
+            appbar_title.setText("");
+        }
+    }
+
+    public void setTitle(String title) {
+        appbar_title.setText(title);
     }
 
     public void bindMenuItems() {

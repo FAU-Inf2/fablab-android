@@ -1,50 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/appbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/colorPrimary"
-    android:theme="@style/ToolbarTheme"
     android:layout_margin="0dp"
+    android:background="@color/colorPrimary"
     android:elevation="4dp"
-    android:id="@+id/appbar">
+    android:theme="@style/ToolbarTheme">
 
     <TextView
+        android:id="@+id/appbar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/appbar_fau"
         android:fontFamily="sans-serif-medium"
-        android:textSize="@dimen/textsize_appbar_text"
         android:textColor="@color/AppBarTextColor"
+        android:textSize="@dimen/textsize_appbar_text"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/appbar_fau"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
         android:paddingRight="1dp"
-        android:id="@+id/appbar_fau"/>
+        android:text="@string/appbar_fau"
+        android:textColor="@color/AppBarTextColor"
+        android:textSize="@dimen/textsize_appbar_text" />
 
     <ImageView
         android:id="@+id/icon_fablab"
-        android:src="@drawable/fablab_icon"
         android:layout_width="38sp"
         android:layout_height="38sp"
-        />
+        android:src="@drawable/fablab_icon" />
 
     <TextView
+        android:id="@+id/appbar_fablab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/appbar_fablab"
         android:fontFamily="sans-serif-medium"
-        android:textSize="@dimen/textsize_appbar_text"
+        android:text="@string/appbar_fablab"
         android:textColor="@color/AppBarTextColor"
-        android:id="@+id/appbar_fablab"/>
-    <LinearLayout
+        android:textSize="@dimen/textsize_appbar_text" />
+
+
+    <TextView
+        android:id="@+id/appbar_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right">
+        android:fontFamily="sans-serif-medium"
+        android:gravity="right"
+        android:textColor="#BBBBBB"
+        android:textSize="@dimen/textsize_appbar_time" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:textSize="@dimen/textsize_appbar_time"
-            android:textColor="#BBBBBB"
-            android:id="@+id/appbar_time" />
 
-    </LinearLayout>
 </android.support.v7.widget.Toolbar>

@@ -1,6 +1,5 @@
 package de.fau.cs.mad.fablab.android.view.common.fragments;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
@@ -13,8 +12,6 @@ public abstract class BaseDialogFragment extends DialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((MainActivity) getActivity()).inject(this);
-
-        //getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
     @Override
@@ -23,15 +20,15 @@ public abstract class BaseDialogFragment extends DialogFragment {
         ButterKnife.bind(this, view);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (!getShowsDialog()) {
-            MainActivity activity = (MainActivity) getActivity();
-            activity.enableNavigationDrawer(false);
-            activity.showTitle(true);
-            activity.showFloatingActionButton(false);
-            activity.showCartSlidingUpPanel(false);
-        }
+    public void setDisplayOptions(int options) {
+        ((MainActivity) getActivity()).setDisplayOptions(options);
+    }
+
+    public void setNavigationDrawerSelection(int menuItemId) {
+        ((MainActivity) getActivity()).setNavigationDrawerSelection(menuItemId);
+    }
+
+    public void setTitle(String title) {
+        ((MainActivity) getActivity()).setTitle(title);
     }
 }

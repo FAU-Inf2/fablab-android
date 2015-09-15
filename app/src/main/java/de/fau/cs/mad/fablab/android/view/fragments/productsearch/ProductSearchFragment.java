@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.categorysearch.CategoryDialogFragment;
@@ -36,6 +37,7 @@ public class ProductSearchFragment extends BaseFragment implements
 
     private RVRendererAdapter<ProductSearchViewModel> mAdapter;
     private EventBus mEventBus = EventBus.getDefault();
+    private MenuItem mSearchItem;
     private MenuItem mOrderByItem;
     private boolean mShowCartFAB;
     private boolean mProductSearch;
@@ -70,16 +72,16 @@ public class ProductSearchFragment extends BaseFragment implements
         inflater.inflate(R.menu.menu_search, menu);
 
         if(mProductSearch) {
-            MenuItem searchItem = menu.findItem(R.id.action_search);
-            searchItem.setVisible(true);
+            mSearchItem = menu.findItem(R.id.action_search);
+            mSearchItem.setVisible(true);
             ProductSearchView searchView = (ProductSearchView) MenuItemCompat.getActionView(
-                    searchItem);
+                    mSearchItem);
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                     R.layout.dropdown_item, mViewModel.getAutoCompleteWords());
             searchView.setAdapter(adapter);
             searchView.setCommand(mViewModel.getSearchCommand());
             searchView.setQueryHint(getString(R.string.search_all_hint));
-            searchItem.expandActionView();
+            mSearchItem.expandActionView();
             searchView.clearFocus();
         }
         else
@@ -136,14 +138,13 @@ public class ProductSearchFragment extends BaseFragment implements
         super.onResume();
         mEventBus.register(this);
         mViewModel.resume();
-        if(mProductSearch)
-        {
-            setDisplayOptions(R.id.drawer_item_productsearch, false, mShowCartFAB, mShowCartFAB);
+        int displayOptions = MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER;
+        if (mShowCartFAB) {
+            displayOptions |= MainActivity.DISPLAY_CART_PANEL | MainActivity.DISPLAY_FAB;
         }
-        else
-        {
-            setDisplayOptions(R.id.drawer_item_categorysearch, false, mShowCartFAB, mShowCartFAB);
-        }
+        setDisplayOptions(displayOptions);
+        setNavigationDrawerSelection(mProductSearch ? R.id.drawer_item_productsearch
+                : R.id.drawer_item_categorysearch);
     }
 
     @Override
@@ -151,6 +152,9 @@ public class ProductSearchFragment extends BaseFragment implements
         super.onPause();
         mEventBus.unregister(this);
         mViewModel.pause();
+        if (mSearchItem != null) {
+            mSearchItem.collapseActionView();
+        }
     }
 
     @Override
@@ -195,7 +199,6 @@ public class ProductSearchFragment extends BaseFragment implements
         }
     }
 
-    @SuppressWarnings("unused")
     public void onEvent(ProductClickedEvent event) {
         ProductDialogFragment dialogFragment = new ProductDialogFragment();
         Bundle arguments = new Bundle();

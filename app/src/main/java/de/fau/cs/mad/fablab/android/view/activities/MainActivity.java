@@ -38,6 +38,13 @@ import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationEvent;
 import de.greenrobot.event.EventBus;
 
 public class MainActivity extends AppCompatActivity {
+    public static final int DISPLAY_NOTHING = 0;
+    public static final int DISPLAY_LOGO = 1;
+    public static final int DISPLAY_TITLE = 2;
+    public static final int DISPLAY_NAVDRAWER = 4;
+    public static final int DISPLAY_CART_PANEL = 8;
+    public static final int DISPLAY_FAB = 16;
+
     private final static String TAG_STORAGE_FRAGMENT = "tag_storage_fragment";
     private final static String TAG_ICAL_AND_NEWS_FRAGMENT = "tag_ical_and_news_fragment";
     private final static String TAG_PRODUCTSEARCH_FRAGMENT = "tag_productsearch_fragment";
@@ -55,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
     private NavigationDrawer mNavigationDrawer;
     private FloatingFablabButton mFablabButton;
     private CartSlidingUpPanel mCartSlidingUpPanel;
-    private StorageFragment mStorageFragment;
 
     private ObjectGraph mObjectGraph;
     private EventBus mEventBus = EventBus.getDefault();
@@ -76,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //uiUtils = new UiUtils();
-
         // register the TopExceptionHandler
         Thread.setDefaultUncaughtExceptionHandler(new TopExceptionHandler(this));
         StackTraceReporter.reportStackTraceIfAvailable(this);
@@ -85,16 +89,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mStorageFragment = (StorageFragment) getSupportFragmentManager()
+        StorageFragment storageFragment = (StorageFragment) getSupportFragmentManager()
                 .findFragmentByTag(TAG_STORAGE_FRAGMENT);
-        if (mStorageFragment == null) {
-            mStorageFragment = new StorageFragment();
-            getSupportFragmentManager().beginTransaction().add(mStorageFragment,
+        if (storageFragment == null) {
+            storageFragment = new StorageFragment();
+            getSupportFragmentManager().beginTransaction().add(storageFragment,
                     TAG_STORAGE_FRAGMENT).commit();
             getSupportFragmentManager().executePendingTransactions();
         }
 
-        mObjectGraph = ObjectGraph.create(new ModelModule(mStorageFragment));
+        mObjectGraph = ObjectGraph.create(new ModelModule(storageFragment));
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
@@ -164,28 +168,24 @@ public class MainActivity extends AppCompatActivity {
         mObjectGraph.inject(object);
     }
 
-    public void enableNavigationDrawer(boolean enable) {
-        mNavigationDrawer.enableDrawer(enable);
-        mActionBar.showNavdrawerIcon(enable);
+    public void setDisplayOptions(int options) {
+        mActionBar.showLogo((options & DISPLAY_LOGO) == DISPLAY_LOGO);
+        mActionBar.showTitle((options & DISPLAY_TITLE) == DISPLAY_TITLE);
+        boolean displayNavdrawer = (options & DISPLAY_NAVDRAWER) == DISPLAY_NAVDRAWER;
+        mNavigationDrawer.enableDrawer(displayNavdrawer);
+        mActionBar.showNavdrawerIcon(displayNavdrawer);
+        mCartSlidingUpPanel.setVisibility((options & DISPLAY_CART_PANEL) == DISPLAY_CART_PANEL);
+        mFablabButton.setVisibility((options & DISPLAY_FAB) == DISPLAY_FAB);
     }
 
     public void setNavigationDrawerSelection(int menuItemId) {
         mNavigationDrawer.setSelection(menuItemId);
     }
 
-    public void showTitle(boolean show) {
-        mActionBar.showTitle(show);
+    public void setTitle(String title) {
+        mActionBar.setTitle(title);
     }
 
-    public void showCartSlidingUpPanel(boolean show) {
-        mCartSlidingUpPanel.setVisibility(show);
-    }
-
-    public void showFloatingActionButton(boolean show) {
-        mFablabButton.setVisibility(show);
-    }
-
-    @SuppressWarnings("unused")
     public void onEvent(NavigationEvent destination) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         String currentFragmentTag = getSupportFragmentManager().findFragmentById(

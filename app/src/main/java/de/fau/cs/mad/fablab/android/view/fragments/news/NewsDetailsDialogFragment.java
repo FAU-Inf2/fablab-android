@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 
@@ -65,6 +66,12 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment
                              Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         return inflater.inflate(R.layout.fragment_news_dialog, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setDisplayOptions(MainActivity.DISPLAY_LOGO);
     }
 
     @Override

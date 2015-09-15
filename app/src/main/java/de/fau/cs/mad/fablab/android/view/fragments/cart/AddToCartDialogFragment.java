@@ -156,7 +156,7 @@ public class AddToCartDialogFragment extends BaseDialogFragment
     public void onResume() {
         super.onResume();
         mEventBus.register(this);
-        ((MainActivity) getActivity()).showTitle(false);
+        setDisplayOptions(MainActivity.DISPLAY_NOTHING);
     }
 
     @Override

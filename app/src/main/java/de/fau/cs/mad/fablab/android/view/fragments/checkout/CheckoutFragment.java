@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.Formatter;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.cartpanel.CartEntryViewModel;
 import de.fau.cs.mad.fablab.android.view.cartpanel.CartEntryViewModelRendererBuilder;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
@@ -89,6 +90,8 @@ public class CheckoutFragment extends BaseDialogFragment implements CheckoutView
     public void onResume() {
         super.onResume();
         mViewModel.resume();
+
+        setDisplayOptions(MainActivity.DISPLAY_LOGO);
     }
 
     @Override

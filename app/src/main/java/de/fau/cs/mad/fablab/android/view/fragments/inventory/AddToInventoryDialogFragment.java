@@ -19,6 +19,7 @@ import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventInventory;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.EditTextCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.EnterKeyCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
@@ -86,6 +87,12 @@ public class AddToInventoryDialogFragment extends BaseDialogFragment implements 
                              Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         return inflater.inflate(R.layout.fragment_add_to_inventory, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setDisplayOptions(MainActivity.DISPLAY_LOGO);
     }
 
     @Override

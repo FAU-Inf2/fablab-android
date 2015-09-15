@@ -79,16 +79,13 @@ public class AlertDialogFragment extends BaseDialogFragment
     @Override
     public void onResume() {
         super.onResume();
-        MainActivity activity = (MainActivity) getActivity();
-        activity.enableNavigationDrawer(true);
-        activity.setNavigationDrawerSelection(R.id.drawer_item_alert);
-        activity.showFloatingActionButton(false);
-        activity.showCartSlidingUpPanel(false);
+        setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER);
+        setNavigationDrawerSelection(R.id.drawer_item_alert);
     }
 
     @Override
     public void onOK() {
-        String text = "";
+        String text;
         if (mBoolSpinner) {
             text = mToolSpinner.getSelectedItem().toString();
         } else {
