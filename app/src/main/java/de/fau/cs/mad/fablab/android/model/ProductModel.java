@@ -158,6 +158,7 @@ public class ProductModel {
                     for (int i = 1; i < searchTokens.length; i++) {
                         query.and().like("name", "%" + searchTokens[i] + "%");
                     }
+                    query.or().eq("product_id", params[0]);
                     result = mProductDao.query(query.prepare());
                 } catch (SQLException e) {
                     Log.e(TAG, "Query failed", e);
