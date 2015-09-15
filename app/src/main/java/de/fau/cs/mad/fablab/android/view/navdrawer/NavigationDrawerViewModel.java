@@ -14,6 +14,7 @@ import de.greenrobot.event.EventBus;
 
 public class NavigationDrawerViewModel {
     private static final String KEY_SELECTED_ITEM = "key_selected_item";
+    private static final String KEY_LOGGEDIN_USER = "key_loggedin_user";
 
     private Listener mListener;
     private EventBus mEventBus = EventBus.getDefault();
@@ -154,6 +155,11 @@ public class NavigationDrawerViewModel {
     public void restoreState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             mSelectedItem = savedInstanceState.getInt(KEY_SELECTED_ITEM);
+            mLoggedInUser = (User) savedInstanceState.getSerializable(KEY_LOGGEDIN_USER);
+            if((mLoggedInUser != null) && (mListener != null))
+            {
+                mListener.loggedIn(mLoggedInUser);
+            }
         }
         if (mListener != null) {
             mListener.onNavigationDrawerItemSelected(mSelectedItem);
@@ -162,6 +168,7 @@ public class NavigationDrawerViewModel {
 
     public void saveState(Bundle outState) {
         outState.putInt(KEY_SELECTED_ITEM, mSelectedItem);
+        outState.putSerializable(KEY_LOGGEDIN_USER, mLoggedInUser);
     }
 
     public void onEvent(UserRetrievedEvent event) {
