@@ -16,7 +16,14 @@ public class CartEntryViewModel {
     };
 
     public CartEntryViewModel(CartEntry cartEntry) {
+        this(cartEntry, true);
+    }
+
+    public CartEntryViewModel(CartEntry cartEntry, boolean isEditable) {
         mCartEntry = cartEntry;
+        if (!isEditable) {
+            mShowDialogCommand.setIsExecutable(false);
+        }
     }
 
     public Command<Void> getShowDialogCommand() {

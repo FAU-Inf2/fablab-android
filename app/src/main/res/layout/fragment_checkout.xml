@@ -4,23 +4,60 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/checkout_cart_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/checkout_status_margin"
+            android:layout_marginRight="@dimen/checkout_status_margin"
+            android:layout_marginTop="@dimen/checkout_status_margin"
+            android:text="@string/checkout_pay"
+            android:textSize="@dimen/textsize_checkout_status" />
+
+        <TextView
+            android:id="@+id/checkout_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textsize_slidinguppanel_bottom_total_price"
+            android:textStyle="bold" />
+
+        <include layout="@layout/divider" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/checkout_cart_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".70"
+            android:scrollbars="vertical" />
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/checkout_status_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/textsize_checkout_status"
-        android:textColor="@color/colorPrimaryDark"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/textsize_checkout_status" />
 
     <Button
         android:id="@+id/checkout_retry_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/textsize_button"
         android:layout_below="@+id/checkout_status_description"
         android:layout_centerHorizontal="true"
-        android:text="@string/retry" />
+        android:text="@string/retry"
+        android:textSize="@dimen/textsize_button" />
 
     <Button
         android:id="@+id/checkout_ok_button"
@@ -28,8 +65,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkout_status_description"
         android:layout_centerHorizontal="true"
-        android:textSize="@dimen/textsize_button"
-        android:text="@android:string/ok" />
+        android:text="@android:string/ok"
+        android:textSize="@dimen/textsize_button" />
 
     <ProgressBar
         android:id="@+id/checkout_progress_bar"

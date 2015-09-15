@@ -2,17 +2,25 @@ package de.fau.cs.mad.fablab.android.view.fragments.checkout;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.pedrogomez.renderers.RVRendererAdapter;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.util.Formatter;
+import de.fau.cs.mad.fablab.android.view.cartpanel.CartEntryViewModel;
+import de.fau.cs.mad.fablab.android.view.cartpanel.CartEntryViewModelRendererBuilder;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 
@@ -23,6 +31,12 @@ public class CheckoutFragment extends BaseDialogFragment implements CheckoutView
     ProgressBar progress_bar;
     @Bind(R.id.checkout_status_description)
     TextView status_description_tv;
+    @Bind(R.id.checkout_cart_preview)
+    LinearLayout cart_preview_ll;
+    @Bind(R.id.checkout_cart_recycler_view)
+    RecyclerView cart_rv;
+    @Bind(R.id.checkout_total_price)
+    TextView total_price_tv;
     @Bind(R.id.checkout_retry_button)
     Button retry_button;
     @Bind(R.id.checkout_ok_button)
@@ -44,6 +58,13 @@ public class CheckoutFragment extends BaseDialogFragment implements CheckoutView
         super.onActivityCreated(savedInstanceState);
 
         mViewModel.setListener(this);
+
+        cart_rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        RVRendererAdapter<CartEntryViewModel> adapter = new RVRendererAdapter<>(
+                getLayoutInflater(savedInstanceState), new CartEntryViewModelRendererBuilder(),
+                mViewModel.getCartEntryViewModelCollection());
+        cart_rv.setAdapter(adapter);
+        total_price_tv.setText(Formatter.formatPrice(mViewModel.getTotalPrice()));
 
         new ViewCommandBinding().bind(retry_button, mViewModel.getRetryCommand());
         new ViewCommandBinding().bind(ok_button, mViewModel.getOkCommand());
@@ -71,20 +92,27 @@ public class CheckoutFragment extends BaseDialogFragment implements CheckoutView
     }
 
     @Override
-    public void onShowSpinner() {
+    public void onShowProgressBar() {
         status_description_tv.setVisibility(View.GONE);
         progress_bar.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void onHideSpinner() {
+    public void onHideProgressBar() {
         progress_bar.setVisibility(View.GONE);
         status_description_tv.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void onShowPayMessage() {
-        status_description_tv.setText(R.string.checkout_pay);
+    public void onShowCartPreview() {
+        status_description_tv.setVisibility(View.GONE);
+        cart_preview_ll.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onHideCartPreview() {
+        cart_preview_ll.setVisibility(View.GONE);
+        status_description_tv.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -2,43 +2,57 @@ package de.fau.cs.mad.fablab.android.view.fragments.checkout;
 
 import android.os.Bundle;
 
+import com.pedrogomez.renderers.AdapteeCollection;
+import com.pedrogomez.renderers.ListAdapteeCollection;
+
 import javax.inject.Inject;
 
+import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.model.CheckoutModel;
+import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
 import de.fau.cs.mad.fablab.android.view.activities.BackButtonPressedEvent;
+import de.fau.cs.mad.fablab.android.view.cartpanel.CartEntryViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.CartStatus;
 import de.greenrobot.event.EventBus;
 
 public class CheckoutViewModel {
     @Inject
-    CheckoutModel mModel;
+    CheckoutModel mCheckoutModel;
+    @Inject
+    CartModel mCartModel;
+
     private Listener mListener;
     private EventBus mEventBus = EventBus.getDefault();
 
     private String mCartCode;
+    private ListAdapteeCollection<CartEntryViewModel> mCartEntryViewModelCollection;
 
     private final Command<Void> mRetryCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
             mRetryCommand.setIsAvailable(false);
             if (mListener != null) {
-                mListener.onShowSpinner();
+                mListener.onShowProgressBar();
             }
-            mModel.cancelCheckout();
-            mModel.startCheckout(mCartCode);
+            mCheckoutModel.cancelCheckout();
+            mCheckoutModel.startCheckout(mCartCode);
         }
     };
 
     private final Command<Void> mOkCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            mModel.finishCheckout();
+            mCheckoutModel.finishCheckout();
             if (mListener != null) {
                 mListener.onDismiss();
             }
         }
     };
+
+    public CheckoutViewModel() {
+        mCartEntryViewModelCollection = new ListAdapteeCollection<>();
+    }
 
     public void setListener(Listener listener) {
         mListener = listener;
@@ -52,40 +66,55 @@ public class CheckoutViewModel {
         return mOkCommand;
     }
 
+    public AdapteeCollection<CartEntryViewModel> getCartEntryViewModelCollection() {
+        return mCartEntryViewModelCollection;
+    }
+
+    public double getTotalPrice() {
+        return mCartModel.getTotalPrice();
+    }
+
     public void initialize(Bundle args) {
         mRetryCommand.setIsAvailable(false);
         mOkCommand.setIsAvailable(false);
 
         mCartCode = args.getString(CheckoutFragment.KEY_CART_CODE);
 
-        if (mModel.getStatus() == CartStatus.SHOPPING) {
-            mModel.startCheckout(mCartCode);
+        if (mCheckoutModel.getStatus() == CartStatus.SHOPPING) {
+            mCheckoutModel.startCheckout(mCartCode);
         }
 
-        updateState(mModel.getStatus());
+        for (CartEntry cartEntry : mCartModel.getCartEntries()) {
+            mCartEntryViewModelCollection.add(new CartEntryViewModel(cartEntry, false));
+        }
+
+        updateState(mCheckoutModel.getStatus());
     }
 
     private void updateState(CartStatus status) {
         if (mListener != null) {
             switch (status) {
                 case WAITING:
-                    mListener.onShowSpinner();
+                    mListener.onShowProgressBar();
                     break;
                 case PENDING:
-                    mListener.onHideSpinner();
-                    mListener.onShowPayMessage();
+                    mListener.onHideProgressBar();
+                    mListener.onShowCartPreview();
                     break;
                 case FAILED:
-                    mListener.onHideSpinner();
+                    mListener.onHideProgressBar();
+                    mListener.onHideCartPreview();
                     mListener.onShowErrorMessage();
                     mRetryCommand.setIsAvailable(true);
                     break;
                 case CANCELLED:
                     mOkCommand.setIsAvailable(true);
+                    mListener.onHideCartPreview();
                     mListener.onShowCancelledMessage();
                     break;
                 case PAID:
                     mOkCommand.setIsAvailable(true);
+                    mListener.onHideCartPreview();
                     mListener.onShowPaidMessage();
                     break;
             }
@@ -100,25 +129,26 @@ public class CheckoutViewModel {
         mEventBus.register(this);
     }
 
-    @SuppressWarnings("unused")
     public void onEvent(CartStatus event) {
         updateState(event);
     }
 
     @SuppressWarnings("unused")
     public void onEvent(BackButtonPressedEvent event) {
-        mModel.cancelCheckout();
+        mCheckoutModel.cancelCheckout();
         if (mListener != null) {
             mListener.onDismiss();
         }
     }
 
     public interface Listener {
-        void onShowSpinner();
+        void onShowProgressBar();
 
-        void onHideSpinner();
+        void onHideProgressBar();
 
-        void onShowPayMessage();
+        void onShowCartPreview();
+
+        void onHideCartPreview();
 
         void onShowErrorMessage();
 

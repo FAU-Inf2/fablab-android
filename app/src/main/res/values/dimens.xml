@@ -94,6 +94,8 @@
     <dimen name="autocomplete_item_margin_lr">10dp</dimen>
     <dimen name="autocomplete_item_margin_tb">20dp</dimen>
 
+    <dimen name="checkout_status_margin">8dp</dimen>
+
     <dimen name="textsize_button">15dp</dimen>
     <dimen name="textsize_about_title">50dp</dimen>
     <dimen name="textsize_about_subtitle">25dp</dimen>
