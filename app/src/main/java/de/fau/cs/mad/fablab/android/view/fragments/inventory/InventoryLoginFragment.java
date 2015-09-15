@@ -12,6 +12,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 
 public class InventoryLoginFragment extends BaseFragment{
@@ -44,6 +45,7 @@ public class InventoryLoginFragment extends BaseFragment{
     @Override
     public void onResume() {
         super.onResume();
-        setDisplayOptions(R.id.drawer_item_inventory, true, false, false);
+        setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER);
+        setNavigationDrawerSelection(R.id.drawer_item_inventory);
     }
 }
