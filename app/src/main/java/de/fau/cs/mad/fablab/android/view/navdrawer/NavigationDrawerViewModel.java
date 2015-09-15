@@ -75,7 +75,7 @@ public class NavigationDrawerViewModel {
         @Override
         public void execute(Void parameter) {
             mEventBus.post(NavigationEvent.News);
-            mListener.loggedOut(getLoggedInUser());
+            mListener.loggedOut();
         }
     };
 
@@ -172,6 +172,6 @@ public class NavigationDrawerViewModel {
 
         void loggedIn(User user);
 
-        void loggedOut(User user);
+        void loggedOut();
     }
 }

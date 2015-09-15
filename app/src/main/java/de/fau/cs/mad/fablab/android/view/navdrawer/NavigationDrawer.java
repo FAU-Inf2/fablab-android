@@ -19,7 +19,6 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
-import de.fau.cs.mad.fablab.rest.core.Roles;
 import de.fau.cs.mad.fablab.rest.core.User;
 
 public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
@@ -70,9 +69,6 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
 
         menu.findItem(R.id.drawer_item_logout).setVisible(false);
 
-        //TODO comment following two lines for login
-        //mHeaderLogin.setVisibility(View.GONE);
-        //mHeaderLoggedIn.setVisibility(View.GONE);
     }
 
     @Override
@@ -117,15 +113,9 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
     }
 
     @Override
-    public void loggedOut(User user) {
+    public void loggedOut() {
         Menu menu = mNavigationView.getMenu();
         menu.findItem(R.id.drawer_item_logout).setVisible(false);
-
-        if(user.getRoles().contains(Roles.INVENTORY))
-        {
-            menu.findItem(R.id.drawer_item_inventory).setVisible(false);
-        }
-
         mHeaderLoggedIn.setVisibility(View.GONE);
     }
 }
