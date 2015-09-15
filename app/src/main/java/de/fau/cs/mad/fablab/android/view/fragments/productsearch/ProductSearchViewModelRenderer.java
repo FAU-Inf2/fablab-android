@@ -1,6 +1,5 @@
 package de.fau.cs.mad.fablab.android.view.fragments.productsearch;
 
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,6 @@ import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 
 public class ProductSearchViewModelRenderer extends Renderer<ProductSearchViewModel> {
 
-    @Bind(R.id.product_card_view)
-    CardView mProductCardView;
     @Bind(R.id.product_name)
     TextView mProductName;
     @Bind(R.id.product_detail)
@@ -52,7 +49,6 @@ public class ProductSearchViewModelRenderer extends Renderer<ProductSearchViewMo
         mProductName.setText(viewModel.getName());
         mProductDetail.setText(viewModel.getNameDetails());
         mProductPrice.setText(viewModel.getPrice());
-        mProductPer.setText(getRootView().getResources().getString(R.string.per));
         mProductUnit.setText(viewModel.getUnit());
 
         if(viewModel.isProductZeroPriced()){
@@ -62,6 +58,8 @@ public class ProductSearchViewModelRenderer extends Renderer<ProductSearchViewMo
                     .primary_text_disabled_material_light));
             mProductPrice.setTextColor(mProductPrice.getResources().getColor(R.color
                     .primary_text_disabled_material_light));
+            mProductPer.setTextColor(mProductPer.getResources().getColor(R.color
+                    .primary_text_disabled_material_light));
             mProductUnit.setTextColor(mProductUnit.getResources().getColor(R.color
                     .primary_text_disabled_material_light));
         } else {
@@ -70,6 +68,8 @@ public class ProductSearchViewModelRenderer extends Renderer<ProductSearchViewMo
             mProductDetail.setTextColor(mProductDetail.getResources().getColor(R.color
                     .primary_text_default_material_light));
             mProductPrice.setTextColor(mProductPrice.getResources().getColor(R.color
+                    .primary_text_default_material_light));
+            mProductPer.setTextColor(mProductPer.getResources().getColor(R.color
                     .primary_text_default_material_light));
             mProductUnit.setTextColor(mProductUnit.getResources().getColor(R.color
                     .primary_text_default_material_light));

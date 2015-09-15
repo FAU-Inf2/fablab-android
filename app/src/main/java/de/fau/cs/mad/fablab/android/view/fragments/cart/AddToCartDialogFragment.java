@@ -74,7 +74,7 @@ public class AddToCartDialogFragment extends BaseDialogFragment
 
         name_tv.setText(mViewModel.getName());
         price_tv.setText(Html.fromHtml(Formatter.formatPrice(mViewModel.getPrice())) + " "
-                + getString(R.string.add_to_cart_price_per_unit) + " " + mViewModel.getUnit());
+                + getString(R.string.per) + " " + mViewModel.getUnit());
 
         if (mViewModel.isDecimalAmount()) {
             amount_et.setInputType(InputType.TYPE_CLASS_NUMBER
