@@ -5,9 +5,10 @@ import android.os.Bundle;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.model.UserModel;
+import de.fau.cs.mad.fablab.android.model.events.NavigationEventInventory;
 import de.fau.cs.mad.fablab.android.model.events.UserRetrievedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
+import de.fau.cs.mad.fablab.rest.core.Roles;
 import de.fau.cs.mad.fablab.rest.core.User;
 import de.greenrobot.event.EventBus;
 
@@ -17,7 +18,6 @@ public class NavigationDrawerViewModel {
     private Listener mListener;
     private EventBus mEventBus = EventBus.getDefault();
     private User mLoggedInUser;
-    private UserModel mModel;
 
     private int mSelectedItem = R.id.drawer_item_news;
 
@@ -74,6 +74,7 @@ public class NavigationDrawerViewModel {
     {
         @Override
         public void execute(Void parameter) {
+            mLoggedInUser = null;
             mEventBus.post(NavigationEvent.News);
             mListener.loggedOut();
         }
@@ -83,13 +84,19 @@ public class NavigationDrawerViewModel {
     {
         @Override
         public void execute(Void parameter) {
-            mEventBus.post(NavigationEvent.InventoryLogin);
+            User user = getLoggedInUser();
+            if((user != null) && user.hasRole(Roles.INVENTORY))
+            {
+                mEventBus.post(new NavigationEventInventory(user));
+            }
+            else {
+                mEventBus.post(NavigationEvent.InventoryLogin);
+            }
         }
     };
 
     @Inject
-    public NavigationDrawerViewModel(UserModel userModel) {
-        mModel = userModel;
+    public NavigationDrawerViewModel() {
         mEventBus.register(this);
     }
 
