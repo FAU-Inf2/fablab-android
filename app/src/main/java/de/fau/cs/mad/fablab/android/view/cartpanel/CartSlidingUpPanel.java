@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.cartpanel;
 
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
@@ -214,8 +215,8 @@ public class CartSlidingUpPanel implements CartSlidingUpPanelViewModel.Listener 
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (sliding_up_pl.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED) {
-                            if(mActivity.getResources().getConfiguration().orientation == mActivity.getResources().getConfiguration().ORIENTATION_PORTRAIT) {
+                        if (sliding_up_pl.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED && mViewModel.isVisible()) {
+                            if(mActivity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
                                 container.setPadding(0, 0, 0, (int) mActivity.getResources().getDimension(R.dimen.slidinguppanel_panel_height));
                             }
                             else{
