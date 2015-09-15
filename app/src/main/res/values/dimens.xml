@@ -142,4 +142,5 @@
     <dimen name="textsize_autocomplete_item">18dp</dimen>
     <dimen name="textsize_category_title">18dp</dimen>
     <dimen name="textsize_category_text">16dp</dimen>
+    <dimen name="textsize_inventory_login_title">22dp</dimen>
 </resources>

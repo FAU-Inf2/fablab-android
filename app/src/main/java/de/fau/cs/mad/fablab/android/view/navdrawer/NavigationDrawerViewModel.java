@@ -6,7 +6,6 @@ import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.UserModel;
-import de.fau.cs.mad.fablab.android.model.events.NavigationEventInventory;
 import de.fau.cs.mad.fablab.android.model.events.UserRetrievedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.User;
@@ -71,14 +70,6 @@ public class NavigationDrawerViewModel {
         }
     };
 
-    private final Command<Void> mLoginCommand = new Command<Void>()
-    {
-        @Override
-        public void execute(Void parameter) {
-            mModel.getUser(mListener.getUsername(), mListener.getPassword());
-        }
-    };
-
     private final Command<Void> mLogoutCommand = new Command<Void>()
     {
         @Override
@@ -92,7 +83,7 @@ public class NavigationDrawerViewModel {
     {
         @Override
         public void execute(Void parameter) {
-            mEventBus.post(new NavigationEventInventory(getLoggedInUser()));
+            mEventBus.post(NavigationEvent.InventoryLogin);
         }
     };
 
@@ -134,11 +125,6 @@ public class NavigationDrawerViewModel {
     public Command<Void> getNavigateToAlertCommand()
     {
         return mNavigateToAlertCommand;
-    }
-
-    public Command<Void> getLoginCommand()
-    {
-        return mLoginCommand;
     }
 
     public Command<Void> getLogoutCommand()
@@ -183,10 +169,6 @@ public class NavigationDrawerViewModel {
 
     public interface Listener {
         void onNavigationDrawerItemSelected(int itemId);
-
-        String getUsername();
-
-        String getPassword();
 
         void loggedIn(User user);
 

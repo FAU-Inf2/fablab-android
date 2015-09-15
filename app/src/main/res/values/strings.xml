@@ -87,6 +87,11 @@
     <string name="inventory_get_inventory_success">Es sind keine Objekte im Inventar vorhanden</string>
     <string name="inventory_add_inventory_fail">Objekt konnte nicht hinzugefügt werden</string>
     <string name="inventory_add_inventory_success">Objekt erfolgreich hinzugefügt</string>
+    <string name="inventory_login_title">Login</string>
+    <string name="inventory_login_login">Login</string>
+    <string name="inventory_login_scanner">Mit QRCode einloggen</string>
+    <string name="inventory_login_hint_username">Benutzername</string>
+    <string name="inventory_login_hint_password">Passwort</string>
 
     <string name="version_check_update_optional">Optionales Update verfügbar</string>
     <string name="version_check_update_required">Update verfügbar</string>

@@ -28,6 +28,7 @@ import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScanner
 import de.fau.cs.mad.fablab.android.view.fragments.icalandnews.ICalAndNewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryBarcodeScannerFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryLoginFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.ShowInventoryFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String TAG_PRODUCTSEARCH_INVENTORY_FRAGMENT = "tag_productsearch_inventory_fragment";
     private final static String TAG_SHOWINVENTORY_INVENTORY_FRAGMENT = "tag_showinventory_inventory_fragment";
     private final static String TAG_CATEGORYSEARCH_FRAGMENT ="tag_categorysearch_fragment";
+    private final static String TAG_INVENTORY_LOGIN_FRAGMENT = "tag_inventory_login_fragment";
 
     private ActionBar mActionBar;
     private NavigationDrawer mNavigationDrawer;
@@ -285,6 +287,15 @@ public class MainActivity extends AppCompatActivity {
                             TAG_ALERT_FRAGMENT).addToBackStack(null).commit();
                 }
                 break;
+
+            case InventoryLogin:
+                if(!TAG_INVENTORY_LOGIN_FRAGMENT.equals(currentFragmentTag))
+                {
+                    fragmentTransaction.replace(R.id.fragment_container, new InventoryLoginFragment(),
+                            TAG_INVENTORY_LOGIN_FRAGMENT).addToBackStack(null).commit();
+                }
+                break;
+
         }
         mNavigationDrawer.closeDrawer();
     }

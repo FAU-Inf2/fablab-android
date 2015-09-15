@@ -8,8 +8,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,7 +19,6 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
-import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.rest.core.Roles;
 import de.fau.cs.mad.fablab.rest.core.User;
 
@@ -30,16 +27,6 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
     DrawerLayout mDrawerLayout;
     @Bind(R.id.navigation)
     NavigationView mNavigationView;
-
-    // views for login
-    @Bind(R.id.navdrawer_header_login)
-    LinearLayout mHeaderLogin;
-    @Bind(R.id.drupal_login_button)
-    Button mLoginButton;
-    @Bind(R.id.drupal_login_username)
-    EditText mUsernameET;
-    @Bind(R.id.drupal_login_password)
-    EditText mPasswordET;
 
     // views when logged in
     @Bind(R.id.navdrawer_header_loggedin)
@@ -80,10 +67,8 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
                 mViewModel.getNavigateToSettingsCommand());
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_logout),
                 mViewModel.getLogoutCommand());
-        new ViewCommandBinding().bind(mLoginButton, mViewModel.getLoginCommand());
 
         menu.findItem(R.id.drawer_item_logout).setVisible(false);
-        menu.findItem(R.id.drawer_item_inventory).setVisible(false);
 
         //TODO comment following two lines for login
         //mHeaderLogin.setVisibility(View.GONE);
@@ -120,26 +105,6 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
     }
 
     @Override
-    public String getUsername()
-    {
-        if(mUsernameET != null)
-        {
-            return mUsernameET.getText().toString();
-        }
-        return null;
-    }
-
-    @Override
-    public String getPassword()
-    {
-        if(mPasswordET != null)
-        {
-            return mPasswordET.getText().toString();
-        }
-        return null;
-    }
-
-    @Override
     public void loggedIn(User user) {
 
         UiUtils.hideKeyboard(mainActivity);
@@ -147,14 +112,7 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
         Menu menu = mNavigationView.getMenu();
         menu.findItem(R.id.drawer_item_logout).setVisible(true);
 
-        if(user.getRoles().contains(Roles.INVENTORY))
-        {
-            menu.findItem(R.id.drawer_item_inventory).setVisible(true);
-        }
-
-        mHeaderLogin.setVisibility(View.GONE);
         mHeaderLoggedIn.setVisibility(View.VISIBLE);
-
         mUsernameLoggedIn.setText(user.getUsername());
     }
 
@@ -168,9 +126,6 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
             menu.findItem(R.id.drawer_item_inventory).setVisible(false);
         }
 
-        mHeaderLogin.setVisibility(View.VISIBLE);
         mHeaderLoggedIn.setVisibility(View.GONE);
-        mPasswordET.setText("");
-        mUsernameET.setText("");
     }
 }
