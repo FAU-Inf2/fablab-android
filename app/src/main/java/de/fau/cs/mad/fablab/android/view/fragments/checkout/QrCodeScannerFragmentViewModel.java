@@ -12,7 +12,7 @@ import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 public class QrCodeScannerFragmentViewModel {
     private Listener mListener;
 
-    private Pattern mQrCodePattern = Pattern.compile("(-)?\\d{1,19}");
+    private Pattern mQrCodePattern = Pattern.compile("(FAU)(-)?\\d{1,19}");
     private final Command<Result> mProcessQrCodeCommand = new Command<Result>() {
         @Override
         public void execute(Result result) {

@@ -14,6 +14,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.binding.ScannerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.checkout.CheckoutFragment;
 import de.fau.cs.mad.fablab.rest.core.Product;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -73,5 +74,11 @@ public class BarcodeScannerFragment extends BaseFragment
     public void onShowInvalidBarcodeMessage() {
         Toast.makeText(getActivity(), R.string.barcode_scanner_invalid_barcode, Toast.LENGTH_LONG)
                 .show();
+    }
+
+    @Override
+    public void onStartCheckout(String cartCode) {
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                CheckoutFragment.newInstance(cartCode)).commit();
     }
 }

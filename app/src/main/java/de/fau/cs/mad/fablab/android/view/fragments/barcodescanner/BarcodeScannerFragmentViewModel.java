@@ -23,6 +23,7 @@ public class BarcodeScannerFragmentViewModel {
     private EventBus mEventBus = EventBus.getDefault();
 
     private final Pattern mBarcodePattern = Pattern.compile("200(00000)?\\d{5}");
+    private Pattern mQrCodePattern = Pattern.compile("(FAU)(-)?\\d{1,19}");
     private final Command<Result> mProcessBarcodeCommand = new Command<Result>() {
         @Override
         public void execute(Result result) {
@@ -32,7 +33,13 @@ public class BarcodeScannerFragmentViewModel {
             boolean isEan8 = BarcodeFormat.EAN_8.equals(result.getBarcodeFormat());
             boolean isEan13 = BarcodeFormat.EAN_13.equals(result.getBarcodeFormat());
 
-            if ((isEan8 || isEan13) && mBarcodePattern.matcher(barcode).matches()) {
+            if(mQrCodePattern.matcher(barcode).matches())
+            {
+                if (mListener != null) {
+                    mListener.onStartCheckout(barcode);
+                }
+            }
+            else if ((isEan8 || isEan13) && mBarcodePattern.matcher(barcode).matches()) {
                 String productId;
                 if (isEan13) {
                     productId = barcode.substring(8, 12);
@@ -47,6 +54,7 @@ public class BarcodeScannerFragmentViewModel {
                     mListener.onShowInvalidBarcodeMessage();
                 }
             }
+
         }
     };
 
@@ -93,5 +101,6 @@ public class BarcodeScannerFragmentViewModel {
         void onShowAddToCartDialog(Product product);
         void onShowProductNotFoundMessage();
         void onShowInvalidBarcodeMessage();
+        void onStartCheckout(String cartCode);
     }
 }
