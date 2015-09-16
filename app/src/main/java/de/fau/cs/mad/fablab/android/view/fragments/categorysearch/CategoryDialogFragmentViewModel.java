@@ -6,13 +6,16 @@ import java.util.List;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.CategoryModel;
+import de.fau.cs.mad.fablab.android.model.events.CategorySearchProductsEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Category;
+import de.greenrobot.event.EventBus;
 
 public class CategoryDialogFragmentViewModel {
 
     private CategoryModel mCategoryModel;
     private Listener mListener;
+    private EventBus mEventBus = EventBus.getDefault();
 
     private Command<Void> mOnGetProductsButtonClickedCommand = new Command<Void>() {
         @Override
@@ -20,6 +23,7 @@ public class CategoryDialogFragmentViewModel {
             if(mListener != null)
             {
                 mCategoryModel.getCategoryProducts(mListener.getCategory());
+                mEventBus.post(new CategorySearchProductsEvent());
                 mListener.onGetProductsButtonClicked();
             }
         }
