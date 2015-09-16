@@ -29,9 +29,9 @@ public class WidgetProvider extends AppWidgetProvider
 //    @Inject
 //    SpaceApiModel mSpaceApiModel;
 
-    boolean isOpen;
-    String widgetTime;
-    final String SET_TIME = "set_time";
+//    boolean isOpen;
+//    String widgetTime;
+//    final String SET_TIME = "set_time";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
@@ -55,25 +55,10 @@ public class WidgetProvider extends AppWidgetProvider
     {
         super.onReceive(context, intent);
 
-        if(intent.getAction().toString() == SET_TIME)
-        {
 
-        }
     }
 
-    public void updateWidgetNow(Context context, RemoteViews remoteViews)
-    {
-        ComponentName widgetComponent = new ComponentName(context, WidgetProvider.class);
-        AppWidgetManager.getInstance(context).updateAppWidget(widgetComponent, remoteViews);
-    }
 
-    public PendingIntent onClickPendingIntent(Context context, String stringAction)
-    {
-        Intent onClickIntent = new Intent(context, WidgetProvider.class);
-        onClickIntent.setAction(stringAction);
-
-        return PendingIntent.getBroadcast(context, 0, onClickIntent, 0);
-    }
 
 
 }
