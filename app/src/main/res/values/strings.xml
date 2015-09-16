@@ -99,7 +99,7 @@
     <string name="version_check_update_required">Update verfügbar</string>
     <string name="version_check_no_update_available">Kein Update verfügbar</string>
 
-    <string name="category_title">Kategorien:</string>
+    <string name="category_title">Kategorie:</string>
     <string name="category_button">Produkte suchen</string>
 
     <string name="add_calendar">FabLab Kalender hinzugefügt</string>
