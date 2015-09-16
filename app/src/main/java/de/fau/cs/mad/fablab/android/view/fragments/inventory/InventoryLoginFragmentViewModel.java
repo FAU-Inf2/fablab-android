@@ -25,6 +25,15 @@ public class InventoryLoginFragmentViewModel {
         }
     };
 
+    private final Command<Void> mLoginQrCodeScannerCommand = new Command<Void>() {
+        @Override
+        public void execute(Void parameter) {
+            if(mListener != null) {
+                mListener.onLoginQrCodeClicked();
+            }
+        }
+    };
+
     @Inject
     public InventoryLoginFragmentViewModel(UserModel model)
     {
@@ -40,6 +49,11 @@ public class InventoryLoginFragmentViewModel {
     public Command<Void> getLoginCommand()
     {
         return mLoginCommand;
+    }
+
+    public Command<Void> getLoginQrCodeScannerCommand()
+    {
+        return mLoginQrCodeScannerCommand;
     }
 
     public void onEvent(UserRetrievedEvent event) {
@@ -62,5 +76,7 @@ public class InventoryLoginFragmentViewModel {
         String getPassword();
 
         void userUnauthorized();
+
+        void onLoginQrCodeClicked();
     }
 }

@@ -93,6 +93,7 @@
     <string name="inventory_login_hint_username">Benutzername</string>
     <string name="inventory_login_hint_password">Passwort</string>
     <string name="inventory_login_unauthorized_user">Anmeldung ist fehlgeschlagen</string>
+    <string name="inventory_login_qr_code_scanner_request">Bitte Inventur QRCode scannen</string>
 
     <string name="version_check_update_optional">Optionales Update verfügbar</string>
     <string name="version_check_update_required">Update verfügbar</string>

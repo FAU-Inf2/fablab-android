@@ -46,6 +46,7 @@ public class InventoryLoginFragment extends BaseFragment implements InventoryLog
         mViewModel.setListener(this);
 
         new ViewCommandBinding().bind(loginButton, mViewModel.getLoginCommand());
+        new ViewCommandBinding().bind(scanButton, mViewModel.getLoginQrCodeScannerCommand());
     }
 
     @Override
@@ -79,5 +80,11 @@ public class InventoryLoginFragment extends BaseFragment implements InventoryLog
     public void userUnauthorized() {
         Toast.makeText(getActivity(), R.string.inventory_login_unauthorized_user, Toast.LENGTH_LONG)
                 .show();
+    }
+
+    @Override
+    public void onLoginQrCodeClicked() {
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new InventoryLoginQrCodeScannerFragment()).addToBackStack(null).commit();
     }
 }
