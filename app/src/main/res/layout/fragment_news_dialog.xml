@@ -11,19 +11,7 @@
         android:orientation="horizontal"
         android:id="@+id/news_dialog_title_ll"
         android:background="@color/colorPrimaryDark"
-        android:minHeight="@dimen/news_dialog_header_minheight"
-        >
-
-        <!--<ImageView
-            android:id="@+id/news_dialog_image"
-            android:layout_width="@dimen/news_dialog_preview_image_size"
-            android:layout_height="@dimen/news_dialog_preview_image_size"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/news_dialog_preview_image_margin_right"
-            android:layout_marginLeft="@dimen/news_dialog_title_margin_left_right"
-            android:layout_marginRight="@dimen/news_dialog_preview_image_margin_right"
-            android:layout_marginStart="@dimen/news_dialog_title_margin_left_right"
-            android:contentDescription="@string/news_preview_image_content_description" />-->
+        android:minHeight="@dimen/news_dialog_header_minheight">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/news_dialog_image"
