@@ -47,8 +47,10 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment
 
         title_tv.setText(mViewModel.getNews().getTitle());
         final WebSettings webSettings = webView.getSettings();
-        webSettings.setTextSize(WebSettings.TextSize.NORMAL);
-        webView.loadData(mViewModel.getNews().getDescription(), "text/html; charset=utf-8", "UTF-8");
+        String htmlData = mViewModel.getNews().getDescription();
+        htmlData += "<link rel=\"stylesheet\" type=\"text/css\" href=\"news_dialog_stylesheet.css\" /> " + htmlData;
+
+        webView.loadDataWithBaseURL("file:///android_asset/", htmlData, "text/html; charset=utf-8", "UTF-8", null);
         if (mViewModel.getNews().getLinkToPreviewImage() != null) {
             Picasso.with(image_iv.getContext()).load(mViewModel.getNews().getLinkToPreviewImage()).into(image_iv);
         } else {
@@ -56,9 +58,9 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment
         }
 
         final WebSettings webSettingsLink = link_tv.getSettings();
-        webSettingsLink.setTextSize(WebSettings.TextSize.NORMAL);
-        String link = "<html><body><b>Link:</b> <a href=" +  mViewModel.getNews().getLink() + ">" + mViewModel.getNews().getLink() + "</a></body></html>";
-        link_tv.loadData(link, "text/html; charset=utf-8", "UTF-8");
+        String link = "<link rel=\"stylesheet\" type=\"text/css\" href=\"news_dialog_stylesheet.css\" />" +
+                "<html><body class=\"link\"><a href=" +  mViewModel.getNews().getLink() + ">" + mViewModel.getNews().getLink() + "</a></body></html>";
+        link_tv.loadDataWithBaseURL("file:///android_asset/", link, "text/html; charset=utf-8", "UTF-8", null);
     }
 
     @Override

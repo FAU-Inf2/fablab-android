@@ -1,0 +1,19 @@
+body {
+	background: #E0E0E0;
+	font-family: Roboto, sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: #9C5151;
+	font-weight: bold;
+}
+
+.link {
+	background: #A7B8BE;
+}
+.link a {
+	text-decoration: none;
+	color: #788F94;
+	font-weight: bold;
+}

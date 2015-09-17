@@ -2,16 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:paddingTop="@dimen/news_dialog_padding_top">
+    android:background="@color/windowBackground"
+    android:paddingTop="0dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:id="@+id/news_dialog_title_ll"
+        android:background="@color/colorPrimaryDark"
+        android:minHeight="@dimen/news_dialog_header_minheight"
         >
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/news_dialog_image"
             android:layout_width="@dimen/news_dialog_preview_image_size"
             android:layout_height="@dimen/news_dialog_preview_image_size"
@@ -20,23 +23,32 @@
             android:layout_marginLeft="@dimen/news_dialog_title_margin_left_right"
             android:layout_marginRight="@dimen/news_dialog_preview_image_margin_right"
             android:layout_marginStart="@dimen/news_dialog_title_margin_left_right"
-            android:contentDescription="@string/news_preview_image_content_description" />
+            android:contentDescription="@string/news_preview_image_content_description" />-->
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/news_dialog_image"
+            android:layout_width="@dimen/news_dialog_preview_image_size"
+            android:layout_height="@dimen/news_dialog_preview_image_size"
+            android:layout_gravity="center"
+            android:contentDescription="@string/news_preview_image_content_description"
+            android:layout_marginLeft="@dimen/news_dialog_title_margin_left_right" />
 
         <TextView
             android:id="@+id/news_dialog_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/news_dialog_title_margin_left_right"
+            android:layout_marginLeft="@dimen/news_dialog_title_margin_left_right"
             android:layout_marginRight="@dimen/news_dialog_title_margin_left_right"
-            android:gravity="center"
-            android:layout_toRightOf="@+id/news_dialog_image"
+            android:gravity="left"
+            android:layout_gravity="center"
             android:layout_centerVertical="true"
             android:maxHeight="@dimen/news_entry_title_maxheight"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
+            android:fontFamily="sans-serif-medium"
             android:textSize="@dimen/textsize_news_dialog_title"
             android:layout_alignParentTop="true" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <WebView
         android:id="@+id/news_dialog_webview"
@@ -48,7 +60,8 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/news_dialog_title_ll"
         android:layout_marginTop="@dimen/news_dialog_webview_margin_top"
-        android:layout_above="@+id/news_dialog_link_tv" />
+        android:layout_above="@+id/news_dialog_link_tv"
+        android:background="@color/windowBackground"/>
 
     <WebView
         android:layout_width="match_parent"
