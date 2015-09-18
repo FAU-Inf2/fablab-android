@@ -44,6 +44,6 @@ public class EditProjectFragment extends BaseFragment {
         super.onResume();
 
         setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER);
-        setNavigationDrawerSelection(R.id.drawer_item_projects);
+        //setNavigationDrawerSelection(R.id.drawer_item_projects);
     }
 }

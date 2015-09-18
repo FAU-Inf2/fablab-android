@@ -62,7 +62,7 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
         super.onResume();
 
         setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER);
-        setNavigationDrawerSelection(R.id.drawer_item_projects);
+        //setNavigationDrawerSelection(R.id.drawer_item_projects);
     }
 
     @Override
