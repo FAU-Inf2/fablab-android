@@ -15,9 +15,10 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
+import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 
-public class ProjectFragment extends BaseFragment {
+public class ProjectFragment extends BaseFragment implements ProjectFragmentViewModel.Listener{
 
     @Bind(R.id.projects_recycler_view)
     RecyclerView projectsRV;
@@ -32,6 +33,7 @@ public class ProjectFragment extends BaseFragment {
         inflater.inflate(R.menu.menu_project, menu);
 
         MenuItem newItem = menu.findItem(R.id.action_new);
+        new MenuItemCommandBinding().bind(newItem, mViewModel.getNewProjectCommand());
 
     }
 
@@ -39,6 +41,13 @@ public class ProjectFragment extends BaseFragment {
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mViewModel.setListener(this);
     }
 
     @Override
@@ -54,5 +63,11 @@ public class ProjectFragment extends BaseFragment {
 
         setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER);
         setNavigationDrawerSelection(R.id.drawer_item_projects);
+    }
+
+    @Override
+    public void onNewProjectClicked() {
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new EditProjectFragment()).addToBackStack(null).commit();
     }
 }
