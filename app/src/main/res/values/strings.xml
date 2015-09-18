@@ -105,6 +105,9 @@
     <string name="add_calendar">FabLab Kalender hinzugefügt</string>
     <string name="existing_calendar">FabLab Kalender existiert bereits</string>
 
+    <string name="projects_title">Projekte:</string>
+    <string name="action_new_project">neues Projekt</string>
+
     <string name="key_show_cart_fab">showcartfab</string>
     <string name="key_user">user</string>
     <string name="key_product_search">productsearch</string>

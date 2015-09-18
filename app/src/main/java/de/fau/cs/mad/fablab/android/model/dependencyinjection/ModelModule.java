@@ -43,6 +43,7 @@ import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productmap.ProductMapFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.projects.ProjectFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.stacktrace.StackTraceDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.versioncheck.VersionCheckDialogFragment;
@@ -62,7 +63,7 @@ import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
                 InventoryProductSearchFragment.class, AddToInventoryDialogFragment.class,
                 SettingsFragment.class, ShowInventoryFragment.class, CartEntryDialogFragment.class,
                 CategoryDialogFragment.class, InventoryLoginFragment.class,
-                InventoryLoginQrCodeScannerFragment.class
+                InventoryLoginQrCodeScannerFragment.class, ProjectFragment.class
         })
 public class ModelModule {
     private final StorageFragment mStorageFragment;

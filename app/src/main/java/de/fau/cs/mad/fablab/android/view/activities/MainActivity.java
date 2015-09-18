@@ -32,6 +32,7 @@ import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryLoginFragm
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.ShowInventoryFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.projects.ProjectFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.versioncheck.VersionCheckDialogFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String TAG_SHOWINVENTORY_INVENTORY_FRAGMENT = "tag_showinventory_inventory_fragment";
     private final static String TAG_CATEGORYSEARCH_FRAGMENT ="tag_categorysearch_fragment";
     private final static String TAG_INVENTORY_LOGIN_FRAGMENT = "tag_inventory_login_fragment";
+    private final static String TAG_PROJECTS_FRAGMENT = "tag_projects_fragment";
 
     private ActionBar mActionBar;
     private NavigationDrawer mNavigationDrawer;
@@ -293,6 +295,14 @@ public class MainActivity extends AppCompatActivity {
                 {
                     fragmentTransaction.replace(R.id.fragment_container, new InventoryLoginFragment(),
                             TAG_INVENTORY_LOGIN_FRAGMENT).addToBackStack(null).commit();
+                }
+                break;
+
+            case Projects:
+                if(!TAG_PROJECTS_FRAGMENT.equals(currentFragmentTag))
+                {
+                    fragmentTransaction.replace(R.id.fragment_container, new ProjectFragment(),
+                            TAG_PROJECTS_FRAGMENT).addToBackStack(null).commit();
                 }
                 break;
 
