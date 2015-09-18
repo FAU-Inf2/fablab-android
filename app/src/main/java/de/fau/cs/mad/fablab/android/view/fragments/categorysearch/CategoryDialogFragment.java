@@ -74,6 +74,13 @@ public class CategoryDialogFragment extends BaseDialogFragment implements Catego
         HashMap<Long, Category> children = mViewModel.getChildrenCategories();
 
         TreeNode root = TreeNode.root();
+
+        if(!roots.isEmpty())
+        {
+            currentCategory = roots.get(0).getName();
+            statusBarTextView.setText(currentCategory);
+        }
+        
         for(Category c : roots)
         {
             TreeNode node = new TreeNode(new TreeItemHolder.TreeItem(c));
