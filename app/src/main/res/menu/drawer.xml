@@ -23,6 +23,10 @@
             android:icon="@drawable/ic_nav_inventory"
             android:title="@string/inventory" />
         <item
+            android:id="@+id/drawer_item_projects"
+            android:icon="@drawable/ic_nav_project"
+            android:title="@string/projects" />
+        <item
             android:id="@+id/drawer_item_alert"
             android:icon="@drawable/ic_nav_warning"
             android:title="@string/alert" />

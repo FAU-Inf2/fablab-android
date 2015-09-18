@@ -96,6 +96,13 @@ public class NavigationDrawerViewModel {
         }
     };
 
+    private final Command<Void> mNavigateToProjectsCommand = new Command<Void>() {
+        @Override
+        public void execute(Void parameter) {
+            mEventBus.post(NavigationEvent.Projects);
+        }
+    };
+
     @Inject
     public NavigationDrawerViewModel() {
         mEventBus.register(this);
@@ -143,6 +150,11 @@ public class NavigationDrawerViewModel {
     public Command<Void> getInventoryCommand()
     {
         return mInventoryCommand;
+    }
+
+    public Command<Void> getNavigateToProjectsCommand()
+    {
+        return mNavigateToProjectsCommand;
     }
 
     public void setSelection(int itemId) {
