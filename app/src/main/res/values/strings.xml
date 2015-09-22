@@ -112,6 +112,9 @@
     <string name="edit_project_hint_title">Titel</string>
     <string name="edit_project_hint_short_description">Kurzbeschreibung</string>
     <string name="edit_project_hint_description">Beschreibung</string>
+    <string name="save_project_title">Speichern</string>
+    <string name="save_project_local">Entwurf lokal speichern</string>
+    <string name="save_project_github">auf Github hochladen</string>
 
     <string name="key_show_cart_fab">showcartfab</string>
     <string name="key_user">user</string>

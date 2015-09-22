@@ -143,4 +143,5 @@
     <dimen name="textsize_category_text">16dp</dimen>
     <dimen name="textsize_inventory_login_title">22dp</dimen>
     <dimen name="textsize_projects_title">22dp</dimen>
+    <dimen name="textsize_save_project_title">22dp</dimen>
 </resources>

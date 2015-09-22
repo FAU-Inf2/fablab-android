@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/margin_large"
+    android:paddingBottom="@dimen/margin_large"
+    android:paddingRight="@dimen/margin_medium"
+    android:paddingLeft="@dimen/margin_medium"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/save_project_title_tv"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/textsize_save_project_title"
+        android:text="@string/save_project_title"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_large"
+        android:id="@+id/save_project_save_local_button"
+        android:textSize="@dimen/textsize_button"
+        android:text="@string/save_project_local"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/save_project_save_github_button"
+        android:textSize="@dimen/textsize_button"
+        android:text="@string/save_project_github"
+        />
+
+</LinearLayout>
