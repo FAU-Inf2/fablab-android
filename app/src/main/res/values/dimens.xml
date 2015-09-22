@@ -87,7 +87,7 @@
     <dimen name="navdrawer_edittext_margin_lr">50dp</dimen>
     <dimen name="navdrawer_edittext_margin_tb">5dp</dimen>
     <dimen name="navdrawer_button_margin_lr">100dp</dimen>
-    <!-- <dimen name="navdrawer_header_padding_top">25dp</dimen> for statusbar overlay, not yet implemented to fit all APIs -->
+    <dimen name="navdrawer_header_margin_top">25dp</dimen>
     <dimen name="navdrawer_header_padding_top">0dp</dimen>
 
     <dimen name="snackbar_height">48dp </dimen>
