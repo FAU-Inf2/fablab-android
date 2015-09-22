@@ -9,11 +9,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
+import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 
-public class EditProjectFragment extends BaseFragment {
+public class EditProjectFragment extends BaseFragment implements EditProjectFragmentViewModel.Listener{
+
+    @Inject
+    EditProjectFragmentViewModel mViewModel;
 
     @Override
     public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
@@ -24,6 +30,15 @@ public class EditProjectFragment extends BaseFragment {
         MenuItem addPhotoItem = menu.findItem(R.id.action_add_photo_project);
         MenuItem saveProjectItem = menu.findItem(R.id.action_save_project);
 
+        new MenuItemCommandBinding().bind(saveProjectItem, mViewModel.getSaveProjectCommand());
+
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mViewModel.setListener(this);
     }
 
     @Override
@@ -45,5 +60,11 @@ public class EditProjectFragment extends BaseFragment {
 
         setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER);
         //setNavigationDrawerSelection(R.id.drawer_item_projects);
+    }
+
+    @Override
+    public void onSaveProjectClicked() {
+        SaveProjectDialogFragment fragment = new SaveProjectDialogFragment();
+        fragment.show(getFragmentManager(), "SaveProjectDialogFragment");
     }
 }
