@@ -66,6 +66,10 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
                 mViewModel.getNavigateToSettingsCommand());
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_logout),
                 mViewModel.getLogoutCommand());
+        /*
+        new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_projects),
+                mViewModel.getNavigateToProjectsCommand());
+                */
 
         menu.findItem(R.id.drawer_item_logout).setVisible(false);
 

@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import de.fau.cs.mad.fablab.android.model.events.CategorySearchSuccessfulEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.rest.core.Category;
 import de.fau.cs.mad.fablab.rest.core.Product;
 import de.fau.cs.mad.fablab.rest.myapi.CategoryApi;
-import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
+import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -16,7 +17,7 @@ import retrofit.client.Response;
 public class CategoryModel {
 
     private CategoryApi mCategoryApi;
-    private ProductApi mProductApi;
+    private ProductModel mProductModel;
     private List<Category> mAllCategories;
     private List<Category> mRoots;
     private HashMap<Long, Category> mChildren;
@@ -35,25 +36,14 @@ public class CategoryModel {
         }
     };
 
-    private Callback<List<Product>> mCategoryProductsCallback = new Callback<List<Product>>() {
-        @Override
-        public void success(List<Product> products, Response response) {
-            mProducts.clear();
-            mProducts.addAll(products);
-        }
-
-        @Override
-        public void failure(RetrofitError error) {
-        }
-    };
-
-    public CategoryModel(CategoryApi categoryApi, ProductApi productApi){
+    public CategoryModel(CategoryApi categoryApi, ProductModel productModel) {
         mCategoryApi = categoryApi;
-        mProductApi = productApi;
+        mProductModel = productModel;
         mAllCategories = new ArrayList<>();
         mRoots = new ArrayList<>();
         mChildren = new HashMap<>();
         mProducts = new ObservableArrayList<>();
+        EventBus.getDefault().register(this);
         update();
     }
 
@@ -101,6 +91,11 @@ public class CategoryModel {
 
     public void getCategoryProducts(String category)
     {
-        mProductApi.findByCategory(category, 0,0, mCategoryProductsCallback);
+        mProducts.clear();
+        mProductModel.findByCategory(category);
+    }
+
+    public void onEvent(CategorySearchSuccessfulEvent event) {
+        mProducts.addAll(event.getProducts());
     }
 }

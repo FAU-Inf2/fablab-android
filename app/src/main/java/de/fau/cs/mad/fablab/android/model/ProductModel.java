@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 
+import de.fau.cs.mad.fablab.android.model.events.CategorySearchSuccessfulEvent;
 import de.fau.cs.mad.fablab.android.model.events.NoProductsFoundEvent;
 import de.fau.cs.mad.fablab.android.model.events.ProductFoundEvent;
 import de.fau.cs.mad.fablab.android.model.events.ProductNotFoundEvent;
@@ -217,5 +218,40 @@ public class ProductModel {
                 }
             }
         }.execute(id);
+    }
+
+    public void findByCategory(String category) {
+        new AsyncTask<String, Void, List<Product>>() {
+
+            @Override
+            protected List<Product> doInBackground(String... params) {
+                try {
+                    mCountDownLatch.await();
+                } catch (InterruptedException e) {
+                    Log.e(TAG, "Interrupt", e);
+                }
+                List<Product> result = null;
+                try {
+                    PreparedQuery<Product> query = mProductDao.queryBuilder().where().like(
+                            "category_string", "%" + params[0] + "%").prepare();
+                    result = mProductDao.query(query);
+                } catch (SQLException e) {
+                    Log.e(TAG, "Query failed", e);
+                }
+                return result;
+            }
+
+            @Override
+            protected void onPostExecute(List<Product> result) {
+                super.onPostExecute(result);
+                if (result == null) {
+                    mEventBus.post(new ProductSearchRetrofitErrorEvent());
+                } else if (result.isEmpty()) {
+                    mEventBus.post(new NoProductsFoundEvent());
+                } else {
+                    mEventBus.post(new CategorySearchSuccessfulEvent(result));
+                }
+            }
+        }.execute(category);
     }
 }

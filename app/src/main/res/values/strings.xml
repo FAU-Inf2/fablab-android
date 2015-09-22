@@ -105,6 +105,14 @@
     <string name="add_calendar">FabLab Kalender hinzugefügt</string>
     <string name="existing_calendar">FabLab Kalender existiert bereits</string>
 
+    <string name="action_add_photo_project">Photo hinzufügen</string>
+    <string name="action_save_project">Projekt speichern</string>
+    <string name="projects_title">Projekte:</string>
+    <string name="action_new_project">neues Projekt</string>
+    <string name="edit_project_hint_title">Titel</string>
+    <string name="edit_project_hint_short_description">Kurzbeschreibung</string>
+    <string name="edit_project_hint_description">Beschreibung</string>
+
     <string name="key_show_cart_fab">showcartfab</string>
     <string name="key_user">user</string>
     <string name="key_product_search">productsearch</string>
@@ -119,6 +127,7 @@
     <string name="alert">Störmeldung</string>
     <string name="logout">Logout</string>
     <string name="inventory">Inventur</string>
+    <string name="projects">Projekte</string>
 
     <string name="navdrawer_login_hint_username">Username</string>
     <string name="navdrawer_login_hint_password">Password</string>

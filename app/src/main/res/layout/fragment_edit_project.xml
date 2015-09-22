@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/margin_medium"
+    >
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_project_title"
+        android:hint="@string/edit_project_hint_title"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_project_short_description"
+        android:hint="@string/edit_project_hint_short_description"
+        android:paddingTop="@dimen/margin_small"
+        />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/edit_project_description_et"
+        android:hint="@string/edit_project_hint_description"
+        android:gravity="top|left"
+        android:paddingTop="@dimen/margin_small"
+        />
+
+</LinearLayout>
