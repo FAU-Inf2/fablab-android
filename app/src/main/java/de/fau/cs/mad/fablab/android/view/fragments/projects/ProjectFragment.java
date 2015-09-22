@@ -67,7 +67,11 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
 
     @Override
     public void onNewProjectClicked() {
+        EditProjectFragment fragment = new EditProjectFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        args.putSerializable(getResources().getString(R.string.key_project), null);
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new EditProjectFragment()).addToBackStack(null).commit();
+                fragment).addToBackStack(null).commit();
     }
 }

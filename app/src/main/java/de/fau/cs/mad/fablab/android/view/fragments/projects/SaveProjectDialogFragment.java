@@ -13,8 +13,10 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
+import de.fau.cs.mad.fablab.android.viewmodel.common.Project;
 
-public class SaveProjectDialogFragment extends BaseDialogFragment {
+public class SaveProjectDialogFragment extends BaseDialogFragment
+        implements SaveProjectDialogFragmentViewModel.Listener{
 
     @Bind(R.id.save_project_save_local_button)
     Button mSaveLocalButton;
@@ -30,5 +32,15 @@ public class SaveProjectDialogFragment extends BaseDialogFragment {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         return inflater.inflate(R.layout.fragment_save_project_dialog, container, false);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        Project project = (Project) getArguments().getSerializable(getResources().getString(R.string.key_project));
+        mViewModel.setProject(project);
+
+        mViewModel.setListener(this);
     }
 }

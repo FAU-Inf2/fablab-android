@@ -119,6 +119,7 @@
     <string name="key_show_cart_fab">showcartfab</string>
     <string name="key_user">user</string>
     <string name="key_product_search">productsearch</string>
+    <string name="key_project">project</string>
 
     <!-- Strings for navigation drawer titles -->
     <string name="news">News</string>
