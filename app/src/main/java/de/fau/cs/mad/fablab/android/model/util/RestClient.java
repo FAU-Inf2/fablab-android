@@ -26,6 +26,7 @@ import de.fau.cs.mad.fablab.rest.myapi.ICalApi;
 import de.fau.cs.mad.fablab.rest.myapi.InventoryApi;
 import de.fau.cs.mad.fablab.rest.myapi.NewsApi;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
+import de.fau.cs.mad.fablab.rest.myapi.ProjectsApi;
 import de.fau.cs.mad.fablab.rest.myapi.PushApi;
 import de.fau.cs.mad.fablab.rest.myapi.SpaceApi;
 import de.fau.cs.mad.fablab.rest.myapi.VersionCheckApi;
@@ -139,5 +140,10 @@ public class RestClient {
     public CategoryApi getCategoryApi()
     {
         return mRestAdapter.create(CategoryApi.class);
+    }
+
+    public ProjectsApi getProjectsApi()
+    {
+        return mRestAdapter.create(ProjectsApi.class);
     }
 }

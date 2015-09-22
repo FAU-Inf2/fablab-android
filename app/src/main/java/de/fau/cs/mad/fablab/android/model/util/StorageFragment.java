@@ -10,11 +10,12 @@ import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.model.CategoryModel;
 import de.fau.cs.mad.fablab.android.model.CheckoutModel;
 import de.fau.cs.mad.fablab.android.model.DrupalModel;
-import de.fau.cs.mad.fablab.android.model.MailModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
 import de.fau.cs.mad.fablab.android.model.InventoryModel;
+import de.fau.cs.mad.fablab.android.model.MailModel;
 import de.fau.cs.mad.fablab.android.model.NewsModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
+import de.fau.cs.mad.fablab.android.model.ProjectModel;
 import de.fau.cs.mad.fablab.android.model.PushModel;
 import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
 import de.fau.cs.mad.fablab.android.model.UserModel;
@@ -38,6 +39,7 @@ public class StorageFragment extends Fragment {
     private InventoryModel mInventoryModel;
     private VersionCheckModel mVersionCheckModel;
     private CategoryModel mCategoryModel;
+    private ProjectModel mProjectModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class StorageFragment extends Fragment {
         mVersionCheckModel = new VersionCheckModel(restClient.getVersionCheckApi(),
                 getActivity().getApplicationContext());
         mCategoryModel = new CategoryModel(restClient.getCategoryApi(), mProductModel);
+        mProjectModel = new ProjectModel(restClient.getProjectsApi());
     }
 
     public NewsModel getNewsModel() {
@@ -126,5 +129,10 @@ public class StorageFragment extends Fragment {
     public CategoryModel getCategoryModel()
     {
         return mCategoryModel;
+    }
+
+    public ProjectModel getProjectModel()
+    {
+        return mProjectModel;
     }
 }
