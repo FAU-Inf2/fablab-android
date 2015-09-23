@@ -18,12 +18,10 @@ public class EditProjectFragmentViewModel extends BaseFragment {
             ProjectFile projectFile = createProjectFile();
             if(mProject == null)
             {
-                mProject = new Project(projectFile);
+                mProject = new Project();
             }
-            else
-            {
-                mProject.setProjectFile(projectFile);
-            }
+            mProject.setProjectFile(projectFile);
+
             if(mListener != null) {
                 mListener.onSaveProjectClicked();
             }
