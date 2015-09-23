@@ -59,7 +59,7 @@ public class EditProjectFragmentViewModel extends BaseFragment {
     {
         if(mListener != null)
         {
-            return new ProjectFile(mListener.getTitle(), mListener.getShortDescription(),
+            return new ProjectFile(mListener.getShortDescription(), mListener.getTitle(),
                     mListener.getText());
         }
         else
