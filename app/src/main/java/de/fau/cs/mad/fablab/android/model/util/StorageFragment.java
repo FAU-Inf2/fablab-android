@@ -68,7 +68,7 @@ public class StorageFragment extends Fragment {
         mVersionCheckModel = new VersionCheckModel(restClient.getVersionCheckApi(),
                 getActivity().getApplicationContext());
         mCategoryModel = new CategoryModel(restClient.getCategoryApi(), mProductModel);
-        mProjectModel = new ProjectModel(restClient.getProjectsApi());
+        mProjectModel = new ProjectModel(restClient.getProjectsApi(), databaseHelper.getProjectDao());
     }
 
     public NewsModel getNewsModel() {
