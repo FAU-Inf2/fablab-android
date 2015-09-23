@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,21 +45,20 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment
         new ViewCommandBinding().bind(image_iv, mViewModel.getImageClickCommand());
 
         title_tv.setText(mViewModel.getNews().getTitle());
-        final WebSettings webSettings = webView.getSettings();
-        String htmlData = mViewModel.getNews().getDescription();
-        htmlData += "<link rel=\"stylesheet\" type=\"text/css\" href=\"news_dialog_stylesheet.css\" /> " + htmlData;
 
-        webView.loadDataWithBaseURL("file:///android_asset/", htmlData, "text/html; charset=utf-8", "UTF-8", null);
+        String stylesheet = "<link rel=\"stylesheet\" type=\"text/css\" href=\"news_dialog_stylesheet.css\" /> ";
+        String htmlData = stylesheet + mViewModel.getNews().getDescription();
+
+        webView.loadDataWithBaseURL("file:///android_asset/", htmlData, "text/html", "UTF-8", null);
         if (mViewModel.getNews().getLinkToPreviewImage() != null) {
             Picasso.with(image_iv.getContext()).load(mViewModel.getNews().getLinkToPreviewImage()).into(image_iv);
         } else {
             Picasso.with(image_iv.getContext()).load(R.drawable.news_nopicture).fit().into(image_iv);
         }
 
-        final WebSettings webSettingsLink = link_tv.getSettings();
-        String link = "<link rel=\"stylesheet\" type=\"text/css\" href=\"news_dialog_stylesheet.css\" />" +
+        String link = stylesheet +
                 "<html><body class=\"link\"><a href=" +  mViewModel.getNews().getLink() + ">" + mViewModel.getNews().getLink() + "</a></body></html>";
-        link_tv.loadDataWithBaseURL("file:///android_asset/", link, "text/html; charset=utf-8", "UTF-8", null);
+        link_tv.loadDataWithBaseURL("file:///android_asset/", link, "text/html", "UTF-8", null);
     }
 
     @Override
