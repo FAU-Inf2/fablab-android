@@ -8,12 +8,28 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+import javax.inject.Inject;
+
+import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
+import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
+import de.fau.cs.mad.fablab.android.viewmodel.common.Project;
 
-public class EditProjectFragment extends BaseFragment {
+public class EditProjectFragment extends BaseFragment implements EditProjectFragmentViewModel.Listener{
+
+    @Bind(R.id.edit_project_title_et)
+    EditText mTitleTV;
+    @Bind(R.id.edit_project_short_description_et)
+    EditText mShortDescriptionTV;
+    @Bind(R.id.edit_project_description_et)
+    EditText mDescriptionTV;
+
+    @Inject
+    EditProjectFragmentViewModel mViewModel;
 
     @Override
     public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
@@ -24,6 +40,18 @@ public class EditProjectFragment extends BaseFragment {
         MenuItem addPhotoItem = menu.findItem(R.id.action_add_photo_project);
         MenuItem saveProjectItem = menu.findItem(R.id.action_save_project);
 
+        new MenuItemCommandBinding().bind(saveProjectItem, mViewModel.getSaveProjectCommand());
+
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        Project project = (Project) getArguments().getSerializable(getResources().getString(R.string.key_project));
+        mViewModel.setProject(project);
+
+        mViewModel.setListener(this);
     }
 
     @Override
@@ -45,5 +73,29 @@ public class EditProjectFragment extends BaseFragment {
 
         setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER);
         //setNavigationDrawerSelection(R.id.drawer_item_projects);
+    }
+
+    @Override
+    public void onSaveProjectClicked() {
+        SaveProjectDialogFragment fragment = new SaveProjectDialogFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(getResources().getString(R.string.key_project), mViewModel.getProject());
+        fragment.setArguments(args);
+        fragment.show(getFragmentManager(), "SaveProjectDialogFragment");
+    }
+
+    @Override
+    public String getTitle() {
+        return mTitleTV.getText().toString();
+    }
+
+    @Override
+    public String getShortDescription() {
+        return mShortDescriptionTV.getText().toString();
+    }
+
+    @Override
+    public String getText() {
+        return mDescriptionTV.getText().toString();
     }
 }
