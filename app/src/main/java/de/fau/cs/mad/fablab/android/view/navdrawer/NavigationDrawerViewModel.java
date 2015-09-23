@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventInventory;
+import de.fau.cs.mad.fablab.android.model.events.NavigationEventReservation;
 import de.fau.cs.mad.fablab.android.model.events.UserRetrievedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.Roles;
@@ -81,6 +82,21 @@ public class NavigationDrawerViewModel {
         }
     };
 
+    private final Command<Void> mNavigateToReservationCommand = new Command<Void>()
+    {
+        @Override
+        public void execute(Void parameter) {
+            User user = getLoggedInUser();
+            if((user != null))
+            {
+                mEventBus.post(new NavigationEventReservation(user));
+            }
+            else {
+                mEventBus.post(NavigationEvent.Reservation);
+            }
+        }
+    };
+
     private final Command<Void> mInventoryCommand = new Command<Void>()
     {
         @Override
@@ -140,6 +156,11 @@ public class NavigationDrawerViewModel {
     public Command<Void> getNavigateToAlertCommand()
     {
         return mNavigateToAlertCommand;
+    }
+
+    public Command<Void> getNavigateToReservationCommand()
+    {
+        return mNavigateToReservationCommand;
     }
 
     public Command<Void> getLogoutCommand()

@@ -14,6 +14,7 @@ import de.fau.cs.mad.fablab.android.model.NewsModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.model.PushModel;
 import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
+import de.fau.cs.mad.fablab.android.model.ToolUsageModel;
 import de.fau.cs.mad.fablab.android.model.UserModel;
 import de.fau.cs.mad.fablab.android.model.VersionCheckModel;
 import de.fau.cs.mad.fablab.android.model.util.StorageFragment;
@@ -45,6 +46,8 @@ import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductDialogFr
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.projects.EditProjectFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.projects.ProjectFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.reservation.ReservationDialogFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.reservation.ReservationFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.stacktrace.StackTraceDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.versioncheck.VersionCheckDialogFragment;
@@ -64,7 +67,8 @@ import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
                 InventoryProductSearchFragment.class, AddToInventoryDialogFragment.class,
                 SettingsFragment.class, ShowInventoryFragment.class, CartEntryDialogFragment.class,
                 CategoryDialogFragment.class, InventoryLoginFragment.class,
-                InventoryLoginQrCodeScannerFragment.class, ProjectFragment.class, EditProjectFragment.class
+                InventoryLoginQrCodeScannerFragment.class, ProjectFragment.class, EditProjectFragment.class,
+                ReservationFragment.class, ReservationDialogFragment.class
         })
 public class ModelModule {
     private final StorageFragment mStorageFragment;
@@ -142,5 +146,10 @@ public class ModelModule {
     CategoryModel provideCategoryModel()
     {
         return mStorageFragment.getCategoryModel();
+    }
+
+    @Provides
+    ToolUsageModel provideToolUsageModel() {
+        return mStorageFragment.getToolUsageModel();
     }
 }

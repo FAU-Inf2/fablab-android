@@ -17,9 +17,9 @@ import javax.net.ssl.TrustManagerFactory;
 
 import de.fau.cs.mad.fablab.android.BuildConfig;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.rest.myapi.CategoryApi;
 import de.fau.cs.mad.fablab.rest.core.Format;
 import de.fau.cs.mad.fablab.rest.myapi.CartApi;
+import de.fau.cs.mad.fablab.rest.myapi.CategoryApi;
 import de.fau.cs.mad.fablab.rest.myapi.DataApi;
 import de.fau.cs.mad.fablab.rest.myapi.DrupalApi;
 import de.fau.cs.mad.fablab.rest.myapi.ICalApi;
@@ -28,6 +28,7 @@ import de.fau.cs.mad.fablab.rest.myapi.NewsApi;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
 import de.fau.cs.mad.fablab.rest.myapi.PushApi;
 import de.fau.cs.mad.fablab.rest.myapi.SpaceApi;
+import de.fau.cs.mad.fablab.rest.myapi.ToolUsageApi;
 import de.fau.cs.mad.fablab.rest.myapi.VersionCheckApi;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
@@ -139,5 +140,9 @@ public class RestClient {
     public CategoryApi getCategoryApi()
     {
         return mRestAdapter.create(CategoryApi.class);
+    }
+
+    public ToolUsageApi getToolUsageApi() {
+        return mRestAdapter.create(ToolUsageApi.class);
     }
 }

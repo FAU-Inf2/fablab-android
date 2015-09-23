@@ -71,6 +71,8 @@
     <string name="alert_dialog_tool">Gerät:</string>
     <string name="alert_dialog_problem">Problem:</string>
 
+    <string name="reservation_dialog_title">Maschinenreservierung</string>
+
     <string name="inventory_fragment_title">Inventur</string>
     <string name="inventory_fragment_scan_product">Produkt scannen</string>
     <string name="inventory_fragment_search_product">Produkt suchen</string>
@@ -128,6 +130,7 @@
     <string name="logout">Logout</string>
     <string name="inventory">Inventur</string>
     <string name="projects">Projekte</string>
+    <string name="reservation">Maschinenreservierung</string>
 
     <string name="navdrawer_login_hint_username">Username</string>
     <string name="navdrawer_login_hint_password">Password</string>
