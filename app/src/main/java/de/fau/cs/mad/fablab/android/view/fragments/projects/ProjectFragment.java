@@ -2,6 +2,7 @@ package de.fau.cs.mad.fablab.android.view.fragments.projects;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,6 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.pedrogomez.renderers.RVRendererAdapter;
 
 import javax.inject.Inject;
 
@@ -21,7 +24,9 @@ import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 public class ProjectFragment extends BaseFragment implements ProjectFragmentViewModel.Listener{
 
     @Bind(R.id.projects_recycler_view)
-    RecyclerView projectsRV;
+    RecyclerView mProjectsRV;
+
+    private RVRendererAdapter<ProjectViewModel> mAdapter;
 
     @Inject
     ProjectFragmentViewModel mViewModel;
@@ -47,6 +52,15 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mProjectsRV.setLayoutManager(layoutManager);
+
+        mAdapter = new RVRendererAdapter<>(getLayoutInflater(savedInstanceState),
+                new ProjectViewModelRendererBuilder(),
+                mViewModel.getProjectViewModelCollection());
+        mProjectsRV.setAdapter(mAdapter);
+
         mViewModel.setListener(this);
     }
 
@@ -62,6 +76,7 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
         super.onResume();
 
         setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER);
+        mViewModel.update();
         //setNavigationDrawerSelection(R.id.drawer_item_projects);
     }
 
@@ -73,5 +88,10 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
         args.putSerializable(getResources().getString(R.string.key_project), null);
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 fragment).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void onDataChanged() {
+        mAdapter.notifyDataSetChanged();
     }
 }

@@ -2,6 +2,8 @@ package de.fau.cs.mad.fablab.android.model;
 
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
+import java.util.List;
+
 import de.fau.cs.mad.fablab.android.viewmodel.common.Project;
 import de.fau.cs.mad.fablab.rest.myapi.ProjectsApi;
 
@@ -18,6 +20,10 @@ public class ProjectModel {
     public void saveProject(Project project)
     {
         mProjectDao.createOrUpdate(project);
-        System.out.println("SIZE PROJECT DAO: " + mProjectDao.countOf());
+    }
+
+    public List<Project> getAllProjects()
+    {
+        return mProjectDao.queryForAll();
     }
 }
