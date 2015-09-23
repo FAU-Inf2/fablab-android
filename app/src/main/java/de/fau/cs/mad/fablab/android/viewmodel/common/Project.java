@@ -17,6 +17,8 @@ public class Project implements Serializable {
     private ProjectFile mProjectFile;
     @DatabaseField(columnName = "gist_id")
     private String mGistID;
+    @DatabaseField(columnName = "last_updated")
+    private long mLastUpdated;
 
     public Project(ProjectFile projectFile, String gistID)
     {
@@ -62,6 +64,16 @@ public class Project implements Serializable {
     public void setID(long id)
     {
         mID = id;
+    }
+
+    public void setLastUpdated(long lastUpdated)
+    {
+        mLastUpdated = lastUpdated;
+    }
+
+    public long getLastUpdated()
+    {
+        return mLastUpdated;
     }
 
     @Override

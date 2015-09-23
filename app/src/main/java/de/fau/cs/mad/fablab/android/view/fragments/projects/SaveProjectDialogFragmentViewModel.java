@@ -15,6 +15,7 @@ public class SaveProjectDialogFragmentViewModel {
     private Command<Void> mSaveProjectLocallyCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
+            mProject.setLastUpdated(System.currentTimeMillis());
             mModel.saveProject(mProject);
 
             if(mListener != null) {
