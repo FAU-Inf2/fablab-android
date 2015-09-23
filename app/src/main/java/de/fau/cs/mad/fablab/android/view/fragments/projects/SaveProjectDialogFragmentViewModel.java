@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.ProjectModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.Project;
+import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 
 public class SaveProjectDialogFragmentViewModel {
 
@@ -11,10 +12,26 @@ public class SaveProjectDialogFragmentViewModel {
     private Listener mListener;
     private Project mProject;
 
+    private Command<Void> mSaveProjectLocallyCommand = new Command<Void>() {
+        @Override
+        public void execute(Void parameter) {
+            mModel.saveProject(mProject);
+
+            if(mListener != null) {
+                mListener.onSaveProjectLocallyClicked();
+            }
+        }
+    };
+
     @Inject
     public SaveProjectDialogFragmentViewModel(ProjectModel projectModel)
     {
         mModel = projectModel;
+    }
+
+    public Command<Void> getSaveProjectLocallyCommand()
+    {
+        return mSaveProjectLocallyCommand;
     }
 
     public void setListener(Listener listener)
@@ -29,6 +46,6 @@ public class SaveProjectDialogFragmentViewModel {
     }
 
     public interface Listener{
-
+        void onSaveProjectLocallyClicked();
     }
 }

@@ -12,6 +12,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import de.fau.cs.mad.fablab.android.viewmodel.common.Project;
 
@@ -41,6 +42,13 @@ public class SaveProjectDialogFragment extends BaseDialogFragment
         Project project = (Project) getArguments().getSerializable(getResources().getString(R.string.key_project));
         mViewModel.setProject(project);
 
+        new ViewCommandBinding().bind(mSaveLocalButton, mViewModel.getSaveProjectLocallyCommand());
+
         mViewModel.setListener(this);
+    }
+
+    @Override
+    public void onSaveProjectLocallyClicked() {
+        dismiss();
     }
 }
