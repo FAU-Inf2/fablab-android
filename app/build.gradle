@@ -79,7 +79,7 @@ android {
                 srcDir mainSourcesDir
                 srcDir generatedSourcesDir
             }
-            res.srcDirs = ['src/main/res', 'src/main/res/values-v19', 'src/main/res/layout-land', 'src/main/res/assets']
+            res.srcDirs = ['src/main/res', 'src/main/res/values-v19', 'src/main/res/layout-land', 'src/main/res/assets', 'src/main/res/values-v21']
         }
     }
 }

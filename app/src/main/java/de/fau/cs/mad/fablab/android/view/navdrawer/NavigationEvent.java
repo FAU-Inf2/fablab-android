@@ -11,5 +11,6 @@ public enum NavigationEvent {
     BarcodeScannerInventory,
     ProductSearchInventory,
     InventoryLogin,
-    Projects
+    Projects,
+    Reservation
 }

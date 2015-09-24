@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/alert_dialog_margin"
+    android:paddingRight="@dimen/alert_dialog_margin"
+    android:paddingTop="@dimen/alert_dialog_margin"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center_horizontal"
+        android:text="@string/reservation_dialog_title"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/textsize_alert_title" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/alert_dialog_tool"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/textsize_alert_subtitle" />
+
+
+    <Spinner
+        android:id="@+id/reservation_tool_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/card_vertical_margin" />
+
+    <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/reservation_recycler_view"
+        android:scrollbars="vertical"
+        android:layout_marginBottom="70dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/news_activity_news_padding_top"
+        tools:context="de.fau.cs.mad.fablab.android.view.fragments.reservation.ReservationFragment" />
+
+
+    <Button
+        android:id="@+id/reservation_fragment_add_button"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="-70dp"
+        android:text="Reservieren" />
+
+</LinearLayout>

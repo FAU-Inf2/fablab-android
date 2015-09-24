@@ -31,6 +31,7 @@ import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryLoginFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.ShowInventoryFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.reservation.ReservationFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.projects.ProjectFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String TAG_BARCODE_FRAGMENT = "tag_barcode_fragment";
     private final static String TAG_ABOUT_FRAGMENT = "tag_about_fragment";
     private final static String TAG_SETTINGS_FRAGMENT = "tag_settings_fragment";
+    private final static String TAG_RESERVATION_FRAGMENT = "tag_reservation_fragment";
     private final static String TAG_ALERT_FRAGMENT = "tag_alert_fragment";
     private final static String TAG_INVENTORY_FRAGMENT = "tag_inventory_fragment";
     private final static String TAG_BARCODE_INVENTORY_FRAGMENT = "tag_barcode_inventory_fragment";
@@ -266,6 +268,19 @@ public class MainActivity extends AppCompatActivity {
                     }
                     fragmentTransaction.replace(R.id.fragment_container, settingsFragment,
                             TAG_SETTINGS_FRAGMENT).addToBackStack(null).commit();
+                }
+                break;
+
+            case Reservation:
+                if (!TAG_RESERVATION_FRAGMENT.equals(currentFragmentTag)) {
+                    ReservationFragment reservationFragment =
+                            (ReservationFragment) getSupportFragmentManager().findFragmentByTag(
+                                    TAG_RESERVATION_FRAGMENT);
+                    if (reservationFragment == null) {
+                        reservationFragment = new ReservationFragment();
+                    }
+                    fragmentTransaction.replace(R.id.fragment_container, reservationFragment,
+                            TAG_RESERVATION_FRAGMENT).addToBackStack(null).commit();
                 }
                 break;
 
