@@ -10,11 +10,12 @@ import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.model.CategoryModel;
 import de.fau.cs.mad.fablab.android.model.CheckoutModel;
 import de.fau.cs.mad.fablab.android.model.DrupalModel;
-import de.fau.cs.mad.fablab.android.model.MailModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
 import de.fau.cs.mad.fablab.android.model.InventoryModel;
+import de.fau.cs.mad.fablab.android.model.MailModel;
 import de.fau.cs.mad.fablab.android.model.NewsModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
+import de.fau.cs.mad.fablab.android.model.ProjectModel;
 import de.fau.cs.mad.fablab.android.model.PushModel;
 import de.fau.cs.mad.fablab.android.model.SpaceApiModel;
 import de.fau.cs.mad.fablab.android.model.ToolUsageModel;
@@ -40,6 +41,7 @@ public class StorageFragment extends Fragment {
     private VersionCheckModel mVersionCheckModel;
     private CategoryModel mCategoryModel;
     private ToolUsageModel mToolUsageModel;
+    private ProjectModel mProjectModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -134,5 +136,10 @@ public class StorageFragment extends Fragment {
 
     public ToolUsageModel getToolUsageModel() {
         return mToolUsageModel;
+    }
+
+    public ProjectModel getProjectModel()
+    {
+        return mProjectModel;
     }
 }
