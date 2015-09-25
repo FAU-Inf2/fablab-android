@@ -19,7 +19,7 @@ public class ToolUsageViewModel {
     public String getDuration() {
         Date date = new Date(getCreationTime() + (mToolUsage.getDuration() * 1000 * 60));
         Format format = new SimpleDateFormat("HH:mm");
-        return format.format(date);
+        return mToolUsage.getDuration() + "m (" + format.format(date) + ")";
     }
 
     public String getUser() {
