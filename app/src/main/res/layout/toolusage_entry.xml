@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolusage_entry"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginRight="@dimen/card_horizontal_margin"
@@ -9,17 +10,49 @@
     android:layout_marginBottom="@dimen/card_vertical_margin"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
+    android:minHeight="40dp"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="40dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+        <TextView
+            android:id="@+id/toolusage_entry_user"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/black"
+            android:padding="5dp"
+            android:textSize="@dimen/textsize_news_entry_title"
+            android:text="User"
+            android:layout_weight="1"
+            android:background="#FFCCCCCC"
+            />
+        <TextView
+            android:id="@+id/toolusage_entry_project"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textsize_news_entry_title"
+            android:text="Projekt"
+            android:padding="5dp"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/toolusage_entry_duration"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/textsize_news_entry_title"
+            android:text="Dauer"
+            android:background="#FFCCCCCC"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:padding="5dp"
+            />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/user_toolusage_entry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/news_entry_bottom_title_margin"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/textsize_news_entry_title"
-                android:text="Title"
-                />
 
 
 

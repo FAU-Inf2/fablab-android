@@ -33,22 +33,28 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/card_vertical_margin" />
 
-    <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/reservation_recycler_view"
-        android:scrollbars="vertical"
-        android:layout_marginBottom="70dp"
-        android:layout_width="match_parent"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/news_activity_news_padding_top"
-        tools:context="de.fau.cs.mad.fablab.android.view.fragments.reservation.ReservationFragment" />
+        android:layout_width="match_parent"
+        android:layout_marginBottom="70dp">
 
+        <android.support.v7.widget.RecyclerView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/reservation_recycler_view"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="de.fau.cs.mad.fablab.android.view.fragments.reservation.ReservationFragment" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <Button
         android:id="@+id/reservation_fragment_add_button"
         android:layout_width="300dp"
         android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:background="@android:color/holo_green_light"
         android:layout_marginTop="-70dp"
         android:text="Reservieren" />
 

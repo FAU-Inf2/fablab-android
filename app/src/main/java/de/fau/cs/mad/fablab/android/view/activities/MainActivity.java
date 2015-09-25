@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import dagger.ObjectGraph;
@@ -14,7 +15,9 @@ import de.fau.cs.mad.fablab.android.model.dependencyinjection.ModelModule;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventBarcodeScannerInventory;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventInventory;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventProductSearchInventory;
+import de.fau.cs.mad.fablab.android.model.events.NavigationEventReservation;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventShowInventory;
+import de.fau.cs.mad.fablab.android.model.events.ShowToastEvent;
 import de.fau.cs.mad.fablab.android.model.events.UpdateAvailableEvent;
 import de.fau.cs.mad.fablab.android.model.util.StorageFragment;
 import de.fau.cs.mad.fablab.android.util.StackTraceReporter;
@@ -343,6 +346,24 @@ public class MainActivity extends AppCompatActivity {
         mNavigationDrawer.closeDrawer();
     }
 
+    public void onEvent(NavigationEventReservation event)
+    {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        String currentFragmentTag = getSupportFragmentManager().findFragmentById(
+                R.id.fragment_container).getTag();
+        if (!TAG_RESERVATION_FRAGMENT.equals(currentFragmentTag)) {
+
+            Bundle args = new Bundle();
+            args.putSerializable(getResources().getString(R.string.key_user), event.getUser());
+            ReservationFragment reservationFragment = new ReservationFragment();
+            reservationFragment.setArguments(args);
+
+            fragmentTransaction.replace(R.id.fragment_container, reservationFragment,
+                    TAG_RESERVATION_FRAGMENT).addToBackStack(null).commit();
+        }
+        mNavigationDrawer.closeDrawer();
+    }
+
     public void onEvent(NavigationEventBarcodeScannerInventory event)
     {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -405,5 +426,12 @@ public class MainActivity extends AppCompatActivity {
     public void onEvent(UpdateAvailableEvent event) {
         VersionCheckDialogFragment.newInstance(event.isRequired(), event.getMessage()).show(
                 getSupportFragmentManager(), "versioncheck");
+    }
+
+    public void onEvent(ShowToastEvent event) {
+        if(event.getLength() == Toast.LENGTH_SHORT)
+            Toast.makeText(this, event.getMsg(), Toast.LENGTH_SHORT);
+        else if(event.getLength() == Toast.LENGTH_LONG)
+            Toast.makeText(this, event.getMsg(), Toast.LENGTH_LONG);
     }
 }

@@ -1,5 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.fragments.reservation;
 
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,14 @@ import butterknife.ButterKnife;
 import de.fau.cs.mad.fablab.android.R;
 
 public class ToolUsageViewModelRenderer extends Renderer<ToolUsageViewModel> {
-    @Bind(R.id.user_toolusage_entry)
+    @Bind(R.id.toolusage_entry)
+    CardView entry_cv;
+    @Bind(R.id.toolusage_entry_user)
     TextView user_tv;
+    @Bind(R.id.toolusage_entry_project)
+    TextView project_tv;
+    @Bind(R.id.toolusage_entry_duration)
+    TextView duration_tv;
 
     @Override
     protected void setUpView(View view) {
@@ -35,14 +42,12 @@ public class ToolUsageViewModelRenderer extends Renderer<ToolUsageViewModel> {
         ToolUsageViewModel viewModel = getContent();
 
         user_tv.setText(viewModel.getUser());
-        /*title_tv.setText(viewModel.getTitle());
-        text_tv.setText(viewModel.getDescriptionShort());
-
-        if (viewModel.getLinkToPreviewImage() != null) {
-            Picasso.with(icon_iv.getContext()).load(viewModel.getLinkToPreviewImage()).fit()
-                    .centerCrop().into(icon_iv);
+        project_tv.setText(viewModel.getProject());
+        duration_tv.setText(viewModel.getDuration());
+        if(viewModel.isOwnId()) {
+            entry_cv.setCardBackgroundColor(0xFFBBFFBB);
         } else {
-            Picasso.with(icon_iv.getContext()).load(R.drawable.news_nopicture).fit().into(icon_iv);
-        }*/
+            entry_cv.setCardBackgroundColor(0xFFFFFFFF);
+        }
     }
 }

@@ -1,5 +1,7 @@
 package de.fau.cs.mad.fablab.android.view.fragments.reservation;
 
+import android.support.v4.widget.SwipeRefreshLayout;
+
 import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
 
@@ -16,7 +18,7 @@ import de.fau.cs.mad.fablab.rest.core.FabTool;
 import de.fau.cs.mad.fablab.rest.core.ToolUsage;
 import de.fau.cs.mad.fablab.rest.core.User;
 
-public class ReservationFragmentViewModel extends BaseViewModel<ToolUsage> {
+public class ReservationFragmentViewModel extends BaseViewModel<ToolUsage> implements SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     DrupalModel mDrupalModel;
@@ -25,14 +27,35 @@ public class ReservationFragmentViewModel extends BaseViewModel<ToolUsage> {
 
     private Listener mListener;
     private User mUser;
+    private FabTool mTool;
 
     private ListAdapteeCollection<ToolUsageViewModel> mToolUsageViewModelCollection;
+    private ToolUsage mLastRemovedEntry;
+    private int mLastRemovedEntryPosition;
 
     private Command<Void> mAddCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
             if (mListener != null) {
                 mListener.onAdd();
+            }
+        }
+    };
+
+    private Command<Integer> mRemoveReservationCommand = new Command<Integer>() {
+        @Override
+        public void execute(Integer parameter) {
+            // Comment for allowing users and admins to delete
+            if (mToolUsageModel.isOwnUsage(mToolUsageViewModelCollection.get(parameter).getToolUsageEntry()) /*||
+                    mUser != null && (mUser.hasRole(Roles.ADMIN) || mUser.getUsername().equals(mToolUsageViewModelCollection.get(parameter).getToolUsageEntry().getUser()))*/) {
+                mLastRemovedEntryPosition = parameter;
+                mLastRemovedEntry = mToolUsageViewModelCollection.get(parameter).getToolUsageEntry();
+                mToolUsageViewModelCollection.remove((int) parameter);
+                mToolUsageModel.removeEntry(mLastRemovedEntry);
+                if (mListener != null) {
+                    mListener.onToolListChanged();
+                    // TODO mListener.onShowUndoSnackbar();
+                }
             }
         }
     };
@@ -63,6 +86,10 @@ public class ReservationFragmentViewModel extends BaseViewModel<ToolUsage> {
         return mToolChangedCommand;
     }
 
+    public Command<Integer> getRemoveReservationCommand() {
+        return mRemoveReservationCommand;
+    }
+
     public List<FabTool> getTools() {
         return mDrupalModel.getFabTools();
     }
@@ -71,13 +98,6 @@ public class ReservationFragmentViewModel extends BaseViewModel<ToolUsage> {
         return mToolUsageModel.getToolUsages(toolId);
     }
 
-    private Command<Void> mOnDeleteButtonClickedCommand = new Command<Void>()
-    {
-        @Override
-        public void execute(Void parameter) {
-            // To-do stuff ... mModel.deleteReservation(mUser.getUsername(), mUser.getPassword());
-        }
-    };
 
     @Override
     public void onAllItemsAdded(Collection<? extends ToolUsage> collection) {
@@ -86,7 +106,7 @@ public class ReservationFragmentViewModel extends BaseViewModel<ToolUsage> {
 
     private void addItems(Collection<? extends ToolUsage> toolUsages) {
         for (ToolUsage toolUsage : toolUsages) {
-            mToolUsageViewModelCollection.add(new ToolUsageViewModel(toolUsage));
+            mToolUsageViewModelCollection.add(new ToolUsageViewModel(toolUsage, mToolUsageModel.isOwnUsage(toolUsage)));
         }
         if (mListener != null) {
             mListener.onToolListChanged();
@@ -114,6 +134,24 @@ public class ReservationFragmentViewModel extends BaseViewModel<ToolUsage> {
     public User getUser()
     {
         return mUser;
+    }
+
+    public void setTool(FabTool fabTool)
+    {
+        mTool = fabTool;
+    }
+
+    public FabTool getTool()
+    {
+        return mTool;
+    }
+
+    @Override
+    public void onRefresh() {
+        if (mListener != null) {
+            mListener.onToolChanged(0);
+            mListener.onToolListChanged();
+        }
     }
 
     public interface Listener {
