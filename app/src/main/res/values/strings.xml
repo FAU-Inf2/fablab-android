@@ -123,6 +123,8 @@
     <string name="key_product_search">productsearch</string>
     <string name="key_project">project</string>
 
+    <string name="product_map_download_failed">Fehler beim Laden der Karte aufgetreten</string>
+
     <!-- Strings for navigation drawer titles -->
     <string name="news">News</string>
     <string name="productsearch">Produkt suchen</string>

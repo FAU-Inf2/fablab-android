@@ -38,16 +38,15 @@ import retrofit.converter.JacksonConverter;
 public class RestClient {
     private static final String LOG_TAG = "RestClient";
 
+    private OkHttpClient mHttpClient;
     private RestAdapter mRestAdapter;
-    private Context mContext;
     private RestAdapter.Builder mRestAdapterBuilder;
 
     public RestClient(Context context) {
-        mContext = context;
-        final String API_URL = mContext.getString(R.string.api_url);
+        final String API_URL = context.getString(R.string.api_url);
 
-        OkHttpClient httpClient = new OkHttpClient();
-        httpClient.setSslSocketFactory(getPinnedCertSslSocketFactory());
+        mHttpClient = new OkHttpClient();
+        mHttpClient.setSslSocketFactory(getPinnedCertSslSocketFactory(context));
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
@@ -55,7 +54,7 @@ public class RestClient {
 
         mRestAdapterBuilder = new RestAdapter.Builder()
                 .setEndpoint(API_URL)
-                .setClient(new OkClient(httpClient))
+                .setClient(new OkClient(mHttpClient))
                 .setConverter(new JacksonConverter(mapper))
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL
                         : RestAdapter.LogLevel.NONE);
@@ -69,16 +68,16 @@ public class RestClient {
      *
      * @return a SSLSocketFactory trusting our selfsigned certs.
      */
-    private SSLSocketFactory getPinnedCertSslSocketFactory() {
+    private SSLSocketFactory getPinnedCertSslSocketFactory(Context context) {
         try {
             //Default type is BKS on android
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             //our truststore containing the public certs
-            InputStream inputStream = mContext.getResources().openRawResource(
+            InputStream inputStream = context.getResources().openRawResource(
                     R.raw.fablab_dev_truststore);
 
             //the password used here is just a dummy as it is needed by the keystore.load method
-            String trustStorePass = mContext.getString(R.string.development_truststore_pass);
+            String trustStorePass = context.getString(R.string.development_truststore_pass);
             keyStore.load(inputStream, trustStorePass.toCharArray());
 
             SSLContext sslContext = SSLContext.getInstance("TLS");
@@ -150,5 +149,9 @@ public class RestClient {
     public ProjectsApi getProjectsApi()
     {
         return mRestAdapter.create(ProjectsApi.class);
+    }
+
+    public OkHttpClient getHttpClient() {
+        return mHttpClient;
     }
 }

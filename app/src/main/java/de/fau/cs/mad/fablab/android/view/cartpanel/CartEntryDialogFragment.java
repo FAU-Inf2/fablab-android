@@ -101,12 +101,9 @@ public class CartEntryDialogFragment extends BaseDialogFragment
     public void onShowLocation() {
         dismiss();
 
-        ProductMapFragment productMapFragment = new ProductMapFragment();
-        Bundle arguments = new Bundle();
-        arguments.putString(ProductMapFragment.KEY_LOCATION, mViewModel.getProductLocation());
-        productMapFragment.setArguments(arguments);
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                productMapFragment).addToBackStack(null).commit();
+                ProductMapFragment.newInstance(mViewModel.getProductLocation()))
+                .addToBackStack(null).commit();
     }
 
 }

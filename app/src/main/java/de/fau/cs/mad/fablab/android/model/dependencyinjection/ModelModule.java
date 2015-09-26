@@ -11,6 +11,7 @@ import de.fau.cs.mad.fablab.android.model.ICalModel;
 import de.fau.cs.mad.fablab.android.model.InventoryModel;
 import de.fau.cs.mad.fablab.android.model.MailModel;
 import de.fau.cs.mad.fablab.android.model.NewsModel;
+import de.fau.cs.mad.fablab.android.model.ProductMapModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.model.ProjectModel;
 import de.fau.cs.mad.fablab.android.model.PushModel;
@@ -145,8 +146,7 @@ public class ModelModule {
     }
 
     @Provides
-    CategoryModel provideCategoryModel()
-    {
+    CategoryModel provideCategoryModel() {
         return mStorageFragment.getCategoryModel();
     }
 
@@ -156,8 +156,12 @@ public class ModelModule {
     }
 
     @Provides
-    ProjectModel provideProjectModel()
-    {
+    ProjectModel provideProjectModel() {
         return mStorageFragment.getProjectModel();
+    }
+
+    @Provides
+    ProductMapModel provideProductMapModel() {
+        return mStorageFragment.getProductMapModel();
     }
 }

@@ -14,6 +14,7 @@ import de.fau.cs.mad.fablab.android.model.ICalModel;
 import de.fau.cs.mad.fablab.android.model.InventoryModel;
 import de.fau.cs.mad.fablab.android.model.MailModel;
 import de.fau.cs.mad.fablab.android.model.NewsModel;
+import de.fau.cs.mad.fablab.android.model.ProductMapModel;
 import de.fau.cs.mad.fablab.android.model.ProductModel;
 import de.fau.cs.mad.fablab.android.model.ProjectModel;
 import de.fau.cs.mad.fablab.android.model.PushModel;
@@ -42,6 +43,7 @@ public class StorageFragment extends Fragment {
     private CategoryModel mCategoryModel;
     private ToolUsageModel mToolUsageModel;
     private ProjectModel mProjectModel;
+    private ProductMapModel mProductMapModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,8 @@ public class StorageFragment extends Fragment {
         mCategoryModel = new CategoryModel(restClient.getCategoryApi(), mProductModel);
         mProjectModel = new ProjectModel(restClient.getProjectsApi(), databaseHelper.getProjectDao());
         mToolUsageModel = new ToolUsageModel(restClient.getToolUsageApi());
+        mProductMapModel = new ProductMapModel(getActivity().getApplicationContext(),
+                restClient.getHttpClient());
     }
 
     public NewsModel getNewsModel() {
@@ -114,23 +118,19 @@ public class StorageFragment extends Fragment {
         return mDrupalModel;
     }
 
-    public UserModel getUserModel()
-    {
+    public UserModel getUserModel() {
         return mUserModel;
     }
 
-    public InventoryModel getInventoryModel()
-    {
+    public InventoryModel getInventoryModel() {
         return mInventoryModel;
     }
 
-    public VersionCheckModel getVersionCheckModel()
-    {
+    public VersionCheckModel getVersionCheckModel() {
         return mVersionCheckModel;
     }
 
-    public CategoryModel getCategoryModel()
-    {
+    public CategoryModel getCategoryModel() {
         return mCategoryModel;
     }
 
@@ -138,8 +138,11 @@ public class StorageFragment extends Fragment {
         return mToolUsageModel;
     }
 
-    public ProjectModel getProjectModel()
-    {
+    public ProjectModel getProjectModel() {
         return mProjectModel;
+    }
+
+    public ProductMapModel getProductMapModel() {
+        return mProductMapModel;
     }
 }
