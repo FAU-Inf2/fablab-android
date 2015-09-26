@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -150,5 +151,17 @@ public class ReservationFragment extends BaseFragment implements ReservationFrag
 
     public void onEvent(ReservationChangedEvent event) {
         onToolChanged(0);
+    }
+
+    public void onEvent(MotionEvent event) {
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP:
+                mSwipeRefreshLayout.setEnabled(true);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                mSwipeRefreshLayout.setEnabled(false);
+                break;
+        }
     }
 }
