@@ -430,8 +430,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void onEvent(ShowToastEvent event) {
         if(event.getLength() == Toast.LENGTH_SHORT)
-            Toast.makeText(this, event.getMsg(), Toast.LENGTH_SHORT);
+            Toast.makeText(this, event.getMsg(), Toast.LENGTH_SHORT).show();
         else if(event.getLength() == Toast.LENGTH_LONG)
-            Toast.makeText(this, event.getMsg(), Toast.LENGTH_LONG);
+            Toast.makeText(this, event.getMsg(), Toast.LENGTH_LONG).show();
     }
 }
