@@ -22,6 +22,13 @@ public class ToolUsageViewModel {
         return mToolUsage.getDuration() + "m (" + format.format(date) + ")";
     }
 
+    public boolean isNow() {
+        Date dateNow = new Date();
+        Date dateStart = new Date(getStartTime());
+        Date dateEnd = new Date(getStartTime() + (mToolUsage.getDuration() * 1000 * 60));
+        return (dateStart.before(dateNow) && dateEnd.after(dateNow));
+    }
+
     public String getUser() {
         return mToolUsage.getUser();
     }

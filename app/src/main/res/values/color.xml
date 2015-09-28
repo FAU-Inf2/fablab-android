@@ -22,4 +22,15 @@
     <color name="slidingUpPanel_footer_button_txt_pressed">#FFFFFF</color>
 
     <color name="navdrawer_hint">#AAAAAA</color>
+
+    <color name="toolUsage_text_now">#FFFFFF</color>
+    <color name="toolUsage_text_notnow">#000000</color>
+    <color name="toolUsage_background_my_now">#336633</color>
+    <color name="toolUsage_background_my_now_light">#447744</color>
+    <color name="toolUsage_background_my_notnow">#BBFFBB</color>
+    <color name="toolUsage_background_my_notnow_light">#DDFFDD</color>
+    <color name="toolUsage_background_others_now">#333333</color>
+    <color name="toolUsage_background_others_now_light">#222222</color>
+    <color name="toolUsage_background_others_notnow">#EEEEEE</color>
+    <color name="toolUsage_background_others_notnow_light">#FFFFFF</color>
 </resources>

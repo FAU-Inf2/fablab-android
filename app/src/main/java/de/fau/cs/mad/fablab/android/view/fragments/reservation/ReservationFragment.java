@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.pedrogomez.renderers.RVRendererAdapter;
 
@@ -41,6 +42,10 @@ public class ReservationFragment extends BaseFragment implements ReservationFrag
     Button mAddButton;
     @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @Bind(R.id.reservation_machines_available)
+    TextView mMachinesAvailable_tv;
+    @Bind(R.id.reservation_usages_available)
+    TextView mUsagesAvailable_tv;
 
     @Inject
     ReservationFragmentViewModel mViewModel;
@@ -70,20 +75,7 @@ public class ReservationFragment extends BaseFragment implements ReservationFrag
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         toolUsage_rv.setLayoutManager(layoutManager);
 
-        List<FabTool> mTools = mViewModel.getTools();
-        if (mTools.isEmpty()) {
-            getFragmentManager().popBackStack();
-        } else {
-            List<String> mToolNames = new ArrayList<>();
-            for (FabTool f : mTools) {
-                mToolNames.add(f.getTitle());
-            }
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                    R.layout.spinner_item, mToolNames);
-            mToolSpinner.setAdapter(adapter);
-
-            mToolSpinner.setVisibility(View.VISIBLE);
-        }
+        onLoadTools();
 
         mAdapter = new RVRendererAdapter<>(getLayoutInflater(savedInstanceState),
                 new ToolUsageViewModelRendererBuilder(), mViewModel.getToolUsageViewModelCollection());
@@ -130,6 +122,7 @@ public class ReservationFragment extends BaseFragment implements ReservationFrag
 
         // TODO Wait until available in better way (handler or something)
         while(mToolSpinner == null) { }
+        if(mToolSpinner.getSelectedItem() == null) return;
         text = mToolSpinner.getSelectedItem().toString();
         long id = -1;
         for(FabTool f : mViewModel.getTools()) {
@@ -144,8 +137,49 @@ public class ReservationFragment extends BaseFragment implements ReservationFrag
     }
 
     @Override
+    public void onLoadTools() {
+        List<FabTool> mTools = mViewModel.getTools();
+
+        ArrayAdapter<String> adapter = (ArrayAdapter) mToolSpinner.getAdapter();
+
+        if (mTools.isEmpty()) {
+            mMachinesAvailable_tv.setVisibility(View.VISIBLE);
+            mUsagesAvailable_tv.setVisibility(View.GONE);
+            mToolSpinner.setVisibility(View.GONE);
+            mAddButton.setVisibility(View.GONE);
+            if(adapter != null) adapter.notifyDataSetChanged();
+        } else {
+            List<String> mToolNames = new ArrayList<>();
+            for (FabTool f : mTools) {
+                mToolNames.add(f.getTitle());
+            }
+
+            if(adapter == null) {
+                adapter = new ArrayAdapter<>(getActivity(),
+                        R.layout.spinner_item, mToolNames);
+                mToolSpinner.setAdapter(adapter);
+            } else {
+                adapter.clear();
+                adapter.addAll(mToolNames);
+                adapter.notifyDataSetChanged();
+            }
+
+            mAddButton.setVisibility(View.VISIBLE);
+            mToolSpinner.setVisibility(View.VISIBLE);
+            mMachinesAvailable_tv.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
     public void onToolListChanged() {
         mAdapter.notifyDataSetChanged();
+        if(mAdapter != null) {
+            if(mAdapter.getItemCount() == 0 && mToolSpinner.getAdapter().getCount() != 0) {
+                mUsagesAvailable_tv.setVisibility(View.VISIBLE);
+            } else {
+                mUsagesAvailable_tv.setVisibility(View.GONE);
+            }
+        }
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

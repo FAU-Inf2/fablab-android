@@ -1,6 +1,7 @@
 package de.fau.cs.mad.fablab.android.view.fragments.reservation;
 
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.widget.Toast;
 
 import com.pedrogomez.renderers.AdapteeCollection;
 import com.pedrogomez.renderers.ListAdapteeCollection;
@@ -10,18 +11,17 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import de.fau.cs.mad.fablab.android.model.DrupalModel;
 import de.fau.cs.mad.fablab.android.model.ToolUsageModel;
+import de.fau.cs.mad.fablab.android.model.events.ShowToastEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.BaseViewModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.FabTool;
 import de.fau.cs.mad.fablab.rest.core.ToolUsage;
 import de.fau.cs.mad.fablab.rest.core.User;
+import de.greenrobot.event.EventBus;
 
 public class ReservationFragmentViewModel extends BaseViewModel<ToolUsage> implements SwipeRefreshLayout.OnRefreshListener {
 
-    @Inject
-    DrupalModel mDrupalModel;
     @Inject
     ToolUsageModel mToolUsageModel;
 
@@ -31,7 +31,8 @@ public class ReservationFragmentViewModel extends BaseViewModel<ToolUsage> imple
 
     private ListAdapteeCollection<ToolUsageViewModel> mToolUsageViewModelCollection;
     private ToolUsage mLastRemovedEntry;
-    private int mLastRemovedEntryPosition;
+
+    EventBus mEventBus = EventBus.getDefault();
 
     private Command<Void> mAddCommand = new Command<Void>() {
         @Override
@@ -48,14 +49,14 @@ public class ReservationFragmentViewModel extends BaseViewModel<ToolUsage> imple
             // Comment for allowing users and admins to delete
             if (mToolUsageModel.isOwnUsage(mToolUsageViewModelCollection.get(parameter).getToolUsageEntry()) /*||
                     mUser != null && (mUser.hasRole(Roles.ADMIN) || mUser.getUsername().equals(mToolUsageViewModelCollection.get(parameter).getToolUsageEntry().getUser()))*/) {
-                mLastRemovedEntryPosition = parameter;
                 mLastRemovedEntry = mToolUsageViewModelCollection.get(parameter).getToolUsageEntry();
                 mToolUsageViewModelCollection.remove((int) parameter);
                 mToolUsageModel.removeEntry(mLastRemovedEntry);
                 if (mListener != null) {
                     mListener.onToolListChanged();
-                    // TODO mListener.onShowUndoSnackbar();
                 }
+            } else {
+                mEventBus.post(new ShowToastEvent("Es ist nur m\u00F6glich, eigene Reservierungen zu l\u00F6schen.", Toast.LENGTH_SHORT));
             }
         }
     };
@@ -65,6 +66,7 @@ public class ReservationFragmentViewModel extends BaseViewModel<ToolUsage> imple
         public void execute(Integer parameter) {
             if (mListener != null) {
                 mListener.onToolChanged(parameter);
+                mListener.onToolListChanged();
             }
         }
     };
@@ -91,7 +93,7 @@ public class ReservationFragmentViewModel extends BaseViewModel<ToolUsage> imple
     }
 
     public List<FabTool> getTools() {
-        return mDrupalModel.getFabTools();
+        return mToolUsageModel.getEnabledFabTools();
     }
 
     public List<ToolUsage> getToolUsages(long toolId) {
@@ -151,6 +153,7 @@ public class ReservationFragmentViewModel extends BaseViewModel<ToolUsage> imple
         if (mListener != null) {
             mListener.onToolChanged(0);
             mListener.onToolListChanged();
+            mListener.onLoadTools();
         }
     }
 
@@ -158,5 +161,6 @@ public class ReservationFragmentViewModel extends BaseViewModel<ToolUsage> imple
         void onAdd();
         void onToolChanged(int parameter);
         void onToolListChanged();
+        void onLoadTools();
     }
 }

@@ -32,6 +32,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/card_vertical_margin" />
+    <TextView
+        android:id="@+id/reservation_machines_available"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reservation_no_machine_available"
+        android:padding="10dp"
+        android:background="#FFFFAAAA"
+        android:visibility="gone"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/reservation_usages_available"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reservation_no_usage_available"
+        android:padding="10dp"
+        android:textColor="#FF888888"
+        android:visibility="gone"
+        android:textSize="15sp"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
@@ -56,6 +75,6 @@
         android:layout_gravity="center"
         android:background="@android:color/holo_green_light"
         android:layout_marginTop="-70dp"
-        android:text="Reservieren" />
+        android:text="@string/reservation_button" />
 
 </LinearLayout>

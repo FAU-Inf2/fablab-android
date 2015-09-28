@@ -72,6 +72,12 @@
     <string name="alert_dialog_problem">Problem:</string>
 
     <string name="reservation_dialog_title">Maschinenreservierung</string>
+    <string name="reservation_no_machine_available">Zur Zeit ist keine Maschine reservierbar.</string>
+    <string name="reservation_no_usage_available">Es sind noch keine Reservierungen vorhanden.</string>
+    <string name="reservation_button">Reservieren</string>
+    <string name="reservation_button_now">Jetzt reservieren!</string>
+    <string name="reservation_hint_projects">Projekte</string>
+    <string name="reservation_hint_user">User</string>
 
     <string name="inventory_fragment_title">Inventur</string>
     <string name="inventory_fragment_scan_product">Produkt scannen</string>

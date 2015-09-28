@@ -2,8 +2,12 @@ package de.fau.cs.mad.fablab.android.model;
 
 import android.widget.Toast;
 
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import de.fau.cs.mad.fablab.android.model.events.ReservationChangedEvent;
@@ -21,12 +25,33 @@ import retrofit.client.Response;
 public class ToolUsageModel {
 
     private ObservableArrayList<ToolUsage> mUsages;
-    private List<ToolUsage> ownToolUsages;
+    private List<ToolUsage> mOwnToolUsages;
+    private List<FabTool> mTools;
     private ToolUsageApi mToolUsageApi;
     private long mToolId;
-    private String uuidRandom;
+    private String mUuidRandom;
 
     EventBus mEventBus = EventBus.getDefault();
+
+    private Callback<List<FabTool>> mFabToolsCallback = new Callback<List<FabTool>>() {
+        @Override
+        public void success(List<FabTool> tools, Response response) {
+            mTools.clear();
+            mTools.addAll(tools);
+            Collections.sort(mTools, new Comparator<FabTool>() {
+                @Override
+                public int compare(FabTool lhs, FabTool rhs) {
+                    Collator collator = Collator.getInstance(Locale.GERMAN);
+                    collator.setStrength(Collator.SECONDARY);
+                    return collator.compare(lhs.getTitle(), rhs.getTitle());
+                }
+            });
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+        }
+    };
 
     private Callback<List<ToolUsage>> mToolUsagesCallback = new Callback<List<ToolUsage>>() {
         @Override
@@ -45,14 +70,14 @@ public class ToolUsageModel {
         @Override
         public void success(ToolUsage usage, Response response) {
             if(usage != null) {
-                ownToolUsages.add(usage);
+                mOwnToolUsages.add(usage);
                 mEventBus.post(new ReservationChangedEvent());
             }
         }
 
         @Override
         public void failure(RetrofitError error) {
-            mEventBus.post(new ShowToastEvent("Leider ist beim Hinzufuegen ein Fehler aufgetreten.", Toast.LENGTH_SHORT));
+            mEventBus.post(new ShowToastEvent("Leider ist beim Hinzuf\u00FCgen ein Fehler aufgetreten.", Toast.LENGTH_SHORT));
         }
     };
 
@@ -66,24 +91,33 @@ public class ToolUsageModel {
 
         @Override
         public void failure(RetrofitError error) {
-            mEventBus.post(new ShowToastEvent("Leider ist beim Loeschen ein Fehler aufgetreten. Es ist nur moeglich, eigene Reservierungen zu loeschen.", Toast.LENGTH_SHORT));
+            mEventBus.post(new ShowToastEvent("Leider ist beim L\u00F6schen ein Fehler aufgetreten. Es ist nur m\u00F6glich, eigene Reservierungen zu l\u00F6schen.", Toast.LENGTH_SHORT));
         }
     };
 
     public ToolUsageModel(ToolUsageApi toolUsageApi)
     {
         mUsages = new ObservableArrayList<>();
-        ownToolUsages = new ArrayList<>();
+        mTools = new ArrayList<>();
+        mOwnToolUsages = new ArrayList<>();
         mToolUsageApi = toolUsageApi;
-        uuidRandom = UUID.randomUUID().toString();
+        mUuidRandom = UUID.randomUUID().toString();
+        mToolUsageApi.getEnabledTools(mFabToolsCallback);
     }
 
     public void setObservableArrayListListener(ObservableArrayList.Listener<ToolUsage> listener) {
         mUsages.setListener(listener);
     }
 
+
     public String getUuidRandom() {
-        return uuidRandom;
+        return mUuidRandom;
+    }
+
+    public List<FabTool> getEnabledFabTools()
+    {
+        mToolUsageApi.getEnabledTools(mFabToolsCallback);
+        return mTools;
     }
 
     public ObservableArrayList<ToolUsage> getToolUsages(long toolId)
@@ -108,7 +142,7 @@ public class ToolUsageModel {
     }
 
     public boolean isOwnUsage(ToolUsage usage) {
-        for(ToolUsage t : ownToolUsages) {
+        for(ToolUsage t : mOwnToolUsages) {
             if(t.getId() == usage.getId() && t.toString().equals(usage.toString()))
                 return true;
         }

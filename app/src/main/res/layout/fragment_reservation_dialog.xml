@@ -16,23 +16,28 @@
                 android:id="@+id/reservation_dialog_user"
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
-                android:hint="User" />
+                android:hint="@string/reservation_hint_user" />
             <EditText
                 android:id="@+id/reservation_dialog_project"
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
-                android:hint="Projekt" />
+                android:hint="@string/reservation_hint_projects" />
         </LinearLayout>
         <NumberPicker
             android:id="@+id/reservation_dialog_duration"
             android:layout_width="80dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="10dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="m"/>
     </LinearLayout>
     <Button
         android:id="@+id/reservation_dialog_fragment_button"
-        android:text="Jetzt reservieren!"
+        android:text="@string/reservation_button_now"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_green_light"
