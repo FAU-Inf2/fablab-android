@@ -49,6 +49,12 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
         super.onActivityCreated(savedInstanceState);
 
         Project project = (Project) getArguments().getSerializable(getResources().getString(R.string.key_project));
+        if(project != null)
+        {
+            mTitleTV.setText(project.getProjectFile().getFilename());
+            mShortDescriptionTV.setText(project.getProjectFile().getDescription());
+            mDescriptionTV.setText(project.getProjectFile().getContent());
+        }
         mViewModel.setProject(project);
 
         mViewModel.setListener(this);
@@ -72,7 +78,7 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
         super.onResume();
 
         setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER);
-        //setNavigationDrawerSelection(R.id.drawer_item_projects);
+        setNavigationDrawerSelection(R.id.drawer_item_projects);
     }
 
     @Override

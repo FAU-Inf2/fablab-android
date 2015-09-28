@@ -20,6 +20,7 @@ import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
+import de.greenrobot.event.EventBus;
 
 public class ProjectFragment extends BaseFragment implements ProjectFragmentViewModel.Listener{
 
@@ -27,6 +28,7 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
     RecyclerView mProjectsRV;
 
     private RVRendererAdapter<ProjectViewModel> mAdapter;
+    private EventBus mEventBus = EventBus.getDefault();
 
     @Inject
     ProjectFragmentViewModel mViewModel;
@@ -75,9 +77,18 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
     public void onResume() {
         super.onResume();
 
+        mEventBus.register(this);
+
         setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER);
         mViewModel.update();
-        //setNavigationDrawerSelection(R.id.drawer_item_projects);
+        setNavigationDrawerSelection(R.id.drawer_item_projects);
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        mEventBus.unregister(this);
     }
 
     @Override
@@ -86,6 +97,16 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
         Bundle args = new Bundle();
         fragment.setArguments(args);
         args.putSerializable(getResources().getString(R.string.key_project), null);
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                fragment).addToBackStack(null).commit();
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(ProjectClickedEvent event) {
+        EditProjectFragment fragment = new EditProjectFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(getResources().getString(R.string.key_project), event.getProject());
+        fragment.setArguments(args);
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 fragment).addToBackStack(null).commit();
     }

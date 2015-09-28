@@ -10,6 +10,7 @@ import com.pedrogomez.renderers.Renderer;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 
 public class ProjectViewModelRenderer extends Renderer<ProjectViewModel> {
 
@@ -39,6 +40,8 @@ public class ProjectViewModelRenderer extends Renderer<ProjectViewModel> {
     public void render() {
 
         ProjectViewModel viewModel = getContent();
+
+        new ViewCommandBinding().bind(getRootView(), viewModel.getShowProjectCommand());
 
         mProjectEntryTitleTV.setText(viewModel.getTitle());
         mProjectEntryShortDescriptionTV.setText(viewModel.getShortDescription());
