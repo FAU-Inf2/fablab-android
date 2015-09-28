@@ -22,15 +22,16 @@
             android:id="@+id/drawer_item_inventory"
             android:icon="@drawable/ic_nav_inventory"
             android:title="@string/inventory" />
+        <!-- TODO visible false / true for showing -->
         <item
             android:id="@+id/drawer_item_projects"
             android:icon="@drawable/ic_nav_project"
             android:title="@string/projects"
             android:visible="false" />
-        <!-- TODO reservation icon -->
+        <!-- TODO visible false / true for showing -->
         <item
             android:id="@+id/drawer_item_reservation"
-            android:icon="@drawable/ic_nav_inventory"
+            android:icon="@drawable/ic_nav_reservation"
             android:title="@string/reservation"
             android:visible="false" />
         <item
