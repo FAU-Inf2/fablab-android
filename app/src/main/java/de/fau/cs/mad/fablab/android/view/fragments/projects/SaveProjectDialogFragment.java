@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -23,6 +25,8 @@ public class SaveProjectDialogFragment extends BaseDialogFragment
     Button mSaveLocalButton;
     @Bind(R.id.save_project_save_github_button)
     Button mSaveGithubButton;
+    @Bind(R.id.project_progress_bar)
+    ProgressBar mProgressBar;
 
     @Inject
     SaveProjectDialogFragmentViewModel mViewModel;
@@ -43,12 +47,35 @@ public class SaveProjectDialogFragment extends BaseDialogFragment
         mViewModel.setProject(project);
 
         new ViewCommandBinding().bind(mSaveLocalButton, mViewModel.getSaveProjectLocallyCommand());
+        new ViewCommandBinding().bind(mSaveGithubButton, mViewModel.getSaveProjectGithubCommand());
 
         mViewModel.setListener(this);
     }
 
     @Override
-    public void onSaveProjectLocallyClicked() {
+    public void onSaveProjectClicked() {
         dismiss();
+    }
+
+    @Override
+    public void saveFailure() {
+        Toast.makeText(getActivity(), getResources().getString(R.string.save_project_failure), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void saveSuccess() {
+        Toast.makeText(getActivity(), getResources().getString(R.string.save_project_success), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showProgressBar(boolean show) {
+        if(show)
+        {
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            mProgressBar.setVisibility(View.GONE);
+        }
     }
 }
