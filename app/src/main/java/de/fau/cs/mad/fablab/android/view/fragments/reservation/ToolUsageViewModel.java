@@ -17,7 +17,7 @@ public class ToolUsageViewModel {
     }
 
     public String getDuration() {
-        Date date = new Date(getCreationTime() + (mToolUsage.getDuration() * 1000 * 60));
+        Date date = new Date(getStartTime() + (mToolUsage.getDuration() * 1000 * 60));
         Format format = new SimpleDateFormat("HH:mm");
         return mToolUsage.getDuration() + "m (" + format.format(date) + ")";
     }
@@ -34,8 +34,8 @@ public class ToolUsageViewModel {
         return mToolUsage.getTool();
     }
 
-    public long getCreationTime() {
-        return mToolUsage.getCreationTime();
+    public long getStartTime() {
+        return mToolUsage.getStartTime();
     }
 
     public ToolUsage getToolUsageEntry() {
