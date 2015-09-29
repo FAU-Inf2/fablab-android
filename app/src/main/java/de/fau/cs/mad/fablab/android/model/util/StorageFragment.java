@@ -50,7 +50,8 @@ public class StorageFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
 
-        RestClient restClient = new RestClient(getActivity().getApplicationContext());
+        RestClient restClient = new RestClient(getActivity().getApplicationContext(), false);
+        RestClient restClientString = new RestClient(getActivity().getApplicationContext(), true);
         DatabaseHelper databaseHelper = DatabaseHelper.getHelper(getActivity().getApplicationContext());
         mICalModel = new ICalModel(restClient.getICalApi(), databaseHelper.getICalDao());
         mNewsModel = new NewsModel(restClient.getNewsApi(), databaseHelper.getNewsDao());
@@ -72,7 +73,7 @@ public class StorageFragment extends Fragment {
         mVersionCheckModel = new VersionCheckModel(restClient.getVersionCheckApi(),
                 getActivity().getApplicationContext());
         mCategoryModel = new CategoryModel(restClient.getCategoryApi(), mProductModel);
-        mProjectModel = new ProjectModel(restClient.getProjectsApi(), databaseHelper.getProjectDao());
+        mProjectModel = new ProjectModel(restClientString.getProjectsApi(), databaseHelper.getProjectDao());
         mToolUsageModel = new ToolUsageModel(restClient.getToolUsageApi());
         mProductMapModel = new ProductMapModel(getActivity().getApplicationContext(),
                 restClient.getHttpClient());

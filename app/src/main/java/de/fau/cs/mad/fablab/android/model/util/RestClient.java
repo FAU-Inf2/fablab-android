@@ -42,7 +42,8 @@ public class RestClient {
     private RestAdapter mRestAdapter;
     private RestAdapter.Builder mRestAdapterBuilder;
 
-    public RestClient(Context context) {
+    public RestClient(Context context, boolean string) {
+
         final String API_URL = context.getString(R.string.api_url);
 
         mHttpClient = new OkHttpClient();
@@ -52,14 +53,25 @@ public class RestClient {
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         mapper.setDateFormat(new SimpleDateFormat(Format.DATE_FORMAT));
 
-        mRestAdapterBuilder = new RestAdapter.Builder()
-                .setEndpoint(API_URL)
-                .setClient(new OkClient(mHttpClient))
-                .setConverter(new JacksonConverter(mapper))
-                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL
-                        : RestAdapter.LogLevel.NONE);
+        if (!string) {
+            mRestAdapterBuilder = new RestAdapter.Builder()
+                    .setEndpoint(API_URL)
+                    .setClient(new OkClient(mHttpClient))
+                    .setConverter(new JacksonConverter(mapper))
+                    .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL
+                            : RestAdapter.LogLevel.NONE);
 
-        mRestAdapter = mRestAdapterBuilder.build();
+            mRestAdapter = mRestAdapterBuilder.build();
+        } else {
+            mRestAdapterBuilder = new RestAdapter.Builder()
+                    .setEndpoint(API_URL)
+                    .setClient(new OkClient(mHttpClient))
+                    .setConverter(new JsonInputStringOutputConverter(mapper))
+                    .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL
+                            : RestAdapter.LogLevel.NONE);
+
+            mRestAdapter = mRestAdapterBuilder.build();
+        }
     }
 
     /**

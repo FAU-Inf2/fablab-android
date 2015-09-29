@@ -24,7 +24,6 @@ public class ProjectModel {
     private Callback<String> mSaveProjectCallback = new Callback<String>() {
         @Override
         public void success(String id, Response response) {
-            System.out.println("create Project gist id: " + id);
             mEventBus.post(new ProjectSavedEvent(id, true));
         }
 
@@ -37,7 +36,6 @@ public class ProjectModel {
     private Callback<String> mUpdateProjectCallback = new Callback<String>() {
         @Override
         public void success(String id, Response response) {
-            System.out.println("update Project gist id: " + id);
             mEventBus.post(new ProjectSavedEvent(id, true));
         }
 
@@ -62,12 +60,10 @@ public class ProjectModel {
     {
         if(project.getGistID() == null)
         {
-            System.out.println("create Project");
             mProjectsApi.createProject(project.getProjectFile(), mSaveProjectCallback);
         }
         else
         {
-            System.out.println("update Project");
             mProjectsApi.updateProject(project.getGistID(), project.getProjectFile(), mUpdateProjectCallback);
         }
     }
