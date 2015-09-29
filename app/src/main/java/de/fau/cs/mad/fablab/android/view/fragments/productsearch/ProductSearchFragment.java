@@ -56,6 +56,8 @@ public class ProductSearchFragment extends BaseFragment implements
     @Bind(R.id.product_progress_bar)
     ProgressBar mProductProgressBar;
 
+    private ProductSearchView mSearchView;
+
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,15 +76,15 @@ public class ProductSearchFragment extends BaseFragment implements
         if(mProductSearch) {
             mSearchItem = menu.findItem(R.id.action_search);
             mSearchItem.setVisible(true);
-            ProductSearchView searchView = (ProductSearchView) MenuItemCompat.getActionView(
+            mSearchView = (ProductSearchView) MenuItemCompat.getActionView(
                     mSearchItem);
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                     R.layout.dropdown_item, mViewModel.getAutoCompleteWords());
-            searchView.setAdapter(adapter);
-            searchView.setCommand(mViewModel.getSearchCommand());
-            searchView.setQueryHint(getString(R.string.search_all_hint));
+            mSearchView.setAdapter(adapter);
+            mSearchView.setCommand(mViewModel.getSearchCommand());
+            mSearchView.setQueryHint(getString(R.string.search_all_hint));
             mSearchItem.expandActionView();
-            searchView.clearFocus();
+            mSearchView.clearFocus();
         }
         else
         {
@@ -168,6 +170,7 @@ public class ProductSearchFragment extends BaseFragment implements
             UiUtils.hideKeyboard(getActivity());
             mProductRecyclerViewContainer.setVisibility(View.GONE);
             mProductProgressBar.setVisibility(View.VISIBLE);
+            mSearchView.clearFocus();
         }
         else{
             mProductProgressBar.setVisibility(View.GONE);
