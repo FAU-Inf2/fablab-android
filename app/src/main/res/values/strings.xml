@@ -54,7 +54,7 @@
     <string name="dates_location">Ort:</string>
 
     <string name="action_search">Suche</string>
-    <string name="search_all_hint">Alle Produkte</string>
+    <string name="search_all_hint">Produkt</string>
     <string name="per">pro</string>
 
     <string name="stacktrace_messaging_subject">Fehlermeldung FAU FabLab</string>
