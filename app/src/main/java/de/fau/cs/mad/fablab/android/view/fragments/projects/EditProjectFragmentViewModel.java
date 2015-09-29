@@ -3,10 +3,12 @@ package de.fau.cs.mad.fablab.android.view.fragments.projects;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.ProjectModel;
+import de.fau.cs.mad.fablab.android.model.events.CC0LicenseEvent;
 import de.fau.cs.mad.fablab.android.model.events.ProjectImageUploadedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.Project;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.ProjectFile;
+import de.fau.cs.mad.fablab.rest.core.ProjectImageUpload;
 import de.greenrobot.event.EventBus;
 
 public class EditProjectFragmentViewModel {
@@ -15,6 +17,7 @@ public class EditProjectFragmentViewModel {
     private Project mProject;
     private ProjectModel mModel;
     private EventBus mEventBus = EventBus.getDefault();
+    private ProjectImageUpload mProjectImage;
 
     private Command<Void> mSaveProjectCommand = new Command<Void>() {
         @Override
@@ -113,6 +116,11 @@ public class EditProjectFragmentViewModel {
         return mProject;
     }
 
+    public void setProjectImage(ProjectImageUpload image)
+    {
+        mProjectImage = image;
+    }
+
     private ProjectFile createProjectFile()
     {
         if(mListener != null)
@@ -126,15 +134,10 @@ public class EditProjectFragmentViewModel {
         }
     }
 
-    public void uploadImage(byte[] image, String fileName)
-    {
-        if(mProject.getGistID() != null) {
-            mModel.uploadImage(image, mProject.getGistID(), fileName);
-        }
-    }
 
     @SuppressWarnings("unused")
     public void onEvent(ProjectImageUploadedEvent event) {
+        mProjectImage = null;
         if(mListener != null)
         {
             mListener.showProgressBar(false);
@@ -159,6 +162,22 @@ public class EditProjectFragmentViewModel {
             {
                 mListener.uploadFailure();
             }
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(CC0LicenseEvent event) {
+        if(event.getState())
+        {
+            if(mListener != null)
+            {
+                mListener.showProgressBar(true);
+            }
+            mModel.uploadImage(mProjectImage);
+        }
+        else
+        {
+            mProjectImage = null;
         }
     }
 

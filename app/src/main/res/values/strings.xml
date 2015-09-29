@@ -130,6 +130,15 @@
     <string name="project_photo_image_too_large">das Bild ist zu groß</string>
     <string name="project_photo_not_yet_uploaded">Bitte das Projekt erst auf Github hochladen, bevor Bilder eingefügt werden können</string>
     <string name="project_photo_upload_failure">Beim Hochladen ist leider ein Fehler aufgetreten</string>
+    <string name="license_information_ok">Zustimmen</string>
+    <string name="license_information_cancel">Ablehnen</string>
+    <string name="license_information_title">
+        <![CDATA[
+        Um Bilder hochzuladen müssen Sie der
+        <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0-Lizenz</a>
+        zustimmen.
+        ]]>
+    </string>
 
     <string name="key_show_cart_fab">showcartfab</string>
     <string name="key_user">user</string>

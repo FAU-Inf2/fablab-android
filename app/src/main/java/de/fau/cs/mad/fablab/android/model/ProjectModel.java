@@ -87,9 +87,8 @@ public class ProjectModel {
         }
     }
 
-    public void uploadImage(byte[] image, String id, String fileName)
+    public void uploadImage(ProjectImageUpload imageUpload)
     {
-        ProjectImageUpload imageUpload = new ProjectImageUpload(fileName + ".png", image, id);
         mProjectsApi.uploadImage(imageUpload, mUploadImageCallback);
     }
 

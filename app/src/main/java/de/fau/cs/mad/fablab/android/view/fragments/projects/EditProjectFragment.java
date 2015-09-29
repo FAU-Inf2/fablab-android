@@ -31,6 +31,7 @@ import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.fau.cs.mad.fablab.android.viewmodel.common.Project;
+import de.fau.cs.mad.fablab.rest.core.ProjectImageUpload;
 
 public class EditProjectFragment extends BaseFragment implements EditProjectFragmentViewModel.Listener{
 
@@ -203,11 +204,18 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
         try {
             byte[] array = bos.toByteArray();
-            showProgressBar(true);
-            mViewModel.uploadImage(array, fileName);
+            mViewModel.setProjectImage(new ProjectImageUpload(fileName + ".png",
+                    array, mViewModel.getProject().getGistID()));
+
+            LicenseInformationDialogFragment fragment = new LicenseInformationDialogFragment();
+            fragment.show(getFragmentManager(), "license_information");
+
             bitmap.recycle();
             bos.close();
             bos = null;
+
+
+
         } catch(OutOfMemoryError error)
         {
             Toast.makeText(getActivity(), getResources().getString(R.string.project_photo_image_too_large), Toast.LENGTH_SHORT).show();
