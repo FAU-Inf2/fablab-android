@@ -1,6 +1,11 @@
 package de.fau.cs.mad.fablab.android.view.fragments.projects;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,6 +14,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 
 import javax.inject.Inject;
 
@@ -31,6 +40,8 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
     @Inject
     EditProjectFragmentViewModel mViewModel;
 
+    private static final int PICK_IMAGE = 100;
+
     @Override
     public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -41,7 +52,7 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
         MenuItem saveProjectItem = menu.findItem(R.id.action_save_project);
 
         new MenuItemCommandBinding().bind(saveProjectItem, mViewModel.getSaveProjectCommand());
-
+        new MenuItemCommandBinding().bind(addPhotoItem, mViewModel.getAddPhotoCommand());
     }
 
     @Override
@@ -103,5 +114,55 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
     @Override
     public String getText() {
         return mDescriptionTV.getText().toString();
+    }
+
+    @Override
+    public void startPicturePicker() {
+        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        getIntent.setType("image/*");
+
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setType("image/*");
+
+        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
+
+        startActivityForResult(chooserIntent, PICK_IMAGE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK
+                    && null != data) {
+
+                Uri selectedImage = data.getData();
+                Bitmap bitmap;
+                try {
+                    bitmap = BitmapFactory.decodeStream(getActivity().getApplicationContext().getContentResolver().openInputStream(selectedImage));
+
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                    try {
+                        byte[] array = bos.toByteArray();
+                    } catch(OutOfMemoryError error)
+                    {
+                        Toast.makeText(getActivity(), getResources().getString(R.string.project_photo_image_too_large), Toast.LENGTH_SHORT).show();
+                    }
+                    bos.close();
+                    bos = null;
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+            } else {
+
+            }
+        } catch (Exception e) {
+
+        }
+
     }
 }

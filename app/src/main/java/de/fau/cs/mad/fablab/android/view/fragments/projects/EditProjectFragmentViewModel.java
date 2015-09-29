@@ -28,6 +28,16 @@ public class EditProjectFragmentViewModel extends BaseFragment {
         }
     };
 
+    private Command<Void> mAddPhotoCommand = new Command<Void>() {
+        @Override
+        public void execute(Void parameter) {
+            if(mListener != null)
+            {
+                mListener.startPicturePicker();
+            }
+        }
+    };
+
     @Inject
     public EditProjectFragmentViewModel()
     {
@@ -37,6 +47,11 @@ public class EditProjectFragmentViewModel extends BaseFragment {
     public Command<Void> getSaveProjectCommand()
     {
         return mSaveProjectCommand;
+    }
+
+    public Command<Void> getAddPhotoCommand()
+    {
+        return mAddPhotoCommand;
     }
 
     public void setListener(Listener listener)
@@ -73,5 +88,6 @@ public class EditProjectFragmentViewModel extends BaseFragment {
         String getTitle();
         String getShortDescription();
         String getText();
+        void startPicturePicker();
     }
 }
