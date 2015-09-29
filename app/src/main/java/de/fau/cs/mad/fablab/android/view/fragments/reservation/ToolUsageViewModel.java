@@ -29,6 +29,12 @@ public class ToolUsageViewModel {
         return (dateStart.before(dateNow) && dateEnd.after(dateNow));
     }
 
+    public boolean isPast() {
+        Date dateNow = new Date();
+        Date dateEnd = new Date(getStartTime() + (mToolUsage.getDuration() * 1000 * 60));
+        return (dateEnd.before(dateNow));
+    }
+
     public String getUser() {
         return mToolUsage.getUser();
     }

@@ -1,6 +1,7 @@
 package de.fau.cs.mad.fablab.android.view.fragments.reservation;
 
 import android.content.res.Resources;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import butterknife.ButterKnife;
 import de.fau.cs.mad.fablab.android.R;
 
 public class ToolUsageViewModelRenderer extends Renderer<ToolUsageViewModel> {
+    @Bind(R.id.toolusage_entry)
+    CardView entry_cv;
     @Bind(R.id.toolusage_entry_user)
     TextView user_tv;
     @Bind(R.id.toolusage_entry_project)
@@ -42,6 +45,11 @@ public class ToolUsageViewModelRenderer extends Renderer<ToolUsageViewModel> {
         user_tv.setText(viewModel.getUser());
         project_tv.setText(viewModel.getProject());
         duration_tv.setText(viewModel.getDuration());
+
+        if(viewModel.isPast()) {
+            entry_cv.setAlpha(0.28f);
+        }
+
         if(viewModel.isOwnId()) {
             if(viewModel.isNow()) {
                 user_tv.setBackgroundColor(res.getColor(R.color.toolUsage_background_my_now));

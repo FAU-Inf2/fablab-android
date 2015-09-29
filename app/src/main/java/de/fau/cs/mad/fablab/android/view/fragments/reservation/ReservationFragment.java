@@ -173,7 +173,7 @@ public class ReservationFragment extends BaseFragment implements ReservationFrag
     @Override
     public void onToolListChanged() {
         mAdapter.notifyDataSetChanged();
-        if(mAdapter != null) {
+        if(mAdapter != null && mToolSpinner != null && mToolSpinner.getAdapter() != null) {
             if(mAdapter.getItemCount() == 0 && mToolSpinner.getAdapter().getCount() != 0) {
                 mUsagesAvailable_tv.setVisibility(View.VISIBLE);
             } else {
