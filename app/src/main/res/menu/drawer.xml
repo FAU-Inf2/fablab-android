@@ -27,7 +27,7 @@
             android:id="@+id/drawer_item_projects"
             android:icon="@drawable/ic_nav_project"
             android:title="@string/projects"
-            android:visible="false" />
+            android:visible="true" />
         <!-- TODO visible false / true for showing -->
         <item
             android:id="@+id/drawer_item_reservation"

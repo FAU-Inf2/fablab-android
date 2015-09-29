@@ -126,6 +126,8 @@
     <string name="save_project_success">Projekt wurde gespeichert</string>
     <string name="save_project_failure">Beim Speichern ist leider ein Fehler aufgetreten</string>
     <string name="project_photo_image_too_large">das Bild ist zu groß</string>
+    <string name="project_photo_not_yet_uploaded">Bitte das Projekt erst auf Github hochladen, bevor Bilder eingefügt werden können</string>
+    <string name="project_photo_upload_failure">Beim Hochladen ist leider ein Fehler aufgetreten</string>
 
     <string name="key_show_cart_fab">showcartfab</string>
     <string name="key_user">user</string>

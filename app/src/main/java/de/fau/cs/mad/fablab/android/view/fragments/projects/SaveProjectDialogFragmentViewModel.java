@@ -68,7 +68,6 @@ public class SaveProjectDialogFragmentViewModel {
 
     @SuppressWarnings("unused")
     public void onEvent(ProjectSavedEvent event) {
-        EventBus.getDefault().cancelEventDelivery(event);
         if(mListener != null)
         {
             mListener.showProgressBar(false);

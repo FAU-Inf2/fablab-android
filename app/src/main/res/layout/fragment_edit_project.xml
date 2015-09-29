@@ -7,29 +7,45 @@
     android:padding="@dimen/margin_medium"
     >
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edit_project_title_et"
-        android:hint="@string/edit_project_hint_title"
-        />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edit_project_short_description_et"
-        android:hint="@string/edit_project_hint_short_description"
-        android:paddingTop="@dimen/margin_small"
-        />
-
-
-    <EditText
+    <ProgressBar
+        android:id="@+id/project_image_upload_progress_bar"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/edit_project_description_et"
-        android:hint="@string/edit_project_hint_description"
-        android:gravity="top|left"
-        android:paddingTop="@dimen/margin_small"
-        />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_project_title_et"
+            android:hint="@string/edit_project_hint_title"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_project_short_description_et"
+            android:hint="@string/edit_project_hint_short_description"
+            android:paddingTop="@dimen/margin_small"
+            android:layout_below="@+id/edit_project_title_et"
+            />
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/edit_project_description_et"
+            android:hint="@string/edit_project_hint_description"
+            android:gravity="top|left"
+            android:paddingTop="@dimen/margin_small"
+            android:layout_below="@+id/edit_project_short_description_et"
+            />
+    </RelativeLayout>
 
 </LinearLayout>

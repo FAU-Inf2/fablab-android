@@ -2,15 +2,19 @@ package de.fau.cs.mad.fablab.android.view.fragments.projects;
 
 import javax.inject.Inject;
 
-import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
+import de.fau.cs.mad.fablab.android.model.ProjectModel;
+import de.fau.cs.mad.fablab.android.model.events.ProjectImageUploadedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.Project;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
 import de.fau.cs.mad.fablab.rest.core.ProjectFile;
+import de.greenrobot.event.EventBus;
 
-public class EditProjectFragmentViewModel extends BaseFragment {
+public class EditProjectFragmentViewModel {
 
     private Listener mListener;
     private Project mProject;
+    private ProjectModel mModel;
+    private EventBus mEventBus = EventBus.getDefault();
 
     private Command<Void> mSaveProjectCommand = new Command<Void>() {
         @Override
@@ -31,17 +35,30 @@ public class EditProjectFragmentViewModel extends BaseFragment {
     private Command<Void> mAddPhotoCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
-            if(mListener != null)
-            {
-                mListener.startPicturePicker();
+            if(mListener != null) {
+                ProjectFile projectFile = createProjectFile();
+                if(mProject == null)
+                {
+                    mProject = new Project();
+                }
+                mProject.setProjectFile(projectFile);
+                if (getProject().getGistID() == null)
+                {
+                    mListener.projectNotUploaded();
+                }
+                else
+                {
+                    mListener.startPicturePicker();
+                }
             }
         }
     };
 
     @Inject
-    public EditProjectFragmentViewModel()
+    public EditProjectFragmentViewModel(ProjectModel projectModel)
     {
-
+        mModel = projectModel;
+        mEventBus.register(this);
     }
 
     public Command<Void> getSaveProjectCommand()
@@ -62,7 +79,6 @@ public class EditProjectFragmentViewModel extends BaseFragment {
     public void setProject(Project project)
     {
         mProject = project;
-        System.out.println(mProject);
     }
 
     public Project getProject()
@@ -83,11 +99,51 @@ public class EditProjectFragmentViewModel extends BaseFragment {
         }
     }
 
+    public void uploadImage(byte[] image, String fileName)
+    {
+        if(mProject.getGistID() != null) {
+            mModel.uploadImage(image, mProject.getGistID(), fileName);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(ProjectImageUploadedEvent event) {
+        if(mListener != null)
+        {
+            mListener.showProgressBar(false);
+        }
+        if(event.getSuccess())
+        {
+            if(event.getFilePath() != null)
+            {
+                if(mListener != null)
+                {
+                    String text = mListener.getText();
+                    text = text + "\n";
+                    text = text + "![titel](" + event.getFilePath() + ")";
+                    text = text + "\n";
+                    mListener.setDescription(text);
+                }
+            }
+        }
+        else
+        {
+            if(mListener != null)
+            {
+                mListener.uploadFailure();
+            }
+        }
+    }
+
     public interface Listener{
         void onSaveProjectClicked();
         String getTitle();
         String getShortDescription();
         String getText();
         void startPicturePicker();
+        void projectNotUploaded();
+        void showProgressBar(boolean show);
+        void uploadFailure();
+        void setDescription(String text);
     }
 }

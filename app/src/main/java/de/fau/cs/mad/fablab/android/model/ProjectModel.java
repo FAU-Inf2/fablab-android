@@ -7,8 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fau.cs.mad.fablab.android.model.events.ProjectImageUploadedEvent;
 import de.fau.cs.mad.fablab.android.model.events.ProjectSavedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.Project;
+import de.fau.cs.mad.fablab.rest.core.ProjectFile;
+import de.fau.cs.mad.fablab.rest.core.ProjectImageUpload;
 import de.fau.cs.mad.fablab.rest.myapi.ProjectsApi;
 import de.greenrobot.event.EventBus;
 import retrofit.Callback;
@@ -45,6 +48,18 @@ public class ProjectModel {
         }
     };
 
+    private Callback<String> mUploadImageCallback = new Callback<String>() {
+        @Override
+        public void success(String filePath, Response response) {
+            mEventBus.post(new ProjectImageUploadedEvent(filePath, true));
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            mEventBus.post(new ProjectImageUploadedEvent(null, false));
+        }
+    };
+
     public ProjectModel(ProjectsApi projectsApi, RuntimeExceptionDao<Project, Long> projectDao) {
         mProjectsApi = projectsApi;
         mProjectDao = projectDao;
@@ -58,14 +73,24 @@ public class ProjectModel {
 
     public void uploadProjectGithub(Project project)
     {
+        ProjectFile projectFile = project.getProjectFile();
+        if(!projectFile.getFilename().contains(".md")) {
+            projectFile.setFilename(projectFile.getFilename() + ".md");
+        }
         if(project.getGistID() == null)
         {
-            mProjectsApi.createProject(project.getProjectFile(), mSaveProjectCallback);
+            mProjectsApi.createProject(projectFile, mSaveProjectCallback);
         }
         else
         {
-            mProjectsApi.updateProject(project.getGistID(), project.getProjectFile(), mUpdateProjectCallback);
+            mProjectsApi.updateProject(project.getGistID(), projectFile, mUpdateProjectCallback);
         }
+    }
+
+    public void uploadImage(byte[] image, String id, String fileName)
+    {
+        ProjectImageUpload imageUpload = new ProjectImageUpload(fileName + ".png", image, id);
+        mProjectsApi.uploadImage(imageUpload, mUploadImageCallback);
     }
 
     public List<Project> getAllProjects()

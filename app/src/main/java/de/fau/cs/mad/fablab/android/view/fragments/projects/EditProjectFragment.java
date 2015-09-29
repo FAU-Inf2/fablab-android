@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -36,6 +37,8 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
     EditText mShortDescriptionTV;
     @Bind(R.id.edit_project_description_et)
     EditText mDescriptionTV;
+    @Bind(R.id.project_image_upload_progress_bar)
+    ProgressBar mProgressBar;
 
     @Inject
     EditProjectFragmentViewModel mViewModel;
@@ -131,6 +134,33 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
     }
 
     @Override
+    public void projectNotUploaded() {
+        Toast.makeText(getActivity(), getResources().getString(R.string.project_photo_not_yet_uploaded), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showProgressBar(boolean show) {
+        if(show)
+        {
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            mProgressBar.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void uploadFailure() {
+        Toast.makeText(getActivity(), getResources().getString(R.string.project_photo_upload_failure), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setDescription(String text) {
+        mDescriptionTV.setText(text);
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
@@ -138,18 +168,22 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
                     && null != data) {
 
                 Uri selectedImage = data.getData();
+                String fileName = selectedImage.getLastPathSegment();
                 Bitmap bitmap;
                 try {
                     bitmap = BitmapFactory.decodeStream(getActivity().getApplicationContext().getContentResolver().openInputStream(selectedImage));
 
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
                     try {
                         byte[] array = bos.toByteArray();
+                        showProgressBar(true);
+                        mViewModel.uploadImage(array, fileName);
                     } catch(OutOfMemoryError error)
                     {
                         Toast.makeText(getActivity(), getResources().getString(R.string.project_photo_image_too_large), Toast.LENGTH_SHORT).show();
                     }
+                    bitmap.recycle();
                     bos.close();
                     bos = null;
 
