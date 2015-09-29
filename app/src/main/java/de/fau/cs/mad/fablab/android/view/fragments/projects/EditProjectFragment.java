@@ -121,15 +121,9 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
 
     @Override
     public void startPicturePicker() {
-        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        getIntent.setType("image/*");
-
-        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent pickIntent = new Intent(Intent.ACTION_GET_CONTENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         pickIntent.setType("image/*");
-
-        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
-
+        Intent chooserIntent = Intent.createChooser(pickIntent, "Select Image");
         startActivityForResult(chooserIntent, PICK_IMAGE);
     }
 
