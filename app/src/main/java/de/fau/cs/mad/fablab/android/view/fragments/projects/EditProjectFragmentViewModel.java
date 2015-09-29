@@ -32,7 +32,7 @@ public class EditProjectFragmentViewModel {
         }
     };
 
-    private Command<Void> mAddPhotoCommand = new Command<Void>() {
+    private Command<Void> mAddPhotoGalleryCommand = new Command<Void>() {
         @Override
         public void execute(Void parameter) {
             if(mListener != null) {
@@ -54,6 +54,28 @@ public class EditProjectFragmentViewModel {
         }
     };
 
+    private Command<Void> mAddPhotoCameraCommand = new Command<Void>() {
+        @Override
+        public void execute(Void parameter) {
+            if(mListener != null) {
+                ProjectFile projectFile = createProjectFile();
+                if(mProject == null)
+                {
+                    mProject = new Project();
+                }
+                mProject.setProjectFile(projectFile);
+                if (getProject().getGistID() == null)
+                {
+                    mListener.projectNotUploaded();
+                }
+                else
+                {
+                    mListener.startCamera();
+                }
+            }
+        }
+    };
+
     @Inject
     public EditProjectFragmentViewModel(ProjectModel projectModel)
     {
@@ -66,9 +88,14 @@ public class EditProjectFragmentViewModel {
         return mSaveProjectCommand;
     }
 
-    public Command<Void> getAddPhotoCommand()
+    public Command<Void> getAddPhotoCameraCommand()
     {
-        return mAddPhotoCommand;
+        return mAddPhotoCameraCommand;
+    }
+
+    public Command<Void> getAddPhotoGalleryCommand()
+    {
+        return mAddPhotoGalleryCommand;
     }
 
     public void setListener(Listener listener)
@@ -141,6 +168,7 @@ public class EditProjectFragmentViewModel {
         String getShortDescription();
         String getText();
         void startPicturePicker();
+        void startCamera();
         void projectNotUploaded();
         void showProgressBar(boolean show);
         void uploadFailure();

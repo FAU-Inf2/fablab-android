@@ -117,6 +117,8 @@
     <string name="action_save_project">Projekt speichern</string>
     <string name="projects_title">Projekte:</string>
     <string name="action_new_project">neues Projekt</string>
+    <string name="action_browse_gallery">Gallery durchsuchen</string>
+    <string name="action_take_photo">Photo aufnehmen</string>
     <string name="edit_project_hint_title">Titel</string>
     <string name="edit_project_hint_short_description">Kurzbeschreibung</string>
     <string name="edit_project_hint_description">Beschreibung</string>

@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -44,6 +47,7 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
     EditProjectFragmentViewModel mViewModel;
 
     private static final int PICK_IMAGE = 100;
+    private static final int REQUEST_CAMERA = 200;
 
     @Override
     public void onCreateOptionsMenu (Menu menu, MenuInflater inflater) {
@@ -55,7 +59,13 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
         MenuItem saveProjectItem = menu.findItem(R.id.action_save_project);
 
         new MenuItemCommandBinding().bind(saveProjectItem, mViewModel.getSaveProjectCommand());
-        new MenuItemCommandBinding().bind(addPhotoItem, mViewModel.getAddPhotoCommand());
+
+        if(addPhotoItem != null) {
+            new MenuItemCommandBinding().bind(addPhotoItem.getSubMenu().getItem(0),
+                    mViewModel.getAddPhotoGalleryCommand());
+            new MenuItemCommandBinding().bind(addPhotoItem.getSubMenu().getItem(1),
+                    mViewModel.getAddPhotoCameraCommand());
+        }
     }
 
     @Override
@@ -128,6 +138,12 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
     }
 
     @Override
+    public void startCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, REQUEST_CAMERA);
+    }
+
+    @Override
     public void projectNotUploaded() {
         Toast.makeText(getActivity(), getResources().getString(R.string.project_photo_not_yet_uploaded), Toast.LENGTH_SHORT).show();
     }
@@ -163,33 +179,40 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
 
                 Uri selectedImage = data.getData();
                 String fileName = selectedImage.getLastPathSegment();
-                Bitmap bitmap;
                 try {
-                    bitmap = BitmapFactory.decodeStream(getActivity().getApplicationContext().getContentResolver().openInputStream(selectedImage));
-
-                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-                    try {
-                        byte[] array = bos.toByteArray();
-                        showProgressBar(true);
-                        mViewModel.uploadImage(array, fileName);
-                    } catch(OutOfMemoryError error)
-                    {
-                        Toast.makeText(getActivity(), getResources().getString(R.string.project_photo_image_too_large), Toast.LENGTH_SHORT).show();
-                    }
-                    bitmap.recycle();
-                    bos.close();
-                    bos = null;
-
+                    Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getApplicationContext().getContentResolver().openInputStream(selectedImage));
+                    processBitmap(bitmap, fileName);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-
-            } else {
-
+            } else if (requestCode == REQUEST_CAMERA && resultCode == Activity.RESULT_OK
+                    && null != data)
+            {
+                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                processBitmap(bitmap, UUID.randomUUID().toString());
             }
         } catch (Exception e) {
 
+        }
+
+    }
+
+    private void processBitmap(Bitmap bitmap, String fileName)
+    {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+        try {
+            byte[] array = bos.toByteArray();
+            showProgressBar(true);
+            mViewModel.uploadImage(array, fileName);
+            bitmap.recycle();
+            bos.close();
+            bos = null;
+        } catch(OutOfMemoryError error)
+        {
+            Toast.makeText(getActivity(), getResources().getString(R.string.project_photo_image_too_large), Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

@@ -8,7 +8,18 @@
         android:icon="@drawable/add_photo"
         android:orderInCategory="100"
         android:title="@string/action_add_photo_project"
-        app:showAsAction="always" />
+        app:showAsAction="always" >
+        <menu>
+            <item
+                android:id="@+id/action_browse_photo_project"
+                android:title="@string/action_browse_gallery"
+                app:showAsAction="always" />
+            <item
+                android:id="@+id/action_take_photo_project"
+                android:title="@string/action_take_photo"
+                app:showAsAction="always" />
+        </menu>
+    </item>
 
     <item
         android:id="@+id/action_save_project"
