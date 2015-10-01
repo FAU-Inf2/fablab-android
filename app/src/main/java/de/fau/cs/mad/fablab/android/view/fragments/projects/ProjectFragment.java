@@ -131,6 +131,7 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
     @Override
     public void showCartChooser() {
         CartChooserDialogFragment fragment = new CartChooserDialogFragment();
-        fragment.show(getFragmentManager(), "cart_chooser");
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                fragment).addToBackStack(null).commit();
     }
 }
