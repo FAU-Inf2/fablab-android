@@ -120,7 +120,6 @@ dependencies {
 
     // Push
     googleplayCompile 'com.google.android.gms:play-services:3.1.59'
-    googleplayCompile 'com.fasterxml.jackson.core:jackson-databind:2.6.1'
 
     // UI
     compile 'com.github.brnunes:swipeablerecyclerview:1.0.1'
