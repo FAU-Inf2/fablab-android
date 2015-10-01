@@ -140,7 +140,8 @@ public class ProductSearchFragment extends BaseFragment implements
         super.onResume();
         mEventBus.register(this);
         mViewModel.resume();
-        int displayOptions = MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER;
+        int displayOptions = MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER
+                | MainActivity.DISPLAY_TIME;
         if (mShowCartFAB) {
             displayOptions |= MainActivity.DISPLAY_CART_PANEL | MainActivity.DISPLAY_FAB;
         }

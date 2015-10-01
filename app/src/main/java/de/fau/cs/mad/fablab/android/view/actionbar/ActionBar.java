@@ -92,6 +92,18 @@ public class ActionBar implements ActionBarViewModel.Listener {
         }
     }
 
+    public void showTime(boolean show)
+    {
+        if (show)
+        {
+            time_tv.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            time_tv.setVisibility(View.GONE);
+        }
+    }
+
     public void showTitle(boolean show) {
         if (show) {
             appbar_title.setVisibility(View.VISIBLE);

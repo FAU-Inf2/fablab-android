@@ -96,7 +96,8 @@ public class AboutFragment extends BaseFragment implements AboutFragmentViewMode
     @Override
     public void onResume() {
         super.onResume();
-        setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER);
+        setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_TIME
+                | MainActivity.DISPLAY_NAVDRAWER);
         setNavigationDrawerSelection(R.id.drawer_item_about);
     }
 
