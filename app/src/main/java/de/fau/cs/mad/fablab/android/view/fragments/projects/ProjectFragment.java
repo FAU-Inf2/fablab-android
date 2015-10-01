@@ -104,6 +104,7 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
         Bundle args = new Bundle();
         fragment.setArguments(args);
         args.putSerializable(getResources().getString(R.string.key_project), null);
+        args.putSerializable(getResources().getString(R.string.key_cart), null);
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 fragment).addToBackStack(null).commit();
     }
@@ -113,6 +114,7 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
         EditProjectFragment fragment = new EditProjectFragment();
         Bundle args = new Bundle();
         args.putSerializable(getResources().getString(R.string.key_project), event.getProject());
+        args.putSerializable(getResources().getString(R.string.key_cart), null);
         fragment.setArguments(args);
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 fragment).addToBackStack(null).commit();

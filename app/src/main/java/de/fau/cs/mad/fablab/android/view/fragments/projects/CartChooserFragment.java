@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
+import de.greenrobot.event.EventBus;
 
 public class CartChooserFragment extends BaseFragment implements
         CartChooserFragmentViewModel.Listener{
@@ -26,6 +27,7 @@ public class CartChooserFragment extends BaseFragment implements
     CartChooserFragmentViewModel mViewModel;
 
     private RVRendererAdapter<CartViewModel> mAdapter;
+    private EventBus mEventBus = EventBus.getDefault();
 
 
     @Override
@@ -56,11 +58,29 @@ public class CartChooserFragment extends BaseFragment implements
     public void onResume() {
         super.onResume();
         mViewModel.update();
+        mEventBus.register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mEventBus.unregister(this);
     }
 
     @Override
     public void onDataChanged()
     {
         mAdapter.notifyDataSetChanged();
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(CartClickedEvent event) {
+        EditProjectFragment fragment = new EditProjectFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(getResources().getString(R.string.key_project), null);
+        args.putSerializable(getResources().getString(R.string.key_cart), event.getCart());
+        fragment.setArguments(args);
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                fragment).addToBackStack(null).commit();
     }
 }

@@ -18,6 +18,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.j256.ormlite.dao.ForeignCollection;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,6 +29,8 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.model.entities.Cart;
+import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
@@ -74,11 +78,27 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
         super.onActivityCreated(savedInstanceState);
 
         Project project = (Project) getArguments().getSerializable(getResources().getString(R.string.key_project));
+        Cart cart = (Cart) getArguments().getSerializable(getResources().getString(R.string.key_cart));
         if(project != null)
         {
             mTitleTV.setText(project.getProjectFile().getFilename());
             mShortDescriptionTV.setText(project.getProjectFile().getDescription());
             mDescriptionTV.setText(project.getProjectFile().getContent());
+        }
+        else
+        {
+            if(cart != null)
+            {
+                String text = getString(R.string.edit_cart_cart) + "\n";
+                ForeignCollection<CartEntry> entries = cart.getEntries();
+                for(CartEntry e : entries)
+                {
+                    text += "* " + e.getAmount() + " " + e.getProduct().getName() + "\n";
+                }
+                text += "\n";
+                text += getString(R.string.edit_cart_description) + "\n";
+                mDescriptionTV.setText(text);
+            }
         }
         mViewModel.setProject(project);
 

@@ -11,7 +11,7 @@ public class CartClickedEvent {
         mCart = cart;
     }
 
-    public Cart getProject()
+    public Cart getCart()
     {
         return mCart;
     }

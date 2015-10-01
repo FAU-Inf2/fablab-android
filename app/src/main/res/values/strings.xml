@@ -146,11 +146,14 @@
     <string name="project_photo_image_wrong_format">Die Datei hat das falsche Format</string>
     <string name="cart_entry_title">Warenkorb</string>
     <string name="cart_entry_items">Items:</string>
+    <string name="edit_cart_cart">#Warenkorb:</string>
+    <string name="edit_cart_description">#Beschreibung:</string>
 
     <string name="key_show_cart_fab">showcartfab</string>
     <string name="key_user">user</string>
     <string name="key_product_search">productsearch</string>
     <string name="key_project">project</string>
+    <string name="key_cart">cart</string>
 
     <string name="product_map_download_failed">Fehler beim Laden der Karte aufgetreten</string>
 
