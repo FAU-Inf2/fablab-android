@@ -3,8 +3,6 @@ package de.fau.cs.mad.fablab.android.view.fragments.settings;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -42,16 +40,9 @@ public class SettingsFragment extends PreferenceFragment  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.settings);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
     }
 
     @Override
@@ -73,7 +64,7 @@ public class SettingsFragment extends PreferenceFragment  {
         MainActivity activity = (MainActivity) getActivity();
         activity.setDisplayOptions(MainActivity.DISPLAY_TITLE | MainActivity.DISPLAY_NAVDRAWER);
         activity.setNavigationDrawerSelection(R.id.drawer_item_settings);
-        activity.setTitle(getString(R.string.settings));
+        activity.setTitle(R.string.settings);
 
         mEventBus.register(this);
     }

@@ -31,7 +31,7 @@ public abstract class BaseFragment extends Fragment {
         ((MainActivity) getActivity()).setNavigationDrawerSelection(menuItemId);
     }
 
-    public void setTitle(String title) {
-        ((MainActivity) getActivity()).setTitle(title);
+    public void setTitle(int titleId) {
+        getActivity().setTitle(titleId);
     }
 }

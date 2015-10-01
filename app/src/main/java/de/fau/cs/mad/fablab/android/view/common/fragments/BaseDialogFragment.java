@@ -28,7 +28,7 @@ public abstract class BaseDialogFragment extends DialogFragment {
         ((MainActivity) getActivity()).setNavigationDrawerSelection(menuItemId);
     }
 
-    public void setTitle(String title) {
-        ((MainActivity) getActivity()).setTitle(title);
+    public void setTitle(int titleId) {
+        getActivity().setTitle(titleId);
     }
 }

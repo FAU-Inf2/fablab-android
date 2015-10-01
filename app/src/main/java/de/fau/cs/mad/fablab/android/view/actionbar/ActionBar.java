@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,28 +18,22 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
-import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
+import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 
 public class ActionBar implements ActionBarViewModel.Listener {
-
     @Bind(R.id.appbar)
     Toolbar toolbar;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawer;
-    @Bind(R.id.appbar_time)
-    TextView time_tv;
-
+    @Bind(R.id.appbar_logo)
+    LinearLayout logo_ll;
     @Bind(R.id.appbar_title)
-    TextView appbar_title;
-    @Bind(R.id.appbar_fau)
-    TextView appbar_fau;
-    @Bind(R.id.appbar_fablab)
-    TextView appbar_fablab;
-    @Bind(R.id.icon_fablab)
-    ImageView icon_fablab;
+    TextView title_tv;
 
-    private MenuItem mOpenStateMenuItem;
     private ActionBarDrawerToggle mDrawerToggle;
+    private TextView time_tv;
+    private ImageView door_state_iv;
+
     private Context mContext;
 
     @Inject
@@ -50,27 +45,15 @@ public class ActionBar implements ActionBarViewModel.Listener {
         ButterKnife.bind(this, view);
         activity.inject(this);
 
-        mViewModel.setListener(this);
-
         activity.setSupportActionBar(toolbar);
-        if (activity.getSupportActionBar() != null) {
-            activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
-            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        android.support.v7.app.ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         mDrawerToggle = new ActionBarDrawerToggle(activity, drawer, R.string.app_name,
-                R.string.app_name) {
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-            }
-        };
+                R.string.app_name);
         drawer.setDrawerListener(mDrawerToggle);
     }
 
@@ -79,48 +62,31 @@ public class ActionBar implements ActionBarViewModel.Listener {
     }
 
     public void showLogo(boolean show) {
-        if (show) {
-            appbar_fablab.setVisibility(View.VISIBLE);
-            appbar_fau.setVisibility(View.VISIBLE);
-            icon_fablab.setVisibility(View.VISIBLE);
-            time_tv.setVisibility(View.VISIBLE);
-        } else {
-            appbar_fablab.setVisibility(View.GONE);
-            appbar_fau.setVisibility(View.GONE);
-            icon_fablab.setVisibility(View.GONE);
-            time_tv.setVisibility(View.GONE);
-        }
-    }
-
-    public void showTime(boolean show)
-    {
-        if (show)
-        {
-            time_tv.setVisibility(View.VISIBLE);
-        }
-        else
-        {
-            time_tv.setVisibility(View.GONE);
-        }
+        logo_ll.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     public void showTitle(boolean show) {
         if (show) {
-            appbar_title.setVisibility(View.VISIBLE);
+            title_tv.setVisibility(View.VISIBLE);
         } else {
-            appbar_title.setVisibility(View.GONE);
-            appbar_title.setText("");
+            title_tv.setVisibility(View.GONE);
+            title_tv.setText("");
         }
     }
 
     public void setTitle(String title) {
-        appbar_title.setText(title);
+        title_tv.setText(title);
     }
 
     public void bindMenuItems() {
-        mOpenStateMenuItem = toolbar.getMenu().findItem(R.id.action_opened);
-        new MenuItemCommandBinding().bind(mOpenStateMenuItem,
-                mViewModel.getShowDoorStateToastCommand());
+        MenuItem doorStateMenuItem = toolbar.getMenu().findItem(R.id.action_door_state);
+        doorStateMenuItem.setActionView(R.layout.door_state_action_view);
+        View actionView = doorStateMenuItem.getActionView();
+        time_tv = (TextView) actionView.findViewById(R.id.time_tv);
+        door_state_iv = (ImageView) actionView.findViewById(R.id.door_state_iv);
+        new ViewCommandBinding().bind(actionView, mViewModel.getShowDoorStateToastCommand());
+
+        mViewModel.setListener(this);
         mViewModel.initialize();
     }
 
@@ -146,18 +112,14 @@ public class ActionBar implements ActionBarViewModel.Listener {
 
     @Override
     public void onStateUpdated(boolean open, String time) {
-        if (mOpenStateMenuItem != null) {
-            if (open) {
-                mOpenStateMenuItem.setIcon(R.drawable.opened);
-                mOpenStateMenuItem.setTitle(R.string.appbar_opened);
-                time_tv.setTextColor(time_tv.getResources().getColor(R.color.appbar_color_opened));
-            } else {
-                mOpenStateMenuItem.setIcon(R.drawable.closed);
-                mOpenStateMenuItem.setTitle(R.string.appbar_closed);
-                time_tv.setTextColor(time_tv.getResources().getColor(R.color.appbar_color_closed));
-            }
-            time_tv.setText(time);
+        if (open) {
+            door_state_iv.setImageResource(R.drawable.opened);
+            time_tv.setTextColor(time_tv.getResources().getColor(R.color.appbar_color_opened));
+        } else {
+            door_state_iv.setImageResource(R.drawable.closed);
+            time_tv.setTextColor(time_tv.getResources().getColor(R.color.appbar_color_closed));
         }
+        time_tv.setText(time);
     }
 
     @Override

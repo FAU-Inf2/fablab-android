@@ -37,7 +37,6 @@ public class ProductSearchFragment extends BaseFragment implements
 
     private RVRendererAdapter<ProductSearchViewModel> mAdapter;
     private EventBus mEventBus = EventBus.getDefault();
-    private MenuItem mSearchItem;
     private MenuItem mOrderByItem;
     private boolean mShowCartFAB;
     private boolean mProductSearch;
@@ -74,20 +73,18 @@ public class ProductSearchFragment extends BaseFragment implements
         inflater.inflate(R.menu.menu_search, menu);
 
         if(mProductSearch) {
-            mSearchItem = menu.findItem(R.id.action_search);
-            mSearchItem.setVisible(true);
+            MenuItem searchItem = menu.findItem(R.id.action_search);
+            searchItem.setVisible(true);
             mSearchView = (ProductSearchView) MenuItemCompat.getActionView(
-                    mSearchItem);
+                    searchItem);
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                     R.layout.dropdown_item, mViewModel.getAutoCompleteWords());
             mSearchView.setAdapter(adapter);
             mSearchView.setCommand(mViewModel.getSearchCommand());
             mSearchView.setQueryHint(getString(R.string.search_all_hint));
-            mSearchItem.expandActionView();
+            searchItem.expandActionView();
             mSearchView.clearFocus();
-        }
-        else
-        {
+        } else {
             MenuItem searchItem = menu.findItem(R.id.action_search_category);
             searchItem.setVisible(true);
             searchItem.expandActionView();
@@ -140,8 +137,7 @@ public class ProductSearchFragment extends BaseFragment implements
         super.onResume();
         mEventBus.register(this);
         mViewModel.resume();
-        int displayOptions = MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER
-                | MainActivity.DISPLAY_TIME;
+        int displayOptions = MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER;
         if (mShowCartFAB) {
             displayOptions |= MainActivity.DISPLAY_CART_PANEL | MainActivity.DISPLAY_FAB;
         }
@@ -155,9 +151,6 @@ public class ProductSearchFragment extends BaseFragment implements
         super.onPause();
         mEventBus.unregister(this);
         mViewModel.pause();
-        if (mSearchItem != null) {
-            mSearchItem.collapseActionView();
-        }
     }
 
     @Override
@@ -217,7 +210,6 @@ public class ProductSearchFragment extends BaseFragment implements
         Fragment fragment = getFragmentManager().findFragmentByTag("CategoryDialogFragment");
         if(fragment == null) {
             CategoryDialogFragment frag = new CategoryDialogFragment();
-            Bundle args = new Bundle();
             frag.show(getFragmentManager(), "CategoryDialogFragment");
         }
     }
