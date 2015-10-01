@@ -139,6 +139,7 @@
         für sämtliche Inhalte zustimmen.
         ]]>
     </string>
+    <string name="project_photo_image_wrong_format">Die Datei hat das falsche Format</string>
 
     <string name="key_show_cart_fab">showcartfab</string>
     <string name="key_user">user</string>
