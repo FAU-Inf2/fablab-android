@@ -9,6 +9,17 @@
         android:icon="@drawable/plus"
         android:orderInCategory="101"
         android:title="@string/action_new_project"
-        app:showAsAction="always" />
+        app:showAsAction="always" >
+        <menu>
+            <item
+                android:id="@+id/action_browse_photo_project"
+                android:title="@string/action_create_new_project"
+                app:showAsAction="always" />
+            <item
+                android:id="@+id/action_take_photo_project"
+                android:title="@string/action_create_project_from_cart"
+                app:showAsAction="always" />
+        </menu>
+    </item>
 
 </menu>

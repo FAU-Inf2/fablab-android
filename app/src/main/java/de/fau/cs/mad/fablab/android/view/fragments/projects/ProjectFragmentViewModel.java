@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.model.ProjectModel;
 import de.fau.cs.mad.fablab.android.viewmodel.common.Project;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
@@ -15,6 +16,7 @@ public class ProjectFragmentViewModel {
 
     private Listener mListener;
     private ProjectModel mModel;
+    private CartModel mCartModel;
     private ListAdapteeCollection<ProjectViewModel> mProjectViewModelCollection;
 
     private Command<Void> mNewProjectCommand = new Command<Void>() {
@@ -26,10 +28,28 @@ public class ProjectFragmentViewModel {
         }
     };
 
+    private Command<Void> mNewProjectFromCartCommand = new Command<Void>() {
+        @Override
+        public void execute(Void parameter) {
+            if(mListener != null)
+            {
+                if(mCartModel.getAllPaidCarts().isEmpty())
+                {
+                    mListener.noCartsAvailable();
+                }
+                else
+                {
+                    mListener.showCartChooser();
+                }
+            }
+        }
+    };
+
     @Inject
-    ProjectFragmentViewModel(ProjectModel model)
+    ProjectFragmentViewModel(ProjectModel model, CartModel cartModel)
     {
         mModel = model;
+        mCartModel = cartModel;
         mProjectViewModelCollection = new ListAdapteeCollection<>();
         update();
     }
@@ -37,6 +57,11 @@ public class ProjectFragmentViewModel {
     public Command<Void> getNewProjectCommand()
     {
         return mNewProjectCommand;
+    }
+
+    public Command<Void> getNewProjectFromCartCommand()
+    {
+        return mNewProjectFromCartCommand;
     }
 
     public AdapteeCollection<ProjectViewModel> getProjectViewModelCollection() {
@@ -64,5 +89,7 @@ public class ProjectFragmentViewModel {
     public interface Listener{
         void onNewProjectClicked();
         void onDataChanged();
+        void noCartsAvailable();
+        void showCartChooser();
     }
 }

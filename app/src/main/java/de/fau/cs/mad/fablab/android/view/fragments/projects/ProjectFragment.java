@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.pedrogomez.renderers.RVRendererAdapter;
 
@@ -40,7 +41,13 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
         inflater.inflate(R.menu.menu_project, menu);
 
         MenuItem newItem = menu.findItem(R.id.action_new);
-        new MenuItemCommandBinding().bind(newItem, mViewModel.getNewProjectCommand());
+
+        if(newItem != null) {
+            new MenuItemCommandBinding().bind(newItem.getSubMenu().getItem(0),
+                    mViewModel.getNewProjectCommand());
+            new MenuItemCommandBinding().bind(newItem.getSubMenu().getItem(1),
+                    mViewModel.getNewProjectFromCartCommand());
+        }
 
     }
 
@@ -114,5 +121,16 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
     @Override
     public void onDataChanged() {
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void noCartsAvailable() {
+        Toast.makeText(getActivity(), getResources().getString(R.string.no_carts_available), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showCartChooser() {
+        CartChooserDialogFragment fragment = new CartChooserDialogFragment();
+        fragment.show(getFragmentManager(), "cart_chooser");
     }
 }

@@ -6,6 +6,7 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import de.fau.cs.mad.fablab.android.model.entities.Cart;
 import de.fau.cs.mad.fablab.android.model.entities.CartEntry;
@@ -91,5 +92,10 @@ public class CartModel {
         }
         mCartEntries.clear();
         mCartEntries.addAll(mCart.getEntries());
+    }
+
+    public List<Cart> getAllPaidCarts()
+    {
+        return mCartDao.queryForEq("status", CartStatus.PAID);
     }
 }

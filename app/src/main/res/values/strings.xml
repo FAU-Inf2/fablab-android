@@ -117,6 +117,10 @@
     <string name="action_save_project">Projekt speichern</string>
     <string name="projects_title">Projekte:</string>
     <string name="action_new_project">neues Projekt</string>
+    <string name="action_create_new_project">neues Projekt erstellen</string>
+    <string name="action_create_project_from_cart">Projekt aus Warenkorb erstellen</string>
+    <string name="no_carts_available">Es liegen keine Warenkörbe vor</string>
+    <string name="choose_cart_title">Warenkörbe:</string>
     <string name="action_browse_gallery">Gallery durchsuchen</string>
     <string name="action_take_photo">Photo aufnehmen</string>
     <string name="edit_project_hint_title">Titel</string>
