@@ -54,7 +54,7 @@
     <string name="dates_location">Ort:</string>
 
     <string name="action_search">Suche</string>
-    <string name="search_all_hint">Alle Produkte</string>
+    <string name="search_all_hint">Produkt</string>
     <string name="per">pro</string>
 
     <string name="stacktrace_messaging_subject">Fehlermeldung FAU FabLab</string>
@@ -134,11 +134,12 @@
     <string name="license_information_cancel">Ablehnen</string>
     <string name="license_information_title">
         <![CDATA[
-        Um Bilder hochzuladen müssen Sie der
+        Um Ihr Projekt hochzuladen müssen Sie der
         <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0-Lizenz</a>
-        zustimmen.
+        für sämtliche Inhalte zustimmen.
         ]]>
     </string>
+    <string name="project_photo_image_wrong_format">Die Datei hat das falsche Format</string>
 
     <string name="key_show_cart_fab">showcartfab</string>
     <string name="key_user">user</string>

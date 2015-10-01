@@ -54,7 +54,8 @@ public class ICalAndNewsFragment extends BaseFragment {
 
         mTranslationY = 0;
         setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER
-                | MainActivity.DISPLAY_CART_PANEL | MainActivity.DISPLAY_FAB);
+                | MainActivity.DISPLAY_CART_PANEL | MainActivity.DISPLAY_FAB
+                | MainActivity.DISPLAY_TIME);
         setNavigationDrawerSelection(R.id.drawer_item_news);
     }
 

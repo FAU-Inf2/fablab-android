@@ -91,7 +91,7 @@ public class CheckoutFragment extends BaseDialogFragment implements CheckoutView
         super.onResume();
         mViewModel.resume();
 
-        setDisplayOptions(MainActivity.DISPLAY_LOGO);
+        setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_TIME);
     }
 
     @Override

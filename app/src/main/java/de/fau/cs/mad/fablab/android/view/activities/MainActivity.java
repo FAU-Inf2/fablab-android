@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int DISPLAY_NAVDRAWER = 4;
     public static final int DISPLAY_CART_PANEL = 8;
     public static final int DISPLAY_FAB = 16;
+    public static final int DISPLAY_TIME = 32;
 
     private final static String TAG_STORAGE_FRAGMENT = "tag_storage_fragment";
     private final static String TAG_ICAL_AND_NEWS_FRAGMENT = "tag_ical_and_news_fragment";
@@ -180,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
     public void setDisplayOptions(int options) {
         mActionBar.showLogo((options & DISPLAY_LOGO) == DISPLAY_LOGO);
         mActionBar.showTitle((options & DISPLAY_TITLE) == DISPLAY_TITLE);
+        mActionBar.showTime((options & DISPLAY_TIME) == DISPLAY_TIME);
         boolean displayNavdrawer = (options & DISPLAY_NAVDRAWER) == DISPLAY_NAVDRAWER;
         mNavigationDrawer.enableDrawer(displayNavdrawer);
         mActionBar.showNavdrawerIcon(displayNavdrawer);

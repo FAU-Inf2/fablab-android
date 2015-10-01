@@ -3,6 +3,7 @@ package de.fau.cs.mad.fablab.android.view.fragments.projects;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.model.ProjectModel;
+import de.fau.cs.mad.fablab.android.model.events.CC0LicenseEvent;
 import de.fau.cs.mad.fablab.android.model.events.ProjectSavedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.Project;
 import de.fau.cs.mad.fablab.android.viewmodel.common.commands.Command;
@@ -32,10 +33,8 @@ public class SaveProjectDialogFragmentViewModel {
         public void execute(Void parameter) {
             if(mListener != null)
             {
-                mListener.showProgressBar(true);
+                mListener.showLicenseInformation();
             }
-            mProject.setLastUpdated(System.currentTimeMillis());
-            mModel.uploadProjectGithub(mProject);
         }
     };
 
@@ -64,6 +63,14 @@ public class SaveProjectDialogFragmentViewModel {
     public void setProject(Project project)
     {
         mProject = project;
+    }
+
+    public void unregister()
+    {
+        if(mEventBus.isRegistered(this))
+        {
+            mEventBus.unregister(this);
+        }
     }
 
     @SuppressWarnings("unused")
@@ -97,10 +104,31 @@ public class SaveProjectDialogFragmentViewModel {
         }
     }
 
+    @SuppressWarnings("unused")
+    public void onEvent(CC0LicenseEvent event) {
+        if(event.getState())
+        {
+            if(mListener != null)
+            {
+                mListener.showProgressBar(true);
+            }
+            mProject.setLastUpdated(System.currentTimeMillis());
+            mModel.uploadProjectGithub(mProject);
+        }
+        else
+        {
+           if(mListener != null)
+           {
+               mListener.onSaveProjectClicked();
+           }
+        }
+    }
+
     public interface Listener{
         void onSaveProjectClicked();
         void saveFailure();
         void saveSuccess();
         void showProgressBar(boolean show);
+        void showLicenseInformation();
     }
 }

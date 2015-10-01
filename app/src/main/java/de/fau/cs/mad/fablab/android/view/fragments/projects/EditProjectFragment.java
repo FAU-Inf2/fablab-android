@@ -174,28 +174,30 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        try {
-            if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK
-                    && null != data) {
+        if (requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK
+                && null != data) {
 
-                Uri selectedImage = data.getData();
-                String fileName = selectedImage.getLastPathSegment();
-                try {
-                    Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getApplicationContext().getContentResolver().openInputStream(selectedImage));
-                    processBitmap(bitmap, fileName);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+            Uri selectedImage = data.getData();
+            String fileName = selectedImage.getLastPathSegment();
+            try {
+                Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getApplicationContext().getContentResolver().openInputStream(selectedImage));
+                if(bitmap == null)
+                {
+                    Toast.makeText(getActivity(), getResources().getString(R.string.project_photo_image_wrong_format), Toast.LENGTH_SHORT).show();
                 }
-            } else if (requestCode == REQUEST_CAMERA && resultCode == Activity.RESULT_OK
-                    && null != data)
-            {
-                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                processBitmap(bitmap, UUID.randomUUID().toString());
+                else {
+                    processBitmap(bitmap, fileName);
+                }
+            } catch (OutOfMemoryError error) {
+                Toast.makeText(getActivity(), getResources().getString(R.string.project_photo_image_too_large), Toast.LENGTH_SHORT).show();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-
+        } else if (requestCode == REQUEST_CAMERA && resultCode == Activity.RESULT_OK
+                && null != data) {
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            processBitmap(bitmap, UUID.randomUUID().toString());
         }
-
     }
 
     private void processBitmap(Bitmap bitmap, String fileName)
@@ -204,22 +206,19 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
         try {
             byte[] array = bos.toByteArray();
-            mViewModel.setProjectImage(new ProjectImageUpload(fileName + ".png",
-                    array, mViewModel.getProject().getGistID()));
-
-            LicenseInformationDialogFragment fragment = new LicenseInformationDialogFragment();
-            fragment.show(getFragmentManager(), "license_information");
+            showProgressBar(true);
+            mViewModel.uploadImage(new ProjectImageUpload(fileName + ".png",
+                          array, mViewModel.getProject().getGistID()));
 
             bitmap.recycle();
             bos.close();
             bos = null;
-
-
-
-        } catch(OutOfMemoryError error)
+        }
+        catch(OutOfMemoryError error)
         {
             Toast.makeText(getActivity(), getResources().getString(R.string.project_photo_image_too_large), Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
 

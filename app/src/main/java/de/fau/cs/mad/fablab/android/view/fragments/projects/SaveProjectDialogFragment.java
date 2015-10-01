@@ -54,6 +54,7 @@ public class SaveProjectDialogFragment extends BaseDialogFragment
 
     @Override
     public void onSaveProjectClicked() {
+        mViewModel.unregister();
         dismiss();
     }
 
@@ -77,5 +78,11 @@ public class SaveProjectDialogFragment extends BaseDialogFragment
         {
             mProgressBar.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void showLicenseInformation() {
+        LicenseInformationDialogFragment fragment = new LicenseInformationDialogFragment();
+        fragment.show(getFragmentManager(), "license_information");
     }
 }

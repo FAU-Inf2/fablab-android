@@ -71,7 +71,7 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment
     @Override
     public void onResume() {
         super.onResume();
-        setDisplayOptions(MainActivity.DISPLAY_LOGO);
+        setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_TIME);
     }
 
     @Override
