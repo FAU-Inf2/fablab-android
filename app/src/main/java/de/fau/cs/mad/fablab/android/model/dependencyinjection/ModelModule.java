@@ -46,7 +46,7 @@ import de.fau.cs.mad.fablab.android.view.fragments.news.NewsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productmap.ProductMapFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.projects.CartChooserDialogFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.projects.CartChooserFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.projects.EditProjectFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.projects.LicenseInformationDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.projects.ProjectFragment;
@@ -74,7 +74,7 @@ import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
                 CategoryDialogFragment.class, InventoryLoginFragment.class,
                 InventoryLoginQrCodeScannerFragment.class, ProjectFragment.class, EditProjectFragment.class,
                 ReservationFragment.class, ReservationDialogFragment.class, SaveProjectDialogFragment.class,
-                LicenseInformationDialogFragment.class, CartChooserDialogFragment.class
+                LicenseInformationDialogFragment.class, CartChooserFragment.class
         })
 public class ModelModule {
     private final StorageFragment mStorageFragment;

@@ -10,14 +10,14 @@ import javax.inject.Inject;
 import de.fau.cs.mad.fablab.android.model.CartModel;
 import de.fau.cs.mad.fablab.android.model.entities.Cart;
 
-public class CartChooserDialogFragmentViewModel {
+public class CartChooserFragmentViewModel {
 
     private CartModel mModel;
     private ListAdapteeCollection<CartViewModel> mCartViewModelCollection;
     private Listener mListener;
 
     @Inject
-    CartChooserDialogFragmentViewModel(CartModel model)
+    CartChooserFragmentViewModel(CartModel model)
     {
         mModel = model;
         mCartViewModelCollection = new ListAdapteeCollection<>();
