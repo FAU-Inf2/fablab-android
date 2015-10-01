@@ -75,6 +75,7 @@ public class CartChooserFragment extends BaseFragment implements
 
     @SuppressWarnings("unused")
     public void onEvent(CartClickedEvent event) {
+        getActivity().getSupportFragmentManager().popBackStack();
         EditProjectFragment fragment = new EditProjectFragment();
         Bundle args = new Bundle();
         args.putSerializable(getResources().getString(R.string.key_project), null);
