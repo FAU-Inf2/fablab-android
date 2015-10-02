@@ -39,4 +39,17 @@ public class Formatter {
             return "";
         }
     }
+
+    public static String formatNotificationToolUsage(String tool, String project) {
+        return "Fablab: " + tool + ((!project.isEmpty()) ? " - " : "") + project;
+    }
+
+    public static String formatToastToolUsageOffset(int offset) {
+        if(offset == 0)
+            return "Du bist jetzt an der Reihe!";
+        else if(offset == 1)
+            return "Du bist in ca. einer Minute an der Reihe!";
+        else
+            return "Du bist in ca. " + offset + " Minuten an der Reihe!";
+    }
 }

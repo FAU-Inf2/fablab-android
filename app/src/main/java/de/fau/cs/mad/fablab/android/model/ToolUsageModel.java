@@ -6,12 +6,15 @@ import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import de.fau.cs.mad.fablab.android.model.events.NotificationEvent;
 import de.fau.cs.mad.fablab.android.model.events.ReservationChangedEvent;
 import de.fau.cs.mad.fablab.android.model.events.ShowToastEvent;
+import de.fau.cs.mad.fablab.android.util.Formatter;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.rest.core.FabTool;
 import de.fau.cs.mad.fablab.rest.core.ToolUsage;
@@ -30,6 +33,8 @@ public class ToolUsageModel {
     private ToolUsageApi mToolUsageApi;
     private long mToolId;
     private String mUuidRandom;
+    private String mCurrentTool;
+    private String mCurrentProject;
 
     EventBus mEventBus = EventBus.getDefault();
 
@@ -72,6 +77,26 @@ public class ToolUsageModel {
             if(usage != null) {
                 mOwnToolUsages.add(usage);
                 mEventBus.post(new ReservationChangedEvent());
+                Date dateNow = new Date();
+                Date date = new Date(usage.getStartTime());
+
+                /* more than 2 minutes in the future */
+                if ((date.getTime() - dateNow.getTime()) > 1000 * 60 * 2) {
+                    mEventBus.post(new NotificationEvent(Formatter.formatNotificationToolUsage(mCurrentTool, mCurrentProject), "Du bist in ca. einer Minute an der Reihe!", new Date(usage.getStartTime() - 1000 * 60 * 1), (int) usage.getId()));
+
+                    /* more than 12 minutes in the future */
+                    if((date.getTime() - dateNow.getTime()) > 1000 * 60 * 12) {
+                        mEventBus.post(new NotificationEvent(Formatter.formatNotificationToolUsage(mCurrentTool, mCurrentProject), "Noch ca. 10 Minuten", new Date(usage.getStartTime() - 1000 * 60 * 10), (int) usage.getId()));
+                    }
+                }
+
+                mEventBus.post(new NotificationEvent(Formatter.formatNotificationToolUsage(mCurrentTool, mCurrentProject), "Los geht's! Du bist an der Reihe.", new Date(usage.getStartTime()), (int) usage.getId()));
+
+                NotificationEvent removeEvent = new NotificationEvent("", "", new Date(usage.getStartTime() + usage.getDuration() * 60 * 1000), (int) usage.getId());
+                removeEvent.setRemove();
+
+                mEventBus.post(removeEvent);
+                mEventBus.post(new ShowToastEvent(Formatter.formatToastToolUsageOffset((int) (new Date(date.getTime() - dateNow.getTime()).getTime() / 1000 / 60)), Toast.LENGTH_SHORT));
             }
         }
 
@@ -137,6 +162,9 @@ public class ToolUsageModel {
         t.setProject(project);
         t.setDuration(duration);
         t.setToken(getUuidRandom());
+
+        mCurrentTool = tool.getTitle();
+        mCurrentProject = project;
 
         mToolUsageApi.addUsage(getUuidRandom(), tool.getId(), t, mAddToolUsageCallback);
     }

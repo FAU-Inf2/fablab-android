@@ -58,11 +58,8 @@ public class NavigationDrawer implements NavigationDrawerViewModel.Listener {
                 mViewModel.getNavigateToBarcodeScannerCommand());
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_inventory),
                 mViewModel.getInventoryCommand());
-        /*
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_reservation),
                 mViewModel.getNavigateToReservationCommand());
-                */
-
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_alert),
                 mViewModel.getNavigateToAlertCommand());
         new MenuItemCommandBinding().bind(menu.findItem(R.id.drawer_item_about),

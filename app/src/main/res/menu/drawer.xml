@@ -33,7 +33,7 @@
             android:id="@+id/drawer_item_reservation"
             android:icon="@drawable/ic_nav_reservation"
             android:title="@string/reservation"
-            android:visible="false" />
+            android:visible="true" />
         <item
             android:id="@+id/drawer_item_alert"
             android:icon="@drawable/ic_nav_warning"

@@ -1,8 +1,13 @@
 package de.fau.cs.mad.fablab.android.view.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,9 +22,11 @@ import de.fau.cs.mad.fablab.android.model.events.NavigationEventInventory;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventProductSearchInventory;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventReservation;
 import de.fau.cs.mad.fablab.android.model.events.NavigationEventShowInventory;
+import de.fau.cs.mad.fablab.android.model.events.NotificationEvent;
 import de.fau.cs.mad.fablab.android.model.events.ShowToastEvent;
 import de.fau.cs.mad.fablab.android.model.events.UpdateAvailableEvent;
 import de.fau.cs.mad.fablab.android.model.util.StorageFragment;
+import de.fau.cs.mad.fablab.android.util.NotificationPublisher;
 import de.fau.cs.mad.fablab.android.util.StackTraceReporter;
 import de.fau.cs.mad.fablab.android.util.TopExceptionHandler;
 import de.fau.cs.mad.fablab.android.view.actionbar.ActionBar;
@@ -34,9 +41,9 @@ import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryLoginFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.ShowInventoryFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.reservation.ReservationFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.projects.ProjectFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.reservation.ReservationFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.versioncheck.VersionCheckDialogFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
@@ -435,5 +442,38 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, event.getMsg(), Toast.LENGTH_SHORT).show();
         else if(event.getLength() == Toast.LENGTH_LONG)
             Toast.makeText(this, event.getMsg(), Toast.LENGTH_LONG).show();
+    }
+
+    public void onEvent(NotificationEvent event) {
+        Intent notificationIntent = new Intent(this, NotificationPublisher.class);
+
+        if(!event.getRemove()) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setAction(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+            PendingIntent pendingIntentClick = PendingIntent.getActivity(this, 0, intent, 0);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+            builder.setContentTitle(event.getNotificationTitle());
+            builder.setContentText(event.getNotificationText());
+            builder.setSmallIcon(R.drawable.fablab_icon);
+            builder.setContentIntent(pendingIntentClick);
+            builder.setAutoCancel(true);
+            builder.setWhen(event.getShowTime());
+            builder.setColor(getResources().getColor(R.color.colorPrimary));
+
+            notificationIntent.putExtra("notification", builder.build());
+        } else {
+            notificationIntent.putExtra("remove", true);
+        }
+
+        notificationIntent.putExtra("notification_id", event.getId());
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, event.getId() + event.hashCode(), notificationIntent, PendingIntent.FLAG_ONE_SHOT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, event.getShowTime(), pendingIntent);
     }
 }
