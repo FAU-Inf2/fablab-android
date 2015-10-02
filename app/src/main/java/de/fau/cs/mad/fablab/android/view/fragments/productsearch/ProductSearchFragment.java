@@ -23,7 +23,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.model.events.DeleteProductInProductSearchEvent;
+import de.fau.cs.mad.fablab.android.model.events.ProductSearchDoNotDeleteProductsEvent;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
 import de.fau.cs.mad.fablab.android.view.activities.BackButtonPressedEvent;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
@@ -115,6 +115,8 @@ public class ProductSearchFragment extends BaseFragment implements
                 @Override
                 public boolean onMenuItemActionCollapse(MenuItem item)
                 {
+                    // delete products in product search fragment if the back button is pressed in the product search fragment
+                    // doesn't delete products if the back button is pressed in locationMap, cart or outOfStock dialog
                     if(hasFragmentChangedOnPressedBackButton == false)
                         mViewModel.deleteView();
                     return true;
@@ -226,7 +228,7 @@ public class ProductSearchFragment extends BaseFragment implements
     }
 
     @SuppressWarnings("unused")
-    public void onEvent(DeleteProductInProductSearchEvent event)
+    public void onEvent(ProductSearchDoNotDeleteProductsEvent event)
     {
         hasFragmentChangedOnPressedBackButton = true;
     }

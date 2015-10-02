@@ -14,7 +14,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
-import de.fau.cs.mad.fablab.android.model.events.DeleteProductInProductSearchEvent;
+import de.fau.cs.mad.fablab.android.model.events.ProductSearchDoNotDeleteProductsEvent;
 import de.fau.cs.mad.fablab.android.view.common.binding.ViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseDialogFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.cart.AddToCartDialogFragment;
@@ -78,7 +78,7 @@ public class ProductDialogFragment extends BaseDialogFragment
     @Override
     public void onAddToCart() {
         dismiss();
-        mEventBus.post(new DeleteProductInProductSearchEvent());
+        mEventBus.post(new ProductSearchDoNotDeleteProductsEvent());
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 AddToCartDialogFragment.newInstance(mViewModel.getProduct())).addToBackStack(null)
                 .commit();
@@ -87,7 +87,7 @@ public class ProductDialogFragment extends BaseDialogFragment
     @Override
     public void onOutOfStock() {
         dismiss();
-        mEventBus.post(new DeleteProductInProductSearchEvent());
+        mEventBus.post(new ProductSearchDoNotDeleteProductsEvent());
         Product outProduct = mViewModel.getProduct();
         Intent sendIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                 "mailto", mViewModel.getMailAddress(), null));
@@ -105,7 +105,7 @@ public class ProductDialogFragment extends BaseDialogFragment
     @Override
     public void onShowLocation() {
         dismiss();
-        mEventBus.post(new DeleteProductInProductSearchEvent());
+        mEventBus.post(new ProductSearchDoNotDeleteProductsEvent());
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 ProductMapFragment.newInstance(mViewModel.getProductLocation()))
                 .addToBackStack(null).commit();
