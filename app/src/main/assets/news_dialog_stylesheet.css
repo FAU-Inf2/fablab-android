@@ -17,3 +17,8 @@ a {
 	color: #788F94;
 	font-weight: bold;
 }
+img {
+	display: inline;
+	height: auto !important;
+	max-width: 100%;
+}
