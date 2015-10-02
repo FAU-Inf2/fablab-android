@@ -19,7 +19,7 @@ public class ConfirmDeleteDialogFragmentViewModel {
         public void execute(Void parameter) {
             if(mListener != null)
             {
-                mEventBus.post(new DeleteProjectEvent(true, true, getDeletePosition(), getProject()));
+                mEventBus.post(new DeleteProjectEvent(true, getDeletePosition(), getProject()));
                 mListener.onButtonClicked();
             }
         }
@@ -30,7 +30,7 @@ public class ConfirmDeleteDialogFragmentViewModel {
         public void execute(Void parameter) {
             if(mListener != null)
             {
-                mEventBus.post(new DeleteProjectEvent(false, true, getDeletePosition(), getProject()));
+                mEventBus.post(new DeleteProjectEvent(false, getDeletePosition(), getProject()));
                 mListener.onButtonClicked();
             }
         }

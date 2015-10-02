@@ -127,12 +127,12 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
     @SuppressWarnings("unused")
     public void onEvent(DeleteProjectEvent event) {
         // project should be deleted via swipe
-        if(event.getDelete() && event.getDeleteSwipe() && (event.getProject() != null))
+        if(event.getDelete() && (event.getProject() != null))
         {
             mViewModel.deleteProject(event.getProject());
         }
         // project swiped but should not be deleted
-        else if((!event.getDelete()) && event.getDeleteSwipe() && (event.getProject() != null))
+        else
         {
             onDataChanged();
         }

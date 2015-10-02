@@ -115,6 +115,7 @@
 
     <string name="action_add_photo_project">Photo hinzufügen</string>
     <string name="action_save_project">Projekt speichern</string>
+    <string name="action_delete_project">Projekt löschen</string>
     <string name="projects_title">Projekte:</string>
     <string name="action_new_project">neues Projekt</string>
     <string name="action_create_new_project">neues Projekt erstellen</string>
