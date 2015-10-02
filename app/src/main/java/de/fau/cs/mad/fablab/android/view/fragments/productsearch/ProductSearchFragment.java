@@ -88,6 +88,25 @@ public class ProductSearchFragment extends BaseFragment implements
             mSearchView.setQueryHint(getString(R.string.search_all_hint));
             searchItem.expandActionView();
             mSearchView.clearFocus();
+            if(searchItem != null)
+                MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener()
+                {
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item)
+                    {
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item)
+                    {
+                        // delete products in product search fragment if the back button is pressed in the product search fragment
+                        // doesn't delete products if the back button is pressed in locationMap, cart or outOfStock dialog
+                        if(hasFragmentChangedOnPressedBackButton == false)
+                            mViewModel.deleteView();
+                        return true;
+                    }
+                });
         } else {
             MenuItem searchItem = menu.findItem(R.id.action_search_category);
             searchItem.setVisible(true);
@@ -103,25 +122,7 @@ public class ProductSearchFragment extends BaseFragment implements
             new MenuItemCommandBinding().bind(mOrderByItem.getSubMenu().getItem(1),
                     mViewModel.getOrderProductsByPriceCommand());
         }
-        if(mSearchItem != null)
-            MenuItemCompat.setOnActionExpandListener(mSearchItem, new MenuItemCompat.OnActionExpandListener()
-            {
-                @Override
-                public boolean onMenuItemActionExpand(MenuItem item)
-                {
-                    return true;
-                }
 
-                @Override
-                public boolean onMenuItemActionCollapse(MenuItem item)
-                {
-                    // delete products in product search fragment if the back button is pressed in the product search fragment
-                    // doesn't delete products if the back button is pressed in locationMap, cart or outOfStock dialog
-                    if(hasFragmentChangedOnPressedBackButton == false)
-                        mViewModel.deleteView();
-                    return true;
-                }
-            });
     }
 
     @Override

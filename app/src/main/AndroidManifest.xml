@@ -33,6 +33,7 @@
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="de.fau.cs.mad.fablab.android.widget.DOOR_STATE_WIDGET_UPDATE" />
             </intent-filter>
 
             <meta-data
