@@ -23,7 +23,9 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.model.events.DeleteProductInProductSearchEvent;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
+import de.fau.cs.mad.fablab.android.view.activities.BackButtonPressedEvent;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
@@ -40,6 +42,7 @@ public class ProductSearchFragment extends BaseFragment implements
     private MenuItem mOrderByItem;
     private boolean mShowCartFAB;
     private boolean mProductSearch;
+    private boolean hasFragmentChangedOnPressedBackButton = false;
 
     @Inject
     ProductSearchFragmentViewModel mViewModel;
@@ -58,7 +61,8 @@ public class ProductSearchFragment extends BaseFragment implements
     private ProductSearchView mSearchView;
 
     @Override
-    public void onCreate (Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         mShowCartFAB = args.getBoolean(getResources().getString(R.string.key_show_cart_fab));
@@ -99,6 +103,23 @@ public class ProductSearchFragment extends BaseFragment implements
             new MenuItemCommandBinding().bind(mOrderByItem.getSubMenu().getItem(1),
                     mViewModel.getOrderProductsByPriceCommand());
         }
+        if(mSearchItem != null)
+            MenuItemCompat.setOnActionExpandListener(mSearchItem, new MenuItemCompat.OnActionExpandListener()
+            {
+                @Override
+                public boolean onMenuItemActionExpand(MenuItem item)
+                {
+                    return true;
+                }
+
+                @Override
+                public boolean onMenuItemActionCollapse(MenuItem item)
+                {
+                    if(hasFragmentChangedOnPressedBackButton == false)
+                        mViewModel.deleteView();
+                    return true;
+                }
+            });
     }
 
     @Override
@@ -203,6 +224,19 @@ public class ProductSearchFragment extends BaseFragment implements
         dialogFragment.setArguments(arguments);
         dialogFragment.show(getFragmentManager(), "ProductDialogFragment");
     }
+
+    @SuppressWarnings("unused")
+    public void onEvent(DeleteProductInProductSearchEvent event)
+    {
+        hasFragmentChangedOnPressedBackButton = true;
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(BackButtonPressedEvent event)
+    {
+        hasFragmentChangedOnPressedBackButton = false;
+    }
+
 
     @Override
     public void onCategorySearchClicked()
