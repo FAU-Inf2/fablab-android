@@ -5,20 +5,17 @@ import de.fau.cs.mad.fablab.android.viewmodel.common.Project;
 public class DeleteProjectEvent {
 
     private boolean mDelete;
-    private boolean mDeleteSwipe;
     private int mDeletePosition;
     private Project mProject;
 
-    public DeleteProjectEvent(boolean delete, boolean deleteSwipe)
+    public DeleteProjectEvent(boolean delete)
     {
         mDelete = delete;
-        mDeleteSwipe = deleteSwipe;
     }
 
-    public DeleteProjectEvent(boolean delete, boolean deleteSwipe, int deletePosition, Project project)
+    public DeleteProjectEvent(boolean delete, int deletePosition, Project project)
     {
         mDelete = delete;
-        mDeleteSwipe = deleteSwipe;
         mDeletePosition = deletePosition;
         mProject = project;
     }
@@ -31,16 +28,6 @@ public class DeleteProjectEvent {
     public boolean getDelete()
     {
         return mDelete;
-    }
-
-    public void setDeleteSwipe(boolean deleteSwipe)
-    {
-        mDeleteSwipe = deleteSwipe;
-    }
-
-    public boolean getDeleteSwipe()
-    {
-        return mDeleteSwipe;
     }
 
     public void setDeletePosition(int deletePosition)

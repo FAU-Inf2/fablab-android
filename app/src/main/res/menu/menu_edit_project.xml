@@ -28,4 +28,11 @@
         android:title="@string/action_save_project"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/action_delete_project"
+        android:icon="@drawable/delete"
+        android:orderInCategory="102"
+        android:title="@string/action_save_project"
+        app:showAsAction="always" />
+
 </menu>
