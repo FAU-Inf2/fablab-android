@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import net.spaceapi.HackerSpace;
@@ -20,6 +21,7 @@ import java.lang.annotation.Annotation;
 import java.security.Provider;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -46,10 +48,12 @@ public class WidgetProvider extends AppWidgetProvider
     RestClient restClient;
     SpaceApiModel mSpaceApiModel;
     SpaceApi mSpaceApi;
+    public static String DOOR_STATE_WIDGET_UPDATE = "de.fau.cs.mad.fablab.android.widget.DOOR_STATE_WIDGET_UPDATE";
 
     private boolean mOpen;
     private long mTime;
 
+    private static final String LOG_TAG = "widget";
     public static final String FABLAB_WIDGET_UPDATE = "de.fau.cs.mad.fablab.android.widget.WidgetProvider.FABLAB_WIDGET_UPDATE";
 
 
@@ -65,6 +69,51 @@ public class WidgetProvider extends AppWidgetProvider
 
         }
     };
+
+    private PendingIntent createDoorStateIntent(Context context)
+    {
+        Intent intent = new Intent(DOOR_STATE_WIDGET_UPDATE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return pendingIntent;
+    }
+
+    @Override
+    public void onEnabled(Context context)
+    {
+        super.onEnabled(context);
+        Log.d(LOG_TAG, "widget Provider enabled. Starting timer to update widget every second");
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+
+        //Timer specific
+        Calendar calender = Calendar.getInstance();
+        calender.setTimeInMillis(System.currentTimeMillis());
+        calender.add(Calendar.SECOND, 1);
+        alarmManager.setRepeating(AlarmManager.RTC, calender.getTimeInMillis(), 1000, createDoorStateIntent(context));
+    }
+
+    @Override
+    public void onDisabled(Context context)
+    {
+        super.onDisabled(context);
+        Log.d(LOG_TAG, "Widget Provider disabled. Turning off timer");
+        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(createDoorStateIntent(context));
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent)
+    {
+        super.onReceive(context, intent);
+        Log.d(LOG_TAG, "Received intent " + intent);
+        if(DOOR_STATE_WIDGET_UPDATE.equals(intent.getAction()))
+        {
+            Log.d(LOG_TAG, "Door state update");
+            // Get the widget manager and ids for this widget provider, then call the shared
+            // door state update method
+            ComponentName thisAppWidget = new ComponentName(context.getPackageName(), getClass().getName());
+
+        }
+    }
 
     private void updateState(boolean open, double lastChange)
     {
