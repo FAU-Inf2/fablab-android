@@ -18,8 +18,10 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.model.events.DeleteProjectEvent;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
+import de.fau.cs.mad.fablab.android.view.common.binding.RecyclerViewSwipeCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
 import de.greenrobot.event.EventBus;
 
@@ -69,6 +71,8 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
                 new ProjectViewModelRendererBuilder(),
                 mViewModel.getProjectViewModelCollection());
         mProjectsRV.setAdapter(mAdapter);
+
+        new RecyclerViewSwipeCommandBinding().bind(mProjectsRV, mViewModel.getConfirmDeletionCommand());
 
         mViewModel.setListener(this);
     }
@@ -120,6 +124,20 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
                 fragment).addToBackStack(null).commit();
     }
 
+    @SuppressWarnings("unused")
+    public void onEvent(DeleteProjectEvent event) {
+        // project should be deleted via swipe
+        if(event.getDelete() && event.getDeleteSwipe() && (event.getProject() != null))
+        {
+            mViewModel.deleteProject(event.getProject());
+        }
+        // project swiped but should not be deleted
+        else if((!event.getDelete()) && event.getDeleteSwipe() && (event.getProject() != null))
+        {
+            onDataChanged();
+        }
+    }
+
     @Override
     public void onDataChanged() {
         mAdapter.notifyDataSetChanged();
@@ -135,5 +153,20 @@ public class ProjectFragment extends BaseFragment implements ProjectFragmentView
         CartChooserFragment fragment = new CartChooserFragment();
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 fragment).addToBackStack(null).commit();
+    }
+
+    @Override
+    public void confirmDeletion(int position) {
+        ConfirmDeleteDialogFragment fragment = new ConfirmDeleteDialogFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(getString(R.string.key_delete_project_project),
+                mAdapter.getItem(position).getProject());
+        fragment.setArguments(args);
+        fragment.show(getFragmentManager(), "confirm_delete_dialog");
+    }
+
+    @Override
+    public void deleteFailure() {
+        Toast.makeText(getActivity(), getResources().getString(R.string.delete_project_failure), Toast.LENGTH_SHORT).show();
     }
 }

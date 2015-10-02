@@ -34,4 +34,9 @@ public class ProjectViewModel {
     {
         return mShowProjectCommand;
     }
+
+    public Project getProject()
+    {
+        return mProject;
+    }
 }

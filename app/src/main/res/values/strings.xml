@@ -148,12 +148,18 @@
     <string name="cart_entry_items">Items:</string>
     <string name="edit_cart_cart">#Warenkorb:</string>
     <string name="edit_cart_description">#Beschreibung:</string>
+    <string name="confirm_project_delete_message">Möchten Sie das Projekt wirklich löschen?</string>
+    <string name="confirm_project_delete">Ja</string>
+    <string name="confirm_project_not_delete">Nein</string>
+    <string name="delete_project_failure">Leider ist beim löschen ein Fehler aufgetreten</string>
 
     <string name="key_show_cart_fab">showcartfab</string>
     <string name="key_user">user</string>
     <string name="key_product_search">productsearch</string>
     <string name="key_project">project</string>
     <string name="key_cart">cart</string>
+    <string name="key_delete_project_position">delete_position</string>
+    <string name="key_delete_project_project">delete_project</string>
 
     <string name="product_map_download_failed">Fehler beim Laden der Karte aufgetreten</string>
 
