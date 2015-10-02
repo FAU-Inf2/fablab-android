@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fau.cs.mad.fablab.android.model.events.ProjectDeletedEvent;
 import de.fau.cs.mad.fablab.android.model.events.ProjectImageUploadedEvent;
 import de.fau.cs.mad.fablab.android.model.events.ProjectSavedEvent;
 import de.fau.cs.mad.fablab.android.viewmodel.common.Project;
@@ -33,6 +34,18 @@ public class ProjectModel {
         @Override
         public void failure(RetrofitError error) {
             mEventBus.post(new ProjectSavedEvent(null, false));
+        }
+    };
+
+    private Callback<Response> mDeleteProjectCallback = new Callback<Response>() {
+        @Override
+        public void success(Response id, Response response) {
+            mEventBus.post(new ProjectDeletedEvent(true));
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            mEventBus.post(new ProjectDeletedEvent(false));
         }
     };
 
@@ -105,5 +118,19 @@ public class ProjectModel {
             e.printStackTrace();
         }
         return fetchedProjects;
+    }
+
+    public void deleteProject(Project project)
+    {
+        if(project.getGistID() != null)
+        {
+            mProjectDao.delete(project);
+            mProjectsApi.deleteProject(project.getGistID(), mDeleteProjectCallback);
+        }
+        else
+        {
+            mProjectDao.delete(project);
+            mEventBus.post(new ProjectDeletedEvent(true));
+        }
     }
 }

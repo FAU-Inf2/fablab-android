@@ -28,7 +28,7 @@ public class InventoryBarcodeScannerFragment extends BarcodeScannerFragment {
         super.onResume();
         setDisplayOptions(MainActivity.DISPLAY_TITLE | MainActivity.DISPLAY_NAVDRAWER);
         setNavigationDrawerSelection(R.id.drawer_item_inventory);
-        setTitle(getString(R.string.title_scan_product));
+        setTitle(R.string.title_scan_product);
     }
 
     @Override

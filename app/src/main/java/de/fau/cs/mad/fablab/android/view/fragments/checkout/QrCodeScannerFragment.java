@@ -3,8 +3,6 @@ package de.fau.cs.mad.fablab.android.view.fragments.checkout;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -42,18 +40,6 @@ public class QrCodeScannerFragment extends BaseDialogFragment
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -72,7 +58,7 @@ public class QrCodeScannerFragment extends BaseDialogFragment
         mViewModel.resume();
 
         setDisplayOptions(MainActivity.DISPLAY_TITLE);
-        setTitle(getString(R.string.title_scan_qr_code));
+        setTitle(R.string.title_scan_qr_code);
     }
 
     @Override

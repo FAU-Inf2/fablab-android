@@ -41,9 +41,9 @@ import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryLoginFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.InventoryProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.inventory.ShowInventoryFragment;
+import de.fau.cs.mad.fablab.android.view.fragments.reservation.ReservationFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.productsearch.ProductSearchFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.projects.ProjectFragment;
-import de.fau.cs.mad.fablab.android.view.fragments.reservation.ReservationFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.settings.SettingsFragment;
 import de.fau.cs.mad.fablab.android.view.fragments.versioncheck.VersionCheckDialogFragment;
 import de.fau.cs.mad.fablab.android.view.navdrawer.NavigationDrawer;
@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
     public static final int DISPLAY_NAVDRAWER = 4;
     public static final int DISPLAY_CART_PANEL = 8;
     public static final int DISPLAY_FAB = 16;
-    public static final int DISPLAY_TIME = 32;
 
     private final static String TAG_STORAGE_FRAGMENT = "tag_storage_fragment";
     private final static String TAG_ICAL_AND_NEWS_FRAGMENT = "tag_ical_and_news_fragment";
@@ -188,7 +187,6 @@ public class MainActivity extends AppCompatActivity {
     public void setDisplayOptions(int options) {
         mActionBar.showLogo((options & DISPLAY_LOGO) == DISPLAY_LOGO);
         mActionBar.showTitle((options & DISPLAY_TITLE) == DISPLAY_TITLE);
-        mActionBar.showTime((options & DISPLAY_TIME) == DISPLAY_TIME);
         boolean displayNavdrawer = (options & DISPLAY_NAVDRAWER) == DISPLAY_NAVDRAWER;
         mNavigationDrawer.enableDrawer(displayNavdrawer);
         mActionBar.showNavdrawerIcon(displayNavdrawer);
@@ -200,8 +198,9 @@ public class MainActivity extends AppCompatActivity {
         mNavigationDrawer.setSelection(menuItemId);
     }
 
-    public void setTitle(String title) {
-        mActionBar.setTitle(title);
+    @Override
+    public void setTitle(int titleId) {
+        mActionBar.setTitle(getString(titleId));
     }
 
     public void onEvent(NavigationEvent destination) {

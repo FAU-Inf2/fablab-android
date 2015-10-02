@@ -23,7 +23,9 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import de.fau.cs.mad.fablab.android.R;
+import de.fau.cs.mad.fablab.android.model.events.ProductSearchDoNotDeleteProductsEvent;
 import de.fau.cs.mad.fablab.android.util.UiUtils;
+import de.fau.cs.mad.fablab.android.view.activities.BackButtonPressedEvent;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 import de.fau.cs.mad.fablab.android.view.common.binding.MenuItemCommandBinding;
 import de.fau.cs.mad.fablab.android.view.common.fragments.BaseFragment;
@@ -37,10 +39,10 @@ public class ProductSearchFragment extends BaseFragment implements
 
     private RVRendererAdapter<ProductSearchViewModel> mAdapter;
     private EventBus mEventBus = EventBus.getDefault();
-    private MenuItem mSearchItem;
     private MenuItem mOrderByItem;
     private boolean mShowCartFAB;
     private boolean mProductSearch;
+    private boolean hasFragmentChangedOnPressedBackButton = false;
 
     @Inject
     ProductSearchFragmentViewModel mViewModel;
@@ -59,7 +61,8 @@ public class ProductSearchFragment extends BaseFragment implements
     private ProductSearchView mSearchView;
 
     @Override
-    public void onCreate (Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         mShowCartFAB = args.getBoolean(getResources().getString(R.string.key_show_cart_fab));
@@ -74,20 +77,18 @@ public class ProductSearchFragment extends BaseFragment implements
         inflater.inflate(R.menu.menu_search, menu);
 
         if(mProductSearch) {
-            mSearchItem = menu.findItem(R.id.action_search);
-            mSearchItem.setVisible(true);
+            MenuItem searchItem = menu.findItem(R.id.action_search);
+            searchItem.setVisible(true);
             mSearchView = (ProductSearchView) MenuItemCompat.getActionView(
-                    mSearchItem);
+                    searchItem);
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                     R.layout.dropdown_item, mViewModel.getAutoCompleteWords());
             mSearchView.setAdapter(adapter);
             mSearchView.setCommand(mViewModel.getSearchCommand());
             mSearchView.setQueryHint(getString(R.string.search_all_hint));
-            mSearchItem.expandActionView();
+            searchItem.expandActionView();
             mSearchView.clearFocus();
-        }
-        else
-        {
+        } else {
             MenuItem searchItem = menu.findItem(R.id.action_search_category);
             searchItem.setVisible(true);
             searchItem.expandActionView();
@@ -102,6 +103,25 @@ public class ProductSearchFragment extends BaseFragment implements
             new MenuItemCommandBinding().bind(mOrderByItem.getSubMenu().getItem(1),
                     mViewModel.getOrderProductsByPriceCommand());
         }
+        if(mSearchItem != null)
+            MenuItemCompat.setOnActionExpandListener(mSearchItem, new MenuItemCompat.OnActionExpandListener()
+            {
+                @Override
+                public boolean onMenuItemActionExpand(MenuItem item)
+                {
+                    return true;
+                }
+
+                @Override
+                public boolean onMenuItemActionCollapse(MenuItem item)
+                {
+                    // delete products in product search fragment if the back button is pressed in the product search fragment
+                    // doesn't delete products if the back button is pressed in locationMap, cart or outOfStock dialog
+                    if(hasFragmentChangedOnPressedBackButton == false)
+                        mViewModel.deleteView();
+                    return true;
+                }
+            });
     }
 
     @Override
@@ -140,8 +160,7 @@ public class ProductSearchFragment extends BaseFragment implements
         super.onResume();
         mEventBus.register(this);
         mViewModel.resume();
-        int displayOptions = MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER
-                | MainActivity.DISPLAY_TIME;
+        int displayOptions = MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER;
         if (mShowCartFAB) {
             displayOptions |= MainActivity.DISPLAY_CART_PANEL | MainActivity.DISPLAY_FAB;
         }
@@ -155,9 +174,6 @@ public class ProductSearchFragment extends BaseFragment implements
         super.onPause();
         mEventBus.unregister(this);
         mViewModel.pause();
-        if (mSearchItem != null) {
-            mSearchItem.collapseActionView();
-        }
     }
 
     @Override
@@ -211,13 +227,25 @@ public class ProductSearchFragment extends BaseFragment implements
         dialogFragment.show(getFragmentManager(), "ProductDialogFragment");
     }
 
+    @SuppressWarnings("unused")
+    public void onEvent(ProductSearchDoNotDeleteProductsEvent event)
+    {
+        hasFragmentChangedOnPressedBackButton = true;
+    }
+
+    @SuppressWarnings("unused")
+    public void onEvent(BackButtonPressedEvent event)
+    {
+        hasFragmentChangedOnPressedBackButton = false;
+    }
+
+
     @Override
     public void onCategorySearchClicked()
     {
         Fragment fragment = getFragmentManager().findFragmentByTag("CategoryDialogFragment");
         if(fragment == null) {
             CategoryDialogFragment frag = new CategoryDialogFragment();
-            Bundle args = new Bundle();
             frag.show(getFragmentManager(), "CategoryDialogFragment");
         }
     }

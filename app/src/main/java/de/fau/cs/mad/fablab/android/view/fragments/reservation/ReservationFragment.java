@@ -92,8 +92,7 @@ public class ReservationFragment extends BaseFragment implements ReservationFrag
     @Override
     public void onResume() {
         super.onResume();
-        setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER
-                | MainActivity.DISPLAY_TIME);
+        setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_NAVDRAWER);
         setNavigationDrawerSelection(R.id.drawer_item_reservation);
 
         mViewModel.getToolChangedCommand().execute(0);

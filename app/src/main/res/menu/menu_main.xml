@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
     <item
-        android:id="@+id/action_opened"
-        android:icon="@drawable/closed"
+        android:id="@+id/action_door_state"
         android:orderInCategory="100"
-        android:title="@string/appbar_closed"
+        android:title=""
         app:showAsAction="always" />
 </menu>

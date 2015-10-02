@@ -100,6 +100,7 @@
     <dimen name="project_entry_divider_margin">5dp</dimen>
     <dimen name="project_entry_short_description_margin_left">10dp</dimen>
     <dimen name="project_entry_padding">10dp</dimen>
+    <dimen name="cart_entry_padding">10dp</dimen>
 
     <dimen name="textsize_button">15dp</dimen>
     <dimen name="textsize_about_title">50dp</dimen>
@@ -150,4 +151,7 @@
     <dimen name="textsize_save_project_title">22dp</dimen>
     <dimen name="textsize_project_entry_title">18dp</dimen>
     <dimen name="textsize_project_entry_short_description">16dp</dimen>
+    <dimen name="textsize_cart_entry_title">18dp</dimen>
+    <dimen name="textsize_cart_entry_item">15dp</dimen>
+    <dimen name="textsize_cart_entry_price">20dp</dimen>
 </resources>

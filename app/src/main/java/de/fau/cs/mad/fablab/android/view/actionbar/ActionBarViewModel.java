@@ -48,7 +48,6 @@ public class ActionBarViewModel {
         mEventBus.register(this);
     }
 
-    @SuppressWarnings("unused")
     public void onEvent(SpaceApiStateChangedEvent event) {
         if (mListener != null) {
             mListener.onStateUpdated(event.getOpen(), Formatter.formatTime(event.getTime()));

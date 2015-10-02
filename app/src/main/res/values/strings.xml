@@ -115,8 +115,13 @@
 
     <string name="action_add_photo_project">Photo hinzufügen</string>
     <string name="action_save_project">Projekt speichern</string>
+    <string name="action_delete_project">Projekt löschen</string>
     <string name="projects_title">Projekte:</string>
     <string name="action_new_project">neues Projekt</string>
+    <string name="action_create_new_project">neues Projekt erstellen</string>
+    <string name="action_create_project_from_cart">Projekt aus Warenkorb erstellen</string>
+    <string name="no_carts_available">Es liegen keine Warenkörbe vor</string>
+    <string name="choose_cart_title">Warenkörbe:</string>
     <string name="action_browse_gallery">Gallery durchsuchen</string>
     <string name="action_take_photo">Photo aufnehmen</string>
     <string name="edit_project_hint_title">Titel</string>
@@ -140,11 +145,22 @@
         ]]>
     </string>
     <string name="project_photo_image_wrong_format">Die Datei hat das falsche Format</string>
+    <string name="cart_entry_title">Warenkorb</string>
+    <string name="cart_entry_items">Items:</string>
+    <string name="edit_cart_cart">#Warenkorb:</string>
+    <string name="edit_cart_description">#Beschreibung:</string>
+    <string name="confirm_project_delete_message">Möchten Sie das Projekt wirklich löschen?</string>
+    <string name="confirm_project_delete">Ja</string>
+    <string name="confirm_project_not_delete">Nein</string>
+    <string name="delete_project_failure">Leider ist beim löschen ein Fehler aufgetreten</string>
 
     <string name="key_show_cart_fab">showcartfab</string>
     <string name="key_user">user</string>
     <string name="key_product_search">productsearch</string>
     <string name="key_project">project</string>
+    <string name="key_cart">cart</string>
+    <string name="key_delete_project_position">delete_position</string>
+    <string name="key_delete_project_project">delete_project</string>
 
     <string name="product_map_download_failed">Fehler beim Laden der Karte aufgetreten</string>
 

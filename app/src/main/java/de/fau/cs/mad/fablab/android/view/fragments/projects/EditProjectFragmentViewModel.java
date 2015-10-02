@@ -77,6 +77,20 @@ public class EditProjectFragmentViewModel {
         }
     };
 
+    private Command<Void> mDeleteProjectCommand = new Command<Void>() {
+        @Override
+        public void execute(Void parameter) {
+            if(mListener != null)
+            {
+                if(mProject == null)
+                {
+                    mProject = new Project();
+                }
+                mListener.onDeleteProjectClicked();
+            }
+        }
+    };
+
     @Inject
     public EditProjectFragmentViewModel(ProjectModel projectModel)
     {
@@ -97,6 +111,16 @@ public class EditProjectFragmentViewModel {
     public Command<Void> getAddPhotoGalleryCommand()
     {
         return mAddPhotoGalleryCommand;
+    }
+
+    public Command<Void> getDeleteProjectCommand()
+    {
+        return mDeleteProjectCommand;
+    }
+
+    public void deleteProject()
+    {
+        mModel.deleteProject(mProject);
     }
 
     public void setListener(Listener listener)
@@ -173,5 +197,6 @@ public class EditProjectFragmentViewModel {
         void showProgressBar(boolean show);
         void uploadFailure();
         void setDescription(String text);
+        void onDeleteProjectClicked();
     }
 }

@@ -7,8 +7,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class MailModel {
-    private String mFeedbackMailAddress;
-    private String mFablabMailAddress;
+    private String mFeedbackMailAddress = "";
+    private String mFablabMailAddress = "";
 
     public MailModel(DataApi dataApi) {
         dataApi.getMailAddresses(new Callback<MailAddresses>() {
@@ -20,8 +20,7 @@ public class MailModel {
 
             @Override
             public void failure(RetrofitError error) {
-                mFeedbackMailAddress = "";
-                mFablabMailAddress = "";
+
             }
         });
     }

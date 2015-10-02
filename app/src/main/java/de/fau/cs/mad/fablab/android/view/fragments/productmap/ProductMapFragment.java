@@ -60,7 +60,7 @@ public class ProductMapFragment extends BaseDialogFragment
     public void onResume() {
         super.onResume();
         mViewModel.resume();
-        setDisplayOptions(MainActivity.DISPLAY_LOGO | MainActivity.DISPLAY_TIME);
+        setDisplayOptions(MainActivity.DISPLAY_LOGO);
     }
 
     @Override
