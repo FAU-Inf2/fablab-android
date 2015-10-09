@@ -3,6 +3,7 @@ package de.fau.cs.mad.fablab.android.view.fragments.categorysearch;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,8 @@ public class CategoryDialogFragment extends BaseDialogFragment implements Catego
 
     private AndroidTreeView mTreeView;
     private String currentCategory;
+
+    private static final String LOG_TAG = "CategoriyDialogFragment";
 
 
     @Override
@@ -86,6 +89,8 @@ public class CategoryDialogFragment extends BaseDialogFragment implements Catego
             TreeNode node = new TreeNode(new TreeItemHolder.TreeItem(c));
             depthFirstSearch(node, c, children);
             root.addChild(node);
+
+
         }
 
         mTreeView = new AndroidTreeView(getActivity(), root);
@@ -103,13 +108,15 @@ public class CategoryDialogFragment extends BaseDialogFragment implements Catego
         treeViewContainer.addView(mTreeView.getView());
     }
 
-    private void depthFirstSearch(TreeNode node, Category category, HashMap<Long, Category> children)
+    private void depthFirstSearch(TreeNode node, Category category, HashMap<Long, Category> children)  throws NullPointerException
     {
         List<Long> childrenID = category.getCategories();
-        if(childrenID.isEmpty())
-        {
+
+        if(childrenID == null)
             return;
-        }
+        else if(childrenID.isEmpty())
+                return;
+
         for(Long id : childrenID)
         {
             Category child = children.get(id);
