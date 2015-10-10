@@ -12,13 +12,19 @@ a {
 .link {
 	background: #A7B8BE;
 }
+
 .link a {
 	text-decoration: none;
 	color: #788F94;
 	font-weight: bold;
 }
+
 img {
 	display: inline;
 	height: auto !important;
 	max-width: 100%;
+}
+
+.webview_content {
+	margin-top: 106px;
 }
