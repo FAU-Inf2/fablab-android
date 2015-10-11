@@ -69,6 +69,9 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment
 
         header_ll.bringToFront();
 
+        final LinearLayout.LayoutParams lp_overOffset = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        lp_overOffset.setMargins(0, 0, 0, 180);
+
         webView.setOnScrollChangedCallback(new ObservableWebView.OnScrollChangedCallback() {
             @Override
             public void onScroll(int l, int t) {
@@ -76,6 +79,8 @@ public class NewsDetailsDialogFragment extends BaseDialogFragment
                     LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                     lp.setMargins(0, 0, 0, t);
                     title_ll.setLayoutParams(lp);
+                } else {
+                    title_ll.setLayoutParams(lp_overOffset);
                 }
             }
         });
