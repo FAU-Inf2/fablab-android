@@ -154,4 +154,7 @@
     <dimen name="textsize_cart_entry_title">18dp</dimen>
     <dimen name="textsize_cart_entry_item">15dp</dimen>
     <dimen name="textsize_cart_entry_price">20dp</dimen>
+
+    <dimen name="widget_margin">8dp</dimen>
+    <dimen name="widget_icon_width">35dp</dimen>
 </resources>

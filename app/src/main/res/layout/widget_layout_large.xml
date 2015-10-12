@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorPrimaryDark"
+              android:orientation="horizontal"
+              android:layout_margin="@dimen/widget_margin"
+              android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/widget_iv"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:layout_margin="4dp"
+        />
+
+    <TextView
+        android:id="@+id/widget_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Load.."
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="20dp"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:layout_margin="4dp"
+        />
+</LinearLayout>

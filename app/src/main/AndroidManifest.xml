@@ -30,7 +30,7 @@
         <receiver android:name=".util.NotificationPublisher" />
 
         <receiver android:name="de.fau.cs.mad.fablab.android.widget.WidgetProvider"
-            android:label="FabLab Widget">
+                  android:label="@string/small_widget_name">
 
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -40,6 +40,19 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
+        </receiver>
+
+        <receiver android:name="de.fau.cs.mad.fablab.android.widget.WidgetProviderLarge"
+                  android:label="@string/large_widget_name">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="de.fau.cs.mad.fablab.android.widget.DOOR_STATE_WIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/large_widget_provider" />
         </receiver>
     </application>
 </manifest>

@@ -182,6 +182,10 @@
     <string name="navdrawer_button_login">Login</string>
     <string name="app_website">fablab.fau.de</string>
 
+    <!-- Strings for widget -->
+    <string name="small_widget_name">FabLab Widget Small</string>
+    <string name="large_widget_name">FabLab Widget Large</string>
+
     <string name="about_license">
         <![CDATA[
         Copyright 2015 MAD FabLab team
