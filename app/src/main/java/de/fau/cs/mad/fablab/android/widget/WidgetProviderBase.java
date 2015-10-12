@@ -28,26 +28,23 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-
-public class WidgetProvider extends AppWidgetProvider
+public abstract class WidgetProviderBase extends AppWidgetProvider
 {
-    private RestClient restClient;
-    private SpaceApi mSpaceApi;
-    private static String DOOR_STATE_WIDGET_UPDATE = "de.fau.cs.mad.fablab.android.widget.DOOR_STATE_WIDGET_UPDATE";
-    private static final int space_name = 0x7f0700af;
-    private String mSpaceName;
-    private static SharedPreferences.Editor editor;
+    protected RestClient restClient;
+    protected SpaceApi mSpaceApi;
+    protected static String DOOR_STATE_WIDGET_UPDATE = "de.fau.cs.mad.fablab.android.widget.DOOR_STATE_WIDGET_UPDATE";
+    protected static final int space_name = 0x7f0700af;
+    protected String mSpaceName;
+    protected static SharedPreferences.Editor editor;
 
+    protected Handler mSpaceApiHandler = new Handler();
+    protected Runnable mSpaceApiRunner = new SpaceApiRunner();
 
-    private Handler mSpaceApiHandler = new Handler();
-    private Runnable mSpaceApiRunner = new SpaceApiRunner();
-
-    private static final String LOG_TAG = "widget";
+    protected static final String LOG_TAG = "widget";
     public static final String FABLAB_WIDGET_UPDATE = "de.fau.cs.mad.fablab.android.widget.WidgetProvider.FABLAB_WIDGET_UPDATE";
-    private static final DateFormat df = new SimpleDateFormat("hh:mm:ss");
 
 
-    private Callback<HackerSpace> mSpaceApiCallback = new Callback<HackerSpace>()
+    protected Callback<HackerSpace> mSpaceApiCallback = new Callback<HackerSpace>()
     {
         @Override
         public void success(HackerSpace hackerSpace, Response response)
@@ -71,41 +68,6 @@ public class WidgetProvider extends AppWidgetProvider
         return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    @Override
-    public void onEnabled(Context context)
-    {
-        super.onEnabled(context);
-        Log.d(LOG_TAG, "widget Provider enabled. Starting timer to update widget every second");
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-        SharedPreferences prefs = context.getSharedPreferences("widget", Context.MODE_PRIVATE);
-        editor = prefs.edit();
-        editor.putLong("widget_time", Double.doubleToLongBits(0.0));
-        editor.putBoolean("widget_isOpen", false);
-
-        Calendar calender = Calendar.getInstance();
-        calender.setTimeInMillis(System.currentTimeMillis());
-        calender.add(Calendar.SECOND, 1);
-
-        // update alarmManager each minute because the text view can display each minute
-        // creats an intent which calls onReceive each time interval
-        alarmManager.setRepeating(AlarmManager.RTC, calender.getTimeInMillis(), 10000, createDoorStateIntent(context));
-    }
-
-
-    @Override
-    public void onDisabled(Context context)
-    {
-        super.onDisabled(context);
-        Log.d(LOG_TAG, "Widget Provider disabled. Turning off timer");
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(createDoorStateIntent(context));
-
-        SharedPreferences prefs = context.getSharedPreferences("widget", Context.MODE_PRIVATE);
-        editor = prefs.edit();
-        editor.remove("widget_time");
-        editor.remove("widget_isOpen");
-    }
 
     @Override
     public void onReceive(Context context, Intent intent)
@@ -141,11 +103,46 @@ public class WidgetProvider extends AppWidgetProvider
         }
     }
 
+    @Override
+    public void onEnabled(Context context)
+    {
+        super.onEnabled(context);
+        Log.d(LOG_TAG, "widget Provider enabled. Starting timer to update widget every second");
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        SharedPreferences prefs = context.getSharedPreferences("widget", Context.MODE_PRIVATE);
+        editor = prefs.edit();
+        editor.putLong("widget_time", Double.doubleToLongBits(0.0));
+        editor.putBoolean("widget_isOpen", false);
+
+        Calendar calender = Calendar.getInstance();
+        calender.setTimeInMillis(System.currentTimeMillis());
+        calender.add(Calendar.SECOND, 1);
+
+        // update alarmManager each minute because the text view can display each minute
+        // creats an intent which calls onReceive each time interval
+        alarmManager.setRepeating(AlarmManager.RTC, calender.getTimeInMillis(), 10000, createDoorStateIntent(context));
+    }
+
+    @Override
+    public void onDisabled(Context context)
+    {
+        super.onDisabled(context);
+        Log.d(LOG_TAG, "Widget Provider disabled. Turning off timer");
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(createDoorStateIntent(context));
+
+        SharedPreferences prefs = context.getSharedPreferences("widget", Context.MODE_PRIVATE);
+        editor = prefs.edit();
+        editor.remove("widget_time");
+        editor.remove("widget_isOpen");
+    }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
     {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
+
 
         SharedPreferences prefs = context.getSharedPreferences("widget", Context.MODE_PRIVATE);
         editor = prefs.edit();
@@ -159,7 +156,7 @@ public class WidgetProvider extends AppWidgetProvider
 
     }
 
-    public void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, double lastChange, boolean isOpen)
+    protected void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, double lastChange, boolean isOpen)
     {
 
         long currentTimeSeconds = System.currentTimeMillis() / 1000L;
@@ -173,7 +170,8 @@ public class WidgetProvider extends AppWidgetProvider
             timeSinceLastChangeAsString = Formatter.formatTime(timeSinceLastChange);
         }
 
-        RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+        int romoteViewsId = setRemoteViews();
+        RemoteViews updateViews = new RemoteViews(context.getPackageName(), romoteViewsId);
         updateViews.setTextViewText(R.id.widget_tv, timeSinceLastChangeAsString);
 
         Intent intent = new Intent(context, MainActivity.class);
@@ -195,14 +193,19 @@ public class WidgetProvider extends AppWidgetProvider
         appWidgetManager.updateAppWidget(appWidgetId, updateViews);
     }
 
-    public void updateState(boolean isOpen, double time)
+
+    protected void updateState(boolean isOpen, double time)
     {
         if(editor != null) {
             editor.putLong("widget_time", Double.doubleToLongBits(time));
             editor.putBoolean("widget_isOpen", isOpen);
             editor.apply();
+
         }
     }
+
+    abstract int setRemoteViews();
+
 
     private class SpaceApiRunner implements Runnable {
 
@@ -211,6 +214,4 @@ public class WidgetProvider extends AppWidgetProvider
             mSpaceApi.getSpace(mSpaceName, mSpaceApiCallback);
         }
     }
-
-
 }

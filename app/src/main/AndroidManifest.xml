@@ -29,7 +29,7 @@
         </activity>
         <receiver android:name=".util.NotificationPublisher" />
 
-        <receiver android:name="de.fau.cs.mad.fablab.android.widget.WidgetProvider"
+        <receiver android:name=".widget.WidgetProviderSmall"
                   android:label="@string/small_widget_name">
 
             <intent-filter>
@@ -39,7 +39,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info" />
+                android:resource="@xml/widget_provider_small" />
         </receiver>
 
         <receiver android:name="de.fau.cs.mad.fablab.android.widget.WidgetProviderLarge"
@@ -52,7 +52,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/large_widget_provider" />
+                android:resource="@xml/widget_provider_large" />
         </receiver>
     </application>
 </manifest>
