@@ -35,7 +35,7 @@ public class ProjectFragmentViewModel {
         public void execute(Void parameter) {
             if(mListener != null)
             {
-                if(mCartModel.getAllPaidCarts().isEmpty())
+                if(mCartModel.getAllCarts().isEmpty())
                 {
                     mListener.noCartsAvailable();
                 }
