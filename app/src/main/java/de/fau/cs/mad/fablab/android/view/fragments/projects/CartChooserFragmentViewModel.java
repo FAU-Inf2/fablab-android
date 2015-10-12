@@ -35,7 +35,7 @@ public class CartChooserFragmentViewModel {
 
     public void update()
     {
-        List<Cart> carts = mModel.getAllPaidCarts();
+        List<Cart> carts = mModel.getAllCarts();
         mCartViewModelCollection.clear();
         for(Cart c : carts)
         {

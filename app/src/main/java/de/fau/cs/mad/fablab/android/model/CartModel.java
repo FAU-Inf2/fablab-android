@@ -94,8 +94,11 @@ public class CartModel {
         mCartEntries.addAll(mCart.getEntries());
     }
 
-    public List<Cart> getAllPaidCarts()
-    {
-        return mCartDao.queryForEq("status", CartStatus.PAID);
+    public List<Cart> getAllCarts() {
+        List<Cart> carts = mCartDao.queryForEq("status", CartStatus.PAID);
+        if (mCartEntries.size() > 0) {
+            carts.add(mCart);
+        }
+        return carts;
     }
 }
