@@ -5,7 +5,8 @@
               android:background="@color/colorPrimaryDark"
               android:orientation="horizontal"
               android:layout_margin="@dimen/widget_margin"
-              android:weightSum="1">
+              android:weightSum="1"
+              android:id="@+id/widget">
 
     <ImageView
         android:id="@+id/widget_iv"
