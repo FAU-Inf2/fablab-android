@@ -79,7 +79,7 @@ public class ICalDetailsDialogFragmentViewModel {
 
     public String getDate()
     {
-        String result = "";
+        String result;
 
         //check if event goes more than one day
         if(CalendarHelper.isSameDay(mStartDate, mEndDate))

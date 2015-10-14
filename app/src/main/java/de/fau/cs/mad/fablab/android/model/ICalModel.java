@@ -98,7 +98,7 @@ public class ICalModel {
         else if (!mICalsRequested && !mEndReached)
         {
             mICalsRequested = true;
-            List<ICal> fetchedICals = new ArrayList<>();
+            List<ICal> fetchedICals;
             //get next Element_count elements from database
             QueryBuilder<ICal, Long> queryBuilder = mICalDao.queryBuilder();
             //sort elements in ascending order according to startdate and only return

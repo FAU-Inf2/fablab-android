@@ -12,7 +12,6 @@ import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
 
 public class WidgetProviderSmall extends WidgetProviderBase
 {
-
     @Override
     protected void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, double lastChange, boolean isOpen)
     {
@@ -23,13 +22,12 @@ public class WidgetProviderSmall extends WidgetProviderBase
         String timeSinceLastChangeAsString;
 
         if(lastChange == 0.0) {
-            timeSinceLastChangeAsString = "0m";
+            timeSinceLastChangeAsString = "-";
         } else {
             timeSinceLastChangeAsString = Formatter.formatTimeWidget(timeSinceLastChange);
         }
 
-        int romoteViewsId = setRemoteViews();
-        RemoteViews updateViews = new RemoteViews(context.getPackageName(), romoteViewsId);
+        RemoteViews updateViews = new RemoteViews(context.getPackageName(), setRemoteViews());
         updateViews.setTextViewText(R.id.widget_tv, timeSinceLastChangeAsString);
 
         Intent intent = new Intent(context, MainActivity.class);

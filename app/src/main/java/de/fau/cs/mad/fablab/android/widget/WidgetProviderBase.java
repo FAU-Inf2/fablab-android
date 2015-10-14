@@ -15,8 +15,6 @@ import android.widget.RemoteViews;
 import net.spaceapi.HackerSpace;
 import net.spaceapi.State;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import de.fau.cs.mad.fablab.android.R;
@@ -33,7 +31,6 @@ public abstract class WidgetProviderBase extends AppWidgetProvider
     protected RestClient restClient;
     protected SpaceApi mSpaceApi;
     protected static String DOOR_STATE_WIDGET_UPDATE = "de.fau.cs.mad.fablab.android.widget.DOOR_STATE_WIDGET_UPDATE";
-    protected static final int space_name = 0x7f0700af;
     protected String mSpaceName;
     protected static SharedPreferences.Editor editor;
 
@@ -41,8 +38,6 @@ public abstract class WidgetProviderBase extends AppWidgetProvider
     protected Runnable mSpaceApiRunner = new SpaceApiRunner();
 
     protected static final String LOG_TAG = "widget";
-    public static final String FABLAB_WIDGET_UPDATE = "de.fau.cs.mad.fablab.android.widget.WidgetProvider.FABLAB_WIDGET_UPDATE";
-
 
     protected Callback<HackerSpace> mSpaceApiCallback = new Callback<HackerSpace>()
     {
@@ -91,6 +86,7 @@ public abstract class WidgetProviderBase extends AppWidgetProvider
         if (DOOR_STATE_WIDGET_UPDATE.equals(intent.getAction()))
         {
             Log.d(LOG_TAG, "Door state update");
+
             // Get the widget manager and ids for this widget provider, then call the shared
             // door state update method
             ComponentName thisAppWidget = new ComponentName(context.getPackageName(), getClass().getName());
@@ -143,7 +139,6 @@ public abstract class WidgetProviderBase extends AppWidgetProvider
     {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
 
-
         SharedPreferences prefs = context.getSharedPreferences("widget", Context.MODE_PRIVATE);
         editor = prefs.edit();
         double time = Double.longBitsToDouble(prefs.getLong("widget_time", 0L));
@@ -158,7 +153,6 @@ public abstract class WidgetProviderBase extends AppWidgetProvider
 
     protected void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, double lastChange, boolean isOpen)
     {
-
         long currentTimeSeconds = System.currentTimeMillis() / 1000L;
         double minutesSinceLastChange = (currentTimeSeconds - lastChange) / 60;
         long timeSinceLastChange = Double.valueOf(minutesSinceLastChange).longValue();
@@ -170,8 +164,7 @@ public abstract class WidgetProviderBase extends AppWidgetProvider
             timeSinceLastChangeAsString = Formatter.formatTime(timeSinceLastChange);
         }
 
-        int romoteViewsId = setRemoteViews();
-        RemoteViews updateViews = new RemoteViews(context.getPackageName(), romoteViewsId);
+        RemoteViews updateViews = new RemoteViews(context.getPackageName(), setRemoteViews());
         updateViews.setTextViewText(R.id.widget_tv, timeSinceLastChangeAsString);
 
         Intent intent = new Intent(context, MainActivity.class);
@@ -200,7 +193,6 @@ public abstract class WidgetProviderBase extends AppWidgetProvider
             editor.putLong("widget_time", Double.doubleToLongBits(time));
             editor.putBoolean("widget_isOpen", isOpen);
             editor.apply();
-
         }
     }
 
@@ -208,7 +200,6 @@ public abstract class WidgetProviderBase extends AppWidgetProvider
 
 
     private class SpaceApiRunner implements Runnable {
-
         @Override
         public void run() {
             mSpaceApi.getSpace(mSpaceName, mSpaceApiCallback);

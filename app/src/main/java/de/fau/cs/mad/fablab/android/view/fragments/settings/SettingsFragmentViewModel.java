@@ -18,7 +18,6 @@ import java.util.TimeZone;
 import javax.inject.Inject;
 
 import de.fau.cs.mad.fablab.android.BuildConfig;
-import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.model.AutoCompleteModel;
 import de.fau.cs.mad.fablab.android.model.ICalModel;
 import de.fau.cs.mad.fablab.android.model.PushModel;
@@ -125,7 +124,7 @@ public class SettingsFragmentViewModel implements SharedPreferences.OnSharedPref
     private long getCalID(String name, String accountName)
     {
         long calendarId = 0;
-        Cursor cur = null;
+        Cursor cur;
         ContentResolver cr = context.getContentResolver();
         Uri uri = CalendarContract.Calendars.CONTENT_URI;
         String selection = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = ?) AND ("
@@ -145,7 +144,7 @@ public class SettingsFragmentViewModel implements SharedPreferences.OnSharedPref
 
     private boolean existsFablabCalendar(String name, String accountName)
     {
-        Cursor cur = null;
+        Cursor cur;
         ContentResolver cr = context.getContentResolver();
         Uri uri = CalendarContract.Calendars.CONTENT_URI;
         String selection = "((" + CalendarContract.Calendars.ACCOUNT_NAME + " = ?) AND ("
@@ -155,10 +154,7 @@ public class SettingsFragmentViewModel implements SharedPreferences.OnSharedPref
 
         cur = cr.query(uri, EVENT_PROJECTION, selection, selectionArgs, null);
 
-        if(cur.moveToNext())
-            return true;
-        else
-            return false;
+        return cur.moveToNext();
     }
 
     private void createFablabCalendar(String name, String accountName) {
@@ -179,7 +175,7 @@ public class SettingsFragmentViewModel implements SharedPreferences.OnSharedPref
         values.put(CalendarContract.Calendars.SYNC_EVENTS, 0);
         values.put(CalendarContract.Calendars.CALENDAR_TIME_ZONE, "Europe/Berlin");
 
-        Uri newCalendar = context.getContentResolver().insert(target, values);
+        context.getContentResolver().insert(target, values);
 
         createCalendarEvents(name, accountName);
 
@@ -197,12 +193,12 @@ public class SettingsFragmentViewModel implements SharedPreferences.OnSharedPref
     }
 
     private static void createCalendarEvent(Context ctx, ICal iCal, long calendarId) {
-        long startMillis = 0;
-        long endMillis = 0;
-        String name = "";
-        String description = "";
-        String location = "";
-        boolean isAllday = false;
+        long startMillis;
+        long endMillis;
+        String name;
+        String description;
+        String location;
+        boolean isAllday;
 
         TimeZone timeZone = TimeZone.getDefault();
         Date now = new Date();
@@ -233,7 +229,7 @@ public class SettingsFragmentViewModel implements SharedPreferences.OnSharedPref
         cv.put(CalendarContract.Events.EVENT_TIMEZONE, "Europe/Berlin");
         cv.put(CalendarContract.Events.ALL_DAY, isAllday);
 
-        Uri newEvent = ctx.getContentResolver().insert(CalendarContract.Events.CONTENT_URI, cv);
+        ctx.getContentResolver().insert(CalendarContract.Events.CONTENT_URI, cv);
     }
 
     private class CalendarTask extends AsyncTask<String, Void, Boolean>

@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import de.fau.cs.mad.fablab.android.R;
 import de.fau.cs.mad.fablab.android.view.activities.MainActivity;
-import de.fau.cs.mad.fablab.android.view.common.binding.ScannerViewCommandBinding;
 import de.fau.cs.mad.fablab.android.view.fragments.barcodescanner.BarcodeScannerFragment;
 import de.fau.cs.mad.fablab.rest.core.Product;
 import de.fau.cs.mad.fablab.rest.core.User;

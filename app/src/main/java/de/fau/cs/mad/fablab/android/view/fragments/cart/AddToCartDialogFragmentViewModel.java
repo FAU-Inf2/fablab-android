@@ -1,8 +1,6 @@
 package de.fau.cs.mad.fablab.android.view.fragments.cart;
 
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
 
 import javax.inject.Inject;
 

@@ -254,7 +254,6 @@ public class EditProjectFragment extends BaseFragment implements EditProjectFrag
 
             bitmap.recycle();
             bos.close();
-            bos = null;
         }
         catch(OutOfMemoryError error)
         {

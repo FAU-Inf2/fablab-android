@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import de.fau.cs.mad.fablab.rest.core.CartStatus;
-import de.fau.cs.mad.fablab.rest.core.Product;
 
 /**
  * This class represents a Cart included products
