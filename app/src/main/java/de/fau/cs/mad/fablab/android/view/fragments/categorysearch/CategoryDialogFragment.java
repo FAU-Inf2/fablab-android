@@ -40,6 +40,7 @@ public class CategoryDialogFragment extends BaseDialogFragment implements Catego
 
     private AndroidTreeView mTreeView;
     private String currentCategory;
+    private TreeItemHolder lastSelectedNode;
 
     private static final String LOG_TAG = "CategoriyDialogFragment";
 
@@ -82,29 +83,49 @@ public class CategoryDialogFragment extends BaseDialogFragment implements Catego
             currentCategory = roots.get(0).getName();
             statusBarTextView.setText(currentCategory);
         }
-        
-        for(Category c : roots)
+
+        /* Uncomment this, if fablab has useful category roots */
+        /*for(Category c : roots)
         {
             TreeNode node = new TreeNode(new TreeItemHolder.TreeItem(c));
             depthFirstSearch(node, c, children);
             root.addChild(node);
+        }*/
 
-
+        /* Delete, if fablab has useful category roots */
+        if(!roots.isEmpty()) {
+            TreeNode node = new TreeNode(new TreeItemHolder.TreeItem(roots.get(0)));
+            depthFirstSearch(node, roots.get(0), children);
+            root.addChild(node);
+            lastSelectedNode = (TreeItemHolder) node.getViewHolder();
         }
+        /* */
+
 
         mTreeView = new AndroidTreeView(getActivity(), root);
         mTreeView.setDefaultViewHolder(TreeItemHolder.class);
-        mTreeView.setDefaultAnimation(true);
+        mTreeView.setDefaultAnimation(false);
         mTreeView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
 
         mTreeView.setDefaultNodeClickListener(new TreeNode.TreeNodeClickListener() {
             @Override
             public void onClick(TreeNode treeNode, Object o) {
                 currentCategory = treeNode.getValue().toString();
+                TreeItemHolder treeNodeViewHolder = (TreeItemHolder) treeNode.getViewHolder();
+                treeNodeViewHolder.setActive(true);
+
+                if (lastSelectedNode != null && lastSelectedNode != treeNodeViewHolder) {
+                    lastSelectedNode.setActive(false);
+                }
+
+                lastSelectedNode = treeNodeViewHolder;
                 statusBarTextView.setText(currentCategory);
             }
         });
         treeViewContainer.addView(mTreeView.getView());
+
+        /* Delete, if fablab has useful category roots */
+        mTreeView.expandLevel(1);
     }
 
     private void depthFirstSearch(TreeNode node, Category category, HashMap<Long, Category> children)  throws NullPointerException
