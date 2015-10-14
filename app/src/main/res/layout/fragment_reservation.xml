@@ -15,6 +15,7 @@
         android:gravity="center_horizontal"
         android:text="@string/reservation_dialog_title"
         android:textColor="@color/colorPrimary"
+        android:background="@drawable/shape_rounded_rect_red_widget"
         android:textSize="@dimen/textsize_alert_title" />
 
 

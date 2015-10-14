@@ -40,6 +40,24 @@ public class Formatter {
         }
     }
 
+    public static String formatTimeWidget(long time) {
+        if (time < 0) {
+            return "-";
+        } else if (time < 60) {
+            return time + "m";
+        } else if (time < (60 * 24)) {
+            long hours = time / 60;
+            long minutes = time % 60;
+            if (minutes < 30) {
+                return hours + "h";
+            } else {
+                return (hours + 1) + "h";
+            }
+        } else {
+            return "-";
+        }
+    }
+
     public static String formatNotificationToolUsage(String tool, String project) {
         return "Fablab: " + tool + ((!project.isEmpty()) ? " - " : "") + project;
     }
