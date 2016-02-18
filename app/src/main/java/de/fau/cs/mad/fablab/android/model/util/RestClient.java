@@ -1,19 +1,12 @@
 package de.fau.cs.mad.fablab.android.model.util;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.okhttp.OkHttpClient;
 
-import java.io.InputStream;
-import java.security.KeyStore;
 import java.text.SimpleDateFormat;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManagerFactory;
 
 import de.fau.cs.mad.fablab.android.BuildConfig;
 import de.fau.cs.mad.fablab.android.R;
@@ -47,7 +40,6 @@ public class RestClient {
         final String API_URL = context.getString(R.string.api_url);
 
         mHttpClient = new OkHttpClient();
-        mHttpClient.setSslSocketFactory(getPinnedCertSslSocketFactory(context));
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
@@ -72,37 +64,6 @@ public class RestClient {
 
             mRestAdapter = mRestAdapterBuilder.build();
         }
-    }
-
-    /**
-     * Creates and returns a SSLSocketFactory which will trust our selfsigned certificates in
-     * fablab_dev_truststore. The truststore only contains the public certs.
-     *
-     * @return a SSLSocketFactory trusting our selfsigned certs.
-     */
-    private SSLSocketFactory getPinnedCertSslSocketFactory(Context context) {
-        try {
-            //Default type is BKS on android
-            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            //our truststore containing the public certs
-            InputStream inputStream = context.getResources().openRawResource(
-                    R.raw.fablab_dev_truststore);
-
-            //the password used here is just a dummy as it is needed by the keystore.load method
-            String trustStorePass = context.getString(R.string.development_truststore_pass);
-            keyStore.load(inputStream, trustStorePass.toCharArray());
-
-            SSLContext sslContext = SSLContext.getInstance("TLS");
-            TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(
-                    TrustManagerFactory.getDefaultAlgorithm());
-            trustManagerFactory.init(keyStore);
-            sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
-
-            return sslContext.getSocketFactory();
-        } catch (Exception e) {
-            Log.e(LOG_TAG, e.getMessage());
-        }
-        return null;
     }
 
     public CartApi getCartApi() {
