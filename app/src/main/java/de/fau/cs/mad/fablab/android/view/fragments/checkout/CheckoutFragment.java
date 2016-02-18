@@ -76,7 +76,7 @@ public class CheckoutFragment extends BaseDialogFragment implements CheckoutView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
         return inflater.inflate(R.layout.fragment_checkout, container, false);
     }
 

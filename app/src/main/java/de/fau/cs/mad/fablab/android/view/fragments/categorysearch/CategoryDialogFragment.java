@@ -49,7 +49,7 @@ public class CategoryDialogFragment extends BaseDialogFragment implements Catego
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         return inflater.inflate(R.layout.fragment_category_search, container, false);
     }
