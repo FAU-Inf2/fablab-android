@@ -22,6 +22,7 @@ import de.fau.cs.mad.fablab.android.model.events.ProductFoundEvent;
 import de.fau.cs.mad.fablab.android.model.events.ProductNotFoundEvent;
 import de.fau.cs.mad.fablab.android.model.events.ProductSearchRetrofitErrorEvent;
 import de.fau.cs.mad.fablab.android.model.events.ProductsChangedEvent;
+import de.fau.cs.mad.fablab.android.util.Formatter;
 import de.fau.cs.mad.fablab.android.viewmodel.common.ObservableArrayList;
 import de.fau.cs.mad.fablab.rest.core.Product;
 import de.fau.cs.mad.fablab.rest.myapi.ProductApi;
@@ -99,8 +100,10 @@ public class ProductModel {
                         @Override
                         public Product call() throws Exception {
                             for (Product product : updatedProducts) {
-                                product.setDatabaseId(Long.parseLong(product.getProductId()));
-                                mProductDao.createOrUpdate(product);
+                                if(Formatter.isNumeric(product.getProductId())) {
+                                    product.setDatabaseId(Long.parseLong(product.getProductId()));
+                                    mProductDao.createOrUpdate(product);
+                                }
                             }
                             return null;
                         }
@@ -115,8 +118,10 @@ public class ProductModel {
                         @Override
                         public Product call() throws Exception {
                             for (Product product : removedProducts) {
-                                product.setDatabaseId(Long.parseLong(product.getProductId()));
-                                mProductDao.delete(product);
+                                if(Formatter.isNumeric(product.getProductId())) {
+                                    product.setDatabaseId(Long.parseLong(product.getProductId()));
+                                    mProductDao.delete(product);
+                                }
                             }
                             return null;
                         }

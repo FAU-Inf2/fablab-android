@@ -41,6 +41,7 @@ public class CategoryDialogFragment extends BaseDialogFragment implements Catego
     private AndroidTreeView mTreeView;
     private String currentCategory;
     private TreeItemHolder lastSelectedNode;
+    private int currentIndex;
 
     private static final String LOG_TAG = "CategoriyDialogFragment";
 
@@ -48,7 +49,7 @@ public class CategoryDialogFragment extends BaseDialogFragment implements Catego
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         return inflater.inflate(R.layout.fragment_category_search, container, false);
     }
@@ -73,7 +74,7 @@ public class CategoryDialogFragment extends BaseDialogFragment implements Catego
 
     private void initializeCategoryTree()
     {
-        List<Category> roots = mViewModel.getRootCategories();
+        List<Category> roots = mViewModel.getAllCategories();
         HashMap<Long, Category> children = mViewModel.getChildrenCategories();
 
         TreeNode root = TreeNode.root();
@@ -84,23 +85,20 @@ public class CategoryDialogFragment extends BaseDialogFragment implements Catego
             statusBarTextView.setText(currentCategory);
         }
 
-        /* Uncomment this, if fablab has useful category roots */
-        /*for(Category c : roots)
+        currentIndex = 0;
+        boolean skipEverythingButAllProducts = true;
+
+        while(currentIndex < roots.size())
         {
-            TreeNode node = new TreeNode(new TreeItemHolder.TreeItem(c));
-            depthFirstSearch(node, c, children);
-            root.addChild(node);
-        }*/
+            Category c = roots.get(currentIndex++);
+            if(c.getParent_category_id() == 0) {
+                TreeNode node = new TreeNode(new TreeItemHolder.TreeItem(c));
+                depthSearchBuilder(node, c.getCategoryId(), roots);
+                root.addChild(node);
 
-        /* Delete, if fablab has useful category roots */
-        if(!roots.isEmpty()) {
-            TreeNode node = new TreeNode(new TreeItemHolder.TreeItem(roots.get(0)));
-            depthFirstSearch(node, roots.get(0), children);
-            root.addChild(node);
-            lastSelectedNode = (TreeItemHolder) node.getViewHolder();
+                if(skipEverythingButAllProducts && currentIndex > 0) break;
+            }
         }
-        /* */
-
 
         mTreeView = new AndroidTreeView(getActivity(), root);
         mTreeView.setDefaultViewHolder(TreeItemHolder.class);
@@ -124,11 +122,27 @@ public class CategoryDialogFragment extends BaseDialogFragment implements Catego
         });
         treeViewContainer.addView(mTreeView.getView());
 
-        /* Delete, if fablab has useful category roots */
+        /* Delete, if root is not 'all products' */
         mTreeView.expandLevel(1);
     }
 
-    private void depthFirstSearch(TreeNode node, Category category, HashMap<Long, Category> children)  throws NullPointerException
+    private void depthSearchBuilder(TreeNode node, long parentID, List<Category> categories) {
+        while(currentIndex < categories.size())
+        {
+            Category c = categories.get(currentIndex);
+            if(c.getParent_category_id() == parentID) {
+                TreeNode childNode = new TreeNode(new TreeItemHolder.TreeItem(c));
+                currentIndex++;
+                depthSearchBuilder(childNode, c.getCategoryId(), categories);
+                node.addChild(childNode);
+            } else {
+                return;
+            }
+        }
+    }
+
+    /** Old Version */
+    /* private void depthFirstSearch(TreeNode node, Category category, HashMap<Long, Category> children)  throws NullPointerException
     {
         List<Long> childrenID = category.getCategories();
 
@@ -144,7 +158,7 @@ public class CategoryDialogFragment extends BaseDialogFragment implements Catego
             depthFirstSearch(childNode, child, children);
             node.addChild(childNode);
         }
-    }
+    } */
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

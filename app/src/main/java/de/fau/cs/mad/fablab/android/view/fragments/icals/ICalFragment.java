@@ -60,7 +60,7 @@ public class ICalFragment extends BaseFragment implements ICalFragmentViewModel.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dates, container, false);
     }

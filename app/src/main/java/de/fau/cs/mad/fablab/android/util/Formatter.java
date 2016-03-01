@@ -70,4 +70,17 @@ public class Formatter {
         else
             return "Du bist in ca. " + offset + " Minuten an der Reihe!";
     }
+
+    public static boolean isNumeric(String str)
+    {
+        try
+        {
+            double d = Double.parseDouble(str);
+        }
+        catch(NumberFormatException nfe)
+        {
+            return false;
+        }
+        return true;
+    }
 }
